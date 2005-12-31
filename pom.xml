@@ -2,14 +2,93 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
 
-  <name>Weblets</name>
-  <description>Weblets</description>
-
   <groupId>net.java.dev.weblets</groupId>
   <artifactId>weblets</artifactId>
-  <version>0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
+  <name>Weblets</name>
+  <version>0.1-SNAPSHOT</version>
+  <description>Weblets</description>
+  <url>http://weblets.dev.java.net</url>
+
+  <issueManagement>
+    <system>Issue Tracker</system>
+    <url>https://weblets.dev.java.net/servlets/ProjectIssues</url>
+  </issueManagement>
+  
+  <inceptionYear>2005</inceptionYear>
+  
+  <mailingLists>
+    <mailingList>
+      <name>Weblets User List</name>
+      <post>users@weblets.dev.java.net</post>
+      <archive>https://weblets.dev.java.net/servlets/SummarizeList?listName=users</archive>
+    </mailingList>
+    <mailingList>
+      <name>Weblets Developer List</name>
+      <post>dev@weblets.dev.java.net</post>
+      <archive>https://weblets.dev.java.net/servlets/SummarizeList?listName=dev</archive>
+    </mailingList>
+  </mailingLists>
+  
+  <developers>
+    <developer>
+      <id>jfallows</id>
+      <name>John R. Fallows</name>
+      <email>john.r.fallows@gmail.com</email>
+      <url/>
+      <organization/>
+      <organizationUrl/>
+      <roles>
+        <role>Project Owner</role>
+      </roles>
+      <timezone>-8</timezone>
+      <properties/>
+    </developer>  
+
+    <developer>
+      <id>jjacobi</id>
+      <name>Jonas Jacobi</name>
+      <email>jonas.jacobi@gmail.com</email>
+      <url/>
+      <organization/>
+      <organizationUrl/>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>-8</timezone>
+      <properties/>
+    </developer>  
+
+    <developer>
+      <id>mwessendorf</id>
+      <name>Matthias Wessendorf</name>
+      <email/>
+      <url/>
+      <organization/>
+      <organizationUrl/>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>1</timezone>
+      <properties/>
+    </developer>  
+  </developers>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:svn:http://weblets.dev.java.net/svn/weblets/trunk/</connection>
+    <developerConnection>scm:svn:https://weblets.dev.java.net/svn/weblets/trunk/</developerConnection>
+    <url>https://weblets.dev.java.net/source/browse/weblets/</url>
+  </scm>
+  
   <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>
