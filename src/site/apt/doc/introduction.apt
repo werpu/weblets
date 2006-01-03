@@ -1,4 +1,5 @@
 Loading Resources with Weblets
+
   The goal of this open source project is to provide JSF component writers with a facility
   that can serve resource files out of a Java archive (JAR), rather than serving them from
   the web application root file system. Unlike traditional web applications, which have 
@@ -8,6 +9,7 @@ Loading Resources with Weblets
   Java archive (JAR) that their implementation code resides in. 
 
 * Resource Loading
+
   Let's assume that we have a JSF component, which needs to have a JavaScript file - <<<myScript.js>>>, 
   served to the client. This JavaScript file is used by the component to provide some level of 
   richness when interacted with by the end-user. This JavaScript file is traditionally served by 
@@ -23,13 +25,15 @@ Loading Resources with Weblets
 
   <Code sample 1. The encodeBegin() method in the sample Renderer.>
 
-  <<<ViewHandler handler = context.getApplication().getViewHandler();
+  <<<
+  ViewHandler handler = context.getApplication().getViewHandler();
   String resourceURL = handler.getResourceURL(context,
                                             "/myresources/myScript.js");
   out.startElement("script", null);
   out.writeAttribute("type", "text/javascript", null);
   out.writeAttribute("src", resourceURL, null);
-  out.endElement("script");>>>
+  out.endElement("script");
+  >>>
 
   Although the installables approach is convenient for the JSF component author, it does increase 
   the installation burden on the application developer, who must remember to extract the installables 
@@ -38,6 +42,7 @@ Loading Resources with Weblets
   deployment for application developers using our component library.
 
 ** Using Weblets
+
   The open source Weblets project aims to solve the resource-packaging problem in a generic and extensible
   way, so that it can be leveraged by all JavaServer Faces component writers, while placing only a minimal
   installation burden on the application developer.
@@ -55,12 +60,13 @@ Loading Resources with Weblets
   attribute values, and loaded from the context root as external resources.
 
 * Weblet Architecture
+
   Although Weblets were designed to be used by any web client, the Weblets implementation has been integrated 
   with JavaServer Faces using a custom <<<ViewHandler>>> - <<<WebletsViewHandler>>>, as shown in figure 1. During
   rendering of the main JavaServer Faces page, the <<<WebletsViewHandler>>> is responsible for converting weblet 
   specific resource URLs into the actual URLs used by the browser to request weblet-managed resources.
  
- [/images/figure1.png] <Figure 1. High-overview of Weblet architecture>
+[/doc/images/figure1.png] <Figure 1. High-overview of Weblet architecture>
 
   After receiving the rendered markup for the main page, the browser downloads each additional resource using a 
   separate request. Each request for a weblet-managed resource is intercepted by the <<<WebletsPhaseListener>>>, 
@@ -74,6 +80,7 @@ Loading Resources with Weblets
   can be configured by application developers to override any default settings provided by the component author.
 
 ** Using Weblets in a Component library
+
   Weblets are configured using a <<<weblets-config.xml>>> file, which must be stored in the /META-INF directory 
   of the component library JAR. Configuring a Weblet is similar to configuring a <<<Servlet>>> or a <<<Filter>>>.
   Each Weblet entry in the <<<weblets-config.xml>>> file has a Weblet name, implementation class and initialization 
@@ -85,33 +92,37 @@ Loading Resources with Weblets
   makes them available to the browser using the default URL mapping of <<</myresources/*>>>.
 
   <Code Sample 2. Weblets configuration file, weblets-config.xml.>
-<<<
-  \<?xml version="1.0" encoding="UTF-8" ?>
-  \<weblets-config xmlns="http://weblets.dev.java.net/config" >
-    \<weblet>
-      \<weblet-name>org.myapp.html</weblet-name>
-      \<weblet-class>
+
+  ---------------------------------------------------------------
+  <<<
+  /<?xml version="1.0" encoding="UTF-8" ?>
+  /<weblets-config xmlns="http://weblets.dev.java.net/config" >
+    /<weblet>
+      /<weblet-name>org.myapp.html</weblet-name>
+      /<weblet-class>
         net.java.dev.weblets.packaged.PackagedWeblet
-      \</weblet-class>
-      \<init-param>
-        \<param-name>package</param-name>
-        \<param-value>
+      /</weblet-class>
+      /<init-param>
+        /<param-name>package</param-name>
+        /<param-value>
           org.myapp.faces.renderer.html.resources
-        \</param-value>
-      \</init-param>
-    \</weblet>
-    \<weblet-mapping>
-      \<weblet-name>org.myapp.html</weblet-name>
-      \<url-pattern>/myresources/*</url-pattern>
-    \</weblet-mapping\>
-  \</weblets-config\>
->>>
+        /</param-value>
+      /</init-param>
+    /</weblet>
+    /<weblet-mapping>
+      /<weblet-name>org.myapp.html</weblet-name>
+      /<url-pattern>/myresources/*</url-pattern>
+    /</weblet-mapping>
+  /</weblets-config>
+  >>>
+  ---------------------------------------------------------------
 
 The <<<PackagedWeblet>>> is a built-in Weblet implementation that can read from a particular Java package using the 
 <<<ClassLoader>>> and stream the result back to the browser. The package initialization parameter tells the 
 <<<PackagedWeblet>>> which Java package to use as a root when resolving weblet-managed resource requests.
 
 ** Weblet versioning
+
   Weblets also has built-in support for versioning of the component library. This is used to allow the browser to 
   cache packaged resources such as myScript.js when possible, preventing unnecessary roundtrips to the web server.
 
@@ -134,25 +145,27 @@ The <<<PackagedWeblet>>> is a built-in Weblet implementation that can read from 
   The following code sample illustrates the Weblets versioning feature by adding a 1.0 version to our org.myapp.html Weblet.
 
   <Code Sample 3. Weblets configuration file using 1.0 versioning for production.>
-<<<
-<?xml version="1.0" encoding="UTF-8" ?>
-<weblets-config xmlns="http://weblets.dev.java.net/config" >
-  <weblet>
-    <weblet-name>org.myapp.html</weblet-name>
-    <weblet-class>net.java.dev.weblets.packaged.PackagedWeblet</weblet-class>
-    <weblet-version>1.0</weblet-version>
-    <init-param>
-      <param-name>package</param-name>
-      <param-value>org.myapp.faces.renderer.html.resources</param-value>
-    </init-param>
-  </weblet>
 
-  <weblet-mapping>
-    <weblet-name>org.myapp.html</weblet-name>
-    <url-pattern>/myapp/*</url-pattern>
-  </weblet-mapping>
-</weblets-config>
->>>
+  -------------------------------------------------------------------------------
+  <<<
+  /<?xml version="1.0" encoding="UTF-8" ?>
+  /<weblets-config xmlns="http://weblets.dev.java.net/config" >
+    /<weblet>
+      /<weblet-name>org.myapp.html</weblet-name>
+      /<weblet-class>net.java.dev.weblets.packaged.PackagedWeblet</weblet-class>
+      /<weblet-version>1.0</weblet-version>
+      /<init-param>
+        /<param-name>package</param-name>
+        /<param-value>org.myapp.faces.renderer.html.resources</param-value>
+      /</init-param>
+    /</weblet>
+    /<weblet-mapping>
+      /<weblet-name>org.myapp.html</weblet-name>
+      /<url-pattern>/myapp/*</url-pattern>
+    /</weblet-mapping>
+  /</weblets-config>
+  >>>
+  -------------------------------------------------------------------------------
 
   By specifying a weblet version, you indicate that the packaged resource is not going to change until the 
   version number changes. Therefore, the version number is included as part of the resource URL determined 
@@ -172,22 +185,24 @@ The <<<PackagedWeblet>>> is a built-in Weblet implementation that can read from 
   development and should behave as though the version number has been omitted.
 
   <Code Sample 4. Weblets configurations file using SNAPSHOT versioning for development.>
-+------------------------------------------+
-<<<
-<?xml version="1.0" encoding="UTF-8" ?>
-<weblets-config xmlns="http://weblets.dev.java.net/config" >
-  <weblet>
-    <weblet-name>org.myapp.html</weblet-name>
-    <weblet-class>net.java.dev.weblets.packaged.PackagedWeblet</weblet-class>
-    <weblet-version>1.0-SNAPSHOT</weblet-version>
+
+  -------------------------------------------------------------------------------
+  <<<
+  /<?xml version="1.0" encoding="UTF-8" ?>
+  /<weblets-config xmlns="http://weblets.dev.java.net/config" >
+    /<weblet>
+      /<weblet-name>org.myapp.html</weblet-name>
+      /<weblet-class>net.java.dev.weblets.packaged.PackagedWeblet</weblet-class>
+      /<weblet-version>1.0-SNAPSHOT</weblet-version>
+      ...
+    /</weblet>
     ...
-  </weblet>
-  ...
-</weblets-config>
->>>
-+------------------------------------------+
+  /</weblets-config>
+  >>>
+  -------------------------------------------------------------------------------
 
 ** Security
+
   When serving packaged resources from a JAR, extra care must be taken not to make Java Class files or other 
   sensitive information accessible by URL. In desktop Java applications, resource files are often stored in a 
   sub-package called "resources" underneath the Java implementation classes that use the resource files. The 
@@ -197,15 +212,14 @@ The <<<PackagedWeblet>>> is a built-in Weblet implementation that can read from 
   the "resources" package, or in any sub-package of "resources."
 
 ** Weblets Protocol
+
   Having covered how to configure Weblets, it is time to look at how we can reference resources defined by the 
   Weblet in our Renderer. The syntax, defined by the Weblet contract, for returning a proper URL to the JSF page 
   is as follows:
 
-+------------------------------------------+
   <<<
-  <prefix><weblet name><resource>
+  /<prefix>/<weblet name>/<resource>
   >>>
-+------------------------------------------+
 
   The prefix indicates that this is a Weblet-managed resource, and this followed by the Weblet name and the 
   resource requested.
@@ -215,18 +229,17 @@ The <<<PackagedWeblet>>> is a built-in Weblet implementation that can read from 
   the Weblet protocol instead. 
 
   <Code sample 5. Using Weblet "protocol" to serve up resources.>
-+------------------------------------------+
-<<<
-ViewHandler handler = context.getApplication().getViewHandler();
-String resourceURL = 
-       handler.getResourceURL(context, 
-                              "weblet://org.myapp.html/myScript.js");
-out.startElement("script", null);
-out.writeAttribute("type", "text/javascript", null);
-out.writeAttribute("src", resourceURL, null);
-out.endElement("script");
->>>
-+------------------------------------------+
+
+  <<<
+  ViewHandler handler = context.getApplication().getViewHandler();
+  String resourceURL = 
+         handler.getResourceURL(context, 
+                                "weblet://org.myapp.html/myScript.js");
+  out.startElement("script", null);
+  out.writeAttribute("type", "text/javascript", null);
+  out.writeAttribute("src", resourceURL, null);
+  out.endElement("script");
+  >>>
 
   The Weblet protocol-like syntax is convenient and easy to understand. The syntax starts with <<<weblet://>>> 
   followed by the Weblet name e.g. <<<org.myapp.html>>> and finally the path info, or resource file, 
@@ -241,12 +254,14 @@ out.endElement("script");
   component library.
 
 * Using Weblets in a JSF application
+
   In order to simplify setup for the application developer, component writers should select a default URL mapping 
   for their component libraries. There is no need for the application developer to add any Weblet-specific 
   configuration to the <<<web.xml>>> file, since the <<<WebletsPhaseListener>>> will be invoked automatically to 
   service incoming requests for Weblet-managed resources.
 
 Summary
+
   As a new open source project, Weblets has tremendous potential to become a defacto generic and configurable 
   resource loading facility for web clients and the JSF component community. The key differentiators are simplified 
   packaging of JSF components and their resources, and a minimized overhead of installing and setting up JSF component 
