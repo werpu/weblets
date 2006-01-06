@@ -89,6 +89,19 @@
     <url>https://weblets.dev.java.net/source/browse/weblets/</url>
   </scm>
   
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <templateDirectory>file:src/site/</templateDirectory>
+          <template>java.net.vm</template>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
   <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>
