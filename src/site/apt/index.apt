@@ -1,5 +1,3 @@
-Description
-  
   Component libraries for web application frameworks often need to provide resource files along with implementation classes. For example, JavaServer Faces Renderers often need JavaScript, CSS and image resources.
 
   Although dropping in an implementation JAR does make these components libraries available, the resource files must be extracted into the web application root. This can easily lead to inconsistency problems between implementation code and resource files.
