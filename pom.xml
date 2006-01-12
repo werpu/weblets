@@ -78,7 +78,7 @@
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
-      <url>src/main/resources/META-INF/LICENSE-2.0.txt</url>
+      <url>LICENSE.txt</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
