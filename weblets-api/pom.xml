@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>net.java.dev.weblets</groupId>
+    <artifactId>weblets</artifactId>
+    <version>0.2-SNAPSHOT</version>
+  </parent>
+
+  <groupId>net.java.dev.weblets</groupId>
+  <artifactId>weblets-api</artifactId>
+  <packaging>jar</packaging>
+
+  <name>Weblets API</name>
+  <version>0.2-SNAPSHOT</version>
+  <description>Weblets API</description>
+  <url>http://weblets.dev.java.net</url>
+
+  <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.3</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+</project>

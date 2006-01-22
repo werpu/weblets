@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>net.java.dev.weblets</groupId>
+    <artifactId>weblets</artifactId>
+    <version>0.2-SNAPSHOT</version>
+  </parent>
+
+  <groupId>net.java.dev.weblets</groupId>
+  <artifactId>weblets-demo</artifactId>
+  <packaging>war</packaging>
+
+  <name>Weblets Demo</name>
+  <version>0.2-SNAPSHOT</version>
+  <description>Weblets Demo</description>
+  <url>http://weblets.dev.java.net</url>
+
+  <dependencies>
+    <dependency>
+      <groupId>net.java.dev.weblets</groupId>
+      <artifactId>weblets-api</artifactId>
+      <version>0.2-SNAPSHOT</version>
+    </dependency>
+ 
+    <dependency>
+      <groupId>net.java.dev.weblets</groupId>
+      <artifactId>weblets-impl</artifactId>
+      <version>0.2-SNAPSHOT</version>
+    </dependency>
+ 
+    <dependency>
+      <groupId>myfaces</groupId>
+      <artifactId>myfaces-impl</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+
+  </dependencies>
+</project>
