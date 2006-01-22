@@ -54,7 +54,7 @@ public class WebletContainerImpl extends WebletContainer
     try
     {
       ClassLoader loader = Thread.currentThread().getContextClassLoader();
-      Enumeration e = loader.getResources("META-INF/weblets-config.xml");
+      Enumeration e = loader.getResources("/META-INF/weblets-config.xml");
       while (e.hasMoreElements())
       {
         URL resource = (URL)e.nextElement();
