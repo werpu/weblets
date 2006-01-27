@@ -17,7 +17,10 @@ package com.apress.projsf.weblets.faces;
 
 import java.io.IOException;
 
+import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -75,8 +78,22 @@ public class WebletsPhaseListener implements PhaseListener
       String contextPath = external.getRequestContextPath();
       String requestURI = matcher.group(1);
       String ifModifiedHeader = (String)requestHeaders.get("If-Modified-Since");
-      long ifModifiedSince =
-            (ifModifiedHeader != null) ? Long.parseLong(ifModifiedHeader) : -1L;
+      
+      long ifModifiedSince = -1L;
+      
+      if (ifModifiedHeader != null)
+      {
+        try
+        {
+          DateFormat rfc1123 = new HttpDateFormat();
+          Date parsed = rfc1123.parse(ifModifiedHeader);
+          ifModifiedSince = parsed.getTime();
+        }
+        catch (ParseException e)
+        {
+          throw new FacesException(e);
+        }
+      }
 
       try
       {

@@ -15,9 +15,6 @@
  */
 package com.apress.projsf.weblets;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.servlet.http.HttpServletResponse;
 import net.java.dev.weblets.WebletResponse;
 
 abstract public class WebletResponseBase implements WebletResponse
