@@ -16,7 +16,8 @@
 package com.apress.projsf.weblets.faces;
 
 import java.io.IOException;
-
+import java.io.InputStream;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
@@ -41,22 +42,13 @@ import net.java.dev.weblets.WebletResponse;
 import com.apress.projsf.weblets.WebletContainerImpl;
 import com.apress.projsf.weblets.servlets.WebletResponseImpl;
 
+import javax.faces.webapp.FacesServlet;
+
+import org.apache.commons.digester.Digester;
+import org.xml.sax.SAXException;
+
 public class WebletsPhaseListener implements PhaseListener
 {
-  public WebletsPhaseListener()
-  {
-    // TODO: determine FacesServlet mapping, assumes /faces/*
-    String facesPattern = "/faces/*"; // "/*.jsf";
-    // TODO: determine Faces Weblets ViewIds, assumes /weblets/*
-    String webletsViewIds = "/weblets/*";
-    String formatPattern = facesPattern.replaceFirst("/\\*", webletsViewIds)
-                                       .replaceFirst("/\\*", "{0}");
-    MessageFormat format = new MessageFormat(formatPattern);
-    _webletContainer = new WebletContainerImpl(format);
-    //_webletsPattern = Pattern.compile("/weblets(/.*)\\.jsf");
-    _webletsPattern = Pattern.compile("/faces/weblets(/.*)");
-  }
-
   public void afterPhase(
     PhaseEvent event)
   {
@@ -66,6 +58,9 @@ public class WebletsPhaseListener implements PhaseListener
     PhaseEvent event)
   {
     FacesContext context = FacesContext.getCurrentInstance();
+
+    _initializeLazily(context);
+
     ExternalContext external = context.getExternalContext();
     String pathInfo = external.getRequestServletPath();
     if (external.getRequestPathInfo() != null)
@@ -119,11 +114,107 @@ public class WebletsPhaseListener implements PhaseListener
       }
     }
   }
-
+  
   public PhaseId getPhaseId()
   {
     return PhaseId.RESTORE_VIEW;
   }
+  
+  private void _initializeLazily(
+    FacesContext context)
+  {
+    if (!_initialized)
+    {
+      _initialize(context);
+      _initialized = true;
+    }
+  }
+  
+  private void _initialize(
+    FacesContext context)
+  {
+    try
+    {
+      ExternalContext external = context.getExternalContext();
+      URL webXml = external.getResource("/WEB-INF/web.xml");
+
+      String facesPattern = "/faces/*";
+
+      if (webXml != null)
+      {
+        InputStream in = webXml.openStream();
+        try
+        {
+          WebXmlParser parser = new WebXmlParser();
+          Digester digester = new Digester();
+          digester.setValidating(false);
+          digester.push(parser);
+          digester.addCallMethod("web-app/servlet",
+                                 "addServlet", 2);
+          digester.addCallParam("web-app/servlet/servlet-name", 0);
+          digester.addCallParam("web-app/servlet/servlet-class", 1);
+          digester.addCallMethod("web-app/servlet-mapping",
+                                 "addServletMapping", 2);
+          digester.addCallParam("web-app/servlet-mapping/servlet-name", 0);
+          digester.addCallParam("web-app/servlet-mapping/url-pattern", 1);
+          digester.parse(in);
+          
+          facesPattern = parser.getFacesPattern();
+        }
+        catch (SAXException e)
+        {
+          throw new FacesException(e);
+        }
+        finally
+        {
+          in.close();
+        }
+      }
+      
+      // TODO: determine Faces Weblets ViewIds, assumes /weblets/*
+      String webletsViewIds = "/weblets/*";
+      String formatPattern = facesPattern.replaceFirst("/\\*", webletsViewIds)
+                                         .replaceFirst("/\\*", "{0}");
+      MessageFormat format = new MessageFormat(formatPattern);
+      _webletContainer = new WebletContainerImpl(format);
+      String webletsPattern = facesPattern.replace(".", "\\.")
+                                          .replace("*", "weblets(/.*)");
+      _webletsPattern = Pattern.compile(webletsPattern);
+    }
+    catch (IOException e)
+    {
+      throw new FacesException(e);
+    }
+  }
+
+  static public class WebXmlParser
+  {
+    public void addServlet(
+      String servletName,
+      String servletClass)
+    {
+      if (FacesServlet.class.getName().equals(servletClass))
+        _facesServletName = servletName;
+    }
+
+    public void addServletMapping(
+      String servletName,
+      String urlPattern)
+    {
+      if (servletName.equals(_facesServletName))
+        _facesPattern = urlPattern;
+    }
+    
+    public String getFacesPattern()
+    {
+      return _facesPattern;
+    }
+
+    private String _facesServletName;
+    private String _facesPattern;
+  }
+
+  private boolean _initialized;
 
   private WebletContainerImpl _webletContainer;
   private Pattern _webletsPattern;
