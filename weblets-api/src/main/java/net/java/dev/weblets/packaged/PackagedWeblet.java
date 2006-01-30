@@ -105,22 +105,22 @@ public class PackagedWeblet extends Weblet
 
                   WebletContainer container = WebletContainer.getInstance();
                   String webletURL = container.getWebletURL(webletName, pathInfo);
-                  writer.append(preamble);
-                  writer.append(request.getContextPath());
-                  writer.append(webletURL);
-                  writer.append(postamble);
-                  writer.append('\n');
+                  writer.write(preamble);
+                  writer.write(request.getContextPath());
+                  writer.write(webletURL);
+                  writer.write(postamble);
+                  writer.write('\n');
                 }
                 else
                 {
-                  writer.append(line);
-                  writer.append('\n');
+                  writer.write(line);
+                  writer.write('\n');
                 }
               }
               else
               {
-                writer.append(line);
-                writer.append('\n');
+                writer.write(line);
+                writer.write('\n');
               }
             }
           }

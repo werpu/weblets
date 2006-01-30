@@ -73,9 +73,9 @@ public class WebletsPhaseListener implements PhaseListener
       String contextPath = external.getRequestContextPath();
       String requestURI = matcher.group(1);
       String ifModifiedHeader = (String)requestHeaders.get("If-Modified-Since");
-      
+
       long ifModifiedSince = -1L;
-      
+
       if (ifModifiedHeader != null)
       {
         try
@@ -114,12 +114,12 @@ public class WebletsPhaseListener implements PhaseListener
       }
     }
   }
-  
+
   public PhaseId getPhaseId()
   {
     return PhaseId.RESTORE_VIEW;
   }
-  
+
   private void _initializeLazily(
     FacesContext context)
   {
@@ -129,7 +129,7 @@ public class WebletsPhaseListener implements PhaseListener
       _initialized = true;
     }
   }
-  
+
   private void _initialize(
     FacesContext context)
   {
@@ -158,7 +158,7 @@ public class WebletsPhaseListener implements PhaseListener
           digester.addCallParam("web-app/servlet-mapping/servlet-name", 0);
           digester.addCallParam("web-app/servlet-mapping/url-pattern", 1);
           digester.parse(in);
-          
+
           facesPattern = parser.getFacesPattern();
         }
         catch (SAXException e)
@@ -170,15 +170,23 @@ public class WebletsPhaseListener implements PhaseListener
           in.close();
         }
       }
-      
+
       // TODO: determine Faces Weblets ViewIds, assumes /weblets/*
       String webletsViewIds = "/weblets/*";
+
+      // auto-prepend leading slash in case it is missing from web.xml entry
+      if(!facesPattern.startsWith("/"))
+      {
+        facesPattern = "/" + facesPattern;
+      }
+
       String formatPattern = facesPattern.replaceFirst("/\\*", webletsViewIds)
                                          .replaceFirst("/\\*", "{0}");
+
       MessageFormat format = new MessageFormat(formatPattern);
       _webletContainer = new WebletContainerImpl(format);
-      String webletsPattern = facesPattern.replace(".", "\\.")
-                                          .replace("*", "weblets(/.*)");
+      String webletsPattern = facesPattern.replaceAll("\\.", "\\\\.")
+                                          .replaceAll("\\*", "weblets(/.*)");
       _webletsPattern = Pattern.compile(webletsPattern);
     }
     catch (IOException e)
@@ -204,7 +212,7 @@ public class WebletsPhaseListener implements PhaseListener
       if (servletName.equals(_facesServletName))
         _facesPattern = urlPattern;
     }
-    
+
     public String getFacesPattern()
     {
       return _facesPattern;
