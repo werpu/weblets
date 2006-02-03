@@ -44,4 +44,9 @@ public class HttpDateFormat extends SimpleDateFormat
     // match the pattern exactly, or fail to parse
     setLenient(false);
   }
+  
+  /**
+   * The serialization version. 
+   */
+  private static final long serialVersionUID = 1L;
 }

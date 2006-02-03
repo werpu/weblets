@@ -112,4 +112,9 @@ public class WebletsServletImpl extends HttpServlet
   }
 
   private WebletContainerImpl _webletContainer;
+  
+  /**
+   * The serialization version. 
+   */
+  private static final long serialVersionUID = 1L;
 }

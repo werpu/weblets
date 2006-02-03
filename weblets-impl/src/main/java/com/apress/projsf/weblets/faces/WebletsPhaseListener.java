@@ -226,4 +226,9 @@ public class WebletsPhaseListener implements PhaseListener
 
   private WebletContainerImpl _webletContainer;
   private Pattern _webletsPattern;
+
+  /**
+   * The serialization version. 
+   */
+  private static final long serialVersionUID = -8385571916376473831L;
 }

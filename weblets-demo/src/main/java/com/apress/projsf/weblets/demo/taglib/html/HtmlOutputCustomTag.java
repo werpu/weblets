@@ -1,7 +1,6 @@
 package com.apress.projsf.weblets.demo.taglib.html;
 
 import javax.faces.component.UIComponent;
-import javax.faces.event.ValueChangeEvent;
 
 import com.apress.projsf.weblets.demo.component.html.HtmlOutputCustom;
 import com.apress.projsf.weblets.demo.taglib.UIComponentTagSupport;

@@ -1,11 +1,6 @@
 package com.apress.projsf.weblets.demo.component.html;
 
-import javax.faces.component.UIComponentBase;
-import javax.faces.component.UIInput;
 import javax.faces.component.UIOutput;
-import javax.faces.context.FacesContext;
-import javax.faces.el.MethodBinding;
-import javax.faces.el.ValueBinding;
 
 /**
  * The HtmlOutputCustom component.

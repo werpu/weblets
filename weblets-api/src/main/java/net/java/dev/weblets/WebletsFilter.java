@@ -103,7 +103,7 @@ public class WebletsFilter implements Filter
     try
     {
       ClassLoader loader = Thread.currentThread().getContextClassLoader();
-      String resource = "/META-INF/services/" + WebletsFilter.class.getName();
+      String resource = "META-INF/services/" + WebletsFilter.class.getName();
       InputStream in = loader.getResourceAsStream(resource);
       BufferedReader reader = new BufferedReader(new InputStreamReader(in));
       String serviceClassName = reader.readLine();

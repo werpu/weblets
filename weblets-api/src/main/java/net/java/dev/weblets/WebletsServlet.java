@@ -118,7 +118,7 @@ public class WebletsServlet implements Servlet
     try
     {
       ClassLoader loader = Thread.currentThread().getContextClassLoader();
-      String resource = "/META-INF/services/" + WebletsServlet.class.getName();
+      String resource = "META-INF/services/" + WebletsServlet.class.getName();
       InputStream in = loader.getResourceAsStream(resource);
       BufferedReader reader = new BufferedReader(new InputStreamReader(in));
       String serviceClassName = reader.readLine();

@@ -41,4 +41,8 @@ public class WebletException extends RuntimeException
     super(cause);
   }
 
+  /**
+   * The serialization version. 
+   */
+  private static final long serialVersionUID = 1L;
 }
