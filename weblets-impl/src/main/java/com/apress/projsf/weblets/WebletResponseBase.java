@@ -39,7 +39,7 @@ abstract public class WebletResponseBase implements WebletResponse
   public final void setContentType(
     String contentType)
   {
-    if (contentType == null)
+    if (contentType == null || "content/unknown".equals(contentType))
       contentType = _contentTypeDefault;
     setContentTypeImpl(contentType);
   }
