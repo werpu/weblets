@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -63,20 +64,18 @@ public class PackagedWeblet extends Weblet
       URLConnection conn = url.openConnection();
       response.setLastModified(conn.getLastModified());
       response.setContentType(conn.getContentType());
-      response.setContentLength(conn.getContentLength());
       response.setContentVersion(getWebletConfig().getWebletVersion());
 
       if (request.getIfModifiedSince() < conn.getLastModified())
       {
-        InputStream in = conn.getInputStream();
-        OutputStream out = response.getOutputStream();
-
         String contentType = response.getDefaultContentType();
         if (contentType.startsWith("text/") ||
             contentType.endsWith("xml"))
         {
+          InputStream in = conn.getInputStream();
+	      OutputStream out = response.getOutputStream();
           BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-          BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+          PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(out)));
 
           try
           {
@@ -109,18 +108,18 @@ public class PackagedWeblet extends Weblet
                   writer.write(request.getContextPath());
                   writer.write(webletURL);
                   writer.write(postamble);
-                  writer.write('\n');
+                  writer.println();
                 }
                 else
                 {
                   writer.write(line);
-                  writer.write('\n');
+                  writer.println();
                 }
               }
               else
               {
                 writer.write(line);
-                writer.write('\n');
+                writer.println();
               }
             }
           }
@@ -132,6 +131,11 @@ public class PackagedWeblet extends Weblet
         }
         else
         {
+          // only set Content-Length in advance for passthrough content.
+          response.setContentLength(conn.getContentLength());
+          InputStream in = conn.getInputStream();
+	      OutputStream out = response.getOutputStream();
+
           // binary passthrough
           try
           {
