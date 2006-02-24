@@ -20,8 +20,9 @@ import java.io.OutputStream;
 
 public interface WebletResponse
 {
-  static public final int SC_ACCEPTED  = 0;
-  static public final int SC_NOT_FOUND = 1;
+  static public final int SC_ACCEPTED     = 0;
+  static public final int SC_NOT_FOUND    = 1;
+  static public final int SC_NOT_MODIFIED = 2;
 
   public void setDefaultContentType(String contentTypeDefault);
   public String getDefaultContentType();

@@ -62,12 +62,12 @@ public class PackagedWeblet extends Weblet
     if (url != null)
     {
       URLConnection conn = url.openConnection();
-      response.setLastModified(conn.getLastModified());
-      response.setContentType(conn.getContentType());
-      response.setContentVersion(getWebletConfig().getWebletVersion());
-
       if (request.getIfModifiedSince() < conn.getLastModified())
       {
+        response.setLastModified(conn.getLastModified());
+        response.setContentType(conn.getContentType());
+        response.setContentVersion(getWebletConfig().getWebletVersion());
+
         String contentType = response.getDefaultContentType();
         if (contentType.startsWith("text/") ||
             contentType.endsWith("xml"))
@@ -152,6 +152,10 @@ public class PackagedWeblet extends Weblet
             out.close();
           }
         }
+      }
+      else
+      {
+        response.setStatus(WebletResponse.SC_NOT_MODIFIED);
       }
     }
     else

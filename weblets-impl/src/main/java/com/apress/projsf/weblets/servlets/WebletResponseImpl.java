@@ -56,6 +56,8 @@ public class WebletResponseImpl extends WebletResponseBase
       case WebletResponse.SC_NOT_FOUND:
         _httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
         break;
+      case WebletResponse.SC_NOT_MODIFIED:
+        _httpResponse.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
       default:
         throw new IllegalArgumentException();
     }
