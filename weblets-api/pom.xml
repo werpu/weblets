@@ -5,7 +5,7 @@
   <parent>
     <groupId>net.java.dev.weblets</groupId>
     <artifactId>weblets</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.4-SNAPSHOT</version>
   </parent>
 
   <groupId>net.java.dev.weblets</groupId>
@@ -13,7 +13,7 @@
   <packaging>jar</packaging>
 
   <name>Weblets API</name>
-  <version>0.3-SNAPSHOT</version>
+  <version>0.4-SNAPSHOT</version>
   <description>Weblets API</description>
   <url>http://weblets.dev.java.net</url>
 
