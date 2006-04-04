@@ -40,6 +40,7 @@ import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
 
 import com.apress.projsf.weblets.WebletContainerImpl;
+import com.apress.projsf.weblets.parse.DisconnectedEntityResolver;
 import com.apress.projsf.weblets.servlets.WebletResponseImpl;
 
 import javax.faces.webapp.FacesServlet;
@@ -148,6 +149,7 @@ public class WebletsPhaseListener implements PhaseListener
           WebXmlParser parser = new WebXmlParser();
           Digester digester = new Digester();
           digester.setValidating(false);
+          digester.setEntityResolver(DisconnectedEntityResolver.sharedInstance());
           digester.push(parser);
           digester.addCallMethod("web-app/servlet",
                                  "addServlet", 2);

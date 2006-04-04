@@ -40,6 +40,8 @@ import org.apache.commons.digester.Digester;
 
 import org.xml.sax.SAXException;
 
+import com.apress.projsf.weblets.parse.DisconnectedEntityResolver;
+
 public class WebletContainerImpl extends WebletContainer
 {
   public WebletContainerImpl() throws WebletException
@@ -192,6 +194,7 @@ public class WebletContainerImpl extends WebletContainer
       {
         Digester digester = new Digester();
         digester.setValidating(false);
+        digester.setEntityResolver(DisconnectedEntityResolver.sharedInstance());
         digester.push(this);
         digester.addObjectCreate("weblets-config/weblet", WebletConfigImpl.class);
         digester.addSetNext("weblets-config/weblet", "addWeblet", WebletConfigImpl.class.getName());
