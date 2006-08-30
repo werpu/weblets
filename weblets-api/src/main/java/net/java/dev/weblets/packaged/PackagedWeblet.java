@@ -44,10 +44,14 @@ public class PackagedWeblet extends Weblet
   {
     super.init(config);
     String packageName = config.getInitParameter("package");
-    if (packageName == null)
-      throw new WebletException("Missing init parameter \"package\" for " +
+    String resourceRoot = config.getInitParameter("resourceRoot");
+
+    if (packageName == null && resourceRoot == null)
+      throw new WebletException("Missing either init parameter \"package\" or " + 
+                                " or init parameter \"resourceRoot\" for " +
                                 " Weblet \"" + config.getWebletName() + "\"");
-    _resourceRoot  = packageName.replace('.', '/');
+    _resourceRoot  = (packageName != null) ? packageName.replace('.', '/') 
+                                           : resourceRoot;
   }
 
   public void service(
@@ -70,10 +74,11 @@ public class PackagedWeblet extends Weblet
       {
         String contentType = response.getDefaultContentType();
         if (contentType.startsWith("text/") ||
-            contentType.endsWith("xml"))
+            contentType.endsWith("xml") ||
+            contentType.equals("application/x-javascript"))
         {
           InputStream in = conn.getInputStream();
-	      OutputStream out = response.getOutputStream();
+          OutputStream out = response.getOutputStream();
           BufferedReader reader = new BufferedReader(new InputStreamReader(in));
           PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(out)));
 
@@ -173,5 +178,5 @@ public class PackagedWeblet extends Weblet
   private String _resourceRoot;
 
   private static final Pattern _WEBLET_PROTOCOL =
-                          Pattern.compile("weblet:/(?:/([^/]+)/)?([^\"\\']+)(.*)");
+                          Pattern.compile("weblet:/(?:/([^/]+)/)?([^\"\\']*)(.*)");
 }
