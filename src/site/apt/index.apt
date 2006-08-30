@@ -21,11 +21,15 @@
 
   John Fallows and Jonas Jacobi
 
-  {{{http://java.sys-con.com/read/159161.htm}JDJ article: Loading Resources With Weblets}}
-
-  {{{doc/introduction.html}Site documentation: Loading Resources With Weblets}}
-   
-
 Mission
 
   Weblets will make resource file management and versioning as easy for Web development as it already is today for desktop-based Java development.
+
+Documentation and Articles
+  
+  {{{doc/introduction.html}Site documentation: Loading Resources With Weblets}}
+
+  {{{http://java.sys-con.com/read/159161.htm}JDJ article: Loading Resources With Weblets}}
+
+  {{{http://javamagazin.de/itr/ausgaben/psecom,id,319,nodeid,20.html}JavaMagazine (German): Weblets}}
+   
