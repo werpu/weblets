@@ -35,7 +35,7 @@ import javax.servlet.ServletResponse;
  * Service Provider configuration file is used to lookup the implementation
  * class for this Filter, as defined by the JAR file specification.
  */
-public class WebletsFilter implements Filter
+public final class WebletsFilter implements Filter
 {
   /**
    * Initializes this Filter.

@@ -16,10 +16,6 @@
 package com.apress.projsf.weblets.servlets;
 
 import java.io.IOException;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.MessageFormat;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -35,6 +31,7 @@ import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
 
 import com.apress.projsf.weblets.WebletContainerImpl;
+import net.java.dev.weblets.WebletContainer;
 
 public class WebletsFilterImpl implements Filter
 {
@@ -42,7 +39,8 @@ public class WebletsFilterImpl implements Filter
     FilterConfig config) throws ServletException
   {
     _servletContext = config.getServletContext();
-    _webletContainer = createWebletContainer(config.getServletContext());
+    //_webletContainer = (WebletContainerImpl)config.getServletContext().getAttribute(WebletsContextListenerImpl.WEBLET_CONTAINER_KEY);
+    _webletContainer = (WebletContainerImpl)WebletContainer.getInstance();
   }
 
   public void destroy()
@@ -66,11 +64,17 @@ public class WebletsFilterImpl implements Filter
 
       try
       {
-        webRequest = _webletContainer.getWebletRequest(contextPath,
-                                                       requestURI,
-                                                       ifModifiedSince);
-        if (webRequest != null)
+        String[] parsed =
+          _webletContainer.parseWebletRequest(contextPath, requestURI, ifModifiedSince);
+
+        if (parsed != null)
         {
+          String webletName = parsed[0];
+          String webletPath = parsed[1];
+          String webletPathInfo = parsed[2];
+          webRequest = 
+            new WebletRequestImpl(webletName, webletPath, contextPath, webletPathInfo, 
+                                  ifModifiedSince, httpRequest);
           HttpServletResponse httpResponse = (HttpServletResponse)response;
           httpRequest.setCharacterEncoding("UTF-8");
           String contentName = webRequest.getPathInfo();
@@ -88,27 +92,6 @@ public class WebletsFilterImpl implements Filter
 
     if (webRequest == null)
       chain.doFilter(request, response);
-  }
-
-  private WebletContainerImpl createWebletContainer(
-    ServletContext context)
-  {
-    // TODO: determine WebletsFilter mapping, assumes /*
-    String webletsPattern = "/*";
-    String formatPattern = webletsPattern.replaceFirst("/\\*", "{0}");
-    MessageFormat format = new MessageFormat(formatPattern);
-    WebletContainerImpl webletContainer = new WebletContainerImpl(format);
-    try
-    {
-      URL resource = context.getResource("/WEB-INF/weblets-config.xml");
-      if (resource != null)
-        webletContainer.registerConfig(resource);
-    }
-    catch (MalformedURLException e)
-    {
-      context.log("Unabled to register /WEB-INF/weblets-config.xml", e);
-    }
-    return webletContainer;
   }
 
   private String getCanonicalPath(

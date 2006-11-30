@@ -19,8 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
-
-import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,18 +39,19 @@ import org.apache.commons.digester.Digester;
 import org.xml.sax.SAXException;
 
 import com.apress.projsf.weblets.parse.DisconnectedEntityResolver;
+import java.text.Format;
+import javax.servlet.ServletContext;
 
 public class WebletContainerImpl extends WebletContainer
 {
-  public WebletContainerImpl() throws WebletException
-  {
-    this(null);
-  }
-
   public WebletContainerImpl(
-    MessageFormat webletURLFormat) throws WebletException
+    ServletContext servletContext,
+    Format   webletURLFormat,
+    Pattern  webletURLPattern) throws WebletException
   {
+    _servletContext = servletContext;
     _webletURLFormat = webletURLFormat;
+    _webletURLPattern = webletURLPattern;
     try
     {
       ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -71,6 +70,10 @@ public class WebletContainerImpl extends WebletContainer
     }
   }
 
+  public ServletContext getServletContext() {
+      return _servletContext;
+  }
+  
   public void destroy()
   {
     Iterator i = _weblets.values().iterator();
@@ -84,7 +87,11 @@ public class WebletContainerImpl extends WebletContainer
     _webletMappings = null;
   }
 
-  public WebletRequest getWebletRequest(
+  public Pattern getPattern() {
+      return _webletURLPattern;
+  }
+  
+  public String[] parseWebletRequest(
     String contextPath,
     String requestURI,
     long   ifModifiedSince)
@@ -100,9 +107,7 @@ public class WebletContainerImpl extends WebletContainer
         String webletPath = matcher.group(1);
         String pathInfo = matcher.group(2);
         String webletName = (String)entry.getKey();
-        return new WebletRequestImpl(webletName, webletPath,
-                                     contextPath, pathInfo,
-                                     ifModifiedSince);
+        return new String[] {webletName, webletPath, pathInfo};
       }
     }
 
@@ -274,7 +279,9 @@ public class WebletContainerImpl extends WebletContainer
     }
   }
 
-  private MessageFormat _webletURLFormat;
+  private Format _webletURLFormat;
+  private Pattern _webletURLPattern;
+  private ServletContext _servletContext;
   private Map _weblets = new HashMap();
   private Map _webletPaths = new HashMap();
   private Map _webletConfigs = new HashMap();

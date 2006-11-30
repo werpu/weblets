@@ -15,10 +15,14 @@
  */
 package com.apress.projsf.weblets.faces;
 
+import com.apress.projsf.weblets.WebletContainerImpl;
+import com.apress.projsf.weblets.WebletsContextListenerImpl;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.faces.application.ViewHandler;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import net.java.dev.weblets.WebletContainer;
@@ -41,7 +45,11 @@ public class WebletsViewHandler extends ViewHandlerWrapper
       String webletName = matcher.group(1);
       String pathInfo   = matcher.group(2);
 
-      WebletContainer container = getWebletContainer();
+      ExternalContext external = context.getExternalContext();
+      Map applicationScope = external.getApplicationMap();
+      //WebletContainerImpl container = (WebletContainerImpl)applicationScope.get(WebletsContextListenerImpl.WEBLET_CONTAINER_KEY);
+      WebletContainerImpl container = (WebletContainerImpl)WebletContainer.getInstance();
+      
       path = container.getWebletURL(webletName, pathInfo);
     }
 

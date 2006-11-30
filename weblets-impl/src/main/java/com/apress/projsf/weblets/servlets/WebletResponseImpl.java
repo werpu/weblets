@@ -64,6 +64,10 @@ public class WebletResponseImpl extends WebletResponseBase
     }
   }
 
+  public HttpServletResponse getHttpResponse() {
+      return _httpResponse;
+  }
+  
   protected void setContentTypeImpl(
     String contentType)
   {

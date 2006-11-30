@@ -15,11 +15,12 @@
  */
 package com.apress.projsf.weblets;
 
+import java.util.Map;
 import net.java.dev.weblets.WebletRequest;
 
-public class WebletRequestImpl implements WebletRequest
+public class WebletRequestBase implements WebletRequest
 {
-  public WebletRequestImpl(
+  public WebletRequestBase(
     String webletName,
     String webletPath,
     String contextPath,
@@ -56,6 +57,11 @@ public class WebletRequestImpl implements WebletRequest
   public long getIfModifiedSince()
   {
     return _ifModifiedSince;
+  }
+  
+  public String getParameter(String name)
+  {
+      return null;
   }
 
   private final String _webletName;

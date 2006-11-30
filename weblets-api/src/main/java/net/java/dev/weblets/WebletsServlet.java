@@ -33,7 +33,7 @@ import javax.servlet.ServletResponse;
  * Service Provider configuration file is used to lookup the implementation
  * class for this Servlet, as defined by the JAR file specification.
  */
-public class WebletsServlet implements Servlet
+public final class WebletsServlet implements Servlet
 {
   /**
    * Initializes this Servlet.

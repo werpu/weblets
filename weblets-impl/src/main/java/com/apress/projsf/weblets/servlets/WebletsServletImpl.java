@@ -17,10 +17,6 @@ package com.apress.projsf.weblets.servlets;
 
 import java.io.IOException;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.MessageFormat;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -33,6 +29,7 @@ import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
 
 import com.apress.projsf.weblets.WebletContainerImpl;
+import net.java.dev.weblets.WebletContainer;
 
 public class WebletsServletImpl extends HttpServlet
 {
@@ -40,7 +37,8 @@ public class WebletsServletImpl extends HttpServlet
     ServletConfig config) throws ServletException
   {
     super.init(config);
-    _webletContainer = createWebletContainer(getServletContext());
+//    _webletContainer = (WebletContainerImpl)getServletContext().getAttribute(WebletsContextListenerImpl.WEBLET_CONTAINER_KEY);
+    _webletContainer = (WebletContainerImpl)WebletContainer.getInstance();
   }
 
   public void destroy()
@@ -58,14 +56,20 @@ public class WebletsServletImpl extends HttpServlet
 
     try
     {
-      WebletRequest webRequest =
-        _webletContainer.getWebletRequest(contextPath, requestURI, ifModifiedSince);
+      String[] parsed =
+        _webletContainer.parseWebletRequest(contextPath, requestURI, ifModifiedSince);
 
-      if (webRequest != null)
+      if (parsed != null)
       {
+        String webletName = parsed[0];
+        String webletPath = parsed[1];
+        String webletPathInfo = parsed[2];
+        WebletRequest webRequest = 
+          new WebletRequestImpl(webletName, webletPath, contextPath, webletPathInfo, 
+                                ifModifiedSince, httpRequest);
         ServletContext servletContext = getServletContext();
         String contentName = webRequest.getPathInfo();
-        String contentTypeDefault = servletContext.getMimeType(contentName);
+        String contentTypeDefault = getServletContext().getMimeType(contentName);
         WebletResponse webResponse =
           new WebletResponseImpl(contentTypeDefault, httpResponse);
         _webletContainer.service(webRequest, webResponse);
@@ -75,27 +79,6 @@ public class WebletsServletImpl extends HttpServlet
     {
       throw new ServletException(e);
     }
-  }
-
-  private WebletContainerImpl createWebletContainer(
-    ServletContext context)
-  {
-    // TODO: determine WebletsServlet mapping, assumes /weblets/*
-    String webletsPattern = "/weblets/*";
-    String formatPattern = webletsPattern.replaceFirst("/\\*", "{0}");
-    MessageFormat format = new MessageFormat(formatPattern);
-    WebletContainerImpl webletContainer = new WebletContainerImpl(format);
-    try
-    {
-      URL resource = context.getResource("/WEB-INF/weblets-config.xml");
-      if (resource != null)
-        webletContainer.registerConfig(resource);
-    }
-    catch (MalformedURLException e)
-    {
-      context.log("Unabled to register /WEB-INF/weblets-config.xml", e);
-    }
-    return webletContainer;
   }
 
   private String getCanonicalPath(
