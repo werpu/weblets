@@ -80,6 +80,6 @@ public class WebletsViewHandler extends ViewHandlerWrapper
   private WebletContainer _container;
 
   private static final Pattern WEBLET_PROTOCOL =
-                          Pattern.compile("weblet://([^/]+)(/.+)");
+                          Pattern.compile("weblet://([^/]+)(/.*)?");
 }
 

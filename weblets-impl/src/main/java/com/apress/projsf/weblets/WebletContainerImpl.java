@@ -180,7 +180,10 @@ public class WebletContainerImpl extends WebletContainer
       buffer.append('$');
       buffer.append(webletVersion);
     }
-    buffer.append(pathInfo);
+    if (pathInfo != null)
+    {
+        buffer.append(pathInfo);
+    }
     String webletURL = buffer.toString();
 
     if (_webletURLFormat != null)
@@ -268,7 +271,7 @@ public class WebletContainerImpl extends WebletContainer
         buffer.append(webletVersion);
         buffer.append("\\E");
       }
-      buffer.append("(/.*)");;
+      buffer.append("(/.*)?");;
 
       _webletMappings.put(webletName, Pattern.compile(buffer.toString()));
       _webletPaths.put(webletName, webletPath);
