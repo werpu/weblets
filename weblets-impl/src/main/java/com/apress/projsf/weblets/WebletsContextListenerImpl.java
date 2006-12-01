@@ -46,6 +46,8 @@ public class WebletsContextListenerImpl implements ServletContextListener {
     public void contextDestroyed(
         ServletContextEvent event) 
     {
+        WebletContainerImpl container = (WebletContainerImpl)WebletContainer.getInstance();
+        container.destroy();
     }
 
     private WebletContainer createContainer(ServletContext context) {
