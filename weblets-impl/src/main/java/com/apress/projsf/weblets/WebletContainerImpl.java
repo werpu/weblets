@@ -151,8 +151,11 @@ public class WebletContainerImpl extends WebletContainer
     {
       String pathInfo = request.getPathInfo();
       WebletConfig webConfig = weblet.getWebletConfig();
-      String mimeType = webConfig.getMimeType(pathInfo);
-      response.setDefaultContentType(mimeType);
+      if (pathInfo != null)
+      {
+          String mimeType = webConfig.getMimeType(pathInfo);
+          response.setDefaultContentType(mimeType);
+      }
     }
 
     weblet.service(request, response);

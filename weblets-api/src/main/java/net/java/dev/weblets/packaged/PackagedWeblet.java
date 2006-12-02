@@ -90,7 +90,7 @@ public class PackagedWeblet extends Weblet
 
               // TODO: tidy up pattern matching, use leading single/double quote
               // TODO: conditional filtering
-              int startAt = line.indexOf("weblet:/");
+              int startAt = line.indexOf("weblet:");
               if (startAt != -1)
               {
                 String protocol = line.substring(startAt);
@@ -99,8 +99,7 @@ public class PackagedWeblet extends Weblet
                 {
                   String preamble   = line.substring(0, startAt);
                   String webletName = matcher.group(1);
-                  // TODO: fixup pattern definition
-                  String pathInfo   = "/" + matcher.group(2);
+                  String pathInfo   = matcher.group(2);
                   String postamble  = matcher.group(3);
 
                   // default relative weblet:/resource.ext to this weblet
@@ -178,5 +177,5 @@ public class PackagedWeblet extends Weblet
   private String _resourceRoot;
 
   private static final Pattern _WEBLET_PROTOCOL =
-                          Pattern.compile("weblet:/(?:/([^/]+)/)?([^\"\\']*)(.*)");
+                          Pattern.compile("weblet:(?://([^\"\\'/]+))?(/[^/]{1}[^\"\\']*)?(.*)");
 }
