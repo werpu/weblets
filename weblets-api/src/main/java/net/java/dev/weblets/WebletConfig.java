@@ -19,6 +19,8 @@ import java.util.Iterator;
 
 public interface WebletConfig
 {
+  public WebletContainer getWebletContainer();
+  
   public String   getWebletName();
   public String   getWebletVersion();
   public String   getInitParameter(String paramName);

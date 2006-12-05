@@ -20,9 +20,18 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.java.dev.weblets.WebletConfig;
+import net.java.dev.weblets.WebletContainer;
 
 public class WebletConfigImpl implements WebletConfig
 {
+  public WebletConfigImpl(WebletContainerImpl container) {
+      _container = container;
+  }
+  
+  public WebletContainer getWebletContainer() {
+      return _container;
+  }
+    
   public String getWebletName()
   {
     return _webletName;
@@ -87,6 +96,7 @@ public class WebletConfigImpl implements WebletConfig
     return null;
   }
 
+  private WebletContainerImpl _container;
   private String _webletName;
   private String _webletClass;
   private String _webletVersion;

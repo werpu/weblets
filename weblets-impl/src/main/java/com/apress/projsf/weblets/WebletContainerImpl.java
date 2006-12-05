@@ -35,11 +35,15 @@ import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
 
 import org.apache.commons.digester.Digester;
+import org.apache.commons.digester.ObjectCreationFactory;
+import org.xml.sax.Attributes;
 
 import org.xml.sax.SAXException;
 
 import com.apress.projsf.weblets.parse.DisconnectedEntityResolver;
 import java.text.Format;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.ServletContext;
 
 public class WebletContainerImpl extends WebletContainer
@@ -56,9 +60,18 @@ public class WebletContainerImpl extends WebletContainer
     {
       ClassLoader loader = Thread.currentThread().getContextClassLoader();
       Enumeration e = loader.getResources("META-INF/weblets-config.xml");
+
+      // Defensive: Glassfish.v2.b25 produces duplicates in Enumeration
+      //            returned by loader.getResources()
+      Set urls = new HashSet();
       while (e.hasMoreElements())
       {
-        URL resource = (URL)e.nextElement();
+          urls.add(e.nextElement());
+      }
+
+      for (Iterator i = urls.iterator(); i.hasNext();)
+      {
+        URL resource = (URL)i.next();
         registerConfig(resource);
       }
 
@@ -207,7 +220,7 @@ public class WebletContainerImpl extends WebletContainer
         digester.setValidating(false);
         digester.setEntityResolver(DisconnectedEntityResolver.sharedInstance());
         digester.push(this);
-        digester.addObjectCreate("weblets-config/weblet", WebletConfigImpl.class);
+        digester.addFactoryCreate("weblets-config/weblet", WEBLET_CONFIG_FACTORY);
         digester.addSetNext("weblets-config/weblet", "addWeblet", WebletConfigImpl.class.getName());
         digester.addCallMethod("weblets-config/weblet/weblet-name",
                                "setWebletName", 0);
@@ -293,6 +306,23 @@ public class WebletContainerImpl extends WebletContainer
   private Map _webletConfigs = new HashMap();
   private Map _webletMappings = new LinkedHashMap();
 
+  private ObjectCreationFactory WEBLET_CONFIG_FACTORY = new ObjectCreationFactory() {
+      
+        public Object createObject(Attributes attributes) throws Exception {
+            return new WebletConfigImpl(WebletContainerImpl.this);
+        }
+
+        public Digester getDigester() {
+            return digester;
+        }
+
+        public void setDigester(Digester digester) {
+            this.digester = digester;
+        }
+      
+        private Digester digester;
+  };
+  
   static private final Pattern _WEBLET_PATH_PATTERN =
                                     Pattern.compile("(/[^\\*]+)?/\\*");
 }
