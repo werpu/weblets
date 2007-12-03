@@ -9,22 +9,28 @@
 
 package com.apress.projsf.weblets;
 
-import com.apress.projsf.weblets.parse.DisconnectedEntityResolver;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.regex.Pattern;
+
 import javax.faces.FacesException;
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+
 import net.java.dev.weblets.WebletContainer;
 import net.java.dev.weblets.WebletsServlet;
+
 import org.apache.commons.digester.Digester;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.xml.sax.SAXException;
+
+import com.apress.projsf.weblets.parse.DisconnectedEntityResolver;
 
 /**
  *
@@ -75,6 +81,14 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                     digester.parse(in);
                     
                     facesPattern = parser.getFacesPattern();
+                    
+                    if(!isPathPattern(facesPattern) && parser.isJSFEnabled()) {
+                    	Log logger = LogFactory.getLog(this.getClass());
+                    	logger.warn("JSF Enabled Weblets but path pattern is missing, some relatively referenced resources might not load");
+                    } else if(!isPathPattern(parser.getWebletPattern()) && parser.isServletEnabled()) {
+                    	Log logger = LogFactory.getLog(this.getClass());
+                    	logger.warn("Servlet Enabled Weblets but path pattern is missing, some relatively referenced resources might not load");
+                    }
                 } catch (SAXException e) {
                     throw new FacesException(e);
                 } finally {
@@ -127,9 +141,19 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                 String servletName,
                 String urlPattern) {
             if (servletName.equals(_facesServletName))
+            	if(_facesPattern == null || _facesPattern.trim().equals("") || isPathPattern(urlPattern))
                 _facesPattern = urlPattern;
             if (servletName.equals(_webletServletName))
+            	if(_webletPattern == null || _webletPattern.trim().equals("") || isPathPattern(urlPattern))
                 _webletPattern = urlPattern;
+        }
+        
+        public boolean isServletEnabled() {
+        	return _webletServletName != null && !_webletServletName.trim().equals("");
+        }
+        
+        public boolean isJSFEnabled() {
+        	return _facesServletName != null && !_facesServletName.trim().equals("");
         }
         
         public String getFacesPattern() {
@@ -140,11 +164,18 @@ public class WebletsContextListenerImpl implements ServletContextListener {
             return _webletPattern;
         }
         
+        
+        
         private String _facesServletName;
         private String _facesPattern;
 
         private String _webletServletName;
         private String _webletPattern;
     }
+    
+    private static boolean isPathPattern(String in) {
+    	if(in == null) return false;
+		return in.trim().matches("^(.)*\\/.*\\/(\\*){0,1}$");
+	}
     
 }
