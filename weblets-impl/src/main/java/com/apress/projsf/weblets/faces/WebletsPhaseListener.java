@@ -42,35 +42,33 @@ import net.java.dev.weblets.WebletContainer;
 
 public class WebletsPhaseListener implements PhaseListener {
     
-    private static ThreadLocal reentry = 
-        new ThreadLocal()
-        {
-            protected Object initialValue() 
-            {
-                return Boolean.FALSE;
-            }
-        };
 
-    public void afterPhase(
+    private static final String WEBLETS_PHASE_LISTENER_ENTERED = 
+    	"com.apress.projsf.weblets.faces.WebletsPhaseListener.entered";
+
+	public void afterPhase(
             PhaseEvent event) {
     }
     
     public void beforePhase(
             PhaseEvent event) 
     {
-        Boolean isReentry = (Boolean)reentry.get();
+    	if(event.getPhaseId() != PhaseId.RESTORE_VIEW && 
+    			event.getPhaseId()!=PhaseId.RENDER_RESPONSE) {
+    		//try to execute the phase-listener logic only on restore-view
+    		//and (if restore-view is not called, e.g. in the portlet-case) on render-response
+    		return;
+    	}
+    	
+        Boolean isReentry = 
+        	(Boolean)event.getFacesContext().getExternalContext().getRequestMap().get(
+        			WEBLETS_PHASE_LISTENER_ENTERED);
 
-        try 
+        if (isReentry != Boolean.TRUE) 
         {
-            if (isReentry == Boolean.FALSE) 
-            {
-                reentry.set(Boolean.TRUE);
-                doBeforePhase(event);
-            }
-        }
-        finally
-        {
-            reentry.set(isReentry);
+            event.getFacesContext().getExternalContext().getRequestMap().put(
+            		WEBLETS_PHASE_LISTENER_ENTERED,Boolean.TRUE);
+            doBeforePhase(event);
         }
     }
 
@@ -136,7 +134,7 @@ public class WebletsPhaseListener implements PhaseListener {
     }
     
     public PhaseId getPhaseId() {
-        return PhaseId.RESTORE_VIEW;
+        return PhaseId.ANY_PHASE;
     }
     
     /**
