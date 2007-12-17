@@ -73,7 +73,21 @@
       <timezone>1</timezone>
       <properties/>
     </developer>  
-  </developers>
+
+    <developer>
+      <id>werpu12</id>
+      <name>Werner Punz</name>
+      <email/>
+      <url/>
+      <organization/>
+      <organizationUrl/>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>1</timezone>
+      <properties/>
+    </developer>  
+</developers>
 
   <licenses>
     <license>
@@ -105,6 +119,20 @@
           <template>java.net.vm</template>
         </configuration>
       </plugin>
+        <plugin>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>maven-jetty-plugin</artifactId>
+            <version>6.1.1</version>
+            <configuration>
+                <connectors>
+                    <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+                        <port>9090</port>
+                        <maxIdleTime>60000</maxIdleTime>
+                    </connector>
+                </connectors>
+                <scanIntervalSeconds>10</scanIntervalSeconds>
+            </configuration>
+        </plugin>
     </plugins>
   </build>
 </project>
