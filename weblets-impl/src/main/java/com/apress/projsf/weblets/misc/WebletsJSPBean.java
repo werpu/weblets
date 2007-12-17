@@ -22,7 +22,7 @@ public class WebletsJSPBean {
     public WebletsJSPBean() {
     }
 
-    public static String weblet(String path) {
+    public static String getResourceUrl(String path) {
         Matcher matcher = WEBLET_PROTOCOL.matcher(path);
         matcher.matches();
         String weblet = matcher.group(1);

@@ -38,7 +38,7 @@ public class JSFElWebletURL implements Map {
     public Object get(Object key) {
        if(!(key instanceof String))
             throw new UnsupportedOperationException("only String keys are allowed");
-       return WebletsJSPBean.weblet((String)key);      
+       return WebletsJSPBean.getResourceUrl((String)key);      
     }
 
     public Object put(Object key, Object value) {

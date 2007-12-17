@@ -15,7 +15,7 @@ Author     : werpu
     <jsp:element name="text">
         <jsp:attribute name="lang">EN</jsp:attribute>
         <jsp:body>Hello World!
-        ${wbl:url('weblet://com.apress.projsf.weblets.demo/welcome.js')}
+        ${wbl:resourceUrl('weblet://com.apress.projsf.weblets.demo/welcome.js')}
         </jsp:body>
     </jsp:element>
     

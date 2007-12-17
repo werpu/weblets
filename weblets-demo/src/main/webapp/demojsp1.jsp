@@ -15,6 +15,6 @@
     </head>
     <body>
         <h2>Hello World!</h2>
-        <%= jspwblUrl.weblet("weblet://com.apress.projsf.weblets.demo/welcome.js") %>
+        <%= jspwblUrl.getResourceUrl("weblet://com.apress.projsf.weblets.demo/welcome.js") %>
     </body>
 </html>

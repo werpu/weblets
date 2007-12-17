@@ -8,7 +8,7 @@
     <view-handler>com.apress.projsf.weblets.faces.WebletsViewHandler</view-handler>
   </application>
   <managed-bean>
-       <managed-bean-name>jsfwblUrl</managed-bean-name>    
+       <managed-bean-name>wbl_resourceUrl</managed-bean-name>    
        <managed-bean-class>com.apress.projsf.weblets.faces.JSFElWebletURL</managed-bean-class>
        <managed-bean-scope>application</managed-bean-scope>
    </managed-bean>    

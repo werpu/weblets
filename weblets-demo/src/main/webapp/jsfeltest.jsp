@@ -12,7 +12,7 @@
  </head>
  <body>
    <f:view>
-      <h:outputText value="#{jsfwblUrl['weblet://com.apress.projsf.weblets.demo/welcome.js']}" />
+      <h:outputText value="#{wbl_resourceUrl['weblet://com.apress.projsf.weblets.demo/welcome.js']}" />
    </f:view>
  </body>
 </html> 
