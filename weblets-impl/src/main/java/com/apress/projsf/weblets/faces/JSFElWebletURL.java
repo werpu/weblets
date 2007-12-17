@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * Peuso map for accessing the weblet url format
  * from legacy jsf applications via elwelbetResolver
- * <h:outputFormat value="#{webletUrl['weblet://demo/test.js']}" />
+ * <h:outputFormat value="#{wbl_resourceUrl['weblet://demo/test.js']}" />
  * 
  * @author Werner Punz
  */
@@ -35,6 +35,14 @@ public class JSFElWebletURL implements Map {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * Get method, this is the only method
+     * implemented it triggers
+     * a weblet url resolution from an el based access
+     * 
+     * @param key the weblet:// url
+     * @return
+     */
     public Object get(Object key) {
        if(!(key instanceof String))
             throw new UnsupportedOperationException("only String keys are allowed");

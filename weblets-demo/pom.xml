@@ -17,7 +17,7 @@
     <description>Weblets Demo</description>
     <url>http://weblets.dev.java.net</url>
     
-  
+    
     
     <dependencies>
         <dependency>
@@ -51,10 +51,6 @@
             <scope>provided</scope>
         </dependency>
         
-        
-        
-        
     </dependencies>
     
- 
 </project>
