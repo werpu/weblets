@@ -16,5 +16,9 @@
     <body>
         <h2>Hello World!</h2>
         <%= jspwblUrl.getResourceUrl("weblet://com.apress.projsf.weblets.demo/welcome.js") %>
-    </body>
+        <br /> second way <br />
+        <%= jspwblUrl.getResourceUrl("com.apress.projsf.weblets.demo","/welcome.js") %>
+ 
+        
+   </body>
 </html>

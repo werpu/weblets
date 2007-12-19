@@ -14,8 +14,12 @@ Author     : werpu
     <!-- any content can be specified here, e.g.: -->
     <jsp:element name="text">
         <jsp:attribute name="lang">EN</jsp:attribute>
-        <jsp:body>Hello World!
+        <jsp:body>
         ${wbl:resourceUrl('weblet://com.apress.projsf.weblets.demo/welcome.js')}
+        <br />other option<br />
+         ${wbl:resourceUrl2('com.apress.projsf.weblets.demo','/welcome.js')}
+
+
         </jsp:body>
     </jsp:element>
     

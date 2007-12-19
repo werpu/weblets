@@ -22,7 +22,7 @@ public class WebletsJSPBean {
     }
 
     /**
-     * helper function for the weblet:// resource url
+     * helper method for the weblet:// resource url
      * resolution
      * 
      * @param url the weblet:// path
@@ -34,9 +34,24 @@ public class WebletsJSPBean {
         String weblet = matcher.group(1);
         String pathInfo = matcher.group(2);
 
+        return getResourceUrl(weblet, pathInfo);
+    }
+    
+    /**
+     * helper method for a unified getResourceUrl API to the outside
+     * frameworks 
+     * @param weblet the weblet name
+     * @param pathInfo the path inf to the resource
+     * 
+     * @return the resolved resource url
+     */
+    public static String getResourceUrl(String weblet, String pathInfo) {
         WebletContainerImpl container = (WebletContainerImpl) WebletContainer.getInstance();
         return container.getWebletURL(weblet, pathInfo);
     }
+    
+ 
+    
     private static final Pattern WEBLET_PROTOCOL =
             Pattern.compile("weblet://([^/]+)(/.*)?");
 }
