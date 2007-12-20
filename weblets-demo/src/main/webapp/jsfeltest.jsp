@@ -12,7 +12,8 @@
  </head>
  <body>
    <f:view>
-      <h:outputText value="#{wbl_resourceUrl['weblet://com.apress.projsf.weblets.demo/welcome.js']}" />
+      <h:outputText value="#{jsfweblet['com.apress.projsf.weblets.demo']['/welcome.js']}" />
+      <h:graphicImage id="yyy" value="#{jsfweblet['com.apress.projsf.weblets.demo']['/img/icon_alert.gif']}" />
    </f:view>
  </body>
 </html> 

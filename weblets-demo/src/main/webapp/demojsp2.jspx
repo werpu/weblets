@@ -15,12 +15,13 @@ Author     : werpu
     <jsp:element name="text">
         <jsp:attribute name="lang">EN</jsp:attribute>
         <jsp:body>
-        ${wbl:resourceUrl('weblet://com.apress.projsf.weblets.demo/welcome.js')}
-        <br />other option<br />
-         ${wbl:resourceUrl2('com.apress.projsf.weblets.demo','/welcome.js')}
-
-
-        </jsp:body>
+         <p>
+         also here the path is rendered relative to the context path
+         the framework or the page designer has to set the context path
+         himself! Alternatively a basepath does the trick also!
+         </p>
+         ${wbl:resource('com.apress.projsf.weblets.demo','/welcome.js')}
+   </jsp:body>
     </jsp:element>
     
     </jsp:root>

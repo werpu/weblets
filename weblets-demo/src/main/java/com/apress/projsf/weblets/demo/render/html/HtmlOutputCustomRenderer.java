@@ -1,8 +1,8 @@
 package com.apress.projsf.weblets.demo.render.html;
 
+import com.apress.projsf.weblets.faces.JSFWebletUtils;
 import java.io.IOException;
 
-import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
@@ -16,10 +16,9 @@ public class HtmlOutputCustomRenderer extends Renderer
     FacesContext context,
     UIComponent  component) throws IOException
   {
-    ViewHandler handler = context.getApplication().getViewHandler();
-    String resourceURL = handler.getResourceURL(context,
-                                                "weblet://com.apress.projsf.weblets.demo/welcome.js");
-
+    //ViewHandler handler = context.getApplication().getViewHandler();
+    String resourceURL = JSFWebletUtils.getResource(context, "com.apress.projsf.weblets.demo", "welcome.js", component);
+       
     UIOutput output = (UIOutput)component;
     Object value = output.getValue();
     String stringValue = null;
