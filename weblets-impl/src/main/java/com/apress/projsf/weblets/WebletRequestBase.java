@@ -15,7 +15,6 @@
  */
 package com.apress.projsf.weblets;
 
-import java.util.Map;
 import net.java.dev.weblets.WebletRequest;
 
 public class WebletRequestBase implements WebletRequest

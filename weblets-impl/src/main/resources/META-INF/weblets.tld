@@ -8,15 +8,11 @@
     <display-name>Weblets</display-name>
     <description>The Weblets JSP tag library</description>
     
+   
     <function>
-        <name>resourceUrl</name>
+        <name>resource</name>
         <function-class>com.apress.projsf.weblets.misc.WebletsJSPBean</function-class>
-        <function-signature>java.lang.String getResourceUrl(java.lang.String)</function-signature>
-    </function>
-    <function>
-        <name>resourceUrl2</name>
-        <function-class>com.apress.projsf.weblets.misc.WebletsJSPBean</function-class>
-        <function-signature>java.lang.String getResourceUrl(java.lang.String, java.lang.String)</function-signature>
+        <function-signature>java.lang.String getResource( java.lang.String, java.lang.String)</function-signature>
     </function>
     
     <listener> 

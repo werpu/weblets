@@ -6,67 +6,38 @@
 package com.apress.projsf.weblets.faces;
 
 import com.apress.projsf.weblets.misc.WebletsJSPBean;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Pseudo map for accessing the weblet url format
  * from legacy jsf applications via elwelbetResolver
- * <h:outputFormat value="#{webletUrl['weblet://demo/test.js']}" />
+ * <h:outputFormat value="#{webletUrl['weblet']['/test.js']}" />
  * 
  * @author Werner Punz
  */
-public class JSFElWebletURL implements Map {
+public class JSFElWebletURL extends  JSFDummyMap {
 
-    public int size() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    private class PathInfoMap extends  JSFDummyMap {
+        
+        private String webletName = "";
+        
+        public PathInfoMap(String webletName) {
+          this.webletName = webletName;
+        }
+
+
+        public Object get(Object resource) {
+            if(! (resource instanceof String))
+                throw new UnsupportedOperationException("Not supported yet.");
+            return  WebletsJSPBean.getResource( webletName ,(String)resource);       
+        }
+        
     }
 
-    public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public boolean containsKey(Object key) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public boolean containsValue(Object value) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Object get(Object key) {
-       if(!(key instanceof String))
+    public Object get(Object webletName) {
+       if(!(webletName instanceof String))
             throw new UnsupportedOperationException("only String keys are allowed");
-       return WebletsJSPBean.getResourceUrl((String)key);      
+       return (new PathInfoMap((String)webletName));
     }
 
-    public Object put(Object key, Object value) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Object remove(Object key) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void putAll(Map m) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void clear() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Set keySet() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Collection values() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Set entrySet() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
 }

@@ -16,7 +16,6 @@
 package com.apress.projsf.weblets.faces;
 
 import com.apress.projsf.weblets.WebletContainerImpl;
-import com.apress.projsf.weblets.WebletsContextListenerImpl;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +25,13 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import net.java.dev.weblets.WebletContainer;
+
+/**
+ * @Deprecated This class is obsolete, please
+ * dont use it anymore
+ * use com.apress.projsf.weblets.faces.WebletFacesUtils insteal
+ * @see com.apress.projsf.weblets.faces.WebletFacesUtils 
+ */
 
 public class WebletsViewHandler extends ViewHandlerWrapper
 {
