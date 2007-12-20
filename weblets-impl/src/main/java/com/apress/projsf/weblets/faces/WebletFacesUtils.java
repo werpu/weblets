@@ -15,17 +15,6 @@ import javax.faces.context.FacesContext;
  *
  */
 public class WebletFacesUtils {
-	
-
-        /**
-         * @param context, the standard faces context
-         * @param webletUrl a weblet in weblet:// notation
-         * @returns the resource for simple cases
-         * without any jsf component context
-         */
-	public String getResourceUrl(FacesContext context, String webletUrl) {
-            return WebletsJSPBean.getResourceUrl((String)webletUrl); 
-        }
         
         /**
          * 
@@ -34,21 +23,10 @@ public class WebletFacesUtils {
          * @param pathInfo the path to the resource
          * @return the resource path
          */
-        public String getResourceUrl(FacesContext context, String weblet, String pathInfo) {
-            return WebletsJSPBean.getResourceUrl(weblet, pathInfo);
+        public String getResource(FacesContext context, String weblet, String pathInfo) {
+            return WebletsJSPBean.getResource(weblet, pathInfo);
         }
-        
-         /**
-         * @param context, the standard faces context
-         * @param webletUrl a weblet in weblet:// notation
-         * @param UIComponent component, the component for the include
-         * @return the resource the resource path, currently the FacesContent
-         * and UIComponent are not used but they might be in the future
-         * 
-         */
-	public String getResourceUrl(FacesContext context, String webletUrl, UIComponent component) {
-            return WebletsJSPBean.getResourceUrl((String)webletUrl); 
-        }
+       
         
         /**
          * 
@@ -59,7 +37,7 @@ public class WebletFacesUtils {
          * @return the resource the resource path, currently the FacesContent
          * and UIComponent are not used but they might be in the future
          */
-        public String getResourceUrl(FacesContext context, String weblet, String pathInfo, UIComponent component) {
-            return WebletsJSPBean.getResourceUrl(weblet, pathInfo);
+        public String getResource(FacesContext context, String weblet, String pathInfo, UIComponent component) {
+            return WebletsJSPBean.getResource(weblet, pathInfo);
         }
 }
