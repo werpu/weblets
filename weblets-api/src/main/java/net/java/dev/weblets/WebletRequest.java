@@ -22,6 +22,6 @@ public interface WebletRequest
   public String getContextPath();
   public String getPathInfo();
   public String getParameter(String name);
-
+;
   public long getIfModifiedSince();
 }
