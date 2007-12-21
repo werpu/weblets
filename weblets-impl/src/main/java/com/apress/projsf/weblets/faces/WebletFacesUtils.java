@@ -1,6 +1,6 @@
 package com.apress.projsf.weblets.faces;
 
-import com.apress.projsf.weblets.misc.WebletsJSPBean;
+import com.apress.projsf.weblets.jsp.WebletsJSPBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 

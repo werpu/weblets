@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apress.projsf.weblets.misc;
+package com.apress.projsf.weblets.jsp;
 
 import com.apress.projsf.weblets.WebletContainerImpl;
 import net.java.dev.weblets.WebletContainer;

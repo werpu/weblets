@@ -16,13 +16,11 @@
 package com.apress.projsf.weblets.servlets;
 
 import com.apress.projsf.weblets.WebletResponseBase;
-
-import java.io.IOException;
-import java.io.OutputStream;
+import net.java.dev.weblets.WebletResponse;
 
 import javax.servlet.http.HttpServletResponse;
-
-import net.java.dev.weblets.WebletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class WebletResponseImpl extends WebletResponseBase
 {
@@ -31,6 +29,7 @@ public class WebletResponseImpl extends WebletResponseBase
     HttpServletResponse httpResponse)
   {
     super(contentTypeDefault);
+    //new GZIPResponseWrapper(  
     _httpResponse = httpResponse;
   }
 

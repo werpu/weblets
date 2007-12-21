@@ -5,7 +5,7 @@
 
 package com.apress.projsf.weblets.faces;
 
-import com.apress.projsf.weblets.misc.WebletsJSPBean;
+import com.apress.projsf.weblets.jsp.WebletsJSPBean;
 
 /**
  * Pseudo map for accessing the weblet url format

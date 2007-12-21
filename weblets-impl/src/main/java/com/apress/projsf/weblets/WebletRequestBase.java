@@ -24,7 +24,8 @@ public class WebletRequestBase implements WebletRequest
     String webletPath,
     String contextPath,
     String pathInfo,
-    long   ifModifiedSince)
+    long   ifModifiedSince
+  )
   {
     _webletName = webletName;
     _webletPath = webletPath;
@@ -63,9 +64,26 @@ public class WebletRequestBase implements WebletRequest
       return null;
   }
 
+     public boolean isCompressionEnabled() {
+        return _compressionEnabled;
+    }
+
+    public String getPreferredCompressionType() {
+        return _preferredCompressionType;
+    }
+
+    public String[] getAllowedCompressionTypes() {
+        return _allowedCompressionTypes;
+    }  
+
   private final String _webletName;
   private final String _webletPath;
   private final String _contextPath;
   private final String _pathInfo;
   private final long   _ifModifiedSince;
+
+  /*compression settings, optional not used in the base class*/
+  protected  boolean _compressionEnabled = false;
+  protected  String _preferredCompressionType = "";
+  protected  String [] _allowedCompressionTypes = new String[0];
 }

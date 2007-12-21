@@ -11,10 +11,26 @@
    
     <function>
         <name>resource</name>
-        <function-class>com.apress.projsf.weblets.misc.WebletsJSPBean</function-class>
+        <function-class>com.apress.projsf.weblets.jsp.WebletsJSPBean</function-class>
         <function-signature>java.lang.String getResource( java.lang.String, java.lang.String)</function-signature>
     </function>
-    
+
+    <tag>
+        <name>resource</name>
+        <tag-class>com.apress.projsf.weblets.jsp.WebletsResourceTag</tag-class>
+         <bodycontent>jsp</bodycontent>
+        <attribute>
+            <name>weblet</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>pathInfo</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
     <listener> 
         <listener-class>net.java.dev.weblets.WebletsContextListener</listener-class>
     </listener>
