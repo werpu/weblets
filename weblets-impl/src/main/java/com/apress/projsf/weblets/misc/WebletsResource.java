@@ -2,21 +2,21 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apress.projsf.weblets.jsp;
+package com.apress.projsf.weblets.misc;
 
 import com.apress.projsf.weblets.WebletContainerImpl;
 import net.java.dev.weblets.WebletContainer;
 
 /**
  * A small el function to ease
- * the use of weblets in jsp
+ * the use of weblets in misc
  * or jsf/faclets jsf 1.2 contexts
  * 
  * @author Werner Punz
  */
-public class WebletsJSPBean {
+public class WebletsResource {
 
-    public WebletsJSPBean() {
+    public WebletsResource() {
     }
 
     /**

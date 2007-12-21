@@ -11,13 +11,13 @@
    
     <function>
         <name>resource</name>
-        <function-class>com.apress.projsf.weblets.jsp.WebletsJSPBean</function-class>
+        <function-class>com.apress.projsf.weblets.misc.WebletsResource</function-class>
         <function-signature>java.lang.String getResource( java.lang.String, java.lang.String)</function-signature>
     </function>
 
     <tag>
         <name>resource</name>
-        <tag-class>com.apress.projsf.weblets.jsp.WebletsResourceTag</tag-class>
+        <tag-class>com.apress.projsf.weblets.misc.WebletsResourceTag</tag-class>
          <bodycontent>jsp</bodycontent>
         <attribute>
             <name>weblet</name>

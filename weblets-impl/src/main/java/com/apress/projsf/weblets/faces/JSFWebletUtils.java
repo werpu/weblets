@@ -1,7 +1,8 @@
 package com.apress.projsf.weblets.faces;
 
 
-import com.apress.projsf.weblets.jsp.WebletsJSPBean;
+import com.apress.projsf.weblets.misc.WebletsResource;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
@@ -25,7 +26,7 @@ public class JSFWebletUtils {
          * @return the resource path
          */
         public static String getResource(FacesContext context, String weblet, String pathInfo) {
-            return WebletsJSPBean.getResource( weblet, pathInfo);
+            return WebletsResource.getResource( weblet, pathInfo);
         }
         
         
@@ -39,6 +40,6 @@ public class JSFWebletUtils {
          * and UIComponent are not used but they might be in the future
          */
         public static String getResource(FacesContext context, String weblet, String pathInfo, UIComponent component) {
-            return WebletsJSPBean.getResource(weblet, pathInfo);
+            return WebletsResource.getResource(weblet, pathInfo);
         }
 }

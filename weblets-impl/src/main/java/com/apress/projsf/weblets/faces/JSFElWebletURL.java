@@ -5,7 +5,7 @@
 
 package com.apress.projsf.weblets.faces;
 
-import com.apress.projsf.weblets.jsp.WebletsJSPBean;
+import com.apress.projsf.weblets.misc.WebletsResource;
 
 /**
  * Pseudo map for accessing the weblet url format
@@ -28,7 +28,7 @@ public class JSFElWebletURL extends  JSFDummyMap {
         public Object get(Object resource) {
             if(! (resource instanceof String))
                 throw new UnsupportedOperationException("Not supported yet.");
-            return  WebletsJSPBean.getResource( webletName ,(String)resource);       
+            return  WebletsResource.getResource( webletName ,(String)resource);
         }
         
     }

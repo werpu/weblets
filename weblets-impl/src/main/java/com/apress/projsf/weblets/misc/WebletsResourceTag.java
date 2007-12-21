@@ -1,4 +1,4 @@
-package com.apress.projsf.weblets.jsp;
+package com.apress.projsf.weblets.misc;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -7,7 +7,7 @@ import java.io.IOException;
 
 /**
  * Weblets Tag
- * for jsp
+ * for misc
  * @author Werner Punz
  * werner.punz@gmail.com
  */
@@ -27,7 +27,7 @@ public class WebletsResourceTag extends TagSupport {
     public int doEndTag() throws JspException {
         JspWriter writer = pageContext.getOut();
         try {
-            writer.print(WebletsJSPBean.getResource(weblet, pathInfo));
+            writer.print(WebletsResource.getResource(weblet, pathInfo));
         } catch (IOException e) {
             e.printStackTrace();  
             throw new JspException(e);
