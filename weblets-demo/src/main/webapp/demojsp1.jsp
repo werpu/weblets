@@ -26,7 +26,5 @@
         <img src="./<%= jspweblet.getResource( "com.apress.projsf.weblets.demo","/img/icon_alert.gif") %>" />
         same with a tag
         <img src='./<weblets:resource weblet="com.apress.projsf.weblets.demo" pathInfo="/img/icon_alert.gif" />' />
-
-
    </body>
 </html>
