@@ -7,18 +7,15 @@
     <uri>http://weblets.dev.java.net/tags</uri>
     <display-name>Weblets</display-name>
     <description>The Weblets JSP tag library</description>
-    
-   
-    <function>
-        <name>resource</name>
-        <function-class>com.apress.projsf.weblets.misc.WebletsResource</function-class>
-        <function-signature>java.lang.String getResource( java.lang.String, java.lang.String)</function-signature>
-    </function>
+
+     <listener>
+        <listener-class>net.java.dev.weblets.WebletsContextListener</listener-class>
+    </listener>
 
     <tag>
         <name>resource</name>
         <tag-class>com.apress.projsf.weblets.misc.WebletsResourceTag</tag-class>
-         <bodycontent>jsp</bodycontent>
+        
         <attribute>
             <name>weblet</name>
             <required>true</required>
@@ -31,8 +28,6 @@
         </attribute>
     </tag>
 
-    <listener> 
-        <listener-class>net.java.dev.weblets.WebletsContextListener</listener-class>
-    </listener>
+
 </taglib>
 

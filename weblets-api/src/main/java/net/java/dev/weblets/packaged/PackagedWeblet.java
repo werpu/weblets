@@ -136,10 +136,11 @@ public class PackagedWeblet extends Weblet {
                     // binary passthrough
                     try {
                         byte[] buffer = new byte[1024];
-                        while (in.available() > 0) {
-                            int len = in.read(buffer);
+                        
+                        int len = 0;
+                        while ((len = in.read(buffer)) > 0)
                             out.write(buffer, 0, len);
-                        }
+
                     } finally {
                         in.close();
                         out.close();

@@ -6,7 +6,7 @@ Author     : werpu
 -->
 <jsp:root 
     xmlns:jsp="http://java.sun.com/JSP/Page" 
-    xmlns:wbl="http://weblets.dev.java.net/tags"
+    xmlns:wbl="http://weblets.dev.java.net/tags_jsp2"
     version="2.0">
     
     <jsp:directive.page isELIgnored="false" contentType="text/html" pageEncoding="utf-8"/>
@@ -16,7 +16,7 @@ Author     : werpu
         <jsp:attribute name="lang">EN</jsp:attribute>
         <jsp:body>
          <p>
-         also here the path is rendered relative to the context path
+         <b>Here</b> the path is rendered relative to the context path
          the framework or the page designer has to set the context path
          himself! Alternatively a basepath does the trick also!
          </p>
