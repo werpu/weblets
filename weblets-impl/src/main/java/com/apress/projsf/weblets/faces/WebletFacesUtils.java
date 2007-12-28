@@ -25,6 +25,7 @@ public class WebletFacesUtils {
          * @return the resource path
          */
         public String getResource(FacesContext context, String weblet, String pathInfo) {
+         
             return WebletsResource.getResource(weblet, pathInfo);
         }
        

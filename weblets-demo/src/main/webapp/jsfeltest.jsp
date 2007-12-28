@@ -12,7 +12,11 @@
  </head>
  <body>
    <f:view>
+       test for resource
       <h:outputText value="#{jsfweblet['com.apress.projsf.weblets.demo']['/welcome.js']}" />
+       test for an empty resource
+       <h:outputText value="#{jsfweblet['com.apress.projsf.weblets.demo']['']}" />
+       
       <h:graphicImage id="yyy" value="#{jsfweblet['com.apress.projsf.weblets.demo']['/img/icon_alert.gif']}" />
    </f:view>
  </body>

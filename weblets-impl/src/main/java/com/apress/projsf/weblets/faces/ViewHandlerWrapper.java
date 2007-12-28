@@ -22,6 +22,9 @@ import javax.faces.component.UIViewRoot;
 import java.io.IOException;
 import javax.faces.FacesException;
 
+/**
+ * @deprecated
+ */
 public class ViewHandlerWrapper extends ViewHandler
 {
   public ViewHandlerWrapper(

@@ -27,12 +27,11 @@ import javax.faces.context.FacesContext;
 import net.java.dev.weblets.WebletContainer;
 
 /**
- * @Deprecated This class is obsolete, please
+ * @deprecated This class is obsolete, please
  * dont use it anymore
  * use com.apress.projsf.weblets.faces.WebletFacesUtils insteal
  * @see com.apress.projsf.weblets.faces.WebletFacesUtils 
  */
-
 public class WebletsViewHandler extends ViewHandlerWrapper
 {
   public WebletsViewHandler(

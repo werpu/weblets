@@ -30,7 +30,10 @@ public class WebletsResource {
      * @param path
      * @return
      */
-    public static String getResource(String weblet, String pathInfo) {
+     public static String getResource(String weblet, String pathInfo) {
+        /*lets be more tolerant regarding paths*/
+        if(pathInfo == null || pathInfo.trim().equals(""))
+           pathInfo = "/";
         WebletContainerImpl container = (WebletContainerImpl) WebletContainer.getInstance();
         return   container.getWebletURL(weblet, pathInfo);
     }
