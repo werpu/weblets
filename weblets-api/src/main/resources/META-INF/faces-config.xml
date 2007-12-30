@@ -6,7 +6,7 @@
 <faces-config>
   <managed-bean>
        <managed-bean-name>jsfweblet</managed-bean-name>    
-       <managed-bean-class>net.java.dev.weblets.impl.faces.JSFElWebletURL</managed-bean-class>
+       <managed-bean-class>net.java.dev.weblets.JSFElWebletsUtils</managed-bean-class>
        <managed-bean-scope>application</managed-bean-scope>
    </managed-bean>    
   <lifecycle>

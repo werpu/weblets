@@ -15,6 +15,8 @@
  */
 package net.java.dev.weblets;
 
+import net.java.dev.weblets.util.ServiceLoader;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -114,26 +116,9 @@ public final class WebletsServlet implements Servlet
   static private final Class _WEBLETS_SERVLET_CLASS;
 
   static
+
+
   {
-    try
-    {
-      ClassLoader loader = Thread.currentThread().getContextClassLoader();
-      String resource = "META-INF/services/" + WebletsServlet.class.getName();
-      InputStream in = loader.getResourceAsStream(resource);
-      BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-      String serviceClassName = reader.readLine();
-      _WEBLETS_SERVLET_CLASS = loader.loadClass(serviceClassName);
-      reader.close();
-    }
-    catch (IOException e)
-    {
-      throw new WebletException("Error reading WebletsServlet " +
-                                "service information", e);
-    }
-    catch (ClassNotFoundException e)
-    {
-      throw new WebletException("Unable to load WebletsServlet " +
-                                "implementation class", e);
-    }
+     _WEBLETS_SERVLET_CLASS = ServiceLoader.loadService(WebletsServlet.class.getName());
   }
 }

@@ -4,8 +4,9 @@
  */
 package net.java.dev.weblets.impl.misc;
 
-import net.java.dev.weblets.impl.WebletContainerImpl;
 import net.java.dev.weblets.WebletContainer;
+import net.java.dev.weblets.util.IWebletsUtil;
+import net.java.dev.weblets.impl.WebletContainerImpl;
 
 /**
  * A small el function to ease
@@ -14,9 +15,9 @@ import net.java.dev.weblets.WebletContainer;
  * 
  * @author Werner Punz
  */
-public class WebletsResource {
+public class WebletsUtilsImpl implements IWebletsUtil {
 
-    public WebletsResource() {
+    public WebletsUtilsImpl() {
     }
 
     /**
@@ -28,9 +29,9 @@ public class WebletsResource {
      * 
      * @param weblet
      * @param  pathInfo
-     * @return
+     * @return  the resource path
      */
-     public static String getResource(String weblet, String pathInfo) {
+     public  String getResource(String weblet, String pathInfo) {
         /*lets be more tolerant regarding paths*/
         if(pathInfo == null || pathInfo.trim().equals(""))
            pathInfo = "/";

@@ -15,6 +15,8 @@
  */
 package net.java.dev.weblets;
 
+import net.java.dev.weblets.util.ServiceLoader;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -100,25 +102,6 @@ public final class WebletsFilter implements Filter
 
   static
   {
-    try
-    {
-      ClassLoader loader = Thread.currentThread().getContextClassLoader();
-      String resource = "META-INF/services/" + WebletsFilter.class.getName();
-      InputStream in = loader.getResourceAsStream(resource);
-      BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-      String serviceClassName = reader.readLine();
-      _WEBLETS_FILTER_CLASS = loader.loadClass(serviceClassName);
-      reader.close();
-    }
-    catch (IOException e)
-    {
-      throw new WebletException("Error reading WebletsFilter " +
-                                "service information", e);
-    }
-    catch (ClassNotFoundException e)
-    {
-      throw new WebletException("Unable to load WebletsFilter " +
-                                "implementation class", e);
-    }
+    _WEBLETS_FILTER_CLASS = ServiceLoader.loadService(WebletsFilter.class.getName());   
   }
 }

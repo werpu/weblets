@@ -15,6 +15,8 @@
  */
 package net.java.dev.weblets;
 
+import net.java.dev.weblets.util.ServiceLoader;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,25 +77,6 @@ public final class WebletsContextListener implements ServletContextListener
 
   static
   {
-    try
-    {
-      ClassLoader loader = Thread.currentThread().getContextClassLoader();
-      String resource = "META-INF/services/" + WebletsContextListener.class.getName();
-      InputStream in = loader.getResourceAsStream(resource);
-      BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-      String serviceClassName = reader.readLine();
-      _WEBLETS_CONTEXT_LISTENER_CLASS = loader.loadClass(serviceClassName);
-      reader.close();
-    }
-    catch (IOException e)
-    {
-      throw new WebletException("Error reading WebletsContextListener " +
-                                "service information", e);
-    }
-    catch (ClassNotFoundException e)
-    {
-      throw new WebletException("Unable to load WebletsContextListener " +
-                                "implementation class", e);
-    }
+    _WEBLETS_CONTEXT_LISTENER_CLASS = ServiceLoader.loadService( WebletsContextListener.class.getName());
   }
 }

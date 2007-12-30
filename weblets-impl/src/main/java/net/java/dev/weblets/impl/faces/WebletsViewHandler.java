@@ -29,8 +29,8 @@ import net.java.dev.weblets.WebletContainer;
 /**
  * @deprecated This class is obsolete, please
  * dont use it anymore
- * use net.java.dev.weblets.impl.faces.WebletFacesUtils insteal
- * @see WebletFacesUtils
+ * use net.java.dev.weblets.impl.faces.JSFWebletsUtilsImpl insteal
+ * @see JSFWebletsUtilsImpl
  */
 public class WebletsViewHandler extends ViewHandlerWrapper
 {

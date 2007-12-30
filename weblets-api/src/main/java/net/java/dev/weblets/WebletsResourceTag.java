@@ -1,4 +1,6 @@
-package net.java.dev.weblets.impl.misc;
+package net.java.dev.weblets;
+
+import net.java.dev.weblets.WebletsUtils;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -24,10 +26,11 @@ public class WebletsResourceTag extends TagSupport {
         return super.doStartTag();
     }
 
+
     public int doEndTag() throws JspException {
         JspWriter writer = pageContext.getOut();
         try {
-            writer.print(WebletsResource.getResource(weblet, pathInfo));
+            writer.print(WebletsUtils.getResource(weblet, pathInfo));
         } catch (IOException e) {
             e.printStackTrace();  
             throw new JspException(e);

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package net.java.dev.weblets.impl.faces;
+package net.java.dev.weblets.util;
 
 import java.util.Collection;
 import java.util.Map;

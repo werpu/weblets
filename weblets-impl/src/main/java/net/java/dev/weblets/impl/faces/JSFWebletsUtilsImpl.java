@@ -1,6 +1,7 @@
 package net.java.dev.weblets.impl.faces;
 
-import net.java.dev.weblets.impl.misc.WebletsResource;
+import net.java.dev.weblets.WebletsUtils;
+import net.java.dev.weblets.util.IJSFWebletsUtils;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -15,7 +16,7 @@ import javax.faces.context.FacesContext;
  * @author Werner Punz
  *
  */
-public class WebletFacesUtils {
+public class JSFWebletsUtilsImpl implements IJSFWebletsUtils {
         
         /**
          * 
@@ -26,7 +27,7 @@ public class WebletFacesUtils {
          */
         public String getResource(FacesContext context, String weblet, String pathInfo) {
          
-            return WebletsResource.getResource(weblet, pathInfo);
+            return WebletsUtils.getResource(weblet, pathInfo);
         }
        
         
@@ -40,6 +41,6 @@ public class WebletFacesUtils {
          * and UIComponent are not used but they might be in the future
          */
         public String getResource(FacesContext context, String weblet, String pathInfo, UIComponent component) {
-            return WebletsResource.getResource(weblet, pathInfo);
+            return WebletsUtils.getResource(weblet, pathInfo);
         }
 }

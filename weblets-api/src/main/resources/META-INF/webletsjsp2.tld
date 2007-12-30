@@ -11,7 +11,7 @@
 
     <function>
         <name>resource</name>
-        <function-class>net.java.dev.weblets.impl.misc.WebletsResource</function-class>
+        <function-class>net.java.dev.weblets.WebletsUtils</function-class>
         <function-signature>java.lang.String getResource( java.lang.String, java.lang.String)</function-signature>
     </function>
 

@@ -14,7 +14,7 @@
 
     <tag>
         <name>resource</name>
-        <tag-class>net.java.dev.weblets.impl.misc.WebletsResourceTag</tag-class>
+        <tag-class>net.java.dev.weblets.WebletsResourceTag</tag-class>
         
         <attribute>
             <name>weblet</name>
