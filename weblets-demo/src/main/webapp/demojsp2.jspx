@@ -20,7 +20,7 @@ Author     : werpu
          the framework or the page designer has to set the context path
          himself! Alternatively a basepath does the trick also!
          </p>
-         ${wbl:resource('com.apress.projsf.weblets.demo','/welcome.js')}
+         ${wbl:resource('weblets.demo','/welcome.js')}
    </jsp:body>
     </jsp:element>
     

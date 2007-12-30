@@ -15,7 +15,7 @@
 
   <tag>
     <name>outputCustom</name>
-    <tag-class>com.apress.projsf.weblets.demo.taglib.html.HtmlOutputCustomTag</tag-class>
+    <tag-class>net.java.dev.weblets.demo.taglib.html.HtmlOutputCustomTag</tag-class>
     <body-content>JSP</body-content>
     <description>
       ProJSF Output Custom component tag.

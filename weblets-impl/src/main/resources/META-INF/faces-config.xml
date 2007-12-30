@@ -3,13 +3,13 @@
    PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN" 
           "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
           
-<faces-config xmlns="http://java.sun.com/JSF/Configuration" >
+<faces-config>
   <managed-bean>
        <managed-bean-name>jsfweblet</managed-bean-name>    
-       <managed-bean-class>com.apress.projsf.weblets.faces.JSFElWebletURL</managed-bean-class>
+       <managed-bean-class>net.java.dev.weblets.impl.faces.JSFElWebletURL</managed-bean-class>
        <managed-bean-scope>application</managed-bean-scope>
    </managed-bean>    
   <lifecycle>
-    <phase-listener>com.apress.projsf.weblets.faces.WebletsPhaseListener</phase-listener>
+    <phase-listener>net.java.dev.weblets.impl.faces.WebletsPhaseListener</phase-listener>
   </lifecycle>
 </faces-config>
