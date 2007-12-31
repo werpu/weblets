@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.java.dev.weblets</groupId>
         <artifactId>weblets</artifactId>
-        <version>0.5-SNAPSHOT</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     
     <groupId>net.java.dev.weblets</groupId>
@@ -13,7 +13,7 @@
     <packaging>war</packaging>
     
     <name>Weblets Demo</name>
-    <version>0.5-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <description>Weblets Demo</description>
     <url>http://weblets.dev.java.net</url>
     
@@ -23,13 +23,18 @@
         <dependency>
             <groupId>net.java.dev.weblets</groupId>
             <artifactId>weblets-api</artifactId>
-            <version>0.5-SNAPSHOT</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         
         <dependency>
             <groupId>net.java.dev.weblets</groupId>
             <artifactId>weblets-impl</artifactId>
-            <version>0.5-SNAPSHOT</version>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+         <dependency>
+            <groupId>net.java.dev.weblets</groupId>
+            <artifactId>weblets-exampleweblet</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         
         <dependency>

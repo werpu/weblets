@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<weblets-config xmlns="http://weblets.dev.java.net/config">
+  <weblet>
+    <weblet-name>org.dojotoolkit</weblet-name>
+    <weblet-class>net.java.dev.weblets.packaged.PackagedWeblet</weblet-class>
+    <weblet-version>1.02</weblet-version>
+    <init-param>
+      <param-name>package</param-name>
+      <param-value>org.dojo</param-value>
+    </init-param>
+  </weblet>
+  <weblet-mapping>
+    <weblet-name>org.dojotoolkit</weblet-name>
+    <url-pattern>/dojotoolkit/*</url-pattern>
+  </weblet-mapping>
+</weblets-config>
