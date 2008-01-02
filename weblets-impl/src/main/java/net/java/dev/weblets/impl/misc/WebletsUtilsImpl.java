@@ -36,7 +36,7 @@ public class WebletsUtilsImpl implements IWebletsUtil {
         if(pathInfo == null || pathInfo.trim().equals(""))
            pathInfo = "/";
         WebletContainerImpl container = (WebletContainerImpl) WebletContainer.getInstance();
-        return   container.getWebletURL(weblet, pathInfo);
+        return   container.getResourceUri(weblet, pathInfo);
     }
 
 
@@ -45,7 +45,7 @@ public class WebletsUtilsImpl implements IWebletsUtil {
         if(pathInfo == null || pathInfo.trim().equals(""))
            pathInfo = "/";
         WebletContainerImpl container = (WebletContainerImpl) WebletContainer.getInstance();
-        return   container.getWebletContextPath()+container.getWebletURL(weblet, pathInfo);
+        return   container.getWebletContextPath()+container.getResourceUri(weblet, pathInfo);
     }
     
   

@@ -131,7 +131,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
         String contextPath;
         contextPath = parser.getWebletsContextPath();
         if (contextPath == null || contextPath.trim().equals("")) {
-           /* try {
+           try {
                 //lets check if we are in JEE 5 so that we can execute a getServletContextPath methid
                 Method[] methods = context.getClass().getMethods();
 
@@ -147,7 +147,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
             } catch (InvocationTargetException e) {
                 Log log = LogFactory.getLog(this.getClass());
                 log.error("Error, trying to invoke getContextPath ", e);
-            }*/
+            }
         } else {
             return contextPath;
         }

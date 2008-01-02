@@ -171,7 +171,7 @@ public class WebletContainerImpl extends WebletContainer {
         weblet.service(request, response);
     }
 
-    public String getWebletURL(
+    public String getResourceUri(
             String webletName,
             String pathInfo) throws WebletException {
         WebletConfig config = (WebletConfig) _webletConfigs.get(webletName);

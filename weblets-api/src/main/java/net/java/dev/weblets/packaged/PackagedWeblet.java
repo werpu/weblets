@@ -150,9 +150,9 @@ public class PackagedWeblet extends Weblet {
             WebletContainer container = WebletContainer.getInstance();
             String webletURL = null;
             if(url)
-                webletURL = container.getWebletContextPath()+container.getWebletURL(webletName, pathInfo);
+                webletURL = container.getWebletContextPath()+container.getResourceUri(webletName, pathInfo);
             else
-                webletURL = container.getWebletURL(webletName, pathInfo);
+                webletURL = container.getResourceUri(webletName, pathInfo);
 
             writer.write(preamble);
             

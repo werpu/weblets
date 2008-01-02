@@ -55,7 +55,7 @@ public class WebletsViewHandler extends ViewHandlerWrapper
       //WebletContainerImpl container = (WebletContainerImpl)applicationScope.get(WebletsContextListenerImpl.WEBLET_CONTAINER_KEY);
       WebletContainerImpl container = (WebletContainerImpl)WebletContainer.getInstance();
       
-      path = container.getWebletURL(webletName, pathInfo);
+      path = container.getResourceUri(webletName, pathInfo);
     }
 
     return super.getResourceURL(context, path);

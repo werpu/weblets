@@ -43,7 +43,7 @@ abstract public class WebletContainer
     WebletRequest  request,
     WebletResponse response) throws IOException, WebletException;
 
-  abstract public String getWebletURL(
+  abstract public String getResourceUri(
     String webletName,
     String pathInfo) throws WebletException;
 
