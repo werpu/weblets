@@ -38,7 +38,15 @@ public class WebletsUtilsImpl implements IWebletsUtil {
         WebletContainerImpl container = (WebletContainerImpl) WebletContainer.getInstance();
         return   container.getWebletURL(weblet, pathInfo);
     }
-    
+
+
+     public  String getUrl(String weblet, String pathInfo) {
+        /*lets be more tolerant regarding paths*/
+        if(pathInfo == null || pathInfo.trim().equals(""))
+           pathInfo = "/";
+        WebletContainerImpl container = (WebletContainerImpl) WebletContainer.getInstance();
+        return   container.getWebletContextPath()+container.getWebletURL(weblet, pathInfo);
+    }
     
   
 }

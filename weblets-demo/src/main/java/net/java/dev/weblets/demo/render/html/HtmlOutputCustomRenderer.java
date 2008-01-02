@@ -16,7 +16,7 @@ public class HtmlOutputCustomRenderer extends Renderer
     UIComponent  component) throws IOException
   {
     //ViewHandler handler = context.getApplication().getViewHandler();
-    String resourceURL = JSFWebletsUtils.getResource(context, "weblets.demo", "/welcome.js", component);
+    String resourceURL = JSFWebletsUtils.getUrl(context, "weblets.demo", "/welcome.js");
        
     UIOutput output = (UIOutput)component;
     Object value = output.getValue();

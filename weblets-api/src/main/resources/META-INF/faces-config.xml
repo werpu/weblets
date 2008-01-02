@@ -5,9 +5,15 @@
           
 <faces-config>
   <managed-bean>
-       <managed-bean-name>jsfweblet</managed-bean-name>    
-       <managed-bean-class>net.java.dev.weblets.JSFElWebletsUtils</managed-bean-class>
+       <managed-bean-name>jsfwebletres</managed-bean-name>
+       <managed-bean-class>net.java.dev.weblets.JSFElWebletsResource</managed-bean-class>
        <managed-bean-scope>application</managed-bean-scope>
    </managed-bean>    
-  
+    <managed-bean>
+         <managed-bean-name>jsfwebleturl</managed-bean-name>    
+         <managed-bean-class>net.java.dev.weblets.JSFELWebletsUrl</managed-bean-class>
+         <managed-bean-scope>application</managed-bean-scope>
+     </managed-bean>
+
+
 </faces-config>

@@ -36,6 +36,9 @@ abstract public class WebletContainer
     return (WebletContainer)_INSTANCES.get(loader);
   }
 
+  abstract public String getWebletContextPath();
+  abstract public void setWebletContextPath(String contextPath);
+
   abstract public void service(
     WebletRequest  request,
     WebletResponse response) throws IOException, WebletException;

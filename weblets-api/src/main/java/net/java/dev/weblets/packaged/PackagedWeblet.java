@@ -84,40 +84,16 @@ public class PackagedWeblet extends Weblet {
 
                             // TODO: tidy up pattern matching, use leading single/double quote
                             // TODO: conditional filtering
-                            int startAt = line.indexOf("weblet:url(");
-                            if (startAt != -1) {
-                                String protocol = line.substring(startAt);
-                                Matcher matcher = _WEBLET_PROTOCOL.matcher(protocol);
-                                if (matcher.matches()) {
-                                    String preamble = line.substring(0, startAt);
-                                    String webletName = matcher.group(1);
-                                    webletName = (webletName != null) ? webletName.trim():webletName;
-                                    
-                                    String pathInfo = matcher.group(2);
-                                    pathInfo = (pathInfo != null) ? pathInfo.trim():pathInfo;
-                             
-                                    String postamble = matcher.group(3);
+                            int startWebletUrl = line.indexOf("weblet:url(");
 
-                                    // default relative weblet:/resource.ext to this weblet
-                                    if (webletName == null) {
-                                        webletName = getWebletConfig().getWebletName();
-                                    }
-
-                                    
-                                    WebletContainer container = WebletContainer.getInstance();
-                                    String webletURL = container.getWebletURL(webletName, pathInfo);
-                                    writer.write(preamble);
-                                    //TODO work with absolute resources here not relative ones
-                                    //some frameworks add their own context paths otherweise
-                                    
-                                    writer.write(request.getContextPath());
-                                    writer.write(webletURL);
-                                    writer.write(postamble);
-                                    writer.println();
-                                } else {
-                                    writer.write(line);
-                                    writer.println();
-                                }
+                            if (startWebletUrl != -1) {
+                                String protocol = line.substring(startWebletUrl);
+                                Matcher matcher = _WEBLET_URL.matcher(protocol);
+                                resolveLine(request, writer, line, startWebletUrl, matcher, true);
+                            } else if((startWebletUrl = line.indexOf("weblet:resource(")) != -1) {
+                                String protocol = line.substring(startWebletUrl);
+                                Matcher matcher = _WEBLET_RESOURCE.matcher(protocol);
+                                resolveLine(request, writer, line, startWebletUrl, matcher,false);
                             } else {
                                 writer.write(line);
                                 writer.println();
@@ -154,19 +130,58 @@ public class PackagedWeblet extends Weblet {
         }
     }
 
+    private void resolveLine(WebletRequest request, PrintWriter writer, String line, int startAt, Matcher matcher, boolean url) {
+        if (matcher.matches()) {
+            String preamble = line.substring(0, startAt);
+            String webletName = matcher.group(1);
+            webletName = (webletName != null) ? webletName.trim():webletName;
+
+            String pathInfo = matcher.group(2);
+            pathInfo = (pathInfo != null) ? pathInfo.trim():pathInfo;
+
+            String postamble = matcher.group(3);
+
+            // default relative weblet:/resource.ext to this weblet
+            if (webletName == null) {
+                webletName = getWebletConfig().getWebletName();
+            }
+
+
+            WebletContainer container = WebletContainer.getInstance();
+            String webletURL = null;
+            if(url)
+                webletURL = container.getWebletContextPath()+container.getWebletURL(webletName, pathInfo);
+            else
+                webletURL = container.getWebletURL(webletName, pathInfo);
+
+            writer.write(preamble);
+            
+
+            
+            writer.write(webletURL);
+            writer.write(postamble);
+            writer.println();
+        } else {
+            writer.write(line);
+            writer.println();
+        }
+    }
+
     public void destroy() {
         _resourceRoot = null;
         super.destroy();
     }
     private String _resourceRoot;
 
-    //private static final Pattern _WEBLET_PROTOCOL =
+    //private static final Pattern _WEBLET_URL =
     //                        Pattern.compile("weblet:(?://([^\"\\'/]+))?(/[^/]{1}[^\"\\']*)?(.*)");
-    private static final Pattern _WEBLET_PROTOCOL =
+    private static final Pattern _WEBLET_URL =
             Pattern.compile("weblet:\\s*url\\s*\\(([^\"\\'/]+)\\,([^\"\\'\\)]+)\\)?(.*)");
+    private static final Pattern _WEBLET_RESOURCE =
+            Pattern.compile("weblet:\\s*resource\\s*\\(([^\"\\'/]+)\\,([^\"\\'\\)]+)\\)?(.*)");
 
     public static void main(String[] argv) {
-        Matcher matcher = _WEBLET_PROTOCOL.matcher("weblet:url(demo,/helloworld.js)postampletext");
+        Matcher matcher = _WEBLET_URL.matcher("weblet:url(demo,/helloworld.js)postampletext");
         if (matcher.matches()) {
             String webletName = matcher.group(1);
             System.out.println(webletName);

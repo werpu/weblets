@@ -10,6 +10,5 @@ import javax.faces.context.FacesContext;
  * Generic contractual interface for the weblet utils
  */
 public interface IJSFWebletsUtils {
-      public String getResource(FacesContext context, String weblet, String pathInfo);
-      public  String getResource(FacesContext context, String weblet, String pathInfo, UIComponent component);
+      public String getResource(FacesContext context, String weblet, String pathInfo, boolean fullUrl);
 }

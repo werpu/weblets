@@ -17,13 +17,25 @@
     <body>
         <%= ((HttpServletRequest)pageContext.getRequest()).getContextPath() %>
         <p>
-        the urls give are relative to the context so you have to determine the context path yourself 
-        unless a framework or lib does it for you, also dont forget the leading
+        the getResource results are relative to the context
+        so that you can map it to any url you want
         / !!!
         </p>
         <%= jspweblet.getResource( "weblets.demo","/welcome.js") %>
+
+
+
+         <p>
+        the getUrl results are absolute to the context,
+        note this only works either if you are in a jee5 environment
+        or if you set the weblets filter,
+        alternatively as final override you can set a context-param
+        (examples can be found in the web.xml)
+        </p>
+
+        <%= jspweblet.getUrl( "weblets.demo","/welcome.js") %>
         <br />          
-        <img src=".<%= jspweblet.getResource( "weblets.demo","/img/icon_alert.gif") %>" />
+        <img src="<%= jspweblet.getUrl( "weblets.demo","/img/icon_alert.gif") %>" />
         same with a tag
         <img src='.<weblets:resource weblet="weblets.demo" pathInfo="/img/icon_alert.gif" />' />
    </body>

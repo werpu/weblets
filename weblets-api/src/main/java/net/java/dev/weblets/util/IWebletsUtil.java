@@ -8,4 +8,5 @@ package net.java.dev.weblets.util;
  */
 public interface IWebletsUtil {
     public String getResource(String weblet, String pathInfo);
+    public String getUrl(String weblet, String pathInfo);
 }

@@ -21,6 +21,17 @@ public class WebletsUtils {
          return instance.getResource(weblet, pathInfo);
      }
 
+    /**
+     * constractual method
+     *
+     * @param weblet  the weblet name
+     * @param pathInfo  the path info to the resource
+     * @return the resource path for the resource
+     */
+     public static String getUrl(String weblet, String pathInfo) {
+         return instance.getUrl(weblet, pathInfo);
+     }
+
 
         /**
     * kind of a weird construct but definitely faster

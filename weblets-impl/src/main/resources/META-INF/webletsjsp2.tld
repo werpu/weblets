@@ -15,6 +15,12 @@
         <function-signature>java.lang.String getResource( java.lang.String, java.lang.String)</function-signature>
     </function>
 
+    <function>
+          <name>url</name>
+          <function-class>net.java.dev.weblets.WebletsUtils</function-class>
+          <function-signature>java.lang.String getUrl( java.lang.String, java.lang.String)</function-signature>
+    </function>
+
    
 </taglib>
         

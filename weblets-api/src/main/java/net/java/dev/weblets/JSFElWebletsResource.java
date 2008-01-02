@@ -8,6 +8,8 @@ package net.java.dev.weblets;
 import net.java.dev.weblets.WebletsUtils;
 import net.java.dev.weblets.util.JSFDummyMap;
 
+import javax.faces.context.FacesContext;
+
 /**
  * Pseudo map for accessing the weblet url format
  * from legacy jsf applications via elwelbetResolver
@@ -15,7 +17,7 @@ import net.java.dev.weblets.util.JSFDummyMap;
  *
  * @author Werner Punz
  */
-public class JSFElWebletsUtils extends  JSFDummyMap {
+public class JSFElWebletsResource extends  JSFDummyMap {
 
     private class PathInfoMap extends JSFDummyMap {
 
@@ -29,10 +31,11 @@ public class JSFElWebletsUtils extends  JSFDummyMap {
         public Object get(Object resource) {
             if(! (resource instanceof String))
                 throw new UnsupportedOperationException("Not supported yet.");
-            return  WebletsUtils.getResource( webletName ,(String)resource);
+            return  JSFWebletsUtils.getResource(FacesContext.getCurrentInstance(), webletName ,(String)resource);
         }
 
     }
+
 
     public Object get(Object webletName) {
        if(!(webletName instanceof String))

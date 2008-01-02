@@ -21,6 +21,9 @@ Author     : werpu
          himself! Alternatively a basepath does the trick also!
          </p>
          ${wbl:resource('weblets.demo','/welcome.js')}
+         <p>again we also can
+         use the url function to add the context path</p>
+         ${wbl:url('weblets.demo','/welcome.js')}   
    </jsp:body>
     </jsp:element>
     
