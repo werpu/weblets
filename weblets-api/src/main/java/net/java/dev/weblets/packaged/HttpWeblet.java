@@ -1,6 +1,9 @@
 package net.java.dev.weblets.packaged;
 
 import net.java.dev.weblets.*;
+import net.java.dev.weblets.util.IStreamingFilter;
+import net.java.dev.weblets.util.WebletsSimpleBinaryfilter;
+import net.java.dev.weblets.util.WebletTextprocessingFilter;
 
 import java.io.*;
 import java.net.URL;
@@ -15,7 +18,8 @@ import java.net.URLConnection;
  * 
  */
 public class HttpWeblet extends Weblet {
-
+    IStreamingFilter filterChain = null;
+    
     public void init(
             WebletConfig config) {
         super.init(config);
@@ -29,6 +33,9 @@ public class HttpWeblet extends Weblet {
         }
         _resourceRoot = (httpAddress != null) ? httpAddress
                 : resourceRoot;
+        filterChain = new WebletsSimpleBinaryfilter();
+        filterChain.addFilter(new WebletTextprocessingFilter());
+
     }
 
     public void service(
@@ -38,7 +45,7 @@ public class HttpWeblet extends Weblet {
 
         URL url = new URL(resourcePath);
 
-        WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url);
+        WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, filterChain);
     }
 
 
