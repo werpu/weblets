@@ -25,6 +25,7 @@ import java.io.IOException;
  * @author Werner Punz
  */
 public interface IStreamingFilter {
-    public void addFilter(IStreamingFilter filter); 
+    public void addFilter(StreamingFilter filter); 
     public void filter(WebletConfig config, WebletRequest request,  WebletResponse response, InputStream in, OutputStream out) throws IOException;
+    public void close();
 }

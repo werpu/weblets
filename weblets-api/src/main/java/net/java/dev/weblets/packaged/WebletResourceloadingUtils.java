@@ -36,8 +36,18 @@ public class WebletResourceloadingUtils {
                 try {
                     filterChain.filter(config, request, response, in, out);
                 } finally {
-                    in.close();
-                    out.close();
+                    filterChain.close();
+                    //just in case we missed something in the lower rim
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             } else {
                 response.setStatus(WebletResponse.SC_NOT_MODIFIED);

@@ -25,7 +25,6 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class PackagedWeblet extends Weblet {
-    IStreamingFilter filterChain = null;
     public void init(
             WebletConfig config) {
         super.init(config);
@@ -39,15 +38,17 @@ public class PackagedWeblet extends Weblet {
         }
         _resourceRoot = (packageName != null) ? packageName.replace('.', '/')
                 : resourceRoot;
-        filterChain = new WebletsSimpleBinaryfilter();
-        filterChain.addFilter(new WebletTextprocessingFilter());
-        
+
     }
 
     public void service(
             WebletRequest request,
             WebletResponse response) throws IOException {
         String resourcePath = _resourceRoot + request.getPathInfo();
+
+        IStreamingFilter filterChain = null;
+        filterChain = new WebletsSimpleBinaryfilter();
+        filterChain.addFilter(new WebletTextprocessingFilter());
 
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         URL url = loader.getResource(resourcePath);

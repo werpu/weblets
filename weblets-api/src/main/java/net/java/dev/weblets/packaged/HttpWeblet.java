@@ -18,8 +18,7 @@ import java.net.URLConnection;
  * 
  */
 public class HttpWeblet extends Weblet {
-    IStreamingFilter filterChain = null;
-    
+
     public void init(
             WebletConfig config) {
         super.init(config);
@@ -33,8 +32,6 @@ public class HttpWeblet extends Weblet {
         }
         _resourceRoot = (httpAddress != null) ? httpAddress
                 : resourceRoot;
-        filterChain = new WebletsSimpleBinaryfilter();
-        filterChain.addFilter(new WebletTextprocessingFilter());
 
     }
 
@@ -45,6 +42,9 @@ public class HttpWeblet extends Weblet {
 
         URL url = new URL(resourcePath);
 
+        IStreamingFilter filterChain = null;
+        filterChain = new WebletsSimpleBinaryfilter();
+        filterChain.addFilter(new WebletTextprocessingFilter());
         WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, filterChain);
     }
 
