@@ -209,7 +209,7 @@ Loading Resources with Weblets
 ** Weblets Accessor Methods from the Client
 
       Having covered how to configure Weblets, it is time to look at how we can reference resources defined by the
-      Weblet in our Renderer. The syntax, defined by the Weblet contract, for returning a proper URL to the JSF page
+      Weblet in our client (renderer, servlet, page, etc...). The syntax, defined by the Weblet contract, for returning a proper URL to the JSF page
       is as follows:
 
 +-----------------------------------
@@ -274,7 +274,7 @@ Loading Resources with Weblets
 +----------------------------------------------------------------------
 
 
-   It can be seen, that basically every web framework and frontend technology
+   Basically every web framework and frontend technology
    can be used, utilizing either the frontend helper objects and functions
    or the backend Utils classes.
 
