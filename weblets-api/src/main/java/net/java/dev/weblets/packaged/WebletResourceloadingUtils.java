@@ -4,6 +4,8 @@ import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.util.IStreamingFilter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +23,7 @@ public class WebletResourceloadingUtils {
         return instance;
     }
 
+    
     public void loadFromUrl(WebletConfig config, WebletRequest request, WebletResponse response, URL url, IStreamingFilter filterChain) throws IOException {
         if (url != null) {
 
@@ -41,12 +44,14 @@ public class WebletResourceloadingUtils {
                     try {
                         in.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Log log = LogFactory.getLog(this.getClass());
+                        log.error(e);
                     }
                     try {
                         out.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Log log = LogFactory.getLog(this.getClass());
+                        log.error(e);
                     }
                 }
             } else {

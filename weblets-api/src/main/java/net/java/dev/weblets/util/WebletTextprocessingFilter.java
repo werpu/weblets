@@ -10,8 +10,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * TODO: DESC
- *
+ * A basic regxp bases text processing filter
+ * doing the weblet resource url replacement parsing
+ * 
+ * <p>
+ * note: this class is not thread save, it always should be used in a single thread
+ * only!
+ * The same goes for the reference chains
+ * the threading of the referenced chain elements is enforced by the java
+ * pipe api and does not disrupt this limitation!
+ * </p>
+ * 
  * @author: Werner Punz
  * @date: 03.01.2008.
  */

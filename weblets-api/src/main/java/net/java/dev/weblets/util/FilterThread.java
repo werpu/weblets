@@ -9,7 +9,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * TODO: DESC
+ * Threading class used by the weblet filters
+ * to enable the java piping api!
+ *
  *
  * @author: Werner Punz
  * @date: 03.01.2008.

@@ -7,7 +7,23 @@ import net.java.dev.weblets.WebletResponse;
 import java.io.*;
 
 /**
- * TODO: DESC
+ * A simple binary filter serving a binary resource without any further processing
+ *
+ * <p>
+ * note: this class is not thread save, it always should be used in a single thread
+ * only!
+ * The same goes for the reference chains
+ * the threading of the referenced chain elements is enforced by the java
+ * pipe api and does not disrupt this limitation!
+ * </p>
+ *
+ * Do not chain yet with more than one filter triggering
+ * this feature has not been tested yet with more than one filter
+ * active at one time, but theoretically in the long
+ * run the parallel filter processing should give a speedup
+ * of 20-30% compared to normal pipes
+ * (similar to execution pips in micro processors, but here
+ * on a way bigger level)
  *
  * @author: Werner Punz
  * @date: 03.01.2008.
@@ -39,7 +55,7 @@ public class WebletsSimpleBinaryfilter extends StreamingFilter  {
 
         if (parentFilter != null) {
             closeReader = reader = new InputStreamReader(new PipedInputStream(pipeOut));
-            closeInputStream = in; /*we have a break in the input oput chain due to the pipe*/
+            closeInputStream = in; /*we have a break in the input output chain due to the pipe*/
             FilterThread filterThread = new FilterThread(parentFilter, config, request, response, in, pipeOut);
             filterThread.start();
         } else {
