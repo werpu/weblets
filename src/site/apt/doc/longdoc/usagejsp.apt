@@ -13,8 +13,7 @@ Preface
 
  * Setup
 
-    The setup is described already in the {{{./setup.html}Setup guide}},
-    to reiterate the information there in a few lines.
+    The setup is already described in the {{{./setup.html}Setup guide}}.
 
     To get weblets up and running you need a valid weblets servlet configuration.
     Unlike JSF we do not have any automatisms in place. The configuration has to be done
@@ -43,8 +42,8 @@ Preface
 ** Introduction
 
     Weblets contain of two parts in their execution, a frontend API, which enables a neutral notation for application
-    developers, to isolate the resource call from the actual calling protocol and position.
-    The frontend apis usually expand the parameters into http ursl or uris, which then are processed
+    developers to isolate the resource call from the actual calling protocol and position.
+    The frontend apis usually expand the parameters into http urls or uris, which then are processed
     after a browser request by the weblets container and its subsystems.
 
     A weblets container which then processes in a second stage the request by various framework specific methods.
@@ -52,7 +51,7 @@ Preface
     Now this sounds more complicated, than it really is, all the application programmer has to use, is the frontend
     specific api.
 
-    Weblets tries to be as precise as possible in the apis and their results, so that over all frameworks
+    Weblets tries to be as precise as possible in the apis and their results, so that in all frameworks
     and platforms the application programmer can be sure that the final result stays the same, not depending
     on the underlying framework being used.
 
@@ -98,4 +97,30 @@ Preface
     for JSP2.x.
 
     <Code 3: Accessing weblets via beans and scriptlets>
+
++------------------------------
+    <jsp:useBean class="net.java.dev.weblets.WebletsUtils" scope="application" id="jspweblet" />
+    <%= jspweblet.getResource( "weblets.demo","/welcome.js") %>
+    <%= jspweblet.getUrl( "weblets.demo","/welcome.js") %>
++------------------------------
+
+    As you can see we include our utils class as simple JSP bean, the bean then
+    provides our resource and url functions.
+
+** EL Functions for JSP 2.x
+
+    JSP2 provides newer EL implementations which have so called <<<EL Functions>>>, those are functions which can be added
+    extend the actual functionality provided by standard EL.
+    Weblets provide such function
+
+ The next example shows how to use the el functions:
+
+    <Code 5: Usage of el functions>
+
++----------------------------------------------
+     xmlns:wbl="http://weblets.dev.java.net/tags_jsp2" this has to be added to your namespace definitions
+
+      <h:outputText value="${wbl:url('weblets.demo','/welcome.js')}" />
+      <h:graphicImage value="${wbl:resource('weblets.demo','/img/icon_alert.gif')}" />
++----------------------------------------------
 
