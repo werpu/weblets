@@ -1,5 +1,5 @@
                                   ------------
-                                  Setup
+                                      Setup
                                   ------------
 
 Setup of Weblets
@@ -113,7 +113,12 @@ Setup of Weblets
 
     This optional context parameter overrides any locally determined webapp context value
     determined by weblets. It is simply an override for all cases in existence.
-    Every weblet url request will default to /weblets-demo/<path to the weblet resource/
+    Every weblet url request will default to
+
++------------------------------
+    /weblets-demo/<path to the weblet resource/
++------------------------------
+
     in this case. So, if all other methods fail, this one will work!
 
 
@@ -157,9 +162,9 @@ Setup of Weblets
     context determination tools to the web.xml. All is done automatically.
     However also in JSF one limitation still exists.
 
-** Limitation of the JSF configuration
+** Limitations of the JSF configuration
 
-Just as in the generic configuration, weblets only allows path patterns. Hence
+    Just as in the generic configuration, weblets only allows path patterns. Hence
 
     <Code 6: JSF Specific mapping patterns >
 

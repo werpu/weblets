@@ -4,47 +4,48 @@
 
 Preface
 
- As Weblets originated from a project which was developed for an ajax and jsf centric book,
- Weblets has extensive tooling support for jsf, and tries to utilize JSFs internal structures
- extensively, to ease the configuration and usage.
+     As Weblets originated from a project which was developed for an ajax and jsf centric book,
+     Weblets has extensive tooling support for jsf, and tries to utilize JSFs internal structures
+     extensively, to ease the configuration and usage.
 
- Weblets itself is not jsf centric, but it has a very strong jsf tooling support besides its generic
- web framework coverage. Over time it might be possible that other web frameworks could be supported
- in a similar way where needed.
+     Weblets itself is not jsf centric, but it has a very strong jsf tooling support besides its generic
+     web framework coverage. Over time it might be possible that other web frameworks could be supported
+     in a similar way where needed.
 
- The generic tooling support of course also works in JSF, but it doesn´t have to be used, due to the easier
- configuration and usage of the internal JSF mechanisms
+     The generic tooling support of course also works in JSF, but it doesn´t have to be used, due to the easier
+     configuration and usage of the internal JSF mechanisms
 
+* Setup
 
- * Setup
+     The setup is described already in the {{{./setup.html}Setup guide}}, to reiterate the information there in a few lines.
+     Every basic jsf setup should work out of the box in a plug and play way. The only thing you which is needed
+     is a valid path triggering pattern for the faces servlet.
 
- The setup is described already in the {{{./setup.html}Setup guide}}, to reiterate the information there in a few lines.
- Every basic jsf setup should work out of the box in a plug and play way. The only thing you which is needed
- is a valid path triggering pattern for the faces servlet.
   <Code 0: valid path pattern in the web.xml >
- +-----------------------------------------------------------
+
++-----------------------------------------------------------
    <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>/faces/*</url-pattern>
   </servlet-mapping>
- +-----------------------------------------------------------
++-----------------------------------------------------------
 
- Of course file patterns can be used additionally.
+     Of course file patterns can be used additionally.
 
- Another limitation of this system is, if you use a Faces servlet which is not the standard jsf one
- you have to do a fallback to the generic configuration! However you still can use all of the other features
- weblets provides for jsf.
+     Another limitation of this system is, if you use a Faces servlet which is not the standard jsf one
+     you have to do a fallback to the generic configuration! However you still can use all of the other features
+     weblets provides for jsf.
 
- * Basic Functions
+* Basic Functions
 
- ** Introduction
+** Introduction
 
- Weblets contain of two parts in their execution, a frontend API, which enables a neutral notation for application
- developers, to isolate the resource call from the actual calling protocol and position.
- The frontend apis usually expand the parameters into http ursl or uris, which then are processed
- after a browser request by the weblets container and its subsystems.
+    Weblets contain of two parts in their execution, a frontend API, which enables a neutral notation for application
+    developers, to isolate the resource call from the actual calling protocol and position.
+    The frontend apis usually expand the parameters into http ursl or uris, which then are processed
+    after a browser request by the weblets container and its subsystems.
 
- A weblets container which then processes in a second stage the request by various framework specific methods.
+    A weblets container which then processes in a second stage the request by various framework specific methods.
 
     Now this sounds more complicated, than it really is, all the application programmer has to use, is the frontend
     specific api.
@@ -62,48 +63,46 @@ Preface
     resource(<webletname>,<path to resource>)
 +--------------------------------------------------
 
-   In every framework supported you always will find those two contractual methods in one way or the other.
+    In every framework supported you always will find those two contractual methods in one way or the other.
 
     The main difference between these two contract methods is, that <<<url>>> serves up
     a full url including the current web application context, while <<<resource>>>
     only serves up the relative path to the resource.
 
 
-    The following code example shows the two calls in a jsf specific context.
+    The following code example shows the two calls and their results.
     
 
-  <Code 2: Difference between url and resource in a jsf specific api>
-+----------------------------------------------------------------------
-        JSFWebletsUtils.getUrl(applicationContext, "org.myapp.html","/myresource.js")
+    <Code 2: Difference between url and resource in a pseudo  api>
 
++----------------------------------------------------------------------
+        url ("org.myapp.html","/myresource.js")
         resolves to /my-webapp/faces/weblets/myapp/myresource.js
 
-        JSFWebletsUtils.getResource(applicationContext, "org.myapp.html","/myresource.js")
-
+        resource( "org.myapp.html","/myresource.js")
         resolves to /faces/weblets/myapp/myresource.js
-
 +----------------------------------------------------------------------
 
 
-** JSF Frontend APIs
+* JSF Frontend APIs
 
-  Over the years JSF has become the base technology of various frameworks and view technologies, hence to cover
-  Weblets in JSF entirely, we have to cover serveral frontend technologies
+    Over the years JSF has become the base technology of various frameworks and view technologies, hence to cover
+    Weblets in JSF entirely, we have to cover serveral frontend technologies
 
-*** JSF 1.1
+** JSF 1.1
 
-  JSF 1.1 has several limitations regarding its frontend technologies and the usage of EL. JSF 1.1 in most cases
-  relies on JSP as frontend view technology with its own api providing the additional work, and as el it
-  provides its own el technology.
+    JSF 1.1 has several limitations regarding its frontend technologies and the usage of EL. JSF 1.1 in most cases
+    relies on JSP as frontend view technology with its own api providing the additional work, and as el it
+    provides its own el technology.
 
-  Now to use Weblets in JSF 1.1, you have basically two options
-  a) For cases outside of the JSF area (areas in your page outside of f:view) rely on basic jsp mechanisms as described
-  in {{{./usagejsp.html}JSP : Usage page}}
+    Now to use Weblets in JSF 1.1, you have basically two options
+    a) For cases outside of the JSF area (areas in your page outside of f:view) rely on basic jsp mechanisms as described
+    in {{{./usagejsp.html}JSP : Usage page}}
 
-  b) Within JSF areas you can rely on an el dummy map provided automatically to your jsf system. To use it no
-  additional configuration is needed:
+    b) Within JSF areas you can rely on an el dummy map provided automatically to your jsf system. To use it no
+    additional configuration is needed:
 
-  The following code example showcases the usage of this el dummy map:
+    The following code example showcases the usage of this el dummy map:
 
    <Code 3: Usage or resource and url in a jsf frontend environment>
 
@@ -112,23 +111,23 @@ Preface
   <h:graphicImage value="#{jsfwebletres['weblets.demo']['/img/icon_alert.gif']}" />
 +----------------------------------------------
 
-   In this example you can precisely see why you need sometimes resource <<<jsfwebletres>>> or
-   url <<<jsfwebleturl>>>, in this example h:graphicImage adds the application context itself
-   so we dont need a full url including the web application context, instead we just need
-   a path relative to it.
+    In this example you can precisely see why you need sometimes resource <<<jsfwebletres>>> or
+    url <<<jsfwebleturl>>>, in this example h:graphicImage adds the application context itself
+    so we dont need a full url including the web application context, instead we just need
+    a path relative to it.
 
-  <Code 4: Difference between url and resource in a jsf specific api>
+    <Code 4: Difference between url and resource in a jsf specific api>
 
 +----------------------------------------------
-   <<<#{jsfwebleturl['weblets.demo']['/welcome.js']}>>>
+   #{jsfwebleturl['weblets.demo']['/welcome.js']}
++----------------------------------------------
 
    Is a typical jsf dummy map. One of JSF 1.1s el implementation is, it does not allow functions
    which would easy the extension of the wel, all it allows is properties and maps.
    To allow a function  like behavior you can map the functionality into dummy maps
    and pass the parameters over the map keys.
-+----------------------------------------------
 
-*** Facelets and JSF 1.2
+** Facelets and JSF 1.2
 
    The last years facelets has become the frontend technology for many projects. One of the advantages of facelets
    is that it already provides a JSP 2.x and JSF 1.2 el, so that you automatically can start to use
@@ -141,9 +140,9 @@ Preface
    a) via el functions (the same as in jsp 2.x)
    b) via the above described dummy maps
 
- Newer el implementations provide so called el functions, those are functions which can be added
- to the actual el implementation to extend its functionality. If you are in a system which uses newer
- el implementations, it is highly recommended to use those instead of the dummy maps.
+    Newer el implementations provide so called el functions, those are functions which can be added
+    to the actual el implementation to extend its functionality. If you are in a system which uses newer
+    el implementations, it is highly recommended to use those instead of the dummy maps.
 
  The next example shows how to use the el functions:
 
@@ -159,15 +158,52 @@ Preface
   As you can see the calls are very similar, but instead of reverting into a (still available) jsf dummy map
   we call directly el functions we added to our page by adding another xml namespace to our xmlns definitions.
 
+
+* Backend APIs for the Component and Bean Developers
+
+  Component and generally backend authors in JSF generally face the problem, of not having
+  a standardized way to load resources.
+  The classical way is either to use
+
+  ** a document root and relative resources
+  
+  ** a view handler <<<handler.getResourceURL(context, "/myresources/myScript.js");>>>
+
+*
+
+    In both methods you have to pack the resources into your application, you have to take care
+    about their precise location in your document tree etc...
+    This is burden and error prone, and resources can be traced down to their actual location
+    which opens another door for hackers to bring in trojan horses!
+    Besides that changing the location or even pysical source of any resource might cause
+    changes in the entire application tree and even some components, or at least in the packaging
+    of the actual components themselves!
+
+    Now weblets is here to solve all these problems. And again we revert to our proven url and uri notation
+    in a neutral way.
+
+    Weblets provides for many backend technologies Utils classes which provide the usual url and uri notations,
+    jsf as well:
+
+    <Code 6: Usage contractual API the JSF way>
+
++--------------------------------------------
+
++--------------------------------------------
+
   
 Summary
 
-The usage of weblets in JSF is very easy, depending on your configuration you can either revert to
-    a) Basic JSP mechanisms
-    b) JSF dummy maps
-    c) EL functions for newer el implementations
+    The usage of weblets in JSF is very easy, depending on your configuration you can either revert to
+
+    ** Basic JSP mechanisms
+
+    ** JSF dummy maps
+
+    ** EL functions for newer el implementations
     
 
+    Also for the component and bean developers easy to use JSF specific APIs have been provided
 
 
 

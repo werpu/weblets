@@ -4,11 +4,98 @@
 
 Preface
 
+    As Weblets originated from a project which was developed for an ajax and jsf centric book,
+    Weblets has extensive tooling support for jsf, but it tries to cover as many webframeworks
+    as possible in at least a generic way.
+
+    The native support of JSP as very important frontend technology by various means was important.
+    So JSP has a similar very extensive tooling just as jsf has!
 
  * Setup
 
- The setup is described already in the {{{./setup.html}Setup guide}}, to reiterate the information there in a few lines.
+    The setup is described already in the {{{./setup.html}Setup guide}},
+    to reiterate the information there in a few lines.
 
- * Basic Functions
+    To get weblets up and running you need a valid weblets servlet configuration.
+    Unlike JSF we do not have any automatisms in place. The configuration has to be done
+    explicitly with a path pattern as trigger for the servlet
 
- ** Introduction
++--------------------------------------------------
+    <servlet>
+        <servlet-name>Weblets Servlet</servlet-name>
+        <servlet-class>net.java.dev.weblets.WebletsServlet</servlet-class>
+    </servlet>
+
+
+    <!-- The weblets servlet mapping must be path based otherwise weblets will fail! -->
+    <servlet-mapping>
+        <servlet-name>Weblets Servlet</servlet-name>
+        <url-pattern>/weblets/*</url-pattern>
+    </servlet-mapping>
++--------------------------------------------------
+
+    More information on the entire web.xml configuration can be found under {{{setup.at}Weblets:Setup guide}}
+
+
+* Basic Functions
+
+
+** Introduction
+
+    Weblets contain of two parts in their execution, a frontend API, which enables a neutral notation for application
+    developers, to isolate the resource call from the actual calling protocol and position.
+    The frontend apis usually expand the parameters into http ursl or uris, which then are processed
+    after a browser request by the weblets container and its subsystems.
+
+    A weblets container which then processes in a second stage the request by various framework specific methods.
+
+    Now this sounds more complicated, than it really is, all the application programmer has to use, is the frontend
+    specific api.
+
+    Weblets tries to be as precise as possible in the apis and their results, so that over all frameworks
+    and platforms the application programmer can be sure that the final result stays the same, not depending
+    on the underlying framework being used.
+
+    The basic idea of the weblet fronted api, are two contractual methods
+
+  <Code 1: Contractual Methods>
+
++--------------------------------------------------
+    url(<webletname>,<path to resource>)
+    resource(<webletname>,<path to resource>)
++--------------------------------------------------
+
+    In every framework supported you always will find those two contractual methods in one way or the other.
+
+    The main difference between these two contract methods is, that <<<url>>> serves up
+    a full url including the current web application context, while <<<resource>>>
+    only serves up the relative path to the resource.
+
+
+    The following code example shows the two calls and their results.
+
+
+    <Code 2: Difference between url and resource in a pseudo  api>
+
++----------------------------------------------------------------------
+        url ("org.myapp.html","/myresource.js")
+        resolves to /my-webapp/faces/weblets/myapp/myresource.js
+
+        resource( "org.myapp.html","/myresource.js")
+        resolves to /faces/weblets/myapp/myresource.js
++----------------------------------------------------------------------
+
+* JSP Frontend APIs
+
+    Over the years JSP has evolved and significantly changed, weblets tries to cover jsp as extensively
+    as possible, henace, it provides several apis to the frontend developer.
+
+** The Basic JSP Bean API
+
+    Weblets provides as the most basic and most compatible mechanism a simple bean which can be utilized by the backed
+    or frontend, you can use scriptlets to access this bean.
+    It should be compatible with all jsp versions altough we have more elegant and simpler solutions
+    for JSP2.x.
+
+    <Code 3: Accessing weblets via beans and scriptlets>
+

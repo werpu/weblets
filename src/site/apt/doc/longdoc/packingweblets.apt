@@ -135,7 +135,7 @@ This is a weblet definition, it is very similar to a web.xml servlet definition
     The functionality is similar to the servlet mapping!
 
 
-** The Results of the Configuration
+* The Results of the Configuration
 
     Now the weblet system is configured lets have a short upfront look at the results (more details will follow later)
 
@@ -145,8 +145,17 @@ This is a weblet definition, it is very similar to a web.xml servlet definition
     b) The url or path which in a subsequent
     browser request should trigger the weblet class which then serves the request.
 
-    So if an application programmer for instance calls the el function ${weblet:url('myweblet','/styles/style.css')}
-    the function will return following url /<webapp-context/weblet-servlet/myresources/$1.02/styles/style.css
+    So if an application programmer for instance calls the el function
+
++--------------------------------
+    ${weblet:url('myweblet','/styles/style.css')}
++--------------------------------    
+
+    the function will return following url
+
++--------------------------------
+    /<webapp-context/weblet-servlet/myresources/$1.02/styles/style.css
++--------------------------------
 
     The internal location of the resource itself is hidden entirely from the frontend.
 
