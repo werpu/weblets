@@ -1,0 +1,164 @@
+                                    ------------------------
+                                    Resource Packing With Weblets
+                                    ------------------------
+
+
+Introduction into the Weblets Resource Packing
+
+    As of weblets 1.0 there are two packaging formats for weblet resources, expanded resources in a
+    normal web application, and a simple jar with all the weblet meta information needed.
+
+* Structural information
+
+    A weblet is defined by its <<<weblets-config.xml>>> file located in the jars or webapps
+    META-INF or WEB-INF directory!
+    It is a simple xml config file with a setup syntax very close to a standard web.xml file
+
+** The weblets-config.xml file
+
+    The weblets config.xml file consists of several parts:
+
+    <Code 0: Example weblets-config.xml>
+
++--------------------------------------------------------------
+   <?xml version="1.0" encoding="UTF-8" ?>
+   <weblets-config xmlns="http://weblets.dev.java.net/config" >
+     <weblet>
+       <weblet-name>myweblet</weblet-name>
+       <weblet-class>
+         net.java.dev.weblets.packaged.PackagedWeblet
+       </weblet-class>
+       <weblet-version>1.02</weblet-version>
+       <init-param>
+         <param-name>package</param-name>
+         <param-value>
+           org.myapp.faces.renderer.html.resources
+         </param-value>
+       </init-param>
+     </weblet>
+     <weblet-mapping>
+       <weblet-name>myweblet</weblet-name>
+       <url-pattern>/myresources/*</url-pattern>
+     </weblet-mapping>
+   </weblets-config>
++--------------------------------------------------------------
+
+    Now this this configuration file basically consists of several parts. Lets have a look
+    at the configuration part by part.
+
+    <Code 1: Configuration Part 0>
+
++--------------------------------------------------------------
+     <weblet>
+       <weblet-name>myweblet</weblet-name>
+       <weblet-class>
+         net.java.dev.weblets.packaged.PackagedWeblet
+       </weblet-class>
+       <init-param>
+         <param-name>package</param-name>
+         <param-value>
+           org.myapp.faces.renderer.html.resources
+         </param-value>
+       </init-param>
+     </weblet>
+
++--------------------------------------------------------------
+
+This is a weblet definition, it is very similar to a web.xml servlet definition
+
++--------------------------------------------------------------
+    <weblet-name>myweblet</weblet-name>
++--------------------------------------------------------------
+
+    Defines the weblet name with the name <<<myweblet>>> this is used externally and by the later weblet
+    parts as reference.
+
++--------------------------------------------------------------
+       <weblet-class>
+         net.java.dev.weblets.packaged.PackagedWeblet
+       </weblet-class>
++--------------------------------------------------------------
+
+    Defines a weblet class. Weblet Classes are different implementations of resource loading
+    mechanisms, currently only net.java.dev.weblets.packaged.PackagedWeblet is supported.
+    PackagedWeblet basically does the resource streaming of packed and unpacked resources.
+    It might be possible that Weblet provides other weblet classes in the long run.
+    The possibilities are limitless. It is also possible to provide your own weblet-class
+    for instance, which would stream resources from database clobs or act as proxies streaming
+    resources from the net. Everything would be possible, but for Weblets 1.0 only the
+    PackagedWeblet class is provided.
+
++--------------------------------------------------------------
+    <weblet-version>1.02</weblet-version>
++--------------------------------------------------------------
+
+    This is an optional parameter which is added to the url
+    it basically provides a version number for the packaging
+    to get a finer control over the browser cache!
+
+
++--------------------------------------------------------------
+       <init-param>
+         <param-name>package</param-name>
+         <param-value>
+           org.myapp.faces.renderer.html.resources
+         </param-value>
+       </init-param>
++--------------------------------------------------------------
+
+    Every weblet class takes a set of init parameters, which are variable
+    from weblet-class to weblet class. For the packaged weblet only the
+
++-------------------------------------------------------------
+        <param-name>package</param-name>
+         <param-value>
+           org.myapp.faces.renderer.html.resources
+         </param-value>
++-------------------------------------------------------------
+
+    Parameter is important. It determines the internal package location of your resources!
+
+    Now we have covered the first part of the configuration, lets have a look at the second
+    part.
+
+    <Code 2: Configuration Part 1>
+
++-------------------------------------------------------------
+     <weblet-mapping>
+       <weblet-name>myweblet</weblet-name>
+       <url-pattern>/myresources/*</url-pattern>
+     </weblet-mapping>
++-------------------------------------------------------------
+
+    This is very similar to a servlet mapping. The weblet mapping simply describes the resource mapping
+    a weblet should use to be triggered.
+    The functionality is similar to the servlet mapping!
+
+
+** The Results of the Configuration
+
+    Now the weblet system is configured lets have a short upfront look at the results (more details will follow later)
+
+    From an application programmers view, every weblet call consists of two parts
+    a) An API call which calls the contractual methods, those methods give back a url or path
+
+    b) The url or path which in a subsequent
+    browser request should trigger the weblet class which then serves the request.
+
+    So if an application programmer for instance calls the el function ${weblet:url('myweblet','/styles/style.css')}
+    the function will return following url /<webapp-context/weblet-servlet/myresources/$1.02/styles/style.css
+
+    The internal location of the resource itself is hidden entirely from the frontend.
+
+    Now if a browser calls this resource, the weblet class and its underlying weblet-container will serve the
+    resource transparently.
+
+Summary
+
+    Packaging of weblets is very easy it simply is a matter of adding a weblet-config.xml at the correct locations.
+    You can use expanded dirs or simply jar files.
+    Check out the weblets-example weblet subproject of your weblets installation for an extensive packaging
+    example including maven builds!
+    Also check out the dojo demo in the weblets-demo application for an extensive example on how to use
+    the packed resources in your own applications.
+

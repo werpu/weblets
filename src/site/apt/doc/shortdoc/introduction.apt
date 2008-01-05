@@ -222,46 +222,47 @@ Loading Resources with Weblets
     weblet:resource(<weblet name>, /<resource>)
 +-----------------------------------
 
-      The main difference between these two contract methods is, that url serves up
-      a full url including the current web application context, while resource
+      The main difference between these two contract methods is, that <<<url>>> serves up
+      a full url including the current web application context, while <<<resource>>>
       only serves up the relative path to the resource.
 
 
       This contract is applied in various client technologies differently, but the basic structure is kept the same.
 
-      Following code samples will explain how to enable the contract in various frameworks and frontend technologies:
-    <Code sample 5. Using Weblet "protocol" to serve up resources>
+      Following code samples will explain how to utilize the weblet contract apis in various frameworks and frontend technologies:
+
+    <Code sample 5. Using Weblet "apis" to serve up resources>
 
 +----------------------------------------------------------------------
       JSF:
         JSFWebletsUtils.getInstance().getUrl(applicationContext, "org.myapp.html","/myresource.js")
         JSFWebletsUtils.getInstance().getResource(applicationContext, "org.myapp.html","/myresource.js")
 
-      Generic non JSF Webframeworks:
+      Generic non JSF webframeworks:
         WebletsUtils.getInstance().getUrl("org.myapp.html","/myresource.js")
         WebletsUtils.getInstance().getResource("org.myapp.html","/myresource.js")
 
-      Frontend: JSF Dummy Maps utilizing EL:
+      Frontend: JSF dummy maps utilizing EL:
         #{jsfwebleturl['org.myapp.html']['/myresource.js']}
         #{jsfwebletres['org.myapp.html']['/myresource.js']}
 
-      EL functions usable from jsp2, facelets and jsf 1.2:
+      EL functions usable from JSP2, facelets and JSF 1.2:
         xmlns:wbl="http://weblets.dev.java.net/tags_jsp2"
         ${wbl:resource('org.myapp.html','/myresource.js')}
         ${wbl:url('org.myapp.html','/myresource.js')}
 
-      JSP Bean for jsp 1.x:
+      JSP Bean for JSP 1.x:
         jsp:useBean class="net.java.dev.weblets.WebletsUtils" scope="application" id="jspweblet"
         jspweblet.getResource( "org.myapp.html","/myresource.js")
         jspweblet.getUrl( "org.myapp.html","/myresource.js")
 
-       Mime text/ Resources and CSS loaded from weblet:
+       MIME text/ resources and CSS loaded from weblet:
         weblet:url( org.myapp.html , //myresource.js )
         weblet:resource( org.myapp.html , //myresource.js )
        (example:  alert('weblet:url( weblets.demo , /welcome.js )'); )
 +----------------------------------------------------------------------
 
-   <Code sample 6. Using the Utils classes and contractual methods to serve up resources.>
+   <Code sample 6. Using the API Utils classes and contractual methods to serve up resources.>
 
 +----------------------------------------------------------------------
         String resourceURL =
@@ -275,27 +276,25 @@ Loading Resources with Weblets
 
 
    Basically every web framework and frontend technology
-   can be used, utilizing either the frontend helper objects and functions
-   or the backend Utils classes.
+   can be used, by utilization of either the frontend helper objects and functions
+   or the backend utils APIs.
 
-   The Weblet contract syntax is convenient and easy to understand. The syntax starts with <<<url or resource>>>
+   The Weblet contract apis are easy to understand. The apis start with <<<url or resource>>>
    followed by the Weblet name e.g. <<<org.myapp.html>>> and finally the path info, or resource file,
    e.g. <<</myScript.js>>>. Notice that neither the URL mapping nor the version number are included in the weblet
-   resource syntax. The URL mapping and version number are used by the <<<Utils Classes>>> to create
+   api calls. The URL mapping and version number are generated internally by the <<<Utils Classes>>> to create
    a resource URL that the Weblet will service.
 
 
-   (Note for users of Weblets 0.4, the weblets protocol has been ommitted in favor
-   of the weblet contract, the protocol is not supported anymore!!)
+   <(Note for users of Weblets 0.4, the weblets protocol has been ommitted in favor
+   of the weblet contract, the protocol is not supported anymore!!)>
+
+   The main difference between the <<<url>>> and <<<resource>>> api is, that <<<url>>> serves up
+   a full url including the current web application context, while <<<resource>>>
+   only serves up the relative path to the resource.
 
 
-
-      The main difference between the url and resource contract methods is, that url serves up
-      a full url including the current web application context, while resource
-      only serves up the relative path to the resource.
-
-
-    Following example will show the difference between url and resource
+    Following example will show the difference between <<<url>>> and <<<resource>>>
 
 
  <Code sample 6. Difference between url and resource>
@@ -314,17 +313,14 @@ Loading Resources with Weblets
 
 * Using Weblets in generic Web Applications
 
-   Weblets tries to support as many frameworks as possible to utilize the resource
-   packaging.
+   Weblets tries to support as many frameworks as possible.
    To enable this, generic web applications have to setup a weblets servlet in the
    <<<web.xml>>> file and have to set up a path pattern on this servlet.
    If no path pattern is set, weblets will issue a startup warning and will not work properly.
 
-
-
 * Using Weblets in a JSF application
 
-   In order to simplify setup for the application developer, component writers should select a default URL mapping
+   In order to simplify the setup for the application developer, component writers should select a default URL mapping
    for their component libraries. There is no need for the application developer to add any Weblet-specific
    configuration to the <<<web.xml>>> file, since the <<<WebletsPhaseListener>>> will be invoked automatically to
    service incoming requests for Weblet-managed resources.
