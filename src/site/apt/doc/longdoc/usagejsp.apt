@@ -1,23 +1,23 @@
                                      ------------------------
-                                   Usage of Weblets in a JSP centric environment
+                             Usage of Weblets in a JSP centric environment
                                      ------------------------
 
 Preface
 
-    As Weblets originated from a project which was developed for an ajax and jsf centric book,
-    Weblets has extensive tooling support for jsf, but it tries to cover as many webframeworks
-    as possible in at least a generic way.
+    As <<<Weblets>>> originated from a project which was developed for an <<<Ajax>>> and <<<JSF>>> centric book.
+    <<<Weblets>>> has extensive tooling support for <<<JSF>>>, but it tries to cover as many web frameworks
+    as possible in at least a generic way. And the most important ones in native ways if possible.
 
-    The native support of JSP as very important frontend technology by various means was important.
-    So JSP has a similar very extensive tooling just as jsf has!
+    Therefore, native support of <<<JSP>>> as a very important frontend technology  was important.
+
 
  * Setup
 
     The setup is already described in the {{{./setup.html}Setup guide}}.
 
-    To get weblets up and running you need a valid weblets servlet configuration.
-    Unlike JSF we do not have any automatisms in place. The configuration has to be done
-    explicitly with a path pattern as trigger for the servlet
+    To get <<<Weblets>>> up and running you need a valid <<<Weblets>>> servlet configuration.
+    Unlike <<<JSF>>> we do not have any automatisms in place. The configuration has to be done
+    explicitly, with a path pattern as trigger for the servlet.
 
 +--------------------------------------------------
     <servlet>
@@ -26,7 +26,7 @@ Preface
     </servlet>
 
 
-    <!-- The weblets servlet mapping must be path based otherwise weblets will fail! -->
+    <!-- The <<<Weblets>>> servlet mapping must be path based otherwise <<<Weblets>>> will fail! -->
     <servlet-mapping>
         <servlet-name>Weblets Servlet</servlet-name>
         <url-pattern>/weblets/*</url-pattern>
@@ -38,43 +38,38 @@ Preface
 
 * Basic Functions
 
-
 ** Introduction
 
-    Weblets contain of two parts in their execution, a frontend API, which enables a neutral notation for application
-    developers to isolate the resource call from the actual calling protocol and position.
-    The frontend apis usually expand the parameters into http urls or uris, which then are processed
-    after a browser request by the weblets container and its subsystems.
+    <<<Weblets>>> contain two parts in their execution pipeline, a frontend <<<API>>>, which enables a
+    neutral notation for application developers to isolate the resource call from the actual calling protocol and position.
+     a calling resolution stage, which intercepts the actual resource call and serves the
+    resource from a given datasource.
 
-    A weblets container which then processes in a second stage the request by various framework specific methods.
+    Now this sounds more complicated, than it really is, all the application programmer has to use,
+    is the frontend specific <<<API>>>.
 
-    Now this sounds more complicated, than it really is, all the application programmer has to use, is the frontend
-    specific api.
-
-    Weblets tries to be as precise as possible in the apis and their results, so that in all frameworks
+    <<<Weblets>>> tries to be as precise as possible in the <<<APIs>>> and their results, so that in all frameworks
     and platforms the application programmer can be sure that the final result stays the same, not depending
     on the underlying framework being used.
 
-    The basic idea of the weblet fronted api, are two contractual methods
+    The basic idea of the weblet fronted API, are two contract functions/methods.
 
-  <Code 1: Contractual Methods>
+  <Code 1: Contract Functions/Methods>
 
 +--------------------------------------------------
     url(<webletname>,<path to resource>)
     resource(<webletname>,<path to resource>)
 +--------------------------------------------------
 
-    In every framework supported you always will find those two contractual methods in one way or the other.
+    In every framework supported, you always will find those in one way or the other.
 
     The main difference between these two contract methods is, that <<<url>>> serves up
     a full url including the current web application context, while <<<resource>>>
     only serves up the relative path to the resource.
 
-
     The following code example shows the two calls and their results.
 
-
-    <Code 2: Difference between url and resource in a pseudo  api>
+    <Code 2: Difference between url and resource in a pseudo  API>
 
 +----------------------------------------------------------------------
         url ("org.myapp.html","/myresource.js")
@@ -84,38 +79,41 @@ Preface
         resolves to /faces/weblets/myapp/myresource.js
 +----------------------------------------------------------------------
 
-* JSP Frontend APIs
+* <<<JSP>>> Frontend APIs
 
-    Over the years JSP has evolved and significantly changed, weblets tries to cover jsp as extensively
-    as possible, henace, it provides several apis to the frontend developer.
+    Over the years <<<JSP>>> has evolved, <<<Weblets>>> tries to cover <<<JSP>>> as extensively
+    as possible. Hence, it provides several APIs to the frontend developer,
+    which can be used accordingly to the <<<JSP>>> version in use.
 
-** The Basic JSP Bean API
+** The Basic <<<JSP>>> Bean API
 
-    Weblets provides as the most basic and most compatible mechanism a simple bean which can be utilized by the backed
-    or frontend, you can use scriptlets to access this bean.
-    It should be compatible with all jsp versions altough we have more elegant and simpler solutions
+    <<<Weblets>>> provides as the most basic and most compatible mechanism a simple bean,
+    which can be utilized by the backend or frontend, you can use scriptlets to access this bean.
+    It should be compatible with all <<<JSP>>> versions, although we have more elegant and simpler solutions
     for JSP2.x.
 
-    <Code 3: Accessing weblets via beans and scriptlets>
+    <Code 3: Accessing <<<Weblets>>> via beans and scriptlets>
 
 +------------------------------
     <jsp:useBean class="net.java.dev.weblets.WebletsUtils" scope="application" id="jspweblet" />
+    bean definition in your header
+    
     <%= jspweblet.getResource( "weblets.demo","/welcome.js") %>
     <%= jspweblet.getUrl( "weblets.demo","/welcome.js") %>
 +------------------------------
 
-    As you can see we include our utils class as simple JSP bean, the bean then
+    As you can see we include our utils class as simple <<<JSP>>> bean, the bean then
     provides our resource and url functions.
 
-** EL Functions for JSP 2.x
+** EL Functions for <<<JSP>>> 2.x
 
-    JSP2 provides newer EL implementations which have so called <<<EL Functions>>>, those are functions which can be added
+    JSP2 provides newer <<<EL>>> implementations which have so called <<<EL Functions>>>, those are functions which can be added
     extend the actual functionality provided by standard EL.
-    Weblets provide such function
+    <<<Weblets>>> provide such function
 
- The next example shows how to use the el functions:
+     The next example shows how to use the <<<EL>>> functions:
 
-    <Code 5: Usage of el functions>
+    <Code 5: Usage of <<<EL>>> functions
 
 +----------------------------------------------
      xmlns:wbl="http://weblets.dev.java.net/tags_jsp2" this has to be added to your namespace definitions
@@ -123,4 +121,16 @@ Preface
       <h:outputText value="${wbl:url('weblets.demo','/welcome.js')}" />
       <h:graphicImage value="${wbl:resource('weblets.demo','/img/icon_alert.gif')}" />
 +----------------------------------------------
+
+
+* JSP Backend APIs
+
+    The JSP backend APIs are the same as the servlet APIs for further reference see
+    {{{usagejava.apt}Weblets: Java APIs}}}
+
+
+Summary
+
+    Weblets are fully supported in JSP,depending on your JSP version in use,
+    you have various possibilities to access <<<Weblets>>> from your JSP page.
 
