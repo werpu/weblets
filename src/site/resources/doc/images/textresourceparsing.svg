@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.45.1"
+   sodipodi:docbase="D:\development\webletsintellij\src\site\resources\doc\images"
+   sodipodi:docname="textresourceparsing.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient7143">
+      <stop
+         style="stop-color:#cccccc;stop-opacity:1;"
+         offset="0"
+         id="stop7145" />
+      <stop
+         style="stop-color:#cccccc;stop-opacity:0;"
+         offset="1"
+         id="stop7147" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3139">
+      <stop
+         style="stop-color:#cccccc;stop-opacity:1;"
+         offset="0"
+         id="stop3141" />
+      <stop
+         style="stop-color:#cccccc;stop-opacity:0;"
+         offset="1"
+         id="stop3143" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3139"
+       id="linearGradient3145"
+       x1="31.064729"
+       y1="108.87971"
+       x2="198.23991"
+       y2="108.87971"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.9821783,0,0,0.7257687,0.5280656,78.850628)" />
+    <filter
+       inkscape:collect="always"
+       id="filter5135">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.0050764"
+         id="feGaussianBlur5137" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient7143"
+       id="linearGradient7149"
+       x1="476.54198"
+       y1="156.35688"
+       x2="684.12326"
+       y2="156.35688"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="343.58895"
+     inkscape:cy="802.94773"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="801"
+     inkscape:window-height="691"
+     inkscape:window-x="44"
+     inkscape:window-y="44" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:url(#linearGradient3145);fill-opacity:1;stroke:#000000;stroke-width:0.31301373;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2160"
+       width="163.83171"
+       height="88.070267"
+       x="31.221235"
+       y="113.83698"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="50.507626"
+       y="141.20459"
+       id="text2162"><tspan
+         sodipodi:role="line"
+         id="tspan2164"
+         x="50.507626"
+         y="141.20459">Browser Request to  </tspan><tspan
+         sodipodi:role="line"
+         x="50.507626"
+         y="156.20459"
+         id="tspan2166">load a Javascript</tspan></text>
+    <rect
+       style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter5135)"
+       id="rect3147"
+       width="189.90868"
+       height="211.12187"
+       x="229.30463"
+       y="45.240093" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="248.49753"
+       y="73.524368"
+       id="text3149"><tspan
+         sodipodi:role="line"
+         id="tspan3151"
+         x="248.49753"
+         y="73.524368">Weblets Container </tspan><tspan
+         sodipodi:role="line"
+         x="248.49753"
+         y="88.524368"
+         id="tspan3155">loading the Resource</tspan><tspan
+         sodipodi:role="line"
+         x="248.49753"
+         y="103.52437"
+         id="tspan3153" /></text>
+    <rect
+       style="fill:url(#linearGradient7149);fill-opacity:1.0;stroke:#000000;stroke-width:0.65187645;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3157"
+       width="206.9294"
+       height="70.5588"
+       x="476.86792"
+       y="121.07748" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="502.04584"
+       y="146.25536"
+       id="text3159"><tspan
+         sodipodi:role="line"
+         id="tspan3161"
+         x="502.04584"
+         y="146.25536">Resource</tspan><tspan
+         sodipodi:role="line"
+         x="502.04584"
+         y="161.25536"
+         id="tspan3163" /><tspan
+         sodipodi:role="line"
+         x="502.04584"
+         y="176.25536"
+         id="tspan3165">weblet:url(&lt;weblet&gt;,&lt;path&gt;)</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5203"
+       width="172.73608"
+       height="123.23861"
+       x="236.88078"
+       y="115.95078" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3167"
+       width="172.73608"
+       height="123.23861"
+       x="236.3757"
+       y="116.96092" />
+    <rect
+       style="fill:#28e9ff;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3169"
+       width="130.30968"
+       height="62.629459"
+       x="274.76151"
+       y="172.51932" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="250.51784"
+       y="135.14368"
+       id="text3171"><tspan
+         sodipodi:role="line"
+         id="tspan3173"
+         x="250.51784"
+         y="135.14368">Weblet</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="283.85287"
+       y="187.6716"
+       id="text3175"><tspan
+         sodipodi:role="line"
+         id="tspan3177"
+         x="283.85287"
+         y="187.6716">Text Resource </tspan><tspan
+         sodipodi:role="line"
+         x="283.85287"
+         y="202.6716"
+         id="tspan3179">Parser</tspan></text>
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.05208448;stroke-miterlimit:4;stroke-opacity:1"
+       d="M 196.24237,124.80826 L 225.05843,124.80826 C 225.33655,124.80826 236.60493,130.56821 236.60493,130.87368 L 225.56046,135.8363 C 225.56046,136.14177 225.33655,136.3877 225.05843,136.3877 L 196.24237,136.3877 C 195.96427,136.3877 195.74036,136.14177 195.74036,135.8363 L 195.74036,125.35966 C 195.74036,125.05419 195.96427,124.80826 196.24237,124.80826 z "
+       id="rect7161"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.06567392;stroke-miterlimit:4;stroke-opacity:1"
+       d="M 410.72273,124.30994 L 456.59081,124.30994 C 457.0335,124.30994 474.97,130.06316 474.97,130.36829 L 457.38991,135.32511 C 457.38991,135.63023 457.0335,135.87586 456.59081,135.87586 L 410.72273,135.87586 C 410.28005,135.87586 409.92364,135.63023 409.92364,135.32511 L 409.92364,124.86069 C 409.92364,124.55557 410.28005,124.30994 410.72273,124.30994 z "
+       id="path7164"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:0.06961706;stroke-miterlimit:4;stroke-opacity:1"
+       d="M 476.08658,177.84999 L 424.52771,177.84999 C 424.0301,177.84999 403.86823,183.60126 403.86823,183.90629 L 423.62947,188.86143 C 423.62947,189.16644 424.0301,189.41199 424.52771,189.41199 L 476.08658,189.41199 C 476.58419,189.41199 476.98482,189.16644 476.98482,188.86143 L 476.98482,178.40055 C 476.98482,178.09554 476.58419,177.84999 476.08658,177.84999 z "
+       id="path7166"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       style="fill:#aa0000;fill-opacity:1;stroke:#000000;stroke-width:0.0514192;stroke-miterlimit:4;stroke-opacity:1"
+       d="M 235.0908,189.96276 L 207.00784,189.96276 C 206.7368,189.96276 195.75508,195.72304 195.75508,196.02855 L 206.51859,200.99145 C 206.51859,201.29694 206.7368,201.54288 207.00784,201.54288 L 235.0908,201.54288 C 235.36184,201.54288 235.58005,201.29694 235.58005,200.99145 L 235.58005,190.51419 C 235.58005,190.2087 235.36184,189.96276 235.0908,189.96276 z "
+       id="path7168"
+       sodipodi:nodetypes="ccccccccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="446.48743"
+       y="275.55487"
+       id="text9192"><tspan
+         sodipodi:role="line"
+         id="tspan9194"
+         x="446.48743"
+         y="275.55487">Unparsed Resource </tspan><tspan
+         sodipodi:role="line"
+         x="446.48743"
+         y="290.55487"
+         id="tspan9196">weblet:url(&lt;weblet&gt;,&lt;path&gt;)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="151.52287"
+       y="286.66656"
+       id="text9198"><tspan
+         sodipodi:role="line"
+         id="tspan9200"
+         x="151.52287"
+         y="286.66656">Parsed Resource</tspan><tspan
+         sodipodi:role="line"
+         x="151.52287"
+         y="301.66656"
+         id="tspan9202">/demoweblet/myresource.js</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 204.05081,271.51427 L 210.11173,209.89496"
+       id="path9204"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 480.83261,261.41274 L 448.50773,194.74267"
+       id="path9206"
+       inkscape:connector-type="polyline" />
+  </g>
+</svg>

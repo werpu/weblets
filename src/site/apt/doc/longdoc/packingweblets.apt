@@ -3,20 +3,20 @@
                                     ------------------------
 
 
-Introduction into the Weblets Resource Packing
+Introduction into the <<<Weblets>>> Resource Packing
 
-    As of weblets 1.0 there are two packaging formats for weblet resources, expanded resources in a
+    As of <<<Weblets>>> 1.0 there are two packaging formats for weblet resources, expanded resources in a
     normal web application, and a simple jar with all the weblet meta information needed.
 
 * Structural information
 
     A weblet is defined by its <<<weblets-config.xml>>> file located in the jars or webapps
-    META-INF or WEB-INF directory!
-    It is a simple xml config file with a setup syntax very close to a standard web.xml file
+    <<<META-INF>>> or <<<WEB-INF>>> directory!
+    It is a simple xml config file with a setup syntax very close to a standard <<<web.xml>>> file
 
 ** The weblets-config.xml file
 
-    The weblets config.xml file consists of several parts:
+    The <<<Weblets>>> <<<config.xml>>> file consists of several parts:
 
     <Code 0: Example weblets-config.xml>
 
@@ -43,8 +43,7 @@ Introduction into the Weblets Resource Packing
    </weblets-config>
 +--------------------------------------------------------------
 
-    Now this this configuration file basically consists of several parts. Lets have a look
-    at the configuration part by part.
+    Lets have a look at the configuration part by part.
 
     <Code 1: Configuration Part 0>
 
@@ -64,7 +63,7 @@ Introduction into the Weblets Resource Packing
 
 +--------------------------------------------------------------
 
-This is a weblet definition, it is very similar to a web.xml servlet definition
+This is a weblet definition, it is very similar to a <<<web.xml>>> servlet definition
 
 +--------------------------------------------------------------
     <weblet-name>myweblet</weblet-name>
@@ -79,23 +78,22 @@ This is a weblet definition, it is very similar to a web.xml servlet definition
        </weblet-class>
 +--------------------------------------------------------------
 
-    Defines a weblet class. Weblet Classes are different implementations of resource loading
+    Defines a weblet class. Weblet classes are different implementations of resource loading
     mechanisms, currently only net.java.dev.weblets.packaged.PackagedWeblet is supported.
     PackagedWeblet basically does the resource streaming of packed and unpacked resources.
     It might be possible that Weblet provides other weblet classes in the long run.
     The possibilities are limitless. It is also possible to provide your own weblet-class
     for instance, which would stream resources from database clobs or act as proxies streaming
-    resources from the net. Everything would be possible, but for Weblets 1.0 only the
+    resources from the net. Everything would be possible, but for <<<Weblets>>> 1.0 only the
     PackagedWeblet class is provided.
 
 +--------------------------------------------------------------
     <weblet-version>1.02</weblet-version>
 +--------------------------------------------------------------
 
-    This is an optional parameter which is added to the url
-    it basically provides a version number for the packaging
+    This is an optional parameter, which is added to the url.
+    It basically provides a version number for the packaging
     to get a finer control over the browser cache!
-
 
 +--------------------------------------------------------------
        <init-param>
@@ -116,7 +114,7 @@ This is a weblet definition, it is very similar to a web.xml servlet definition
          </param-value>
 +-------------------------------------------------------------
 
-    Parameter is important. It determines the internal package location of your resources!
+    p$arameter is important. It determines the internal package location of your resources!
 
     Now we have covered the first part of the configuration, lets have a look at the second
     part.
@@ -132,18 +130,28 @@ This is a weblet definition, it is very similar to a web.xml servlet definition
 
     This is very similar to a servlet mapping. The weblet mapping simply describes the resource mapping
     a weblet should use to be triggered.
-    The functionality is similar to the servlet mapping!
+
+
 
 
 * The Results of the Configuration
 
     Now the weblet system is configured lets have a short upfront look at the results (more details will follow later)
 
-    From an application programmers view, every weblet call consists of two parts
-    a) An API call which calls the contractual methods, those methods give back a url or path
+    Every weblet resource loading pipeline consists of two parts, the first one is the weblet notation resolution
+    into a valid url pattern. The second one is the triggering of the resource loading mechanism
+    from a valid url pattern. The mapping described in the second part of the configuration refers
+    to the second stage of weblet loading and is very similar to servlet triggering.
+    To sum it up shortly, different calling urls can trigger different weblets or none at all, depending
+    on the pattern in the url!
 
-    b) The url or path which in a subsequent
-    browser request should trigger the weblet class which then serves the request.
+    ** An API call which calls the contractual methods, those methods give back a url or path, usually
+    only those calls are used by the application programmer
+
+    ** The url or path which in a subsequent
+    browser request should trigger the weblet class which then serves the request, this url can heavily
+    depend on your current web application setup, and hence should not be coded directly!
+
 
     So if an application programmer for instance calls the el function
 
@@ -164,10 +172,29 @@ This is a weblet definition, it is very similar to a web.xml servlet definition
 
 Summary
 
-    Packaging of weblets is very easy it simply is a matter of adding a weblet-config.xml at the correct locations.
+    Packaging of <<<Weblets>>> is very easy it simply is a matter of adding a weblet-config.xml at the correct locations.
     You can use expanded dirs or simply jar files.
-    Check out the weblets-example weblet subproject of your weblets installation for an extensive packaging
+    Check out the weblets-example weblet subproject of your <<<Weblets>>> installation for an extensive packaging
     example including maven builds!
     Also check out the dojo demo in the weblets-demo application for an extensive example on how to use
     the packed resources in your own applications.
 
+=======================================================================
+
+* Contents
+
+   [[1]] {{{./index.html} Users Documentation: Index }}
+
+   [[2]] {{{./gettingstarted.html} Users Documentation: Getting Started }}
+
+   [[3]] {{{./setup.html} Users Documentation: Setup Guide }}
+
+   [[4]] {{{./usagejsp.html} Users Documentation: JSP Weblets Usage Guide }}
+
+   [[5]] {{{./usagejava.html} Users Documentation: Servlet Weblets Usage Guide }}
+
+   [[5]] {{{./usagejsf.html} Users Documentation: JSF Weblets Usage Guide }}
+
+   [[6]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
+
+   [[7]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}

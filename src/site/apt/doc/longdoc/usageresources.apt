@@ -1,0 +1,130 @@
+                                ---------------------------------
+                                Resources Weblets Usage Guide
+                                ---------------------------------
+
+Introduction
+
+    Not only java or jsp files have the problem of having to load resources.
+    Resource loading is universal and not only limited to the domain of java or its
+    derived technologies.\
+    Resources can be loaded also by resource files. Weblets as universal solution to resource loading
+    provides also the hooks for CSS and javascript authors who have to deal with the problem
+    of having to load or reference resources in a neutral way.
+
+*Basic Functions
+
+** Introduction
+
+    <<<Weblets>>> contain two parts in their execution pipeline, a frontend <<<API>>>, which enables a
+    neutral notation for application developers to isolate the resource call from the actual calling protocol and position.
+     a calling resolution stage, which intercepts the actual resource call and serves the
+    resource from a given datasource.
+
+    Now this sounds more complicated, than it really is, all the application programmer has to use,
+    is the frontend specific <<<API>>>.
+
+    <<<Weblets>>> tries to be as precise as possible in the <<<APIs>>> and their results, so that in all frameworks
+    and platforms the application programmer can be sure that the final result stays the same, not depending
+    on the underlying framework being used.
+
+    The basic idea of the weblet fronted API, are two contract functions/methods.
+
+  <Code 1: Contract Functions/Methods>
+
++--------------------------------------------------
+    url(<webletname>,<path to resource>)
+    resource(<webletname>,<path to resource>)
++--------------------------------------------------
+
+    In every framework supported, you always will find those in one way or the other.
+
+    The main difference between these two contract methods is, that <<<url>>> serves up
+    a full url including the current web application context, while <<<resource>>>
+    only serves up the relative path to the resource.
+
+    The following code example shows the two calls and their results.
+
+    <Code 2: Difference between url and resource in a pseudo  API>
+
++----------------------------------------------------------------------
+        url ("org.myapp.html","/myresource.js")
+        resolves to /my-webapp/faces/weblets/myapp/myresource.js
+
+        resource( "org.myapp.html","/myresource.js")
+        resolves to /faces/weblets/myapp/myresource.js
++----------------------------------------------------------------------
+
+
+** Weblets and Javascript
+
+    To support resource cross refencing in a neutral manner, weblets adds another parsing step to
+    generic text resources which preparse the resource for the occurence of the contractual functions
+    and replaces them on the fly with the weblet url calls. The browser then can resolve the urls
+    and triggers the second weblet stage which serves the resources!
+
+   <Image 0: Resource Parsing in Weblets>
+
+[../images/resourceparsing.png]
+
+   No to apply this we have to have in mind that every javascript file loaded
+   by weblets is parsed and searched for our weblet notation.
+   Hence we can use api functions directly without influencing the actual code.
+
+   <Code 0: Javascript Usage of the weblet api >
+
++----------------------------------------------------
+   alert('weblet:url( weblets.demo , /welcome.js )');
+   expands to alert('/myapp/weblets/demo/welcome.js')
+
+   alert('weblet:resource( weblets.demo , /welcome.js )');
+   expands to alert('/weblets/demo/welcome.js')
++----------------------------------------------------
+
+   <<<Note: To ease the integration into various text based resource languages,
+   the hyphenation normally found for strings was deliberately left out of the function!>>>
+
+** Weblets and CSS
+
+   Everything said regarding javascript also applies to CSS, following code example will showcase
+   the features Weblets adds to CSS
+
+   <Code 1: CSS Usage of the weblet api >
+
++-----------------------------------------------------
+     background-image: url( weblet:resource( weblets.demo , /myimage.png ) );
+
+     will be expanded to
+     background-image: url( /myapp/weblets/demo/myimage.png );
++-----------------------------------------------------
+
+** Additional information
+
+    Basically every text resource is parsed in the parsing stage, so you can use the
+    Weblets notation in everything text based!
+    The referencing of relative resources in Weblets as well is no problem, you still
+    can reference resources relatively without any limitations, however you have to have
+    in mind, that those resources are referenced relatively to the expanded weblet url.
+    Generally spoken it is saver to simply use the weblet notation for intra weblet resource
+    references!
+
+=======================================================================
+
+* Contents
+
+   [[1]] {{{./index.html} Users Documentation: Index }}
+
+   [[2]] {{{./gettingstarted.html} Users Documentation: Getting Started }}
+
+   [[3]] {{{./setup.html} Users Documentation: Setup Guide }}
+
+   [[4]] {{{./usagejsp.html} Users Documentation: JSP Weblets Usage Guide }}
+
+   [[5]] {{{./usagejava.html} Users Documentation: Servlet Weblets Usage Guide }}
+
+   [[5]] {{{./usagejsf.html} Users Documentation: JSF Weblets Usage Guide }}
+
+   [[6]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
+
+   [[7]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
+
+                              

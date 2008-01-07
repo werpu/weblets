@@ -67,7 +67,7 @@ Loading Resources with Weblets
    rendering of the main JavaServer Faces page, the <<<JSFWebletsUtils>>> is responsible for converting weblet
    specific resource URLs into the actual URLs used by the browser to request weblet-managed resources.
 
-[images/figure1.png] <Figure 1. High-overview of Weblet architecture>
+[../images/figure1.png] <Figure 1. High-overview of Weblet architecture>
 
    After receiving the rendered markup for the main page, the browser downloads each additional resource using a
    separate request. Each request for a weblet-managed resource is intercepted by the <<<WebletsPhaseListener>>>,
