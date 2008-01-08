@@ -26,6 +26,8 @@ Getting Started with Weblets
 
     ** a weblets-demo war file with the demos to weblets
 
+    []
+
     To get started simply drop the weblets-demo war file into the application
     server of your choice and then call
 

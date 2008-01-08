@@ -4,8 +4,8 @@
 
 Setup of Weblets
 
-    One goal which weblets tries to achieve is to support as many web frameworks as possible
-    to achieve this, currently in Weblets 1.0 two configuration options are supported.
+    One goal which  <<<Weblets>>>tries to achieve is to support as many web frameworks as possible
+    to achieve this, currently in  <<<Weblets 1.0>>> two configuration options are supported.
 
 
 * Manual Configuration via web.xml configured servlets
@@ -14,7 +14,7 @@ Setup of Weblets
     servlet configuration is supported.
     Following code showcases such a servlet configuration
 
-    <Code 0: weblets servlet web.xml>
+    <Code 0:  Weblets servlet web.xml>
 
 +---------------------------------------------------------------------------------------
     <?xml version="1.0" encoding="UTF-8"?>
@@ -29,7 +29,7 @@ Setup of Weblets
       </servlet>
 
 
-      <!-- The weblets servlet mapping must be path based otherwise weblets will fail! -->
+      <!-- The  <<<Weblets>>>servlet mapping must be path based otherwise  <<<Weblets>>>will fail! -->
       <servlet-mapping>
         <servlet-name>Weblets Servlet</servlet-name>
         <url-pattern>/weblets/*</url-pattern>
@@ -40,40 +40,39 @@ Setup of Weblets
 +---------------------------------------------------------------------------------------
 
 
-    This is probably he most basic generic configuration which is possible.
+    This is probably the most basic generic configuration which is possible.
     Note this configuration has one limitation
 
     <Code 2: Configuration limitation >
 
 +---------------------------------------------------------------------------------------
-  <!-- The weblets servlet mapping must be path based otherwise weblets will fail! -->
+  <!-- The  <<<Weblets>>>servlet mapping must be path based otherwise  <<<Weblets>>>will fail! -->
   <servlet-mapping>
     <servlet-name>Weblets Servlet</servlet-name>
     <url-pattern>/weblets/*</url-pattern>
   </servlet-mapping>
 +---------------------------------------------------------------------------------------
 
-    Path based url pattern must be provided, otherwise Weblets will fail.
+    Path based url pattern must be provided, otherwise  <<<Weblets>>> will fail.
 
-** Weblets Basic configuration and the context path
+**  <<<Weblets>>> Basic configuration and the context path
 
-    Now we have a second limitation, weblets internally tries to discover the webapps context path.
-    This works properly in JSF and in JEE5, in JEE4 and earlier there is no clean way to determine it.
+    Now we have a second limitation,  <<<Weblets>>> internally tries to discover the webapps context path.
+    This works properly in <<<JSF>>> and in <<<JEE5>>>, in <<<JEE4>>> and earlier there is no clean way to determine it.
 
-    Weblets has two optional configuration entries to overcome this Problem
+     <<<Weblets>>> has two optional configuration entries to overcome this Problem
 
 *** Configuration Option 1, a Filter
 
-    The first method to enable a clear webapp context path resolution is to add a filter which Weblets optionally provides.
+    The first method to enable a clear webapp context path resolution is to add a filter which <<<Weblets>>> optionally provides.
 
-    <Code 3: Weblets Filter >
+    <Code 3:  Weblets Filter >
 
 +---------------------------------------------------------------------------------------
  <filter>
       <filter-name>WebletsContextFilter</filter-name>
       <filter-class>net.java.dev.weblets.WebletsContextFilter</filter-class>
   </filter>
-
   <filter-mapping>
       <filter-name>WebletsContextFilter</filter-name>
       <url-pattern>*.jsp</url-pattern>
@@ -82,18 +81,16 @@ Setup of Weblets
       <filter-name>WebletsContextFilter</filter-name>
       <url-pattern>*.jspx</url-pattern>
   </filter-mapping>
-   <filter-mapping>
-      <filter-name>WebletsContextFilter</filter-name>
-      <url-pattern>*.html</url-pattern>
-  </filter-mapping>
 +---------------------------------------------------------------------------------------
 
-    Not this filter is triggered only once in full action, it tries to discover the context path
-    and stores it in the weblets container, so that it later can be used internally, after that
+    Note this filter is fully triggered only once, it tries to discover the context path
+    and stores it in the  <<<Weblets>>> container, so that it later can be used internally, after that
     it deactivates itself. Hence the performance impact is neglectable.
+
     Though it is important that the filter is triggered before the first weblet:url resolution
-    command is issued, hence it makes sense to put the filter over every active content types
-    in your system. (The provided default mapping in this tutorial should take care of most use cases)
+    command is issued. Therefore it makes sense to put the filter over every active dynamic type
+    which also triggers a servlet. 
+    (The provided default mapping above should take care of most use cases)
 
     *** Configuration Option 1, a Context Parameter
 
@@ -111,23 +108,23 @@ Setup of Weblets
   </context-param>
 +---------------------------------------------------------------------------------------
 
-    This optional context parameter overrides any locally determined webapp context value
-    determined by weblets. It is simply an override for all cases in existence.
+    This optional context parameter overrides any locally determined webapp context value.
+    It simply is an override for all cases in existence.\
     Every weblet url request will default to
 
 +------------------------------
     /weblets-demo/<path to the weblet resource/
 +------------------------------
 
-    in this case. So, if all other methods fail, this one will work!
+    in this case. So, if all other methods of context discovering fail, this one will work!
 
 
-* Manual Configuration in a JSF System
+* Manual Configuration in a <<<JSF>>> System
 
-    Weblets tries to cover the automatisms provided by JSF. Hence the configuration
+     <<<Weblets>>> tries to cover the automatisms provided by JSF. Hence the configuration
     is easier in such systems.
 
-    <Code 5: JSF Specific web.xml >
+    <Code 5: <<<JSF>>> Specific web.xml >
 
 +---------------------------------------------------------------------------------------
 
@@ -158,15 +155,15 @@ Setup of Weblets
 
 +---------------------------------------------------------------------------------------
 
-    As you can see there is no weblets specific part, there is no need to add additional
-    context determination tools to the web.xml. All is done automatically.
-    However also in JSF one limitation still exists.
+    As you can see there is no  <<<Weblets>>> specific part, there is no need to add additional
+    context discovering tools to the web.xml. All is done automatically.
+    However also in <<<JSF>>> one limitation still exists.
 
-** Limitations of the JSF configuration
+** Limitations of the <<<JSF>>> configuration
 
-    Just as in the generic configuration, weblets only allows path patterns. Hence
+    Just as in the generic configuration,  <<<Weblets>>> only allows path patterns. Hence
 
-    <Code 6: JSF Specific mapping patterns >
+    <Code 6: <<<JSF>>> Specific mapping patterns >
 
 +---------------------------------------------------------------------------------------
   <servlet-mapping>
@@ -181,14 +178,15 @@ Setup of Weblets
   </servlet-mapping>
 +---------------------------------------------------------------------------------------
 
-    The <<</faces/*>>> pattern has to be set, weblets automatically will use this one for its internal url mapping.
-    The <<<*.jsf>>> pattern can be set and used also, weblets simply will ignore it, jsf wont!
+    The <<</faces/*>>> pattern has to be set,  <<<Weblets>>> automatically will use this one for its internal url mapping.
+    The <<<*.jsf>>> pattern can be set and used also,  <<<Weblets>>> simply will ignore it, <<<JSF>>> wont!
 
 
 Summary
 
-    Weblets is configured over web.xml, if you are in a jsf environment, everything is done automatically
-    once jsf is configured properly. In every other environment a small number of entries have to be added
+     <<<Weblets>>> is configured over the web.xml configuration file.\
+    If you are in a <<<JSF>>> environment, everything is done automatically
+    once <<<JSF>>> is configured properly. In every other environment a small number of entries have to be added
     to the web.xml
 
     Check out the weblets-demo example provided to see the configuration in action.
@@ -204,13 +202,13 @@ Summary
 
    [[3]] {{{./setup.html} Users Documentation: Setup Guide }}
 
-   [[4]] {{{./usagejsp.html} Users Documentation: JSP Weblets Usage Guide }}
+   [[4]] {{{./usagejsp.html} Users Documentation: JSP  <<<Weblets>>>Usage Guide }}
 
-   [[5]] {{{./usagejava.html} Users Documentation: Servlet Weblets Usage Guide }}
+   [[5]] {{{./usagejava.html} Users Documentation: Servlet  <<<Weblets>>>Usage Guide }}
 
-   [[5]] {{{./usagejsf.html} Users Documentation: JSF Weblets Usage Guide }}
+   [[5]] {{{./usagejsf.html} Users Documentation: <<<JSF>>>  <<<Weblets>>>Usage Guide }}
 
-   [[6]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
+   [[6]] {{{./usageresources.html} Users Documentation: Resources  <<<Weblets>>>Usage Guide }}
 
-   [[7]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
+   [[7]] {{{./packingweblets.html} Users Documentation:  <<<Weblets>>>Packaging Guide }}
     

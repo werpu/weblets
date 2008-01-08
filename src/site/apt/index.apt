@@ -26,8 +26,14 @@ Mission
   Weblets will make resource file management and versioning as easy for Web development as it already is today for desktop-based Java development.
 
 Documentation and Articles
-  
-  {{{doc/introduction.html}Site documentation: Loading Resources With Weblets}}
+
+* Current Documentation Trunk and 1.0:
+
+  {{{doc/shortdoc/introduction.html}Site documentation:Short Introduction Loading Resources With Weblets}}
+
+  {{{doc/shortdoc/introduction.html}Site documentation:Long Introduction With more Detailed information}}
+
+* Documentation Version 0.4
 
   {{{http://java.sys-con.com/read/159161.htm}JDJ article: Loading Resources With Weblets}}
 

@@ -5,8 +5,13 @@
 
 Introduction into the <<<Weblets>>> Resource Packing
 
-    As of <<<Weblets>>> 1.0 there are two packaging formats for weblet resources, expanded resources in a
-    normal web application, and a simple jar with all the weblet meta information needed.
+    As of <<<Weblets>>> 1.0 there are two packaging formats for weblet resources:
+
+     * expanded resources in a normal web application
+
+     * packed resources as simple jar packages.
+
+    []
 
 * Structural information
 
@@ -104,7 +109,7 @@ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet defin
        </init-param>
 +--------------------------------------------------------------
 
-    Every weblet class takes a set of init parameters, which are variable
+    Every weblet class takes a set of init parameters, which are different
     from weblet-class to weblet class. For the packaged weblet only the
 
 +-------------------------------------------------------------
@@ -114,7 +119,7 @@ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet defin
          </param-value>
 +-------------------------------------------------------------
 
-    p$arameter is important. It determines the internal package location of your resources!
+    parameter is important. It determines the internal package location of your resources!
 
     Now we have covered the first part of the configuration, lets have a look at the second
     part.
@@ -133,27 +138,20 @@ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet defin
 
 
 
-
 * The Results of the Configuration
 
     Now the weblet system is configured lets have a short upfront look at the results (more details will follow later)
 
-    Every weblet resource loading pipeline consists of two parts, the first one is the weblet notation resolution
-    into a valid url pattern. The second one is the triggering of the resource loading mechanism
-    from a valid url pattern. The mapping described in the second part of the configuration refers
-    to the second stage of weblet loading and is very similar to servlet triggering.
+    Every weblet resource loading pipeline consists of two parts, the first one is the weblet notation resolution.
+    It transforms every weblet api call into a valid url pattern.\
+    The second one is the triggering of the resource loading mechanism
+    from a valid url pattern.\
+    The mapping described in the second part of the configuration refers
+    to the second stage of weblet loading and is very similar to servlet triggering.\
     To sum it up shortly, different calling urls can trigger different weblets or none at all, depending
     on the pattern in the url!
 
-    ** An API call which calls the contractual methods, those methods give back a url or path, usually
-    only those calls are used by the application programmer
-
-    ** The url or path which in a subsequent
-    browser request should trigger the weblet class which then serves the request, this url can heavily
-    depend on your current web application setup, and hence should not be coded directly!
-
-
-    So if an application programmer for instance calls the el function
+    Therefore if an application programmer for instance calls the  <<<EL>>>function
 
 +--------------------------------
     ${weblet:url('myweblet','/styles/style.css')}
@@ -162,7 +160,7 @@ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet defin
     the function will return following url
 
 +--------------------------------
-    /<webapp-context/weblet-servlet/myresources/$1.02/styles/style.css
+    /<webapp-context/weblet-servlet/myresources$1.02/styles/style.css
 +--------------------------------
 
     The internal location of the resource itself is hidden entirely from the frontend.

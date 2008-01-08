@@ -7,8 +7,8 @@ Introduction
     Not only java or jsp files have the problem of having to load resources.
     Resource loading is universal and not only limited to the domain of java or its
     derived technologies.\
-    Resources can be loaded also by resource files. Weblets as universal solution to resource loading
-    provides also the hooks for CSS and javascript authors who have to deal with the problem
+    Resources can be loaded also by resource files. <<<Weblets>>> as universal solution to resource loading
+    provides the hooks for CSS and javascript for authors who have to deal with the problem
     of having to load or reference resources in a neutral way.
 
 *Basic Functions
@@ -55,19 +55,20 @@ Introduction
 +----------------------------------------------------------------------
 
 
-** Weblets and Javascript
+** <<<Weblets>>> and Javascript
 
-    To support resource cross refencing in a neutral manner, weblets adds another parsing step to
-    generic text resources which preparse the resource for the occurence of the contractual functions
-    and replaces them on the fly with the weblet url calls. The browser then can resolve the urls
-    and triggers the second weblet stage which serves the resources!
+    To support resource cross refencing in a neutral manner, <<<Weblets>>> adds another parsing step to
+    generic text resources which preparses the resource for the occurence of the contractual functions
+    and then replaces them on the fly with the weblet url calls.\
+    The browser, after the parsing step, can resolve the urls
+    and can trigger the second weblet stage which serves the resources!
 
    <Image 0: Resource Parsing in Weblets>
 
 [../images/resourceparsing.png]
 
-   No to apply this we have to have in mind that every javascript file loaded
-   by weblets is parsed and searched for our weblet notation.
+   Now to apply this we have to have in mind that every javascript file loaded
+   by <<<Weblets>>> is parsed and searched for our weblet notation.
    Hence we can use api functions directly without influencing the actual code.
 
    <Code 0: Javascript Usage of the weblet api >
@@ -80,13 +81,13 @@ Introduction
    expands to alert('/weblets/demo/welcome.js')
 +----------------------------------------------------
 
-   <<<Note: To ease the integration into various text based resource languages,
-   the hyphenation normally found for strings was deliberately left out of the function!>>>
+   <<Note: To ease the integration into various text based resource languages,
+   the hyphenation normally found for strings was deliberately left out of the function definition!>>
 
-** Weblets and CSS
+** <<<Weblets>>> and CSS
 
    Everything said regarding javascript also applies to CSS, following code example will showcase
-   the features Weblets adds to CSS
+   the features <<<Weblets>>> adds to CSS
 
    <Code 1: CSS Usage of the weblet api >
 
@@ -99,13 +100,20 @@ Introduction
 
 ** Additional information
 
-    Basically every text resource is parsed in the parsing stage, so you can use the
-    Weblets notation in everything text based!
-    The referencing of relative resources in Weblets as well is no problem, you still
+    Basically every text resource is parsed in the parsing stage.
+    You can use the <<<Weblets>>> notation in everything text based!
+    The referencing of relative resources in <<<Weblets>>> as well is no problem, you still
     can reference resources relatively without any limitations, however you have to have
     in mind, that those resources are referenced relatively to the expanded weblet url.
     Generally spoken it is saver to simply use the weblet notation for intra weblet resource
     references!
+
+
+Summary
+
+    <<<Weblets>>> resources can cross reference each other, a weblet function parser
+    supports the direct referencing of resources via the weblet notation, out of
+    every weblet loaded resource file.
 
 =======================================================================
 
@@ -117,14 +125,14 @@ Introduction
 
    [[3]] {{{./setup.html} Users Documentation: Setup Guide }}
 
-   [[4]] {{{./usagejsp.html} Users Documentation: JSP Weblets Usage Guide }}
+   [[4]] {{{./usagejsp.html} Users Documentation: JSP <<<Weblets>>> Usage Guide }}
 
-   [[5]] {{{./usagejava.html} Users Documentation: Servlet Weblets Usage Guide }}
+   [[5]] {{{./usagejava.html} Users Documentation: Servlet <<<Weblets>>> Usage Guide }}
 
-   [[5]] {{{./usagejsf.html} Users Documentation: JSF Weblets Usage Guide }}
+   [[5]] {{{./usagejsf.html} Users Documentation: JSF <<<Weblets>>> Usage Guide }}
 
-   [[6]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
+   [[6]] {{{./usageresources.html} Users Documentation: Resources <<<Weblets>>> Usage Guide }}
 
-   [[7]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
+   [[7]] {{{./packingweblets.html} Users Documentation: <<<Weblets>>> Packaging Guide }}
 
                               
