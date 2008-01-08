@@ -276,14 +276,14 @@ Loading Resources with Weblets
 
 
    Basically every web framework and frontend technology
-   can be used, by utilization of either the frontend helper objects and functions
+   can be used, by utilization of either the frontend helper methods
    or the backend utils APIs.
 
    The Weblet contract apis are easy to understand. The apis start with <<<url or resource>>>
    followed by the Weblet name e.g. <<<org.myapp.html>>> and finally the path info, or resource file,
    e.g. <<</myScript.js>>>. Notice that neither the URL mapping nor the version number are included in the weblet
    api calls. The URL mapping and version number are generated internally by the <<<Utils Classes>>> to create
-   a resource URL that the Weblet will service.
+   a resource URL that the weblet class and the <<<Weblet Phase listener>>> will service.
 
 
    <(Note for users of Weblets 0.4, the weblets protocol has been ommitted in favor
