@@ -104,7 +104,16 @@ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet defin
     version number changes. Therefore, the version number is included as part of the resource URL determined
     at runtime by the <<<Weblets Phase Listener>>> and the underlying <<<Weblet Class>>> e.g. <<</myresources$1.0/myScript.js>>>. When the <<<WebletContainer>>>
     services this request, it extracts the version number from the URL and determines that the resource should
-    be cached, and never expire. 
+    be cached, and never expire.
+
+    During development, the contents of packaged resources can change frequently, so it is important for the
+    browser to keep checking back with the web server to detect the latest resource URL contents. This check
+    happens by default every time the main Web page is rendered if the Weblet version is omitted from
+    <<<weblets-config.xml>>>.
+
+    Alternatively the Weblet configuration allows component authors to append <<<-SNAPSHOT>>> to the version
+    number. For example, <<<1.0-SNAPSHOT>>>, as shown in code sample 4, to indicate that this file is under
+    development and should behave as though the version number has been omitted.
 
 +--------------------------------------------------------------
        <init-param>
