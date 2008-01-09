@@ -1,0 +1,113 @@
+<html>
+  <head>
+    <title>Weblets - Usage of Weblets in a Java/Servlet centric environment</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  </head>
+  <body>
+    <div class="app" >
+      <div class="section"><h2>Usage of Weblets in a Java/Servlet centric environment</h2>
+<p>As <tt>Weblets</tt>
+ originated from a project which was developed for an <tt>Ajax</tt>
+ and <tt>JSF</tt>
+ centric book, <tt>Weblets</tt>
+ has extensive tooling support for <tt>JSF</tt>
+, and tries to utilize <tt>JSFs</tt>
+ internal structures extensively, to ease the configuration and usage.</p>
+<p><tt>Weblets</tt>
+ itself is not <tt>JSF</tt>
+ centric, but it has a very strong <tt>JSF</tt>
+ tooling support besides its generic web framework coverage. Over time it might be possible that other web frameworks could be supported in a similar way where needed.</p>
+<p>The base of most if not all web framework technologies is the Java Servlet technology. A very robust frontend controller which can be programmed easily and extensively. The sheer existence of this technology for such a long time with almost no changes and only the enhancement with extension features shows the strong patter in use. It simply was the holy grail of a web framework kernel found very early.</p>
+<p>To support most web frameworks in the most generic way, an extensive tooling support for a Servlet environment is provided by Weblets.</p>
+<p>The tooling consists of two parts</p>
+<ol type="1"><li>A <tt>Weblets</tt>
+ Servlet for <tt>Weblets</tt>
+ url interception and resource streaming</li>
+<li>Generic API Utils classes for loading <tt>Weblets</tt>
+ from Servlets and Servlet based technologies</li>
+</ol>
+<div class="section"><h3>Setup</h3>
+<p>To get <tt>Weblets</tt>
+ up and running you need a valid <tt>Weblets</tt>
+ Servlet configuration. Unlike <tt>JSF</tt>
+ we do not have any automatisms in place. The configuration has to be done explicitly, with a path pattern as trigger for the servlet.</p>
+<div class="source"><pre>     &lt;servlet&gt;
+         &lt;servlet-name&gt;Weblets Servlet&lt;/servlet-name&gt;
+         &lt;servlet-class&gt;net.java.dev.weblets.WebletsServlet&lt;/servlet-class&gt;
+     &lt;/servlet&gt;
+
+
+     &lt;!-- The &lt;&lt;&lt;Weblets&gt;&gt;&gt; Servlet mapping must be path based otherwise &lt;&lt;&lt;Weblets&gt;&gt;&gt; will fail! --&gt;
+     &lt;servlet-mapping&gt;
+         &lt;servlet-name&gt;Weblets Servlet&lt;/servlet-name&gt;
+         &lt;url-pattern&gt;/weblets/*&lt;/url-pattern&gt;
+     &lt;/servlet-mapping&gt;</pre>
+</div>
+<p>More information on the entire web.xml configuration can be found under <a href="./setup.html">Weblets Users Guide:Setup Guide</a>
+</p>
+</div>
+<div class="section"><h3>Basic Functions</h3>
+<div class="section"><h4>Introduction</h4>
+<p>The Weblets APIs follow the general patterns as described in <a href="./generalapi.html">Weblets Users Guide: Introduction to the API Patterns</a>
+. for further information please follow the link.</p>
+</div>
+<div class="section"><h4><tt>Weblets</tt>
+ Servlet APIs</h4>
+<p>The <tt>Weblets</tt>
+ Servlet APIs are very simple to use, they basically are the two contract functions mapped into a utils class.</p>
+<div class="source"><pre>    WebletsUtils.getResource(&quot;org.myapp.html&quot;, &quot;/myresource.js&quot;)
+    WebletsUtils.getUrl(&quot;org.myapp.html&quot;, &quot;/myresource.js&quot;)
+
+    or
+
+    WebletsUtils.getInstance().getResource(&quot;org.myapp.html&quot;, &quot;/myresource.js&quot;)
+    WebletsUtils.getInstance().getUrl(&quot;org.myapp.html&quot;, &quot;/myresource.js&quot;)</pre>
+</div>
+<p>It is up to your personal preference which version of the calling methods you use, internally everything is resolved into a singleton call.<br />
+The methods themselves are thread save, they should not cause any problems in a multithreaded environment which basically every server is!</p>
+<p>Note, we dont have a request object passed down here, to determine the web application context. As already mentioned in the setup guide, we cannot always be sure to have access to the request object.</p>
+<p>(A classical situation for instance would be a long running thread which tries to generate some resource urls outside of any request scope)</p>
+<p>Some web frameworks bypass it or wrap it or simply add additional behavior via decoration classes. To be as generic as possible <tt>Weblets</tt>
+ keeps the request object out of the API and tries to get the context name by other means!</p>
+<p><tt>Weblets</tt>
+ tries to determine the web application context by various means:</p>
+<ul><li>In a JEE5 environment it uses the Servlet context which has a clearly defined api which returns the web application context name</li>
+<li>In a pre JEE5 environment you can set a filter in your web xml, which intercepts a request before serving the first resource, then you always can get the web application context internall</li>
+<li>If both methods fail you can set the context name manually via a web.xml context parameter, this is more or less the final override to enforce a context name</li>
+</ul>
+<p>For more information on the three methods see the <tt>Weblets</tt>
+ <a href="./setup.htm">Weblets User Guide:Setup Guide</a>
+.</p>
+</div>
+</div>
+</div>
+<div class="section"><h2>Summary</h2>
+<p>The <tt>Weblets</tt>
+ Servlet apis are simple to use, they are just a Utils class wrapping up and serving the contractual functions/methods!</p>
+<hr />
+<div class="section"><h3>Contents</h3>
+<ol type="1"><li><a href="./index.html"> Users Documentation: Index </a>
+</li>
+<li><a href="./gettingstarted.html"> Users Documentation: Getting Started </a>
+</li>
+<li><a href="./setup.html"> Users Documentation: Setup Guide </a>
+</li>
+<li><a href="./generalapi.html"> Users Documentation: Introduction to the API Patterns </a>
+</li>
+<li><a href="./usagejsp.html"> Users Documentation: JSP Weblets Usage Guide </a>
+</li>
+<li><a href="./usagejava.html"> Users Documentation: Servlet Weblets Usage Guide </a>
+</li>
+<li><a href="./usagejsf.html"> Users Documentation: JSF Weblets Usage Guide </a>
+</li>
+<li><a href="./usageresources.html"> Users Documentation: Resources Weblets Usage Guide </a>
+</li>
+<li><a href="./packingweblets.html"> Users Documentation: Weblets Packaging Guide </a>
+</li>
+</ol>
+</div>
+</div>
+
+    </div>
+  </body>
+</html>
