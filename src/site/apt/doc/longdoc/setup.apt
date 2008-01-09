@@ -2,7 +2,7 @@
                                       Setup
                                   ------------
 
-Setup of Weblets
+Weblets Setup Guide
 
     One goal which  <<<Weblets>>>tries to achieve is to support as many web frameworks as possible
     to achieve this, currently in  <<<Weblets 1.0>>> two configuration options are supported.
@@ -198,17 +198,19 @@ Summary
 
    [[1]] {{{./index.html} Users Documentation: Index }}
 
-   [[2]] {{{./gettingstarted.html} Users Documentation: Getting Started }}
+   [[]] {{{./gettingstarted.html} Users Documentation: Getting Started }}
 
-   [[3]] {{{./setup.html} Users Documentation: Setup Guide }}
+   [[]] {{{./setup.html} Users Documentation: Setup Guide }}
 
-   [[4]] {{{./usagejsp.html} Users Documentation: JSP  <<<Weblets>>>Usage Guide }}
+   [[]] {{{./generalapi.html} Users Documentation: Introduction to  the API Patterns }}
 
-   [[5]] {{{./usagejava.html} Users Documentation: Servlet  <<<Weblets>>>Usage Guide }}
+   [[]] {{{./usagejsp.html} Users Documentation: JSP Weblets Usage Guide }}
 
-   [[5]] {{{./usagejsf.html} Users Documentation: <<<JSF>>>  <<<Weblets>>>Usage Guide }}
+   [[]] {{{./usagejava.html} Users Documentation: Servlet Weblets Usage Guide }}
 
-   [[6]] {{{./usageresources.html} Users Documentation: Resources  <<<Weblets>>>Usage Guide }}
+   [[]] {{{./usagejsf.html} Users Documentation: JSF Weblets Usage Guide }}
 
-   [[7]] {{{./packingweblets.html} Users Documentation:  <<<Weblets>>>Packaging Guide }}
+   [[]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
+
+   [[]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
     

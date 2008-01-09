@@ -1,8 +1,8 @@
                                      ------------------------
-                                   Usage of Weblets in a Java/Servlet centric environment
+                                Usage of Weblets in a Java/Servlet centric environment
                                      ------------------------
 
-Preface
+Usage of Weblets in a Java/Servlet centric environment
 
      As <<<Weblets>>> originated from a project which was developed for an <<<Ajax>>> and <<<JSF>>> centric book,
      <<<Weblets>>> has extensive tooling support for <<<JSF>>>, and tries to utilize <<<JSFs>>> internal structures
@@ -35,7 +35,7 @@ Preface
      Unlike <<<JSF>>> we do not have any automatisms in place. The configuration has to be done
      explicitly, with a path pattern as trigger for the servlet.
 
- +--------------------------------------------------
++--------------------------------------------------
      <servlet>
          <servlet-name>Weblets Servlet</servlet-name>
          <servlet-class>net.java.dev.weblets.WebletsServlet</servlet-class>
@@ -47,7 +47,7 @@ Preface
          <servlet-name>Weblets Servlet</servlet-name>
          <url-pattern>/weblets/*</url-pattern>
      </servlet-mapping>
- +--------------------------------------------------
++--------------------------------------------------
 
      More information on the entire web.xml configuration can be found under {{{./setup.html}Weblets Users Guide:Setup Guide}}
  
@@ -55,44 +55,10 @@ Preface
 
 ** Introduction
 
-    <<<Weblets>>> contain two parts in their execution pipeline, a frontend <<<API>>>, which enables a
-    neutral notation for application developers to isolate the resource call from the actual calling protocol and position.
-     a calling resolution stage, which intercepts the actual resource call and serves the
-    resource from a given datasource.
 
-    Now this sounds more complicated, than it really is, all the application programmer has to use,
-    is the frontend specific <<<API>>>.
+    The Weblets APIs follow the general patterns as described in {{{./generalapi.html}Weblets Users Guide:  Introduction to the API Patterns}}.
+    for further information please follow the link.
 
-    <<<Weblets>>> tries to be as precise as possible in the <<<APIs>>> and their results, so that in all frameworks
-    and platforms the application programmer can be sure that the final result stays the same, not depending
-    on the underlying framework being used.
-
-    The basic idea of the weblet fronted API, are two contract functions/methods.
-
-  <Code 1: Contract Functions/Methods>
-
-+--------------------------------------------------
-    url(<webletname>,<path to resource>)
-    resource(<webletname>,<path to resource>)
-+--------------------------------------------------
-
-    In every framework supported, you always will find those in one way or the other.
-
-    The main difference between these two contract methods is, that <<<url>>> serves up
-    a full url including the current web application context, while <<<resource>>>
-    only serves up the relative path to the resource.
-
-    The following code example shows the two calls and their results.
-
-    <Code 2: Difference between url and resource in a pseudo  API>
-
-+----------------------------------------------------------------------
-        url ("org.myapp.html","/myresource.js")
-        resolves to /my-webapp/faces/weblets/myapp/myresource.js
-
-        resource( "org.myapp.html","/myresource.js")
-        resolves to /faces/weblets/myapp/myresource.js
-+----------------------------------------------------------------------
 
 ** <<<Weblets>>> Servlet APIs
 
@@ -146,16 +112,18 @@ Summary
 
    [[1]] {{{./index.html} Users Documentation: Index }}
 
-   [[2]] {{{./gettingstarted.html} Users Documentation: Getting Started }}
+   [[]] {{{./gettingstarted.html} Users Documentation: Getting Started }}
 
-   [[3]] {{{./setup.html} Users Documentation: Setup Guide }}
+   [[]] {{{./setup.html} Users Documentation: Setup Guide }}
 
-   [[4]] {{{./usagejsp.html} Users Documentation: JSP <<<Weblets>>> Usage Guide }}
+   [[]] {{{./generalapi.html} Users Documentation: Introduction to  the API Patterns }}
 
-   [[5]] {{{./usagejava.html} Users Documentation: Servlet <<<Weblets>>> Usage Guide }}
+   [[]] {{{./usagejsp.html} Users Documentation: JSP Weblets Usage Guide }}
 
-   [[5]] {{{./usagejsf.html} Users Documentation: <<<JSF>>> <<<Weblets>>> Usage Guide }}
+   [[]] {{{./usagejava.html} Users Documentation: Servlet Weblets Usage Guide }}
 
-   [[6]] {{{./usageresources.html} Users Documentation: Resources <<<Weblets>>> Usage Guide }}
+   [[]] {{{./usagejsf.html} Users Documentation: JSF Weblets Usage Guide }}
 
-   [[7]] {{{./packingweblets.html} Users Documentation: <<<Weblets>>> Packaging Guide }}
+   [[]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
+
+   [[]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
