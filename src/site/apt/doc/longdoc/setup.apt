@@ -1,0 +1,216 @@
+                                  ------------
+                                      Setup
+                                  ------------
+
+Weblets Setup Guide
+
+    One goal which  <<<Weblets>>>tries to achieve is to support as many web frameworks as possible
+    to achieve this, currently in  <<<Weblets 1.0>>> two configuration options are supported.
+
+
+* Manual Configuration via web.xml configured servlets
+
+    To achieve the maximum compatibility with all existing frameworks an optional weblets
+    servlet configuration is supported.
+    Following code showcases such a servlet configuration
+
+    <Code 0:  Weblets servlet web.xml>
+
++---------------------------------------------------------------------------------------
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+    <web-app>
+      <description>Weblets Demo</description>
+
+
+      <servlet>
+        <servlet-name>Weblets Servlet</servlet-name>
+        <servlet-class>net.java.dev.weblets.WebletsServlet</servlet-class>
+      </servlet>
+
+
+      <!-- The  <<<Weblets>>>servlet mapping must be path based otherwise  <<<Weblets>>>will fail! -->
+      <servlet-mapping>
+        <servlet-name>Weblets Servlet</servlet-name>
+        <url-pattern>/weblets/*</url-pattern>
+      </servlet-mapping>
+
+
+    </web-app>
++---------------------------------------------------------------------------------------
+
+
+    This is probably the most basic generic configuration which is possible.
+    Note this configuration has one limitation
+
+    <Code 2: Configuration limitation >
+
++---------------------------------------------------------------------------------------
+  <!-- The  <<<Weblets>>>servlet mapping must be path based otherwise  <<<Weblets>>>will fail! -->
+  <servlet-mapping>
+    <servlet-name>Weblets Servlet</servlet-name>
+    <url-pattern>/weblets/*</url-pattern>
+  </servlet-mapping>
++---------------------------------------------------------------------------------------
+
+    Path based url pattern must be provided, otherwise  <<<Weblets>>> will fail.
+
+**  <<<Weblets>>> Basic configuration and the context path
+
+    Now we have a second limitation,  <<<Weblets>>> internally tries to discover the webapps context path.
+    This works properly in <<<JSF>>> and in <<<JEE5>>>, in <<<JEE4>>> and earlier there is no clean way to determine it.
+
+     <<<Weblets>>> has two optional configuration entries to overcome this Problem
+
+*** Configuration Option 1, a Filter
+
+    The first method to enable a clear webapp context path resolution is to add a filter which <<<Weblets>>> optionally provides.
+
+    <Code 3:  Weblets Filter >
+
++---------------------------------------------------------------------------------------
+ <filter>
+      <filter-name>WebletsContextFilter</filter-name>
+      <filter-class>net.java.dev.weblets.WebletsContextFilter</filter-class>
+  </filter>
+  <filter-mapping>
+      <filter-name>WebletsContextFilter</filter-name>
+      <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+      <filter-name>WebletsContextFilter</filter-name>
+      <url-pattern>*.jspx</url-pattern>
+  </filter-mapping>
++---------------------------------------------------------------------------------------
+
+    Note this filter is fully triggered only once, it tries to discover the context path
+    and stores it in the  <<<Weblets>>> container, so that it later can be used internally, after that
+    it deactivates itself. Hence the performance impact is neglectable.
+
+    Though it is important that the filter is triggered before the first weblet:url resolution
+    command is issued. Therefore it makes sense to put the filter over every active dynamic type
+    which also triggers a servlet. 
+    (The provided default mapping above should take care of most use cases)
+
+    *** Configuration Option 1, a Context Parameter
+
+    The sheer number of web frameworks in the java realm simply makes it impossible to exactly determine
+    every way the context path can be resolved. Standard methods might not work in portlet environments
+    for instance or other frameworks enforce different mapping schemes.
+    To cover such instances, weblet provides a second generic configuration option.
+
+    <Code 4: Weblets Filter >
+
++---------------------------------------------------------------------------------------
+ <context-param>
+      <param-name>net.java.dev.weblets.contextpath</param-name>
+      <param-value>/weblets-demo/</param-value>
+  </context-param>
++---------------------------------------------------------------------------------------
+
+    This optional context parameter overrides any locally determined webapp context value.
+    It simply is an override for all cases in existence.\
+    Every weblet url request will default to
+
++------------------------------
+    /weblets-demo/<path to the weblet resource/
++------------------------------
+
+    in this case. So, if all other methods of context discovering fail, this one will work!
+
+
+* Manual Configuration in a <<<JSF>>> System
+
+     <<<Weblets>>> tries to cover the automatisms provided by JSF. Hence the configuration
+    is easier in such systems.
+
+    <Code 5: <<<JSF>>> Specific web.xml >
+
++---------------------------------------------------------------------------------------
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+  <description>Weblets Demo</description>
+
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>/faces/*</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.jsf</url-pattern>
+  </servlet-mapping>
+
+</web-app>
+
++---------------------------------------------------------------------------------------
+
+    As you can see there is no  <<<Weblets>>> specific part, there is no need to add additional
+    context discovering tools to the web.xml. All is done automatically.
+    However also in <<<JSF>>> one limitation still exists.
+
+** Limitations of the <<<JSF>>> configuration
+
+    Just as in the generic configuration,  <<<Weblets>>> only allows path patterns. Hence
+
+    <Code 6: <<<JSF>>> Specific mapping patterns >
+
++---------------------------------------------------------------------------------------
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>/faces/*</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.jsf</url-pattern>
+  </servlet-mapping>
++---------------------------------------------------------------------------------------
+
+    The <<</faces/*>>> pattern has to be set,  <<<Weblets>>> automatically will use this one for its internal url mapping.
+    The <<<*.jsf>>> pattern can be set and used also,  <<<Weblets>>> simply will ignore it, <<<JSF>>> wont!
+
+
+Summary
+
+     <<<Weblets>>> is configured over the web.xml configuration file.\
+    If you are in a <<<JSF>>> environment, everything is done automatically
+    once <<<JSF>>> is configured properly. In every other environment a small number of entries have to be added
+    to the web.xml
+
+    Check out the weblets-demo example provided to see the configuration in action.
+
+
+=======================================================================
+
+* Contents
+
+   [[1]] {{{./index.html} Users Documentation: Index }}
+
+   [[]] {{{./gettingstarted.html} Users Documentation: Getting Started }}
+
+   [[]] {{{./setup.html} Users Documentation: Setup Guide }}
+
+   [[]] {{{./generalapi.html} Users Documentation: Introduction to  the API Patterns }}
+
+   [[]] {{{./usagejsp.html} Users Documentation: JSP Weblets Usage Guide }}
+
+   [[]] {{{./usagejava.html} Users Documentation: Servlet Weblets Usage Guide }}
+
+   [[]] {{{./usagejsf.html} Users Documentation: JSF Weblets Usage Guide }}
+
+   [[]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
+
+   [[]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
+    
