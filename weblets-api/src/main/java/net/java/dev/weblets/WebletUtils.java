@@ -1,14 +1,14 @@
 package net.java.dev.weblets;
 
 import net.java.dev.weblets.util.ServiceLoader;
-import net.java.dev.weblets.util.IWebletsUtil;
+import net.java.dev.weblets.util.IWebletUtils;
 
 /**
  * @author Werner Punz
  * Date: 30.12.2007
  * Time: 18:00:04
  */
-public class WebletsUtils {
+public class WebletUtils {
 
     /**
      * constractual method
@@ -28,8 +28,8 @@ public class WebletsUtils {
      * @param pathInfo  the path info to the resource
      * @return the resource path for the resource
      */
-     public static String getUrl(String weblet, String pathInfo) {
-         return instance.getUrl(weblet, pathInfo);
+     public static String getURL(String weblet, String pathInfo) {
+         return instance.getURL(weblet, pathInfo);
      }
 
 
@@ -38,14 +38,14 @@ public class WebletsUtils {
     * than doing all the calls over introspection, the internal
     * contract is defined by the IJSFWebletsUtils interface
     */
-    static IWebletsUtil instance = getInstance();
+    static IWebletUtils instance = getInstance();
 
-    static IWebletsUtil getInstance() throws WebletException {
+    static IWebletUtils getInstance() throws WebletException {
         synchronized (FacesWebletUtils.class) {
             if (instance == null) {
-                Class instantiation = ServiceLoader.loadService(WebletsUtils.class.getName());
+                Class instantiation = ServiceLoader.loadService(WebletUtils.class.getName());
                 try {
-                    instance = (IWebletsUtil) instantiation.newInstance();
+                    instance = (IWebletUtils) instantiation.newInstance();
                 } catch (InstantiationException e) {
                     throw new WebletException("Error instantiating WebletsUtil", e);
                 } catch (IllegalAccessException e) {

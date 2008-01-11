@@ -1,6 +1,6 @@
 package net.java.dev.weblets.impl.faces;
 
-import net.java.dev.weblets.WebletsUtils;
+import net.java.dev.weblets.WebletUtils;
 import net.java.dev.weblets.util.IFacesWebletUtils;
 
 import javax.faces.component.UIComponent;
@@ -27,8 +27,8 @@ public class FacesWebletUtilsImpl implements IFacesWebletUtils {
          */
         public String getResource(FacesContext context, String weblet, String pathInfo, boolean url) {
             if(url)
-               return context.getApplication().getViewHandler().getResourceURL(context, WebletsUtils.getResource(weblet, pathInfo));
-            return WebletsUtils.getResource(weblet, pathInfo);
+               return context.getApplication().getViewHandler().getResourceURL(context, WebletUtils.getResource(weblet, pathInfo));
+            return WebletUtils.getResource(weblet, pathInfo);
         }
        
 }

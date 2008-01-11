@@ -6,7 +6,7 @@ package net.java.dev.weblets.util;
  * Generic non jsf resource util classes
  * 
  */
-public interface IWebletsUtil {
+public interface IWebletUtils {
     public String getResource(String weblet, String pathInfo);
-    public String getUrl(String weblet, String pathInfo);
+    public String getURL(String weblet, String pathInfo);
 }

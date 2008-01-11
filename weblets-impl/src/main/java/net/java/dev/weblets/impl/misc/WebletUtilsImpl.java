@@ -5,7 +5,7 @@
 package net.java.dev.weblets.impl.misc;
 
 import net.java.dev.weblets.WebletContainer;
-import net.java.dev.weblets.util.IWebletsUtil;
+import net.java.dev.weblets.util.IWebletUtils;
 import net.java.dev.weblets.impl.WebletContainerImpl;
 
 /**
@@ -15,9 +15,9 @@ import net.java.dev.weblets.impl.WebletContainerImpl;
  * 
  * @author Werner Punz
  */
-public class WebletsUtilsImpl implements IWebletsUtil {
+public class WebletUtilsImpl implements IWebletUtils {
 
-    public WebletsUtilsImpl() {
+    public WebletUtilsImpl() {
     }
 
     /**
@@ -40,7 +40,7 @@ public class WebletsUtilsImpl implements IWebletsUtil {
     }
 
 
-     public  String getUrl(String weblet, String pathInfo) {
+     public  String getURL(String weblet, String pathInfo) {
         /*lets be more tolerant regarding paths*/
         if(pathInfo == null || pathInfo.trim().equals(""))
            pathInfo = "/";

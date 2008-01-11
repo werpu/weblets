@@ -60,7 +60,7 @@ Usage of Weblets in a JSP Centric Environment
     <Code 3: Accessing <<<Weblets>>> via beans and scriptlets>
 
 +------------------------------
-    <jsp:useBean class="net.java.dev.weblets.WebletsUtils" scope="application" id="jspweblet" />
+    <jsp:useBean class="net.java.dev.weblets.WebletUtils" scope="application" id="jspweblet" />
     bean definition in your header
     
     <%= jspweblet.getResource( "weblets.demo","/welcome.js") %>

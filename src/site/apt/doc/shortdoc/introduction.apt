@@ -239,8 +239,8 @@ Loading Resources with Weblets
         FacesWebletUtils.getInstance().getResource(applicationContext, "org.myapp.html","/myresource.js")
 
       Generic non JSF webframeworks:
-        WebletsUtils.getInstance().getUrl("org.myapp.html","/myresource.js")
-        WebletsUtils.getInstance().getResource("org.myapp.html","/myresource.js")
+        WebletUtils.getInstance().getUrl("org.myapp.html","/myresource.js")
+        WebletUtils.getInstance().getResource("org.myapp.html","/myresource.js")
 
       Frontend: JSF dummy maps utilizing EL:
         #{jsfwebleturl['org.myapp.html']['/myresource.js']}
@@ -252,7 +252,7 @@ Loading Resources with Weblets
         ${wbl:url('org.myapp.html','/myresource.js')}
 
       JSP Bean for JSP 1.x:
-        jsp:useBean class="net.java.dev.weblets.WebletsUtils" scope="application" id="jspweblet"
+        jsp:useBean class="net.java.dev.weblets.WebletUtils" scope="application" id="jspweblet"
         jspweblet.getResource( "org.myapp.html","/myresource.js")
         jspweblet.getUrl( "org.myapp.html","/myresource.js")
 

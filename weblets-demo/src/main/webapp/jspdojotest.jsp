@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
-<jsp:useBean class="net.java.dev.weblets.WebletsUtils" scope="application" id="jspweblet" />
+<jsp:useBean class="net.java.dev.weblets.WebletUtils" scope="application" id="jspweblet" />
 <%@ taglib uri="http://weblets.dev.java.net/tags" prefix="weblets" %>
 <html>
     <head>
@@ -15,15 +15,15 @@
         <title>JSP Page</title>
 
         <style type="text/css">
-		@import '<%= jspweblet.getUrl( "org.dojotoolkit","/dojo/dojo.css") %>';
-		@import '<%= jspweblet.getUrl( "org.dojotoolkit","/dijit/tests/css/dijitTests.css") %>';
+		@import '<%= jspweblet.getURL( "org.dojotoolkit","/dojo/dojo.css") %>';
+		@import '<%= jspweblet.getURL( "org.dojotoolkit","/dijit/tests/css/dijitTests.css") %>';
 	</style>
-    <script type="text/javascript" src='<%= jspweblet.getUrl( "org.dojotoolkit","/dojo/dojo.js" )%>'
+    <script type="text/javascript" src='<%= jspweblet.getURL( "org.dojotoolkit","/dojo/dojo.js" )%>'
 		djConfig="parseOnLoad: true, isDebug: true"></script>
-	<script type="text/javascript" src='<%= jspweblet.getUrl( "org.dojotoolkit","/dijit/tests/_testCommon.js") %>'></script>
+	<script type="text/javascript" src='<%= jspweblet.getURL( "org.dojotoolkit","/dijit/tests/_testCommon.js") %>'></script>
 
 
-    <script type="text/javascript" src='<%= jspweblet.getUrl( "org.dojotoolkit","/dijit/Editor.js") %>'></script>
+    <script type="text/javascript" src='<%= jspweblet.getURL( "org.dojotoolkit","/dijit/Editor.js") %>'></script>
 	<script type="text/javascript">
 		dojo.require("dijit.Editor");
 		dojo.require("dijit._editor.plugins.AlwaysShowToolbar");
@@ -43,7 +43,7 @@
         / !!!
         </p>
         <div id="demotext">The demotext here will be replaced by the javascript included below</div>
-        <script type="text/javascript" src='<%= jspweblet.getUrl( "weblets.demo","/dojotest.js") %>'></script>
+        <script type="text/javascript" src='<%= jspweblet.getURL( "weblets.demo","/dojotest.js") %>'></script>
        
        <h1 class="testTitle"><label for="editor1">Editor + Plugins Test</label></h1>
 
@@ -57,7 +57,7 @@
 		<h3><label for="thud">thud - from textarea</label></h3>
 		<textarea dojoType="dijit.Editor" height=""
 			extraPlugins="['dijit._editor.plugins.AlwaysShowToolbar']"
-			styleSheets='<%= jspweblet.getUrl( "org.dojotoolkit","/dojo/resources/dojo.css") %>' id="thud">
+			styleSheets='<%= jspweblet.getURL( "org.dojotoolkit","/dojo/resources/dojo.css") %>' id="thud">
 			<p>
 				This editor is created from a textarea with AlwaysShowToolbar plugin (don't forget to set height="").
 			</p>
@@ -77,7 +77,7 @@
 		<h3><label for="blah">blah entry</label></h3>
 		<textarea dojoType="dijit.Editor"
 			plugins="['bold','italic','|','createLink','foreColor','hiliteColor']"
-			styleSheets='<%= jspweblet.getUrl( "org.dojotoolkit","dojo/resources/dojo.css") %>' id="blah">
+			styleSheets='<%= jspweblet.getURL( "org.dojotoolkit","dojo/resources/dojo.css") %>' id="blah">
 			This instance includes optional toolbar buttons which pull in additional ui (dijit) code.
 			Note the dojo.require() statements required to pull in the associated editor plugins to make
 			this work.
@@ -89,7 +89,7 @@
 		<h3><label for="blah2">Another blah entry</label></h3>
 		<textarea dojoType="dijit.Editor"
 			plugins="['bold','italic','|',{name:'dijit._editor.plugins.LinkDialog'}]"
-			styleSheets='<%= jspweblet.getUrl( "org.dojotoolkit","dojo/resources/dojo.css") %>' id="blah2">
+			styleSheets='<%= jspweblet.getURL( "org.dojotoolkit","dojo/resources/dojo.css") %>' id="blah2">
 			This instance demos how to:
 			<ol>
 				<li>specify which plugins to load (see the plugins property): this instance loads EnterKeyHandling plugin, among others;</li>

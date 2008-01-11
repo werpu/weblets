@@ -5,7 +5,7 @@
 
 package net.java.dev.weblets;
 
-import net.java.dev.weblets.WebletsUtils;
+import net.java.dev.weblets.WebletUtils;
 import net.java.dev.weblets.util.JSFDummyMap;
 
 import javax.faces.context.FacesContext;

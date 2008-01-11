@@ -66,13 +66,13 @@ Usage of Weblets in a Java/Servlet centric environment
     into a utils class.
 
 +----------------------------------------------------------------------
-    WebletsUtils.getResource("org.myapp.html", "/myresource.js")
-    WebletsUtils.getUrl("org.myapp.html", "/myresource.js")
+    WebletUtils.getResource("org.myapp.html", "/myresource.js")
+    WebletUtils.getUrl("org.myapp.html", "/myresource.js")
 
     or
 
-    WebletsUtils.getInstance().getResource("org.myapp.html", "/myresource.js")
-    WebletsUtils.getInstance().getUrl("org.myapp.html", "/myresource.js")
+    WebletUtils.getInstance().getResource("org.myapp.html", "/myresource.js")
+    WebletUtils.getInstance().getUrl("org.myapp.html", "/myresource.js")
 +----------------------------------------------------------------------
 
     It is up to your personal preference which version of the calling methods you use, internally
