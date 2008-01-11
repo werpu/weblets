@@ -64,7 +64,7 @@ Usage of Weblets in a JSP Centric Environment
     bean definition in your header
     
     <%= jspweblet.getResource( "weblets.demo","/welcome.js") %>
-    <%= jspweblet.getUrl( "weblets.demo","/welcome.js") %>
+    <%= jspweblet.getURL( "weblets.demo","/welcome.js") %>
 +------------------------------
 
     As you can see we include our utils class as simple <<<JSP>>> bean, the bean then

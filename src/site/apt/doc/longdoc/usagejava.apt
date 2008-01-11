@@ -67,12 +67,12 @@ Usage of Weblets in a Java/Servlet centric environment
 
 +----------------------------------------------------------------------
     WebletUtils.getResource("org.myapp.html", "/myresource.js")
-    WebletUtils.getUrl("org.myapp.html", "/myresource.js")
+    WebletUtils.getURL("org.myapp.html", "/myresource.js")
 
     or
 
     WebletUtils.getInstance().getResource("org.myapp.html", "/myresource.js")
-    WebletUtils.getInstance().getUrl("org.myapp.html", "/myresource.js")
+    WebletUtils.getInstance().getURL("org.myapp.html", "/myresource.js")
 +----------------------------------------------------------------------
 
     It is up to your personal preference which version of the calling methods you use, internally
