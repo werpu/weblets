@@ -41,7 +41,7 @@ public class WebletsUtils {
     static IWebletsUtil instance = getInstance();
 
     static IWebletsUtil getInstance() throws WebletException {
-        synchronized (JSFWebletsUtils.class) {
+        synchronized (FacesWebletUtils.class) {
             if (instance == null) {
                 Class instantiation = ServiceLoader.loadService(WebletsUtils.class.getName());
                 try {

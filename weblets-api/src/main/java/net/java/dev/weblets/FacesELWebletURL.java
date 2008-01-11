@@ -8,7 +8,7 @@ import javax.faces.context.FacesContext;
  * Legacy JSF EL Helper
  * to resolve jsf urls
  */
-public class JSFELWebletsUrl extends JSFDummyMap {
+public class FacesELWebletURL extends JSFDummyMap {
      private class PathInfoMap extends JSFDummyMap {
 
         private String webletName = "";
@@ -21,7 +21,7 @@ public class JSFELWebletsUrl extends JSFDummyMap {
         public Object get(Object resource) {
             if(! (resource instanceof String))
                 throw new UnsupportedOperationException("Not supported yet.");
-            return  JSFWebletsUtils.getUrl(FacesContext.getCurrentInstance(), webletName ,(String)resource);
+            return  FacesWebletUtils.getURL(FacesContext.getCurrentInstance(), webletName ,(String)resource);
         }
 
     }

@@ -1,7 +1,7 @@
 package net.java.dev.weblets;
 
 import net.java.dev.weblets.util.ServiceLoader;
-import net.java.dev.weblets.util.IJSFWebletsUtils;
+import net.java.dev.weblets.util.IFacesWebletUtils;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -13,7 +13,7 @@ import javax.faces.context.FacesContext;
  *         Date: 30.12.2007
  *         Time: 13:44:04
  */
-public class JSFWebletsUtils {
+public class FacesWebletUtils {
 
     /**
      * returns the absolute url
@@ -24,7 +24,7 @@ public class JSFWebletsUtils {
      * @param pathInfo the path info
      * @return a url with the current web-app context path to the weblet
      */
-    public static String getUrl(FacesContext context, String weblet, String pathInfo) {
+    public static String getURL(FacesContext context, String weblet, String pathInfo) {
         return instance.getResource(context, weblet, pathInfo, true);
     }
 
@@ -44,16 +44,16 @@ public class JSFWebletsUtils {
     /**
     * kind of a weird construct but definitely faster
     * than doing all the calls over introspection, the internal
-    * contract is defined by the IJSFWebletsUtils interface
+    * contract is defined by the IFacesWebletUtils interface
     */
-    static IJSFWebletsUtils instance = getInstance();
+    static IFacesWebletUtils instance = getInstance();
 
-    static IJSFWebletsUtils getInstance() throws WebletException {
-        synchronized (JSFWebletsUtils.class) {
+    static IFacesWebletUtils getInstance() throws WebletException {
+        synchronized (FacesWebletUtils.class) {
             if (instance == null) {
-                Class instantiation = ServiceLoader.loadService(JSFWebletsUtils.class.getName());
+                Class instantiation = ServiceLoader.loadService(FacesWebletUtils.class.getName());
                 try {
-                    instance = (IJSFWebletsUtils) instantiation.newInstance();
+                    instance = (IFacesWebletUtils) instantiation.newInstance();
                 } catch (InstantiationException e) {
                     throw new WebletException("Error instantiating IJSFWebletsUtils", e);
                 } catch (IllegalAccessException e) {

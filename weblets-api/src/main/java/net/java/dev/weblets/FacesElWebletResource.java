@@ -17,7 +17,7 @@ import javax.faces.context.FacesContext;
  *
  * @author Werner Punz
  */
-public class JSFElWebletsResource extends  JSFDummyMap {
+public class FacesElWebletResource extends  JSFDummyMap {
 
     private class PathInfoMap extends JSFDummyMap {
 
@@ -31,7 +31,7 @@ public class JSFElWebletsResource extends  JSFDummyMap {
         public Object get(Object resource) {
             if(! (resource instanceof String))
                 throw new UnsupportedOperationException("Not supported yet.");
-            return  JSFWebletsUtils.getResource(FacesContext.getCurrentInstance(), webletName ,(String)resource);
+            return  FacesWebletUtils.getResource(FacesContext.getCurrentInstance(), webletName ,(String)resource);
         }
 
     }

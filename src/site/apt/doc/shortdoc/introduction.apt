@@ -63,8 +63,8 @@ Loading Resources with Weblets
 * Weblet Architecture
 
    Although Weblets were designed to be used by any web client, the Weblets implementation has been integrated
-   with JavaServer Faces using a custom <<<Utils Class>>> <<<JSFWebletsUtils>>>, as shown in figure 1. During
-   rendering of the main JavaServer Faces page, the <<<JSFWebletsUtils>>> is responsible for converting weblet
+   with JavaServer Faces using a custom <<<Utils Class>>> <<<FacesWebletUtils>>>, as shown in figure 1. During
+   rendering of the main JavaServer Faces page, the <<<FacesWebletUtils>>> is responsible for converting weblet
    specific resource URLs into the actual URLs used by the browser to request weblet-managed resources.
 
 [../images/figure1.png] <Figure 1. High-overview of Weblet architecture>
@@ -169,7 +169,7 @@ Loading Resources with Weblets
    at runtime by the <<<Weblets Phase Listener>>> e.g. <<</myresources$1.0/myScript.js>>>. When the <<<WebletContainer>>>
    services this request, it extracts the version number from the URL and determines that the resource should
    be cached, and never expire. As soon as a new version of the component library is deployed to the web application,
-   the resource URL created at runtime by the <<<JSFWebletsUtils>>> changes e.g. <<</myresources$2.0/myScript.js>>>,
+   the resource URL created at runtime by the <<<FacesWebletUtils>>> changes e.g. <<</myresources$2.0/myScript.js>>>,
    thus the browser's cached copy of myScript.js for version 1.0 is no longer valid because the URL is different.
 
    During development, the contents of packaged resources can change frequently, so it is important for the
@@ -235,8 +235,8 @@ Loading Resources with Weblets
 
 +----------------------------------------------------------------------
       JSF:
-        JSFWebletsUtils.getInstance().getUrl(applicationContext, "org.myapp.html","/myresource.js")
-        JSFWebletsUtils.getInstance().getResource(applicationContext, "org.myapp.html","/myresource.js")
+        FacesWebletUtils.getInstance().getURL(applicationContext, "org.myapp.html","/myresource.js")
+        FacesWebletUtils.getInstance().getResource(applicationContext, "org.myapp.html","/myresource.js")
 
       Generic non JSF webframeworks:
         WebletsUtils.getInstance().getUrl("org.myapp.html","/myresource.js")
@@ -266,7 +266,7 @@ Loading Resources with Weblets
 
 +----------------------------------------------------------------------
         String resourceURL =
-               JSFWebletsUtils.getInstance().url(context,
+               FacesWebletUtils.getInstance().url(context,
                                      "org.myapp.html","/myScript.js");
         out.startElement("script", null);
         out.writeAttribute("type", "text/javascript", null);
@@ -300,11 +300,11 @@ Loading Resources with Weblets
  <Code sample 6. Difference between url and resource>
 
 +----------------------------------------------------------------------
-        JSFWebletsUtils.getInstance().getUrl(applicationContext, "org.myapp.html","/myresource.js")
+        FacesWebletUtils.getInstance().getURL(applicationContext, "org.myapp.html","/myresource.js")
 
         resolves to /my-webapp/faces/weblets/myapp/myresource.js
 
-        JSFWebletsUtils.getInstance().getResource(applicationContext, "org.myapp.html","/myresource.js")
+        FacesWebletUtils.getInstance().getResource(applicationContext, "org.myapp.html","/myresource.js")
 
         resolves to /faces/weblets/myapp/myresource.js
 

@@ -163,8 +163,8 @@ Usage of Weblets in a jsf centric environment
     <Code 6: Usage contractual API the <<<JSF>>> way>
 
 +--------------------------------------------
-    JSFWebletsUtils.getUrl(context, "demo.webletname", "/subpath/myresource.js")
-    JSFWebletsUtils.getResource(context, "demo.webletname", "/subpath/myresource.js")
+    FacesWebletUtils.getURL(context, "demo.webletname", "/subpath/myresource.js")
+    FacesWebletUtils.getResource(context, "demo.webletname", "/subpath/myresource.js")
 
     Context being the Faces Context!
 +--------------------------------------------

@@ -1,6 +1,6 @@
 package net.java.dev.weblets.demo.render.html;
 
-import net.java.dev.weblets.JSFWebletsUtils;
+import net.java.dev.weblets.FacesWebletUtils;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
@@ -16,7 +16,7 @@ public class HtmlOutputCustomRenderer extends Renderer
     UIComponent  component) throws IOException
   {
     //ViewHandler handler = context.getApplication().getViewHandler();
-    String resourceURL = JSFWebletsUtils.getUrl(context, "weblets.demo", "/welcome.js");
+    String resourceURL = FacesWebletUtils.getURL(context, "weblets.demo", "/welcome.js");
        
     UIOutput output = (UIOutput)component;
     Object value = output.getValue();

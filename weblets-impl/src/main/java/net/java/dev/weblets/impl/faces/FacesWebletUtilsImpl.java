@@ -1,7 +1,7 @@
 package net.java.dev.weblets.impl.faces;
 
 import net.java.dev.weblets.WebletsUtils;
-import net.java.dev.weblets.util.IJSFWebletsUtils;
+import net.java.dev.weblets.util.IFacesWebletUtils;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -16,7 +16,7 @@ import javax.faces.context.FacesContext;
  * @author Werner Punz
  *
  */
-public class JSFWebletsUtilsImpl implements IJSFWebletsUtils {
+public class FacesWebletUtilsImpl implements IFacesWebletUtils {
         
         /**
          * 
