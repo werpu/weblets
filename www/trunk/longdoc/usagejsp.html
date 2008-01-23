@@ -56,11 +56,11 @@
  versions, although we have more elegant and simpler solutions for JSP2.x.</p>
 <p><i>Code 3: Accessing &lt;&lt;&lt;Weblets</i>
 &gt;&gt; via beans and scriptlets&gt;</p>
-<div class="source"><pre>    &lt;jsp:useBean class=&quot;net.java.dev.weblets.WebletsUtils&quot; scope=&quot;application&quot; id=&quot;jspweblet&quot; /&gt;
+<div class="source"><pre>    &lt;jsp:useBean class=&quot;net.java.dev.weblets.WebletUtils&quot; scope=&quot;application&quot; id=&quot;jspweblet&quot; /&gt;
     bean definition in your header
     
     &lt;%= jspweblet.getResource( &quot;weblets.demo&quot;,&quot;/welcome.js&quot;) %&gt;
-    &lt;%= jspweblet.getUrl( &quot;weblets.demo&quot;,&quot;/welcome.js&quot;) %&gt;</pre>
+    &lt;%= jspweblet.getURL( &quot;weblets.demo&quot;,&quot;/welcome.js&quot;) %&gt;</pre>
 </div>
 <p>As you can see we include our utils class as simple <tt>JSP</tt>
  bean, the bean then provides our resource and url functions.</p>

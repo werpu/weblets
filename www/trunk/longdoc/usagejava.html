@@ -55,13 +55,13 @@
  Servlet APIs</h4>
 <p>The <tt>Weblets</tt>
  Servlet APIs are very simple to use, they basically are the two contract functions mapped into a utils class.</p>
-<div class="source"><pre>    WebletsUtils.getResource(&quot;org.myapp.html&quot;, &quot;/myresource.js&quot;)
-    WebletsUtils.getUrl(&quot;org.myapp.html&quot;, &quot;/myresource.js&quot;)
+<div class="source"><pre>    WebletUtils.getResource(&quot;org.myapp.html&quot;, &quot;/myresource.js&quot;)
+    WebletUtils.getURL(&quot;org.myapp.html&quot;, &quot;/myresource.js&quot;)
 
     or
 
-    WebletsUtils.getInstance().getResource(&quot;org.myapp.html&quot;, &quot;/myresource.js&quot;)
-    WebletsUtils.getInstance().getUrl(&quot;org.myapp.html&quot;, &quot;/myresource.js&quot;)</pre>
+    WebletUtils.getInstance().getResource(&quot;org.myapp.html&quot;, &quot;/myresource.js&quot;)
+    WebletUtils.getInstance().getURL(&quot;org.myapp.html&quot;, &quot;/myresource.js&quot;)</pre>
 </div>
 <p>It is up to your personal preference which version of the calling methods you use, internally everything is resolved into a singleton call.<br />
 The methods themselves are thread save, they should not cause any problems in a multithreaded environment which basically every server is!</p>

@@ -37,8 +37,8 @@
 </div>
 <div class="section"><h3>Weblet Architecture</h3>
 <p>Although Weblets were designed to be used by any web client, the Weblets implementation has been integrated with JavaServer Faces using a custom <tt>Utils Class</tt>
- <tt>JSFWebletsUtils</tt>
-, as shown in figure 1. During rendering of the main JavaServer Faces page, the <tt>JSFWebletsUtils</tt>
+ <tt>FacesWebletUtils</tt>
+, as shown in figure 1. During rendering of the main JavaServer Faces page, the <tt>FacesWebletUtils</tt>
  is responsible for converting weblet specific resource URLs into the actual URLs used by the browser to request weblet-managed resources.</p>
 <img src="../images/figure1.png" alt="<i>Figure 1. High-overview of Weblet architecture</i>
 " /><p>After receiving the rendered markup for the main page, the browser downloads each additional resource using a separate request. Each request for a weblet-managed resource is intercepted by the <tt>WebletsPhaseListener</tt>
@@ -112,7 +112,7 @@
 <p>By specifying a weblet version, you indicate that the packaged resource is not going to change until the version number changes. Therefore, the version number is included as part of the resource URL determined at runtime by the <tt>Weblets Phase Listener</tt>
  e.g. <tt>/myresources$1.0/myScript.js</tt>
 . When the <tt>WebletContainer</tt>
- services this request, it extracts the version number from the URL and determines that the resource should be cached, and never expire. As soon as a new version of the component library is deployed to the web application, the resource URL created at runtime by the <tt>JSFWebletsUtils</tt>
+ services this request, it extracts the version number from the URL and determines that the resource should be cached, and never expire. As soon as a new version of the component library is deployed to the web application, the resource URL created at runtime by the <tt>FacesWebletUtils</tt>
  changes e.g. <tt>/myresources$2.0/myScript.js</tt>
 , thus the browser's cached copy of myScript.js for version 1.0 is no longer valid because the URL is different.</p>
 <p>During development, the contents of packaged resources can change frequently, so it is important for the browser to keep checking back with the web server to detect the latest resource URL contents. This check happens by default every time the main Web page is rendered if the Weblet version is omitted from <tt>weblets-config.xml</tt>
@@ -153,12 +153,12 @@
 <p><i>Code sample 5. Using Weblet &quot;apis&quot; to serve up resources</i>
 </p>
 <div class="source"><pre>      JSF:
-        JSFWebletsUtils.getInstance().getUrl(applicationContext, &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
-        JSFWebletsUtils.getInstance().getResource(applicationContext, &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+        FacesWebletUtils.getInstance().getURL(applicationContext, &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+        FacesWebletUtils.getInstance().getResource(applicationContext, &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
 
       Generic non JSF webframeworks:
-        WebletsUtils.getInstance().getUrl(&quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
-        WebletsUtils.getInstance().getResource(&quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+        WebletUtils.getInstance().getURL(&quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+        WebletUtils.getInstance().getResource(&quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
 
       Frontend: JSF dummy maps utilizing EL:
         #{jsfwebleturl['org.myapp.html']['/myresource.js']}
@@ -170,9 +170,9 @@
         ${wbl:url('org.myapp.html','/myresource.js')}
 
       JSP Bean for JSP 1.x:
-        jsp:useBean class=&quot;net.java.dev.weblets.WebletsUtils&quot; scope=&quot;application&quot; id=&quot;jspweblet&quot;
+        jsp:useBean class=&quot;net.java.dev.weblets.WebletUtils&quot; scope=&quot;application&quot; id=&quot;jspweblet&quot;
         jspweblet.getResource( &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
-        jspweblet.getUrl( &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+        jspweblet.getURL( &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
 
        MIME text/ resources and CSS loaded from weblet:
         weblet:url( org.myapp.html , //myresource.js )
@@ -182,7 +182,7 @@
 <p><i>Code sample 6. Using the API Utils classes and contractual methods to serve up resources.</i>
 </p>
 <div class="source"><pre>        String resourceURL =
-               JSFWebletsUtils.getInstance().url(context,
+               FacesWebletUtils.getInstance().url(context,
                                      &quot;org.myapp.html&quot;,&quot;/myScript.js&quot;);
         out.startElement(&quot;script&quot;, null);
         out.writeAttribute(&quot;type&quot;, &quot;text/javascript&quot;, null);
@@ -208,11 +208,11 @@
 </p>
 <p><i>Code sample 6. Difference between url and resource</i>
 </p>
-<div class="source"><pre>        JSFWebletsUtils.getInstance().getUrl(applicationContext, &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+<div class="source"><pre>        FacesWebletUtils.getInstance().getURL(applicationContext, &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
 
         resolves to /my-webapp/faces/weblets/myapp/myresource.js
 
-        JSFWebletsUtils.getInstance().getResource(applicationContext, &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+        FacesWebletUtils.getInstance().getResource(applicationContext, &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
 
         resolves to /faces/weblets/myapp/myresource.js
 </pre>
