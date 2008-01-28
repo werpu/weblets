@@ -102,21 +102,21 @@
     <developerConnection>scm:svn:https://weblets.dev.java.net/svn/weblets/trunk/</developerConnection>
     <url>https://weblets.dev.java.net/source/browse/weblets/</url>
   </scm>
-  
+
   <modules>
     <module>weblets-api</module>
     <module>weblets-impl</module>
     <module>weblets-exampleweblet</module>  
     <module>weblets-demo</module>
   </modules>
-  
+
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
         <configuration>
-          <templateDirectory>file:src/site/</templateDirectory>
+          <templateDirectory>src/site/</templateDirectory>
           <template>java.net.vm</template>
         </configuration>
       </plugin>

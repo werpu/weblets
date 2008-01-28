@@ -27,9 +27,9 @@ import java.util.regex.Pattern;
 public class WebletTextprocessingFilter extends StreamingFilter {
 
     public static final Pattern _WEBLET_URL =
-            Pattern.compile("weblet:\\s*url\\s*\\(([^\"\\'/]+)\\,([^\"\\'\\)]+)\\)?(.*)");
+            Pattern.compile("weblet:\\s*URL\\s*\\(([^\"\\'/]+)\\,([^\"\\'\\)]+)\\)?(.*)");
     public static final Pattern _WEBLET_RESOURCE =
-            Pattern.compile("weblet:\\s*resource\\s*\\(([^\"\\'/]+)\\,([^\"\\'\\)]+)\\)?(.*)");
+            Pattern.compile("weblet:\\s*Resource\\s*\\(([^\"\\'/]+)\\,([^\"\\'\\)]+)\\)?(.*)");
 
     public void addFilter(StreamingFilter filter) {
         parentFilter = filter;
@@ -67,13 +67,13 @@ public class WebletTextprocessingFilter extends StreamingFilter {
             String line = reader.readLine();
             // TODO: tidy up pattern matching, use leading single/double quote
             // TODO: conditional filtering
-            int startWebletUrl = line.indexOf("weblet:url(");
+            int startWebletUrl = line.indexOf("weblet:URL(");
 
             if (startWebletUrl != -1) {
                 String protocol = line.substring(startWebletUrl);
                 Matcher matcher = _WEBLET_URL.matcher(protocol);
                 resolveLine(config, writer, line, startWebletUrl, matcher, true);
-            } else if ((startWebletUrl = line.indexOf("weblet:resource(")) != -1) {
+            } else if ((startWebletUrl = line.indexOf("weblet:Resource(")) != -1) {
                 String protocol = line.substring(startWebletUrl);
                 Matcher matcher = _WEBLET_RESOURCE.matcher(protocol);
                 resolveLine(config, writer, line, startWebletUrl, matcher, false);

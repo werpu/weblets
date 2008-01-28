@@ -10,13 +10,13 @@
 
 
     <function>
-        <name>resource</name>
+        <name>Resource</name>
         <function-class>net.java.dev.weblets.WebletUtils</function-class>
         <function-signature>java.lang.String getResource( java.lang.String, java.lang.String)</function-signature>
     </function>
 
     <function>
-          <name>url</name>
+          <name>URL</name>
           <function-class>net.java.dev.weblets.WebletUtils</function-class>
           <function-signature>java.lang.String getURL( java.lang.String, java.lang.String)</function-signature>
     </function>

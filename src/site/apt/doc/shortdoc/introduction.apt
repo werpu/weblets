@@ -243,13 +243,13 @@ Loading Resources with Weblets
         WebletUtils.getInstance().getResource("org.myapp.html","/myresource.js")
 
       Frontend: JSF dummy maps utilizing EL:
-        #{jsfwebleturl['org.myapp.html']['/myresource.js']}
-        #{jsfwebletres['org.myapp.html']['/myresource.js']}
+        #{weblet_URL['org.myapp.html']['/myresource.js']}
+        #{weblet_Resource['org.myapp.html']['/myresource.js']}
 
       EL functions usable from JSP2, facelets and JSF 1.2:
         xmlns:wbl="http://weblets.dev.java.net/tags_jsp2"
-        ${wbl:resource('org.myapp.html','/myresource.js')}
-        ${wbl:url('org.myapp.html','/myresource.js')}
+        ${wbl:Resource('org.myapp.html','/myresource.js')}
+        ${wbl:URL('org.myapp.html','/myresource.js')}
 
       JSP Bean for JSP 1.x:
         jsp:useBean class="net.java.dev.weblets.WebletUtils" scope="application" id="jspweblet"
