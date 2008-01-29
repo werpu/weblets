@@ -5,12 +5,12 @@
           
 <faces-config>
   <managed-bean>
-       <managed-bean-name>wbl_Resource</managed-bean-name>
+       <managed-bean-name>weblet_Resource</managed-bean-name>
        <managed-bean-class>net.java.dev.weblets.FacesElWebletResource</managed-bean-class>
        <managed-bean-scope>application</managed-bean-scope>
    </managed-bean>    
     <managed-bean>
-         <managed-bean-name>wbl_URL</managed-bean-name>
+         <managed-bean-name>weblet_URL</managed-bean-name>
          <managed-bean-class>net.java.dev.weblets.FacesELWebletURL</managed-bean-class>
          <managed-bean-scope>application</managed-bean-scope>
      </managed-bean>
