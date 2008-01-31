@@ -15,7 +15,11 @@
  */
 package net.java.dev.weblets.impl.servlets;
 
-import java.io.IOException;
+import net.java.dev.weblets.WebletContainer;
+import net.java.dev.weblets.WebletException;
+import net.java.dev.weblets.WebletRequest;
+import net.java.dev.weblets.WebletResponse;
+import net.java.dev.weblets.impl.WebletContainerImpl;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -23,13 +27,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.java.dev.weblets.WebletException;
-import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.WebletResponse;
-
-import net.java.dev.weblets.impl.WebletContainerImpl;
-import net.java.dev.weblets.WebletContainer;
+import java.io.IOException;
 
 public class WebletsServletImpl extends HttpServlet
 {

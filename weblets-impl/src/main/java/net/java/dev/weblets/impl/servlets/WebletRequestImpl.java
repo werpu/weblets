@@ -16,8 +16,7 @@
 package net.java.dev.weblets.impl.servlets;
 
 import net.java.dev.weblets.impl.WebletRequestBase;
-
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletRequest;
 
 public class WebletRequestImpl extends WebletRequestBase {
     public WebletRequestImpl(
@@ -26,26 +25,27 @@ public class WebletRequestImpl extends WebletRequestBase {
             String contextPath,
             String pathInfo,
             long ifModifiedSince,
-            HttpServletRequest httpRequest) {
+            ServletRequest httpRequest) {
         super(webletName, webletPath, contextPath, pathInfo, ifModifiedSince);
         _httpRequest = httpRequest;
-        String encodingHeader = httpRequest.getHeader("accept-encoding");
+
+        //String encodingHeader = httpRequest.getHeader("accept-encoding");
 
         /*find the compression params for the request*/
-        if (encodingHeader != null && encodingHeader.indexOf("gzip") != -1) {
-            _compressionEnabled = true;
-            _allowedCompressionTypes = new String[]{"gzip"};
-            _preferredCompressionType = "gzip";
-        }
+        //if (encodingHeader != null && encodingHeader.indexOf("gzip") != -1) {
+        //    _compressionEnabled = true;
+        //    _allowedCompressionTypes = new String[]{"gzip"};
+        //   _preferredCompressionType = "gzip";
+        //}
     }
 
     public String getParameter(String name) {
         return _httpRequest.getParameter(name);
     }
 
-    public HttpServletRequest getHttpRequest() {
+    public ServletRequest getHttpRequest() {
         return _httpRequest;
     }
 
-    private final HttpServletRequest _httpRequest;
+    private final ServletRequest _httpRequest;
 }

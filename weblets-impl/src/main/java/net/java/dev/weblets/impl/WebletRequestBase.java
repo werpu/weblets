@@ -64,18 +64,7 @@ public class WebletRequestBase implements WebletRequest
       return null;
   }
 
-     public boolean isCompressionEnabled() {
-        return _compressionEnabled;
-    }
-
-    public String getPreferredCompressionType() {
-        return _preferredCompressionType;
-    }
-
-    public String[] getAllowedCompressionTypes() {
-        return _allowedCompressionTypes;
-    }  
-
+ 
   private final String _webletName;
   private final String _webletPath;
   private final String _contextPath;
@@ -83,7 +72,7 @@ public class WebletRequestBase implements WebletRequest
   private final long   _ifModifiedSince;
 
   /*compression settings, optional not used in the base class*/
-  protected  boolean _compressionEnabled = false;
-  protected  String _preferredCompressionType = "";
-  protected  String [] _allowedCompressionTypes = new String[0];
+  //protected  boolean _compressionEnabled = false;
+  //protected  String _preferredCompressionType = "";
+  //protected  String [] _allowedCompressionTypes = new String[0];
 }

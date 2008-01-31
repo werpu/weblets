@@ -15,15 +15,12 @@
  */
 package net.java.dev.weblets.impl.faces;
 
+import net.java.dev.weblets.WebletContainer;
+import net.java.dev.weblets.WebletRequest;
+import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.impl.WebletContainerImpl;
 import net.java.dev.weblets.impl.servlets.WebletRequestImpl;
-
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Date;
-import java.util.Map;
-import java.util.regex.Matcher;
+import net.java.dev.weblets.impl.servlets.WebletResponseImpl;
 
 import javax.faces.FacesException;
 import javax.faces.context.ExternalContext;
@@ -31,15 +28,15 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
-
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
-
-import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.WebletResponse;
-import net.java.dev.weblets.impl.servlets.WebletResponseImpl;
-import javax.servlet.http.HttpServletRequest;
-import net.java.dev.weblets.WebletContainer;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Map;
+import java.util.regex.Matcher;
 
 public class WebletsPhaseListener implements PhaseListener {
     
@@ -130,9 +127,9 @@ public class WebletsPhaseListener implements PhaseListener {
                         container.parseWebletRequest(contextPath, requestURI, ifModifiedSince);
 
                 if (parsed != null) {
-                    ServletContext servletContext = (ServletContext)external.getContext();
-                    HttpServletRequest httpRequest = (HttpServletRequest)external.getRequest();
-                    HttpServletResponse httpResponse = (HttpServletResponse)external.getResponse();
+                    ServletContext servletContext = (ServletContext) external.getContext();
+                    ServletRequest httpRequest = (ServletRequest) external.getRequest();
+                    ServletResponse httpResponse = (ServletResponse)external.getResponse();
 
                     String webletName = parsed[0];
                     String webletPath = parsed[1];
