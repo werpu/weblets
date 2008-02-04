@@ -76,7 +76,7 @@
 
   <servlet-mapping>
     <servlet-name>Weblets Servlet</servlet-name>
-    <url-pattern>/weblets/*</url-pattern>
+    <url-pattern>/wbl/*</url-pattern>
   </servlet-mapping>
 
 

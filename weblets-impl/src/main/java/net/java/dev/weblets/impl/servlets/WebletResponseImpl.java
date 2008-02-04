@@ -31,7 +31,7 @@ import java.lang.reflect.Method;
  * Weblets Response impl object
  * implementation of the internal
  * weblets response object
- *
+ * <p/>
  * TODO check out how to enable all the header
  * params in portlet environments which do not provide
  * the needed methods but follow the pure ri interfaces
@@ -51,11 +51,46 @@ public class WebletResponseImpl extends WebletResponseBase {
     }
 
     public OutputStream getOutputStream() throws IOException {
-        return _httpResponse.getOutputStream();
+        //return _httpResponse.getOutputStream();
+        Method m = null;
+
+        try {
+            m = _httpResponse.getClass().getMethod("getOutputStream", (Class[])null);
+            try {
+                return (OutputStream) m.invoke(_httpResponse, new Class[]{});
+            } catch (IllegalAccessException e) {
+                Log log = LogFactory.getLog(getClass());
+                log.error(e);
+            } catch (InvocationTargetException e) {
+                Log log = LogFactory.getLog(getClass());
+                log.error(e);
+            }
+            return null;
+        } catch (NoSuchMethodException e) {
+            try {
+                //this should work because we are in a prerender stage but already
+                //have the response object
+                //this needs further testing of course!
+                m = _httpResponse.getClass().getMethod("getPortletOutputStream", (Class[])null);
+                try {
+                    return (OutputStream) m.invoke(_httpResponse, new Class[]{});
+                } catch (IllegalAccessException e1) {
+                    Log log = LogFactory.getLog(getClass());
+                    log.error(e1);
+                } catch (InvocationTargetException e2) {
+                    Log log = LogFactory.getLog(getClass());
+                    log.error(e2);
+                }
+                return null;
+            } catch (NoSuchMethodException ex) {
+                Log log = LogFactory.getLog(getClass());
+                log.error(ex);
+            }
+        }
+        return null;
     }
 
-    public void setStatus(
-            int statusCode) {
+    public void setStatus(int statusCode) {
         switch (statusCode) {
             case WebletResponse.SC_ACCEPTED:
                 setResponseStatus(HttpServletResponse.SC_ACCEPTED);
@@ -71,22 +106,28 @@ public class WebletResponseImpl extends WebletResponseBase {
         }
     }
 
-    public ServletResponse getHttpResponse() {
+    public ServletResponse getHttpResponse
+            () {
         return _httpResponse;
     }
 
-    protected void setContentTypeImpl(
-            String contentType) {
+    protected void setContentTypeImpl
+            (
+                    String
+                            contentType) {
         _httpResponse.setContentType(contentType);
     }
 
-    protected void setLastModifiedImpl(
-            long lastModified) {
+    protected void setLastModifiedImpl
+            (
+                    long lastModified) {
         setDateHeader("Last-Modified", lastModified);
     }
 
-    protected void setContentVersionImpl(
-            String contentVersion) {
+    protected void setContentVersionImpl
+            (
+                    String
+                            contentVersion) {
         long now = System.currentTimeMillis();
         long never = now + 100l * 60l * 60l * 24l * 365l;
 
@@ -106,12 +147,14 @@ public class WebletResponseImpl extends WebletResponseBase {
      * @param entry
      * @param lastModified
      */
-    private void setDateHeader(String entry, long lastModified) {
+    private void setDateHeader
+            (String
+                    entry, long lastModified) {
         Method[] supportedMethods = _httpResponse.getClass().getMethods();
         //fetch the date header method
         Method m = null;
         try {
-            
+
             m = _httpResponse.getClass().getMethod("setDateHeader", new Class[]{String.class, long.class});
         } catch (NoSuchMethodException e) {
             if (!dateheader_warn) {
@@ -146,7 +189,9 @@ public class WebletResponseImpl extends WebletResponseBase {
      */
     static boolean responsestatus_warn = false;
 
-    private void setResponseStatus(int status) {
+    private void setResponseStatus
+            (
+                    int status) {
         Method[] supportedMethods = _httpResponse.getClass().getMethods();
         //fetch the date header method
         Method m = null;

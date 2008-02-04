@@ -29,6 +29,7 @@ public class WebletResourceloadingUtils {
 
             URLConnection conn = url.openConnection();
             response.setLastModified(conn.getLastModified());
+            
             response.setContentType(null); // Bogus "text/html" overriding mime-type
             response.setContentVersion(config.getWebletVersion());
 

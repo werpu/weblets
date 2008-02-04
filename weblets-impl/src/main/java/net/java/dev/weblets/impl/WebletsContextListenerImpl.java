@@ -9,19 +9,6 @@
 
 package net.java.dev.weblets.impl;
 
-import net.java.dev.weblets.WebletContainer;
-import net.java.dev.weblets.WebletsServlet;
-import net.java.dev.weblets.impl.parse.DisconnectedEntityResolver;
-import org.apache.commons.digester.Digester;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.xml.sax.SAXException;
-
-import javax.faces.FacesException;
-import javax.faces.webapp.FacesServlet;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -30,6 +17,22 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.regex.Pattern;
+
+import javax.faces.FacesException;
+import javax.faces.webapp.FacesServlet;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+
+import net.java.dev.weblets.WebletContainer;
+import net.java.dev.weblets.WebletsServlet;
+import net.java.dev.weblets.impl.parse.DisconnectedEntityResolver;
+
+import org.apache.commons.digester.Digester;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.xml.sax.SAXException;
 
 /**
  * @author john.fallows
@@ -56,7 +59,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
         try {
             URL webXml = context.getResource("/WEB-INF/web.xml");
 
-            String facesPattern = "/faces/*";
+            String triggerPattern = "/faces/*";
             String contextPath = "";
             if (webXml != null) {
                 InputStream in = webXml.openStream();
@@ -81,16 +84,14 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                     digester.addCallParam("web-app/context-param/param-value", 1);
 
                     digester.parse(in);
-
-                    facesPattern = parser.getFacesPattern();
+                    //servlet had priority over the jsf config if both are given
+                    if(!StringUtils.isBlank(parser.getWebletPattern()))
+                        triggerPattern = parser.getWebletPattern();
+                    else
+                        triggerPattern = parser.getFacesPattern();
+                    
                     contextPath = calculateContextPath(parser, context);
-                    if (!isPathPattern(facesPattern) && parser.isJSFEnabled()) {
-                        Log logger = LogFactory.getLog(this.getClass());
-                        logger.warn("JSF Enabled Weblets but path pattern is missing, some relatively referenced resources might not load ");
-                    } else if (!isPathPattern(parser.getWebletPattern()) && parser.isServletEnabled()) {
-                        Log logger = LogFactory.getLog(this.getClass());
-                        logger.warn("Servlet Enabled Weblets but path pattern is missing, some relatively referenced resources might not load ");
-                    }
+                    handlePathPatternWarnings(parser);
                 } catch (SAXException e) {
                     throw new FacesException(e);
                 } finally {
@@ -102,14 +103,17 @@ public class WebletsContextListenerImpl implements ServletContextListener {
             String webletsViewIds = "/weblets/*";
 
             // auto-prepend leading slash in case it is missing from web.xml entry
-            if (!facesPattern.startsWith("/")) {
-                facesPattern = "/" + facesPattern;
+            
+            
+            if (!triggerPattern.startsWith("/")) {
+                triggerPattern = "/" + triggerPattern;
             }
-
-            String formatPattern = facesPattern.replaceFirst("/\\*", webletsViewIds)
+            //TODO still correct? we need a testcase
+            
+            String formatPattern = triggerPattern.replaceFirst("/\\*", webletsViewIds)
                     .replaceFirst("/\\*", "{0}");
 
-            String webletsPattern = facesPattern.replaceAll("\\.", "\\\\.")
+            String webletsPattern = triggerPattern.replaceAll("\\.", "\\\\.")
                     .replaceAll("\\*", "weblets(/.*)");
             MessageFormat format = new MessageFormat(formatPattern);
             WebletContainerImpl container = new WebletContainerImpl(context, contextPath, format , Pattern.compile(webletsPattern));
@@ -124,6 +128,16 @@ public class WebletsContextListenerImpl implements ServletContextListener {
             return container;
         } catch (IOException e) {
             throw new FacesException(e);
+        }
+    }
+
+    private void handlePathPatternWarnings(WebXmlParser parser) {
+        if (!isPathPattern(parser.getFacesPattern()) && parser.isJSFEnabled()) {
+            Log logger = LogFactory.getLog(this.getClass());
+            logger.warn("JSF Enabled Weblets but path pattern is missing, some relatively referenced resources might not load ");
+        } else if (!isPathPattern(parser.getWebletPattern()) && parser.isServletEnabled()) {
+            Log logger = LogFactory.getLog(this.getClass());
+            logger.warn("Servlet Enabled Weblets but path pattern is missing, some relatively referenced resources might not load ");
         }
     }
 
@@ -160,7 +174,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                 String servletClass) {
             if (FacesServlet.class.getName().equals(servletClass))
                 _facesServletName = servletName;
-            if (WebletsServlet.class.getName().equals(servletName))
+            if (WebletsServlet.class.getName().equals(servletClass))
                 _webletServletName = servletName;
         }
 

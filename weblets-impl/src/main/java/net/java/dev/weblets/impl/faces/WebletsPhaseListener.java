@@ -75,8 +75,8 @@ public class WebletsPhaseListener implements PhaseListener {
     {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext external = context.getExternalContext();
-
-        Map applicationScope = external.getApplicationMap();
+        //TODO: portlet context error here
+        //Map applicationScope = external.getApplicationMap();
         //WebletContainerImpl container = (WebletContainerImpl)applicationScope.get(WebletsContextListenerImpl.WEBLET_CONTAINER_KEY);
         WebletContainerImpl container = (WebletContainerImpl)WebletContainer.getInstance();
 

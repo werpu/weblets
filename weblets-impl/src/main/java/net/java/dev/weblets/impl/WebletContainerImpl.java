@@ -263,7 +263,11 @@ public class WebletContainerImpl extends WebletContainer {
             String webletPath = matcher.group(1);
 
             StringBuffer buffer = new StringBuffer();
-            buffer.append("(\\Q");
+            //we have to prepend some optional mapping to cover
+            //the servlet case and some frameworks
+            //which add their own subcontext before triggering
+            //in framework servlets 
+            buffer.append(".*(\\Q");
             buffer.append(webletPath);
             buffer.append("\\E)");
             if (webletVersion != null) {
