@@ -23,18 +23,26 @@ public class WebletResourceloadingUtils {
         return instance;
     }
 
-    
+
     public void loadFromUrl(WebletConfig config, WebletRequest request, WebletResponse response, URL url, IStreamingFilter filterChain) throws IOException {
         if (url != null) {
 
             URLConnection conn = url.openConnection();
             response.setLastModified(conn.getLastModified());
-            
+
             response.setContentType(null); // Bogus "text/html" overriding mime-type
             response.setContentVersion(config.getWebletVersion());
 
+            //some browsers only work on seconds  (Mozilla)  so we go down to one second for a shared
+            //common response time
+            long requestCacheState = request.getIfModifiedSince();
+            if (requestCacheState > 1000)
+                requestCacheState = requestCacheState - requestCacheState % 1000;
+            long responseCacheState = conn.getLastModified();
+            if (responseCacheState > 1000)
+                responseCacheState = responseCacheState - responseCacheState % 1000;
 
-            if (request.getIfModifiedSince() < conn.getLastModified()) {
+            if (requestCacheState < responseCacheState) {
                 InputStream in = conn.getInputStream();
                 OutputStream out = response.getOutputStream();
                 try {
