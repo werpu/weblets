@@ -13,15 +13,15 @@
  <body>
    <f:view>
        test for resource
-      <h:outputText value="#{weblet_Resource['weblets.demo']['/welcome.js']}" />
+      <h:outputText value="#{jsfweblet.resource['weblets.demo']['/welcome.js']}" />
        test for an empty resource
-       <h:outputText value="#{weblet_Resource['weblets.demo']['']}" />
+       <h:outputText value="#{jsfweblet.resource['weblets.demo']['']}" />
       <p>
        test for url
-      <h:outputText value="#{weblet_URL['weblets.demo']['/welcome.js']}" />
+      <h:outputText value="#{jsfweblet.url['weblets.demo']['/welcome.js']}" />
       </p>
        
-      <h:graphicImage id="yyy" value="#{weblet_Resource['weblets.demo']['/img/icon_alert.gif']}" />
+      <h:graphicImage id="yyy" value="#{jsfweblet.resource['weblets.demo']['/img/icon_alert.gif']}" />
    </f:view>
  </body>
 </html> 

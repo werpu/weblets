@@ -20,10 +20,10 @@ Author     : werpu
          the framework or the page designer has to set the context path
          himself! Alternatively a basepath does the trick also!
          </p>
-         ${wbl:Resource('weblets.demo','/welcome.js')}
+         ${wbl:resource('weblets.demo','/welcome.js')}
          <p>again we also can
          use the url function to add the context path</p>
-         ${wbl:URL('weblets.demo','/welcome.js')}   
+         ${wbl:url('weblets.demo','/welcome.js')}
    </jsp:body>
     </jsp:element>
     

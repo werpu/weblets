@@ -3,6 +3,7 @@
 <web-app>
   <description>Weblets Demo</description>
 
+    
   <!--
   <context-param>
       <param-name>net.java.dev.weblets.contextpath</param-name>
@@ -57,7 +58,6 @@
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
-
   <servlet>
     <servlet-name>Weblets Servlet</servlet-name>
     <servlet-class>net.java.dev.weblets.WebletsServlet</servlet-class>
@@ -78,7 +78,6 @@
     <servlet-name>Weblets Servlet</servlet-name>
     <url-pattern>/weblets/*</url-pattern>
   </servlet-mapping>
-
 
 
   <session-config>

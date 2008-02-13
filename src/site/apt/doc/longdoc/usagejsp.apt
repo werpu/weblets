@@ -83,8 +83,8 @@ Usage of Weblets in a JSP Centric Environment
 +----------------------------------------------
      xmlns:wbl="http://weblets.dev.java.net/tags_jsp2" this has to be added to your namespace definitions
 
-      <h:outputText value="${wbl:URL('weblets.demo','/welcome.js')}" />
-      <h:graphicImage value="${wbl:Resource('weblets.demo','/img/icon_alert.gif')}" />
+      <h:outputText value="${wbl:url('weblets.demo','/welcome.js')}" />
+      <h:graphicImage value="${wbl:resource('weblets.demo','/img/icon_alert.gif')}" />
 +----------------------------------------------
 
 

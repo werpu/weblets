@@ -1,6 +1,7 @@
-package net.java.dev.weblets;
+package net.java.dev.weblets.impl.faces.util;
 
-import net.java.dev.weblets.util.JSFDummyMap;
+import net.java.dev.weblets.impl.faces.util.JSFDummyMap;
+import net.java.dev.weblets.FacesWebletUtils;
 
 import javax.faces.context.FacesContext;
 

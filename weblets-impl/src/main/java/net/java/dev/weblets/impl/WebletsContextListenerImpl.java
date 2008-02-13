@@ -36,21 +36,39 @@ import org.xml.sax.SAXException;
 
 /**
  * @author john.fallows
+ * @changes Werner Punz
+ * 
+ * Changes from 0.4 to 1.0
+ *
+ * Clear calling order of weblets servlets
+ * and jsf servlets
+ * 
+ * Last references into the view handler have been removed
+ * 
+ * We have enforced a path trigger pattern
+ * Weblets servlet overrides any other entry
+ * it has higher priority than the faces 
+ * servlet pattern
+ * 
+ * A simplified regexp handling of the pattern
+ * parsing parts
+ * 
+ * 
+ * 
  */
 public class WebletsContextListenerImpl implements ServletContextListener {
 
-//    public static final String WEBLET_CONTAINER_KEY = WebletContainer.class.getName();
+    // public static final String WEBLET_CONTAINER_KEY =
+    // WebletContainer.class.getName();
 
-    public void contextInitialized(
-            ServletContextEvent event) {
+    public void contextInitialized(ServletContextEvent event) {
         ServletContext context = event.getServletContext();
         WebletContainer container = createContainer(context);
-        //throws NPE on Glassfish
-        //context.setAttribute(WEBLET_CONTAINER_KEY, container);
+        // throws NPE on Glassfish
+        // context.setAttribute(WEBLET_CONTAINER_KEY, container);
     }
 
-    public void contextDestroyed(
-            ServletContextEvent event) {
+    public void contextDestroyed(ServletContextEvent event) {
         WebletContainerImpl container = (WebletContainerImpl) WebletContainer.getInstance();
         container.destroy();
     }
@@ -69,27 +87,25 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                     digester.setValidating(false);
                     digester.setEntityResolver(DisconnectedEntityResolver.sharedInstance());
                     digester.push(parser);
-                    digester.addCallMethod("web-app/servlet",
-                            "addServlet", 2);
+                    digester.addCallMethod("web-app/servlet", "addServlet", 2);
                     digester.addCallParam("web-app/servlet/servlet-name", 0);
                     digester.addCallParam("web-app/servlet/servlet-class", 1);
-                    digester.addCallMethod("web-app/servlet-mapping",
-                            "addServletMapping", 2);
+                    digester.addCallMethod("web-app/servlet-mapping", "addServletMapping", 2);
                     digester.addCallParam("web-app/servlet-mapping/servlet-name", 0);
                     digester.addCallParam("web-app/servlet-mapping/url-pattern", 1);
 
-                    digester.addCallMethod("web-app/context-param",
-                            "addContextParam", 2);
+                    digester.addCallMethod("web-app/context-param", "addContextParam", 2);
                     digester.addCallParam("web-app/context-param/param-name", 0);
                     digester.addCallParam("web-app/context-param/param-value", 1);
 
                     digester.parse(in);
-                    //servlet had priority over the jsf config if both are given
-                    if(!StringUtils.isBlank(parser.getWebletPattern()))
+                    // servlet had priority over the jsf config if both are
+                    // given
+                    if (!StringUtils.isBlank(parser.getWebletPattern()))
                         triggerPattern = parser.getWebletPattern();
                     else
                         triggerPattern = parser.getFacesPattern();
-                    
+
                     contextPath = calculateContextPath(parser, context);
                     handlePathPatternWarnings(parser);
                 } catch (SAXException e) {
@@ -100,29 +116,35 @@ public class WebletsContextListenerImpl implements ServletContextListener {
             }
 
             // TODO: determine Faces Weblets ViewIds, assumes /weblets/*
-            String webletsViewIds = "/weblets/*";
+            String webletsViewIds = "/weblets/*";// we add a dedicated
+                                                    // weblets/ to our url for
+                                                    // the filter
 
-            // auto-prepend leading slash in case it is missing from web.xml entry
-            
-            
+            // auto-prepend leading slash in case it is missing from web.xml
+            // entry
+
             if (!triggerPattern.startsWith("/")) {
                 triggerPattern = "/" + triggerPattern;
             }
-            //TODO still correct? we need a testcase
-            
-            String formatPattern = triggerPattern.replaceFirst("/\\*", webletsViewIds)
-                    .replaceFirst("/\\*", "{0}");
 
-            String webletsPattern = triggerPattern.replaceAll("\\.", "\\\\.")
-                    .replaceAll("\\*", "weblets(/.*)");
+            // to avoid any conflicts we reserve the weblets subnamespace
+            // anything under /weblets is a clear
+            // reference into a weblet resource url, anything before is the
+            // trigger and anything after
+            // is the version and path
+            String formatPattern = triggerPattern.replaceFirst("/\\*", webletsViewIds).replaceFirst("/\\*", "{0}");
+           
+            //TODO remove some double weblets pattern to reduce urls
+            String webletsPattern = triggerPattern.replaceAll("\\.", "\\\\.").replaceAll("\\*", "weblets(/.*)");
+            
+            
             MessageFormat format = new MessageFormat(formatPattern);
-            WebletContainerImpl container = new WebletContainerImpl(context, contextPath, format , Pattern.compile(webletsPattern));
+            WebletContainerImpl container = new WebletContainerImpl(context, contextPath, format, Pattern.compile(webletsPattern));
             try {
                 URL resource = context.getResource("/WEB-INF/weblets-config.xml");
                 if (resource != null)
                     container.registerConfig(resource);
-            }
-            catch (MalformedURLException e) {
+            } catch (MalformedURLException e) {
                 context.log("Unabled to register /WEB-INF/weblets-config.xml", e);
             }
             return container;
@@ -145,13 +167,14 @@ public class WebletsContextListenerImpl implements ServletContextListener {
         String contextPath;
         contextPath = parser.getWebletsContextPath();
         if (contextPath == null || contextPath.trim().equals("")) {
-           try {
-                //lets check if we are in JEE 5 so that we can execute a getServletContextPath methid
+            try {
+                // lets check if we are in JEE 5 so that we can execute a
+                // getServletContextPath methid
                 Method[] methods = context.getClass().getMethods();
 
                 for (int cnt = 0; cnt < methods.length; cnt++) {
                     if (methods[cnt].getName().equals("getContextPath")) {
-                        
+
                         return (String) methods[cnt].invoke(context, null);
                     }
                 }
@@ -169,18 +192,14 @@ public class WebletsContextListenerImpl implements ServletContextListener {
     }
 
     static public class WebXmlParser {
-        public void addServlet(
-                String servletName,
-                String servletClass) {
+        public void addServlet(String servletName, String servletClass) {
             if (FacesServlet.class.getName().equals(servletClass))
                 _facesServletName = servletName;
             if (WebletsServlet.class.getName().equals(servletClass))
                 _webletServletName = servletName;
         }
 
-        public void addServletMapping(
-                String servletName,
-                String urlPattern) {
+        public void addServletMapping(String servletName, String urlPattern) {
             if (servletName.equals(_facesServletName))
                 if (_facesPattern == null || _facesPattern.trim().equals("") || isPathPattern(urlPattern))
                     _facesPattern = urlPattern;
@@ -194,7 +213,6 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                 _webletsContextPath = contextValue.trim();
             }
         }
-
 
         public boolean isServletEnabled() {
             return _webletServletName != null && !_webletServletName.trim().equals("");
@@ -216,20 +234,19 @@ public class WebletsContextListenerImpl implements ServletContextListener {
             return _webletsContextPath;
         }
 
-
         private String _facesServletName;
         private String _facesPattern;
 
         private String _webletServletName;
         private String _webletPattern;
 
-
         private String _webletsContextPath;
         private String _contextPathPattern = "^\\s*net\\.java\\.dev\\.weblets\\.contextpath\\s*$";
     }
 
     private static boolean isPathPattern(String in) {
-        if (in == null) return false;
+        if (in == null)
+            return false;
         return in.trim().matches("^(.)*\\/.*\\/(\\*){0,1}$");
     }
 

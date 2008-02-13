@@ -3,11 +3,10 @@ package net.java.dev.weblets.impl.faces;
 import net.java.dev.weblets.WebletUtils;
 import net.java.dev.weblets.util.IFacesWebletUtils;
 
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 /**
- * a faces utils class
+ * a faces util class
  * which allows the easy inclusion of weblets for
  * component authors
  * this one should replace the weblets view handler

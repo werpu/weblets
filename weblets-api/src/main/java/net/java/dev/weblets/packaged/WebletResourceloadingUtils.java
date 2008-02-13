@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
 
 /**
  * helper class to be shared by various weblet loaders
@@ -28,14 +29,33 @@ public class WebletResourceloadingUtils {
         if (url != null) {
 
             URLConnection conn = url.openConnection();
-            response.setLastModified(conn.getLastModified());
+            long never = -1;
+            if (config.getWebletVersion() == null || config.getWebletVersion().trim().equals(""))
+                response.setLastModified(conn.getLastModified());
+            else {
+                //we lock out resource loading once versioned, we do not run into the chain
+                //just in case the expires is ignored
+                //this enforces the loading from cache on some browsers
+                //even if refresh is pressed, this is by
+                //definition the wanted behavior if versioning is on!
+                //some browsers like firefox despite
+                //having a future number pass a local date on refresh maybe we lock this out as well
+                long now = System.currentTimeMillis();
+                never = now + 100l * 60l * 60l * 24l * 365l;
+                response.setLastModified(never);
 
+
+                //this should prevent requests entirely!
+                response.setContentVersion(config.getWebletVersion());
+            }
             response.setContentType(null); // Bogus "text/html" overriding mime-type
-            response.setContentVersion(config.getWebletVersion());
 
             //some browsers only work on seconds  (Mozilla)  so we go down to one second for a shared
             //common response time
-            long requestCacheState = request.getIfModifiedSince();
+            //we cannot tamper the cache state here, because
+            //otherwise firefox will fail with an emptied page resource cache (shift f5)
+            long requestCacheState = request.getIfModifiedSince() ;
+       
             if (requestCacheState > 1000)
                 requestCacheState = requestCacheState - requestCacheState % 1000;
             long responseCacheState = conn.getLastModified();
