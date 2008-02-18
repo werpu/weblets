@@ -68,15 +68,15 @@
  dummy map:</p>
 <p><i>Code 3: Usage or resource and url in a JSF frontend environment</i>
 </p>
-<div class="source"><pre>  &lt;h:outputText value=&quot;#{jsfwebleturl['weblets.demo']['/welcome.js']}&quot; /&gt;
-  &lt;h:graphicImage value=&quot;#{jsfwebletres['weblets.demo']['/img/icon_alert.gif']}&quot; /&gt;</pre>
+<div class="source"><pre>  &lt;h:outputText value=&quot;#{weblet.url['weblets.demo']['/welcome.js']}&quot; /&gt;
+  &lt;h:graphicImage value=&quot;#{weblet.resource['weblets.demo']['/img/icon_alert.gif']}&quot; /&gt;</pre>
 </div>
-<p>In this example you can precisely see why you need sometimes resource <tt>jsfwebletres</tt>
- or url <tt>jsfwebleturl</tt>
+<p>In this example you can precisely see why you need sometimes resource <tt>weblet.resource</tt>
+ or url <tt>weblet.url</tt>
 , in this example h:graphicImage adds the application context itself so we dont need a full url including the web application context, instead we just need a path relative to it.</p>
 <p><i>Code 4: Difference between url and resource in a JSF specific api</i>
 </p>
-<div class="source"><pre>   #{jsfwebleturl['weblets.demo']['/welcome.js']}</pre>
+<div class="source"><pre>   #{weblet.url['weblets.demo']['/welcome.js']}</pre>
 </div>
 <p>Is a typical <tt>JSF</tt>
  dummy map. One of <tt>JSF</tt>
@@ -106,8 +106,8 @@
 </p>
 <div class="source"><pre>     xmlns:wbl=&quot;http://weblets.dev.java.net/tags_jsp2&quot; this has to be added to your namespace definitions
 
-      &lt;h:outputText value=&quot;${wbl:url('weblets.demo','/welcome.js')}&quot; /&gt;
-      &lt;h:graphicImage value=&quot;${wbl:resource('weblets.demo','/img/icon_alert.gif')}&quot; /&gt;</pre>
+      &lt;h:outputText value=&quot;${weblet:url('weblets.demo','/welcome.js')}&quot; /&gt;
+      &lt;h:graphicImage value=&quot;${weblet:resource('weblets.demo','/img/icon_alert.gif')}&quot; /&gt;</pre>
 </div>
 <p>As you can see the calls are very similar, but instead of reverting into a (still available) <tt>JSF</tt>
  dummy map we call directly <tt>EL</tt>

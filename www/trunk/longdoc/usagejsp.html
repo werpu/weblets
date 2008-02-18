@@ -77,14 +77,17 @@
 &gt;&gt; functions</p>
 <div class="source"><pre>     xmlns:wbl=&quot;http://weblets.dev.java.net/tags_jsp2&quot; this has to be added to your namespace definitions
 
-      &lt;h:outputText value=&quot;${wbl:url('weblets.demo','/welcome.js')}&quot; /&gt;
-      &lt;h:graphicImage value=&quot;${wbl:resource('weblets.demo','/img/icon_alert.gif')}&quot; /&gt;</pre>
+      &lt;h:outputText value=&quot;${weblet:url('weblets.demo','/welcome.js')}&quot; /&gt;
+      &lt;h:graphicImage value=&quot;${weblet:resource('weblets.demo','/img/icon_alert.gif')}&quot; /&gt;</pre>
 </div>
 </div>
 </div>
 <div class="section"><h3>JSP Backend APIs</h3>
 <p>The JSP backend APIs are the same as the servlet APIs for further reference see <a href="#usagejava.apt">Weblets: Java APIs</a>
 }</p>
+</div>
+<div class="section"><h3>Additional notes</h3>
+<p>For the usage of JSP scriptlets, do not use the weblet name for your bean name, it is reserved by weblets itself, if you do use it in a mixed jsf jsp enviornment you will get name clashes with jsf - Weblets internal beans that way. Hence all the demos default to jspweblet in our case! In a pure jsp environment the usage of the weblet as bean variable name is safe, but it still is not advicable to use it, it might block the path to further extensions in your application or it might block the path to future weblet updates!</p>
 </div>
 </div>
 <div class="section"><h2>Summary</h2>

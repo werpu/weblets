@@ -84,7 +84,8 @@
  and the underlying <tt>Weblet Class</tt>
  e.g. <tt>/myresources$1.0/myScript.js</tt>
 . When the <tt>WebletContainer</tt>
- services this request, it extracts the version number from the URL and determines that the resource should be cached, and never expire.</p>
+ services this request, it extracts the version number from the URL and determines that the resource should be cached, and never expire. <tt>Weblets</tt>
+ will handle the expiring and browser cache control transparently in this case so that an optimumn in cache performance on the browser side can be reached!</p>
 <p>During development, the contents of packaged resources can change frequently, so it is important for the browser to keep checking back with the web server to detect the latest resource URL contents. This check happens by default every time the main Web page is rendered if the Weblet version is omitted from <tt>weblets-config.xml</tt>
 .</p>
 <p>Alternatively the Weblet configuration allows component authors to append <tt>-SNAPSHOT</tt>
