@@ -235,21 +235,21 @@ Loading Resources with Weblets
 
 +----------------------------------------------------------------------
       JSF:
-        FacesWebletUtils.getInstance().getURL(applicationContext, "org.myapp.html","/myresource.js")
-        FacesWebletUtils.getInstance().getResource(applicationContext, "org.myapp.html","/myresource.js")
+        FacesWebletUtils.getURL(facesContext, "org.myapp.html","/myresource.js")
+        FacesWebletUtils.getResource(facesContext, "org.myapp.html","/myresource.js")
 
       Generic non JSF webframeworks:
         WebletUtils.getInstance().getURL("org.myapp.html","/myresource.js")
         WebletUtils.getInstance().getResource("org.myapp.html","/myresource.js")
 
       Frontend: JSF dummy maps utilizing EL:
-        #{jsfweblet.url['org.myapp.html']['/myresource.js']}
-        #{jsfweblet.resource['org.myapp.html']['/myresource.js']}
+        #{weblet.url['org.myapp.html']['/myresource.js']}
+        #{weblet.resource['org.myapp.html']['/myresource.js']}
 
       EL functions usable from JSP2, facelets and JSF 1.2:
-        xmlns:wbl="http://weblets.dev.java.net/tags_jsp2"
-        ${wbl:resource('org.myapp.html','/myresource.js')}
-        ${wbl:url('org.myapp.html','/myresource.js')}
+        xmlns:weblet="http://weblets.dev.java.net/tags_jsp2"
+        ${weblet:resource('org.myapp.html','/myresource.js')}
+        ${weblet:url('org.myapp.html','/myresource.js')}
 
       JSP Bean for JSP 1.x:
         jsp:useBean class="net.java.dev.weblets.WebletUtils" scope="application" id="jspweblet"
@@ -300,11 +300,11 @@ Loading Resources with Weblets
  <Code sample 6. Difference between url and resource>
 
 +----------------------------------------------------------------------
-        FacesWebletUtils.getInstance().getURL(applicationContext, "org.myapp.html","/myresource.js")
+        FacesWebletUtils.getInstance().getURL(facesContext, "org.myapp.html","/myresource.js")
 
         resolves to /my-webapp/faces/weblets/myapp/myresource.js
 
-        FacesWebletUtils.getInstance().getResource(applicationContext, "org.myapp.html","/myresource.js")
+        FacesWebletUtils.getInstance().getResource(facesContext, "org.myapp.html","/myresource.js")
 
         resolves to /faces/weblets/myapp/myresource.js
 
