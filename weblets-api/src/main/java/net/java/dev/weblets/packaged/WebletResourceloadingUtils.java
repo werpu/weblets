@@ -30,7 +30,7 @@ public class WebletResourceloadingUtils {
 
             URLConnection conn = url.openConnection();
             long never = -1;
-            if (config.getWebletVersion() == null || config.getWebletVersion().trim().equals(""))
+            if (!isVersionedWeblet(config.getWebletVersion()))
                 response.setLastModified(conn.getLastModified());
             else {
                 //we lock out resource loading once versioned, we do not run into the chain
@@ -40,8 +40,7 @@ public class WebletResourceloadingUtils {
                 //definition the wanted behavior if versioning is on!
                 //some browsers like firefox despite
                 //having a future number pass a local date on refresh maybe we lock this out as well
-                long now = System.currentTimeMillis();
-                never = now + 100l * 60l * 60l * 24l * 365l;
+                never = WebletResourceloadingUtils.getNever();
                 response.setLastModified(never);
 
 
@@ -89,6 +88,18 @@ public class WebletResourceloadingUtils {
         } else {
             response.setStatus(WebletResponse.SC_NOT_FOUND);
         }
+    }
+
+    /*unified version checker for weblet versions maybe in existence */
+    public static boolean isVersionedWeblet(String webletVersion) {
+        return webletVersion != null && !webletVersion.trim().equals("") &&
+                !webletVersion.endsWith("-SNAPSHOT");
+    }
+
+    /*defined never value used system internally*/
+    public static long getNever() {
+          long now = System.currentTimeMillis();
+          return now + 100l * 60l * 60l * 24l * 365l;
     }
 
 }

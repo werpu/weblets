@@ -16,6 +16,7 @@
 package net.java.dev.weblets.impl.servlets;
 
 import net.java.dev.weblets.WebletResponse;
+import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
 import net.java.dev.weblets.impl.WebletResponseBase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -55,7 +56,7 @@ public class WebletResponseImpl extends WebletResponseBase {
         Method m = null;
 
         try {
-            m = _httpResponse.getClass().getMethod("getOutputStream", (Class[])null);
+            m = _httpResponse.getClass().getMethod("getOutputStream", (Class[]) null);
             try {
                 return (OutputStream) m.invoke(_httpResponse, new Class[]{});
             } catch (IllegalAccessException e) {
@@ -71,7 +72,7 @@ public class WebletResponseImpl extends WebletResponseBase {
                 //this should work because we are in a prerender stage but already
                 //have the response object
                 //this needs further testing of course!
-                m = _httpResponse.getClass().getMethod("getPortletOutputStream", (Class[])null);
+                m = _httpResponse.getClass().getMethod("getPortletOutputStream", (Class[]) null);
                 try {
                     return (OutputStream) m.invoke(_httpResponse, new Class[]{});
                 } catch (IllegalAccessException e1) {
@@ -128,9 +129,8 @@ public class WebletResponseImpl extends WebletResponseBase {
             (
                     String
                             contentVersion) {
-        long now = System.currentTimeMillis();
-        long never = now + 100l * 60l * 60l * 24l * 365l;
 
+        long never = WebletResourceloadingUtils.getNever();
         setDateHeader("Expires", never);
     }
 
