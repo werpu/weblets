@@ -29,7 +29,7 @@ Weblets Setup Guide
       </servlet>
 
 
-      <!-- The  <<<Weblets>>>servlet mapping must be path based otherwise  <<<Weblets>>>will fail! -->
+      <!-- The  Weblets servlet mapping must be path based otherwise  Weblets will fail! -->
       <servlet-mapping>
         <servlet-name>Weblets Servlet</servlet-name>
         <url-pattern>/weblets/*</url-pattern>
@@ -46,7 +46,7 @@ Weblets Setup Guide
     <Code 2: Configuration limitation >
 
 +---------------------------------------------------------------------------------------
-  <!-- The  <<<Weblets>>>servlet mapping must be path based otherwise  <<<Weblets>>>will fail! -->
+  <!-- The  Weblets servlet mapping must be path based otherwise Weblets will fail! -->
   <servlet-mapping>
     <servlet-name>Weblets Servlet</servlet-name>
     <url-pattern>/weblets/*</url-pattern>

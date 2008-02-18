@@ -83,8 +83,8 @@ Usage of Weblets in a JSP Centric Environment
 +----------------------------------------------
      xmlns:wbl="http://weblets.dev.java.net/tags_jsp2" this has to be added to your namespace definitions
 
-      <h:outputText value="${wbl:url('weblets.demo','/welcome.js')}" />
-      <h:graphicImage value="${wbl:resource('weblets.demo','/img/icon_alert.gif')}" />
+      <h:outputText value="${weblet:url('weblets.demo','/welcome.js')}" />
+      <h:graphicImage value="${weblet:resource('weblets.demo','/img/icon_alert.gif')}" />
 +----------------------------------------------
 
 
@@ -93,6 +93,15 @@ Usage of Weblets in a JSP Centric Environment
     The JSP backend APIs are the same as the servlet APIs for further reference see
     {{{usagejava.apt}Weblets: Java APIs}}}
 
+
+* Additional notes
+
+    For the usage of JSP scriptlets, do not use the weblet name for your bean name, it is reserved
+    by weblets itself, if you do use it in a mixed jsf jsp enviornment you will get name clashes
+    with jsf - Weblets internal beans that way. Hence all the demos default to jspweblet in our case!
+    In a pure jsp environment the usage of the weblet as bean variable name is safe, but it still is not
+    advicable to use it, it might block the path to further extensions in your application or it might
+    block the path to future weblet updates!
 
 Summary
 

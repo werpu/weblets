@@ -78,19 +78,19 @@ Usage of Weblets in a jsf centric environment
    <Code 3: Usage or resource and url in a JSF frontend environment>
 
 +----------------------------------------------
-  <h:outputText value="#{jsfweblet.url['weblets.demo']['/welcome.js']}" />
-  <h:graphicImage value="#{jsfweblet.resource['weblets.demo']['/img/icon_alert.gif']}" />
+  <h:outputText value="#{weblet.url['weblets.demo']['/welcome.js']}" />
+  <h:graphicImage value="#{weblet.resource['weblets.demo']['/img/icon_alert.gif']}" />
 +----------------------------------------------
 
-    In this example you can precisely see why you need sometimes resource <<<jsfweblet.resource>>> or
-    url <<<jsfweblet.url>>>, in this example h:graphicImage adds the application context itself
+    In this example you can precisely see why you need sometimes resource <<<weblet.resource>>> or
+    url <<<weblet.url>>>, in this example h:graphicImage adds the application context itself
     so we dont need a full url including the web application context, instead we just need
     a path relative to it.
 
     <Code 4: Difference between url and resource in a JSF specific api>
 
 +----------------------------------------------
-   #{jsfweblet.url['weblets.demo']['/welcome.js']}
+   #{weblet.url['weblets.demo']['/welcome.js']}
 +----------------------------------------------
 
    Is a typical <<<JSF>>> dummy map. One of <<<JSF>>> 1.1s <<<EL>>> implementation is, it does not allow functions
@@ -125,8 +125,8 @@ Usage of Weblets in a jsf centric environment
 +----------------------------------------------
      xmlns:wbl="http://weblets.dev.java.net/tags_jsp2" this has to be added to your namespace definitions
 
-      <h:outputText value="${wbl:url('weblets.demo','/welcome.js')}" />
-      <h:graphicImage value="${wbl:resource('weblets.demo','/img/icon_alert.gif')}" />
+      <h:outputText value="${weblet:url('weblets.demo','/welcome.js')}" />
+      <h:graphicImage value="${weblet:resource('weblets.demo','/img/icon_alert.gif')}" />
 +----------------------------------------------
 
   As you can see the calls are very similar, but instead of reverting into a (still available) <<<JSF>>> dummy map
