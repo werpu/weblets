@@ -105,6 +105,8 @@ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet defin
     at runtime by the <<<Weblets Phase Listener>>> and the underlying <<<Weblet Class>>> e.g. <<</myresources$1.0/myScript.js>>>. When the <<<WebletContainer>>>
     services this request, it extracts the version number from the URL and determines that the resource should
     be cached, and never expire.
+    <<<Weblets>>> will handle the expiring and browser cache control transparently in this case so that an optimumn
+    in cache performance on the browser side can be reached!
 
     During development, the contents of packaged resources can change frequently, so it is important for the
     browser to keep checking back with the web server to detect the latest resource URL contents. This check
