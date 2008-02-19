@@ -5,7 +5,7 @@
           
 <faces-config>
      <managed-bean>
-         <managed-bean-name>jsfweblet</managed-bean-name>
+         <managed-bean-name>weblet</managed-bean-name>
          <managed-bean-class>net.java.dev.weblets.FacesElWeblet</managed-bean-class>
          <managed-bean-scope>application</managed-bean-scope>
      </managed-bean>
