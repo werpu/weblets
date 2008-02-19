@@ -21,7 +21,7 @@
     <dependency>
       <groupId>net.java.dev.weblets</groupId>
       <artifactId>weblets-api</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0-BETA-1</version>
     </dependency>
 
     <dependency>

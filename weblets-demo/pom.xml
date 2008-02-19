@@ -13,7 +13,7 @@
     <packaging>war</packaging>
     
     <name>Weblets Demo</name>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-BETA-1</version>
     <description>Weblets Demo</description>
     <url>http://weblets.dev.java.net</url>
     
