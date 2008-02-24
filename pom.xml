@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
+
+  <properties>
+    <projectversion>1.0</projectversion>
+   
+  </properties>
+
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>net.java.dev.weblets</groupId>
@@ -7,7 +13,7 @@
   <packaging>pom</packaging>
 
   <name>Weblets</name>
-  <version>1.0-BETA-1</version>
+  <version>${projectversion}</version>
   <description>Weblets</description>
   <url>http://weblets.dev.java.net</url>
 
