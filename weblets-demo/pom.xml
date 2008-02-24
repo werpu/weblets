@@ -34,7 +34,7 @@
          <dependency>
             <groupId>net.java.dev.weblets</groupId>
             <artifactId>weblets-exampleweblet</artifactId>
-            <version>1.0-BETA-1</version>
+            <version>${project.version}</version>
         </dependency>
         
         <dependency>
