@@ -52,7 +52,10 @@ public class WebletContainerImpl extends WebletContainer {
         {
             ClassLoader loader = Thread.currentThread().getContextClassLoader();
             Enumeration e = loader.getResources("META-INF/weblets-config.xml");
-
+            if(e == null) {
+            	loader = WebletContainerImpl.class.getClassLoader();
+            	e = loader.getResources("META-INF/weblets-config.xml");
+            }
             // Defensive: Glassfish.v2.b25 produces duplicates in Enumeration
             //            returned by loader.getResources()
             Set urls = new HashSet();

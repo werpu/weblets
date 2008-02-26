@@ -102,7 +102,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                     // given
                     if (parser.getWebletPattern() != null && !parser.getWebletPattern().trim().equals(""))
                         triggerPattern = parser.getWebletPattern();
-                    else
+                    else if(parser.getFacesPattern() != null && !parser.getWebletPattern().trim().equals(""))
                         triggerPattern = parser.getFacesPattern();
 
                     contextPath = calculateContextPath(parser, context);
