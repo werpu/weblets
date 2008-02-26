@@ -18,8 +18,7 @@ import java.net.URL;
 import java.text.MessageFormat;
 import java.util.regex.Pattern;
 
-import javax.faces.FacesException;
-import javax.faces.webapp.FacesServlet;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -29,7 +28,6 @@ import net.java.dev.weblets.WebletsServlet;
 import net.java.dev.weblets.impl.parse.DisconnectedEntityResolver;
 
 import org.apache.commons.digester.Digester;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.xml.sax.SAXException;
@@ -69,8 +67,9 @@ public class WebletsContextListenerImpl implements ServletContextListener {
     }
 
     public void contextDestroyed(ServletContextEvent event) {
-        WebletContainerImpl container = (WebletContainerImpl) WebletContainer.getInstance();
-        container.destroy();
+        WebletContainerImpl container = (WebletContainerImpl) WebletContainerImpl.getInstance();
+        if(container != null)
+        	container.destroy();
     }
 
     private WebletContainer createContainer(ServletContext context) {
@@ -101,7 +100,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                     digester.parse(in);
                     // servlet had priority over the jsf config if both are
                     // given
-                    if (!StringUtils.isBlank(parser.getWebletPattern()))
+                    if (parser.getWebletPattern() != null && !parser.getWebletPattern().trim().equals(""))
                         triggerPattern = parser.getWebletPattern();
                     else
                         triggerPattern = parser.getFacesPattern();
@@ -109,7 +108,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                     contextPath = calculateContextPath(parser, context);
                     handlePathPatternWarnings(parser);
                 } catch (SAXException e) {
-                    throw new FacesException(e);
+                    throw new RuntimeException(e);
                 } finally {
                     in.close();
                 }
@@ -149,7 +148,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
             }
             return container;
         } catch (IOException e) {
-            throw new FacesException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -193,7 +192,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
 
     static public class WebXmlParser {
         public void addServlet(String servletName, String servletClass) {
-            if (FacesServlet.class.getName().equals(servletClass))
+        	if ("javax.faces.webapp.FacesServlet".equals(servletClass))
                 _facesServletName = servletName;
             if (WebletsServlet.class.getName().equals(servletClass))
                 _webletServletName = servletName;
