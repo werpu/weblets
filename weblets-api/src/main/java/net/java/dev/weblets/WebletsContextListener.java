@@ -15,8 +15,6 @@
  */
 package net.java.dev.weblets;
 
-import net.java.dev.weblets.util.ServiceLoader;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,10 +23,14 @@ import java.io.InputStreamReader;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import net.java.dev.weblets.util.ServiceLoader;
+
+import com.sun.jmx.remote.util.Service;
+
 /**
  * The WebletContextListener is responsible for initializing the
  * WebletContainer.
- *
+ *so
  * The <code>META-INF/services/net.java.dev.weblets.WebletsContextListener</code>
  * Service Provider configuration file is used to lookup the implementation
  * class for this ServletContextListener, as defined by the JAR file specification.
@@ -42,6 +44,9 @@ public final class WebletsContextListener implements ServletContextListener
      */
     public void contextInitialized(ServletContextEvent event)
     {
+    	if(_WEBLETS_CONTEXT_LISTENER_CLASS == null)
+    		_WEBLETS_CONTEXT_LISTENER_CLASS = ServiceLoader.loadService( WebletsContextListener.class);
+    	
         try
         {
           _delegate = (ServletContextListener)_WEBLETS_CONTEXT_LISTENER_CLASS.newInstance();
@@ -73,10 +78,10 @@ public final class WebletsContextListener implements ServletContextListener
   private ServletContextListener _delegate;
 
   // the WebletsContextListener Service Provider implementation class
-  static private final Class _WEBLETS_CONTEXT_LISTENER_CLASS;
+  static private  Class _WEBLETS_CONTEXT_LISTENER_CLASS;
 
-  static
-  {
-    _WEBLETS_CONTEXT_LISTENER_CLASS = ServiceLoader.loadService( WebletsContextListener.class.getName());
-  }
+ 
+  
+  
+  
 }

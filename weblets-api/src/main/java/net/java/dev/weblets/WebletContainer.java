@@ -16,7 +16,7 @@
 package net.java.dev.weblets;
 
 import java.io.IOException;
-
+import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,13 +26,22 @@ abstract public class WebletContainer
   static protected void setInstance(
     WebletContainer container) throws WebletException
   {
-    ClassLoader loader = Thread.currentThread().getContextClassLoader();
+	ClassLoader loader = getLoader();
     _INSTANCES.put(loader, container);
   }
 
+private static ClassLoader getLoader() {
+	ClassLoader loader = Thread.currentThread().getContextClassLoader();
+	URL testRes = loader.getResource("META-INF/services/"+WebletContainer.class.getName());
+	if(testRes == null) {
+    	loader = WebletContainer.class.getClassLoader();
+    }
+	return loader;
+}
+
   static public WebletContainer getInstance() throws WebletException
   {
-    ClassLoader loader = Thread.currentThread().getContextClassLoader();
+	ClassLoader loader = getLoader();
     return (WebletContainer)_INSTANCES.get(loader);
   }
 

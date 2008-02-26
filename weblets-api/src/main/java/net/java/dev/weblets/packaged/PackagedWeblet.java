@@ -52,6 +52,10 @@ public class PackagedWeblet extends Weblet {
 
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         URL url = loader.getResource(resourcePath);
+        if(url == null) {
+        	loader = PackagedWeblet.class.getClassLoader();
+        	url = loader.getResource(resourcePath);
+        }
 
         WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, filterChain);
     }
