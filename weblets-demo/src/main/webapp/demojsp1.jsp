@@ -8,7 +8,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 <jsp:useBean class="net.java.dev.weblets.WebletUtils" scope="application" id="jspweblet" />
-<%@ taglib uri="http://weblets.dev.java.net/tags" prefix="weblets" %>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
@@ -36,7 +36,7 @@
         <%= jspweblet.getURL( "weblets.demo","/welcome.js") %>
         <br />          
         <img src="<%= jspweblet.getURL( "weblets.demo","/img/icon_alert.gif") %>" />
-        same with a tag
-        <img src='.<weblets:resource weblet="weblets.demo" pathInfo="/img/icon_alert.gif" />' />
+
+        
    </body>
 </html>
