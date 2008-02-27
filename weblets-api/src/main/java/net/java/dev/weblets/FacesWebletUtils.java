@@ -10,8 +10,6 @@ import javax.faces.context.FacesContext;
  * @author Werner Punz
  *         Weblet Utils class which gives the interfaces
  *         for the JSF part of weblets
- *         Date: 30.12.2007
- *         Time: 13:44:04
  */
 public class FacesWebletUtils {
 

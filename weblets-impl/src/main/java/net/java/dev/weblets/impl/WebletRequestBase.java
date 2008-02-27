@@ -71,8 +71,4 @@ public class WebletRequestBase implements WebletRequest
   private final String _pathInfo;
   private final long   _ifModifiedSince;
 
-  /*compression settings, optional not used in the base class*/
-  //protected  boolean _compressionEnabled = false;
-  //protected  String _preferredCompressionType = "";
-  //protected  String [] _allowedCompressionTypes = new String[0];
 }

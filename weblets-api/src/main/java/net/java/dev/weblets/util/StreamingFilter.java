@@ -7,10 +7,9 @@ import net.java.dev.weblets.WebletResponse;
 import java.io.*;
 
 /**
- * TODO: DESC
+ *  Streaming filter base class
  *
  * @author: Werner Punz
- * @date: 03.01.2008.
  */
 public abstract class StreamingFilter implements IStreamingFilter{
     Reader closeReader = null;

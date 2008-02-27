@@ -15,14 +15,17 @@
  */
 package net.java.dev.weblets.packaged;
 
-import net.java.dev.weblets.*;
-import net.java.dev.weblets.util.IStreamingFilter;
-import net.java.dev.weblets.util.WebletsSimpleBinaryfilter;
-import net.java.dev.weblets.util.WebletTextprocessingFilter;
-
-import java.io.*;
+import java.io.IOException;
 import java.net.URL;
-import java.net.URLConnection;
+
+import net.java.dev.weblets.Weblet;
+import net.java.dev.weblets.WebletConfig;
+import net.java.dev.weblets.WebletException;
+import net.java.dev.weblets.WebletRequest;
+import net.java.dev.weblets.WebletResponse;
+import net.java.dev.weblets.util.IStreamingFilter;
+import net.java.dev.weblets.util.WebletTextprocessingFilter;
+import net.java.dev.weblets.util.WebletsSimpleBinaryfilter;
 
 public class PackagedWeblet extends Weblet {
     public void init(

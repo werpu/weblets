@@ -51,19 +51,13 @@ import org.xml.sax.SAXException;
  * A simplified regexp handling of the pattern
  * parsing parts
  * 
- * 
- * 
  */
 public class WebletsContextListenerImpl implements ServletContextListener {
 
-    // public static final String WEBLET_CONTAINER_KEY =
-    // WebletContainer.class.getName();
-
+ 
     public void contextInitialized(ServletContextEvent event) {
         ServletContext context = event.getServletContext();
         WebletContainer container = createContainer(context);
-        // throws NPE on Glassfish
-        // context.setAttribute(WEBLET_CONTAINER_KEY, container);
     }
 
     public void contextDestroyed(ServletContextEvent event) {
@@ -98,8 +92,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                     digester.addCallParam("web-app/context-param/param-value", 1);
 
                     digester.parse(in);
-                    // servlet had priority over the jsf config if both are
-                    // given
+ 
                     if (parser.getWebletPattern() != null && !parser.getWebletPattern().trim().equals(""))
                         triggerPattern = parser.getWebletPattern();
                     else if(parser.getFacesPattern() != null && !parser.getWebletPattern().trim().equals(""))

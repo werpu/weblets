@@ -17,6 +17,12 @@ package net.java.dev.weblets;
 
 import java.io.IOException;
 
+/**
+ * Basic weblet class
+ * all resource loading
+ * handlers must extend this class
+ * 
+ */
 abstract public class Weblet
 {
   public void init(WebletConfig config)

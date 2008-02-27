@@ -5,10 +5,10 @@ import net.java.dev.weblets.util.ServiceLoader;
 import java.util.Map;
 
 /**
- * TODO: DESC
+ * El Weblet utils class
+ * api class for the faces el connectors
  *
  * @author: Werner Punz
- * @date: 13.02.2008.
  */
 public  class FacesElWeblet {
     private FacesElWeblet _delegate = null;
