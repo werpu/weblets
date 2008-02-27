@@ -15,8 +15,8 @@ Introduction into the <<<Weblets>>> Resource Packing
 
 * Structural information
 
-    A weblet is defined by its <<<weblets-config.xml>>> file located in the jars or webapps
-    <<<META-INF>>> or <<<WEB-INF>>> directory!
+    A weblet is defined by its <<<weblets-config.xml>>> file located in the jars or a
+    <<<META-INF>>> fdirectory in your classpath or <<<WEB-INF>>> directory!
     It is a simple xml config file with a setup syntax very close to a standard <<<web.xml>>> file
 
 ** The weblets-config.xml file
@@ -29,21 +29,21 @@ Introduction into the <<<Weblets>>> Resource Packing
    <?xml version="1.0" encoding="UTF-8" ?>
    <weblets-config xmlns="http://weblets.dev.java.net/config" >
      <weblet>
-       <weblet-name>myweblet</weblet-name>
-       <weblet-class>
-         net.java.dev.weblets.packaged.PackagedWeblet
-       </weblet-class>
-       <weblet-version>1.02</weblet-version>
-       <init-param>
-         <param-name>package</param-name>
-         <param-value>
-           org.myapp.faces.renderer.html.resources
-         </param-value>
-       </init-param>
+	       <weblet-name>myweblet</weblet-name>
+	       <weblet-class>
+		         net.java.dev.weblets.packaged.PackagedWeblet
+	       </weblet-class>
+	       <weblet-version>1.02</weblet-version>
+	       <init-param>
+		         <param-name>package</param-name>
+		         <param-value>
+		    	       org.myapp.faces.renderer.html.resources
+		         </param-value>
+		    </init-param>
      </weblet>
      <weblet-mapping>
-       <weblet-name>myweblet</weblet-name>
-       <url-pattern>/myresources/*</url-pattern>
+	       <weblet-name>myweblet</weblet-name>
+	       <url-pattern>/myresources/*</url-pattern>
      </weblet-mapping>
    </weblets-config>
 +--------------------------------------------------------------
@@ -185,11 +185,37 @@ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet defin
     Now if a browser calls this resource, the weblet class and its underlying weblet-container will serve the
     resource transparently.
 
+ * Generating a Weblets JAR 
+ 
+	 In the examples you can find a subproject weblets-exampleweblet. This subproject should serve
+	 as a blueprint on how to package your own weblets jar, the pom.xml can serve as a blueprint
+	 for your own maven build to organize your resources in their own resource packages.
+	 
+ * Deployment and dependencies
+
+	Deployment, usually once you have a running weblets web application working adding additonal resource packs
+	is plug and play. Weblets automatically will discover new resource packs in your web application and will enable
+	them to be used by your web application.
+	
+	If you want to use Weblets in a barebones web application following dependencies have to be met due
+	to some libraries weblets uses itself.
+	
+				* Apache commons-logging 
+				* Apache commons-digester
+				* Apache commons-collections
+				* Apache commons-beanutils
+		
+	It is planned to reduce the number of dependencies significantly for future versions but for now this dependency list
+	is mandatory!
+	
+ 
+
+
 Summary
 
     Packaging of <<<Weblets>>> is very easy it simply is a matter of adding a weblet-config.xml at the correct locations.
     You can use expanded dirs or simply jar files.
-    Check out the weblets-example weblet subproject of your <<<Weblets>>> installation for an extensive packaging
+    Check out the weblets-exampleweblet subproject of your <<<Weblets>>> installation for an extensive packaging
     example including maven builds!
     Also check out the dojo demo in the weblets-demo application for an extensive example on how to use
     the packed resources in your own applications.
