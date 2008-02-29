@@ -27,49 +27,72 @@ import net.java.dev.weblets.util.IStreamingFilter;
 import net.java.dev.weblets.util.WebletTextprocessingFilter;
 import net.java.dev.weblets.util.WebletsSimpleBinaryfilter;
 
+/**
+ * The standard packaged weblet 
+ * serves resources from a standard weblet packaging
+ * 
+ */
 public class PackagedWeblet extends Weblet {
-    public void init(
-            WebletConfig config) {
-        super.init(config);
-        String packageName = config.getInitParameter("package");
-        String resourceRoot = config.getInitParameter("resourceRoot");
+	
+	/**
+	 * init method which is called by default
+	 * to process the parameters
+	 * @param config the webletconfig to be processed
+	 */
+	public void init(WebletConfig config) {
+		super.init(config);
+		//fetch the weblets init param
+		String packageName = config.getInitParameter("package");
+		//fetch the resource root param
+		String resourceRoot = config.getInitParameter("resourceRoot");
 
-        if (packageName == null && resourceRoot == null) {
-            throw new WebletException("Missing either init parameter \"package\" or " +
-                    " or init parameter \"resourceRoot\" for " +
-                    " Weblet \"" + config.getWebletName() + "\"");
-        }
-        _resourceRoot = (packageName != null) ? packageName.replace('.', '/')
-                : resourceRoot;
+		//init param missing, lets throw an error
+		if (packageName == null && resourceRoot == null) {
+			throw new WebletException(
+					"Missing either init parameter \"package\" or "
+							+ " or init parameter \"resourceRoot\" for "
+							+ " Weblet \"" + config.getWebletName() + "\"");
+		}
+		//the init was successful we now have all we need
+		_resourceRoot = (packageName != null) ? packageName.replace('.', '/')
+				: resourceRoot;
 
-    }
+	}
 
-    public void service(
-            WebletRequest request,
-            WebletResponse response) throws IOException {
-        String resourcePath = _resourceRoot + request.getPathInfo();
+	public void service(WebletRequest request, WebletResponse response)
+			throws IOException {
+		String resourcePath = _resourceRoot + request.getPathInfo();
 
-        IStreamingFilter filterChain = null;
-        filterChain = new WebletsSimpleBinaryfilter();
-        filterChain.addFilter(new WebletTextprocessingFilter());
+		//lets build up our filter chain which in our case is a binary filter for standard
+		//processing and our text processing filter for text resources with included
+		//weblet: functions
+		IStreamingFilter filterChain = null;
+		filterChain = new WebletsSimpleBinaryfilter();
+		filterChain.addFilter(new WebletTextprocessingFilter());
 
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        URL url = loader.getResource(resourcePath);
-        if(url == null) {
-        	loader = PackagedWeblet.class.getClassLoader();
-        	url = loader.getResource(resourcePath);
-        }
+		
+		URL url = getResourceUrl(resourcePath);
+		//our utils should handle the standard case
+		WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(),
+				request, response, url, filterChain);
+	}
 
-        WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, filterChain);
-    }
+	
+	private URL getResourceUrl(String resourcePath) {
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		URL url = loader.getResource(resourcePath);
+		if (url == null) {
+			loader = getClass().getClassLoader();
+			url = loader.getResource(resourcePath);
+		}
+		return url;
+	}
 
+	public void destroy() {
+		_resourceRoot = null;
+		super.destroy();
+	}
 
-    public void destroy() {
-        _resourceRoot = null;
-        super.destroy();
-    }
-
-    private String _resourceRoot;
-
+	private String _resourceRoot;
 
 }

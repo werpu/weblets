@@ -24,6 +24,9 @@ Author     : werpu
          <p>again we also can
          use the url function to add the context path</p>
          ${wbl:url('weblets.demo','/welcome.js')}
+          
+         <a href='${wbl:url( "weblets.source","/demojsp2.jspx")}' target="_new">[Get the page source]</a>
+         
    </jsp:body>
     </jsp:element>
     

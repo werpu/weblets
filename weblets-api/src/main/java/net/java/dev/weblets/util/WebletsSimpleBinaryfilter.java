@@ -32,7 +32,7 @@ public class WebletsSimpleBinaryfilter extends StreamingFilter  {
 
     private boolean isTriggered(WebletRequest request, WebletResponse response) {
         String contentType = response.getDefaultContentType();
-        super.isTriggered = !(contentType.startsWith("text/") ||
+        super.isTriggered = contentType == null || !(contentType.startsWith("text/") ||
                 contentType.endsWith("xml") ||
                 contentType.equals("application/x-javascript"));
         return super.isTriggered;

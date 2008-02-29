@@ -98,5 +98,7 @@
 		</textarea>
 		<h3>..after</h3>
 	</div>
+	<a href="<%= jspweblet.getURL( "weblets.source","/jspdojotest.jsp") %>" target="_new">[Get the page source]</a>
+ 
    </body>
 </html>

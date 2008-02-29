@@ -22,6 +22,9 @@
       </p>
        
       <h:graphicImage id="yyy" value="#{weblet.resource['weblets.demo']['/img/icon_alert.gif']}" />
+   
+   	  <h:outputLink value='#{weblet.url[ "weblets.source"]["/jsfeltest.jsp"]}' target="_new"><h:outputFormat value="[Get the page source]" /></h:outputLink>
+     
    </f:view>
  </body>
 </html> 

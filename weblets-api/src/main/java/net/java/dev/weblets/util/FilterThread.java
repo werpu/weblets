@@ -16,7 +16,7 @@ import java.io.OutputStream;
  * @author: Werner Punz
  * @date: 03.01.2008.
  */
-class FilterThread extends Thread {
+public class FilterThread extends Thread {
     public boolean isFinished() {
         return finished;
     }

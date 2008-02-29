@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <weblets-config xmlns="http://weblets.dev.java.net/config">
-  <weblet>
-    <weblet-name>weblets.demo</weblet-name>
-    <weblet-class>net.java.dev.weblets.packaged.PackagedWeblet</weblet-class>
-    <weblet-version>1.0</weblet-version>
-      
-    <init-param>
-      <param-name>package</param-name>
-      <param-value>net.java.dev.weblets.demo.resources</param-value>
-    </init-param>
+	<weblet>
+		<weblet-name>weblets.demo</weblet-name>
+		<weblet-class>
+			net.java.dev.weblets.packaged.PackagedWeblet
+		</weblet-class>
+		<weblet-version>1.0</weblet-version>
 
-  </weblet>
-  <weblet-mapping>
-    <weblet-name>weblets.demo</weblet-name>
-    <url-pattern>/demo/*</url-pattern>
-  </weblet-mapping>
+		<init-param>
+			<param-name>package</param-name>
+			<param-value>net.java.dev.weblets.demo.resources</param-value>
+		</init-param>
+
+		<!-- this is a weblet written specifically for the demo -->
+
+	</weblet>
+	<weblet>
+		<weblet-name>weblets.source</weblet-name>
+		<weblet-class>net.java.dev.weblets.demo.sourcecodeweblet.SourcecodeWeblet</weblet-class>
+		<weblet-version>1.0</weblet-version>
+
+	</weblet>
+
+	<weblet-mapping>
+		<weblet-name>weblets.demo</weblet-name>
+		<url-pattern>/demo/*</url-pattern>
+	</weblet-mapping>
+	<weblet-mapping>
+		<weblet-name>weblets.source</weblet-name>
+		<url-pattern>/source/*</url-pattern>
+	</weblet-mapping>
+	
 </weblets-config>

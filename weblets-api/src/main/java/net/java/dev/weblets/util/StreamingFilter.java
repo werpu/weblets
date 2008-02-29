@@ -53,4 +53,40 @@ public abstract class StreamingFilter implements IStreamingFilter{
                 e.printStackTrace();
             }
     }
+	public StreamingFilter getParentFilter() {
+		return parentFilter;
+	}
+	public void setParentFilter(StreamingFilter parentFilter) {
+		this.parentFilter = parentFilter;
+	}
+	public boolean isTriggered() {
+		return isTriggered;
+	}
+	public void setTriggered(boolean isTriggered) {
+		this.isTriggered = isTriggered;
+	}
+	public Reader getCloseReader() {
+		return closeReader;
+	}
+	public void setCloseReader(Reader closeReader) {
+		this.closeReader = closeReader;
+	}
+	public Writer getCloseWriter() {
+		return closeWriter;
+	}
+	public void setCloseWriter(Writer closeWriter) {
+		this.closeWriter = closeWriter;
+	}
+	public InputStream getCloseInputStream() {
+		return closeInputStream;
+	}
+	public void setCloseInputStream(InputStream closeInputStream) {
+		this.closeInputStream = closeInputStream;
+	}
+	public OutputStream getCloseOutputStream() {
+		return closeOutputStream;
+	}
+	public void setCloseOutputStream(OutputStream closeOutputStream) {
+		this.closeOutputStream = closeOutputStream;
+	}
 }

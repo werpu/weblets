@@ -36,7 +36,7 @@
         <%= jspweblet.getURL( "weblets.demo","/welcome.js") %>
         <br />          
         <img src="<%= jspweblet.getURL( "weblets.demo","/img/icon_alert.gif") %>" />
-
-        
+		
+        <a href="<%= jspweblet.getURL( "weblets.source","/demojsp1.jsp") %>" target="_new">[Get the page source]</a>
    </body>
 </html>
