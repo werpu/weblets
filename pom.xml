@@ -10,7 +10,7 @@
   <packaging>pom</packaging>
 
   <name>Weblets</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0-BETA-2</version>
   <description>Weblets</description>
   <url>http://weblets.dev.java.net</url>
 
@@ -106,13 +106,14 @@
     <url>https://weblets.dev.java.net/source/browse/weblets/</url>
   </scm>
 
+
   <modules>
     <module>weblets-api</module>
     <module>weblets-impl</module>
     <module>weblets-exampleweblet</module>  
     <module>weblets-demo</module>
   </modules>
- 
+
 
   <build>
     <plugins>

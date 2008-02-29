@@ -154,6 +154,14 @@ Every weblet url request will default to</p>
  wont!</p>
 </div>
 </div>
+<div class="section"><h3>I have setup everything but weblets still fails with internal errors</h3>
+<p>Some environments do not trigger the internal context listener automatically. Weblets uses an internal context listener for preinitialisation, if the weblet startup fails you might get some internal weblet errors during runtime. If it fails you should try to add</p>
+<div class="source"><pre>  &lt;listener&gt;
+        &lt;listener-class&gt;net.java.dev.weblets.WebletsContextListener&lt;/listener-class&gt;
+  &lt;/listener&gt;</pre>
+</div>
+<p>To your local web.xml, this will ensure that the context listener is called, in any condition. This problem could be confirmed in certain portlet environments, so if you use weblets in a portlet environment it should work but you might have to add the context listener!</p>
+</div>
 </div>
 <div class="section"><h2>Summary</h2>
 <p><tt>Weblets</tt>

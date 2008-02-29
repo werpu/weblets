@@ -14,8 +14,8 @@
 </ul>
 <div class="section"><h3>Structural information</h3>
 <p>A weblet is defined by its <tt>weblets-config.xml</tt>
- file located in the jars or webapps <tt>META-INF</tt>
- or <tt>WEB-INF</tt>
+ file located in the jars or a <tt>META-INF</tt>
+ fdirectory in your classpath or <tt>WEB-INF</tt>
  directory! It is a simple xml config file with a setup syntax very close to a standard <tt>web.xml</tt>
  file</p>
 <div class="section"><h4>The weblets-config.xml file</h4>
@@ -27,21 +27,21 @@
 <div class="source"><pre>   &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
    &lt;weblets-config xmlns=&quot;http://weblets.dev.java.net/config&quot; &gt;
      &lt;weblet&gt;
-       &lt;weblet-name&gt;myweblet&lt;/weblet-name&gt;
-       &lt;weblet-class&gt;
-         net.java.dev.weblets.packaged.PackagedWeblet
-       &lt;/weblet-class&gt;
-       &lt;weblet-version&gt;1.02&lt;/weblet-version&gt;
-       &lt;init-param&gt;
-         &lt;param-name&gt;package&lt;/param-name&gt;
-         &lt;param-value&gt;
-           org.myapp.faces.renderer.html.resources
-         &lt;/param-value&gt;
-       &lt;/init-param&gt;
+               &lt;weblet-name&gt;myweblet&lt;/weblet-name&gt;
+               &lt;weblet-class&gt;
+                         net.java.dev.weblets.packaged.PackagedWeblet
+               &lt;/weblet-class&gt;
+               &lt;weblet-version&gt;1.02&lt;/weblet-version&gt;
+               &lt;init-param&gt;
+                         &lt;param-name&gt;package&lt;/param-name&gt;
+                         &lt;param-value&gt;
+                               org.myapp.faces.renderer.html.resources
+                         &lt;/param-value&gt;
+                    &lt;/init-param&gt;
      &lt;/weblet&gt;
      &lt;weblet-mapping&gt;
-       &lt;weblet-name&gt;myweblet&lt;/weblet-name&gt;
-       &lt;url-pattern&gt;/myresources/*&lt;/url-pattern&gt;
+               &lt;weblet-name&gt;myweblet&lt;/weblet-name&gt;
+               &lt;url-pattern&gt;/myresources/*&lt;/url-pattern&gt;
      &lt;/weblet-mapping&gt;
    &lt;/weblets-config&gt;</pre>
 </div>
@@ -129,11 +129,20 @@ function</p>
 </div>
 <p>The internal location of the resource itself is hidden entirely from the frontend.</p>
 <p>Now if a browser calls this resource, the weblet class and its underlying weblet-container will serve the resource transparently.</p>
+<ul><li>Generating a Weblets JAR <p>In the examples you can find a subproject weblets-exampleweblet. This subproject should serve as a blueprint on how to package your own weblets jar, the pom.xml can serve as a blueprint for your own maven build to organize your resources in their own resource packages.</p>
+</li>
+<li>Deployment and dependencies<p>Deployment, usually once you have a running weblets web application working adding additonal resource packs is plug and play. Weblets automatically will discover new resource packs in your web application and will enable them to be used by your web application.</p>
+<p>If you want to use Weblets in a barebones web application following dependencies have to be met due to some libraries weblets uses itself.</p>
+<ul><li>Apache commons-logging * Apache commons-digester * Apache commons-collections * Apache commons-beanutils</li>
+</ul>
+<p>It is planned to reduce the number of dependencies significantly for future versions but for now this dependency list is mandatory!</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="section"><h2>Summary</h2>
 <p>Packaging of <tt>Weblets</tt>
- is very easy it simply is a matter of adding a weblet-config.xml at the correct locations. You can use expanded dirs or simply jar files. Check out the weblets-example weblet subproject of your <tt>Weblets</tt>
+ is very easy it simply is a matter of adding a weblet-config.xml at the correct locations. You can use expanded dirs or simply jar files. Check out the weblets-exampleweblet subproject of your <tt>Weblets</tt>
  installation for an extensive packaging example including maven builds! Also check out the dojo demo in the weblets-demo application for an extensive example on how to use the packed resources in your own applications.</p>
 <hr />
 <div class="section"><h3>Contents</h3>
