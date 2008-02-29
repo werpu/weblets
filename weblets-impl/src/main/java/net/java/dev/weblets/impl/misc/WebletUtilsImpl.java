@@ -5,8 +5,11 @@
 package net.java.dev.weblets.impl.misc;
 
 import net.java.dev.weblets.WebletContainer;
-import net.java.dev.weblets.util.IWebletUtils;
 import net.java.dev.weblets.impl.WebletContainerImpl;
+import net.java.dev.weblets.util.IWebletUtils;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * A small el function to ease
@@ -17,7 +20,10 @@ import net.java.dev.weblets.impl.WebletContainerImpl;
  */
 public class WebletUtilsImpl implements IWebletUtils {
 
-    public WebletUtilsImpl() {
+    private static final String WEBLETS_NOT_INITIALIZED = "weblets not initialized, please check the logs";
+
+
+	public WebletUtilsImpl() {
     }
 
     /**
@@ -36,8 +42,20 @@ public class WebletUtilsImpl implements IWebletUtils {
         if(pathInfo == null || pathInfo.trim().equals(""))
            pathInfo = "/";
         WebletContainerImpl container = (WebletContainerImpl) WebletContainer.getInstance();
+        if(container == null) {
+        	initError();
+        	
+        	return WEBLETS_NOT_INITIALIZED;
+        }
         return   container.getResourceUri(weblet, pathInfo);
     }
+
+	private void initError() {
+		Log log = LogFactory.getLog(getClass());
+		log.error("The weblet container is null");
+		log.error("This is an indication that weblets is not initialized");
+		log.error("You might have to add   <listener><listener-class>net.java.dev.weblets.WebletsContextListener</listener-class></listener> to your web.xml!!!!");
+	}
 
 
      public  String getURL(String weblet, String pathInfo) {
@@ -45,6 +63,10 @@ public class WebletUtilsImpl implements IWebletUtils {
         if(pathInfo == null || pathInfo.trim().equals(""))
            pathInfo = "/";
         WebletContainerImpl container = (WebletContainerImpl) WebletContainer.getInstance();
+        if(container == null) {
+           	initError();
+            return WEBLETS_NOT_INITIALIZED;
+        }
         return   container.getWebletContextPath()+container.getResourceUri(weblet, pathInfo);
     }
     
