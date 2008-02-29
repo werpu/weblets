@@ -181,18 +181,18 @@ Weblets Setup Guide
     The <<</faces/*>>> pattern has to be set,  <<<Weblets>>> automatically will use this one for its internal url mapping.
     The <<<*.jsf>>> pattern can be set and used also,  <<<Weblets>>> simply will ignore it, <<<JSF>>> wont!
 
-* I have setup everything but weblets still fails 
+* I have setup everything but Weblets still fails with internal errors
 
  Some environments do not trigger the internal context listener automatically.
  Weblets uses an internal context listener for preinitialisation, if the weblet startup
  fails you might get some internal weblet errors during runtime.
  If it fails you should try to add
  
- +------------------------------------------------------------------------
-   <listener>
++------------------------------------------------------------------------
+  <listener>
   	<listener-class>net.java.dev.weblets.WebletsContextListener</listener-class>
   </listener>
- +------------------------------------------------------------------------
++------------------------------------------------------------------------
  
  To your local web.xml, this will ensure that the context listener is called,
  in any condition.
