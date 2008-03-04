@@ -139,6 +139,15 @@
                 <scanIntervalSeconds>10</scanIntervalSeconds>
             </configuration>
         </plugin>
+         
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <tagBase>https://weblets.dev.java.net/svn/weblets/tags</tagBase>
+        </configuration>
+      </plugin>
+	   
     </plugins>
   </build>
 </project>
