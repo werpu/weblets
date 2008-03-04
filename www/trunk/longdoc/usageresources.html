@@ -25,11 +25,11 @@ The browser, after the parsing step, can resolve the urls and can trigger the se
  is parsed and searched for our weblet notation. Hence we can use api functions directly without influencing the actual code.</p>
 <p><i>Code 0: Javascript Usage of the weblet api </i>
 </p>
-<div class="source"><pre>   alert('weblet:url( weblets.demo , /welcome.js )');
+<div class="source"><pre>   alert('weblet:url( &quot;weblets.demo&quot; , &quot;/welcome.js&quot; )');
    expands to alert('/myapp/weblets/demo/welcome.js')
 
-   alert('weblet:resource( weblets.demo , /welcome.js )');
-   expands to alert('/weblets/demo/welcome.js')</pre>
+   alert(&quot;weblet:resource( 'weblets.demo' , '/welcome.js' )&quot;);
+   expands to alert(&quot;/weblets/demo/welcome.js&quot;)</pre>
 </div>
 <p><b>Note: To ease the integration into various text based resource languages, the hyphenation normally found for strings was deliberately left out of the function definition!</b>
 </p>
@@ -40,7 +40,7 @@ The browser, after the parsing step, can resolve the urls and can trigger the se
  adds to CSS</p>
 <p><i>Code 1: CSS Usage of the weblet api </i>
 </p>
-<div class="source"><pre>     background-image: url( weblet:resource( weblets.demo , /myimage.png ) );
+<div class="source"><pre>     background-image: url( weblet:resource( &quot;weblets.demo&quot; , &quot;/myimage.png&quot; ) );
 
      will be expanded to
      background-image: url( /myapp/weblets/demo/myimage.png );</pre>
