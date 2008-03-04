@@ -191,7 +191,7 @@ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet defin
 	 as a blueprint on how to package your own weblets jar, the pom.xml can serve as a blueprint
 	 for your own maven build to organize your resources in their own resource packages.
 	 
- * Deployment and dependencies
+ ** Deployment and dependencies
 
 	Deployment, usually once you have a running weblets web application working adding additonal resource packs
 	is plug and play. Weblets automatically will discover new resource packs in your web application and will enable
@@ -209,7 +209,83 @@ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet defin
 	is mandatory!
 	
  
+ * Additional Weblets
+ 
+	 As of Weblets 1.0 only two options for weblets packaging are given,
+	 the Packaged Weblets class and the URLWeblet, as a late addition to 1.0.
+	 The URL weblet is a preview of what is up and coming post Weblets 1.0.
+	 It allows to stream any url based resource as weblet into your web application.
+	 
+** Usage 
 
++--------------------------------- 	
+   <weblet>
+    <weblet-name>weblets.remote</weblet-name>
+    <weblet-class>net.java.dev.weblets.packaged.URLWeblet</weblet-class>
+    <weblet-version>1.0</weblet-version>
+      
+    <init-param>
+      <param-name>rootaddress</param-name>
+      <param-value>http://localhost:8080/test4Web</param-value>
+    </init-param>
+ +--------------------------------
+ 
+ As we can see it is very similar to the packaged Weblet, just the init params are different
+ the calling api for the application developer stays the same
+ 
+ +----------------------------------
+ 
+ 		<%= jspweblet.getResource( "weblets.remote","/scripts/helloworld.js") %>
+ 
+ +----------------------------------
+ 
+ 
+ * Multiple Weblets per weblets config
+ 
+ 	Of course this is also possible the following configuration should give an example on how to do this
+ 
+ +---------------------------------
+	 <weblets-config xmlns="http://weblets.dev.java.net/config">
+	  <weblet>
+	    <weblet-name>weblets.demo</weblet-name>
+	    <weblet-class>net.java.dev.weblets.packaged.PackagedWeblet</weblet-class>
+	    <weblet-version>1.0</weblet-version>
+	      
+	    <init-param>
+	      <param-name>package</param-name>
+	      <param-value>net.java.dev.weblets.demo.resources</param-value>
+	    </init-param>
+	
+	  </weblet>
+	
+	   <weblet>
+	    <weblet-name>weblets.remote</weblet-name>
+	    <weblet-class>net.java.dev.weblets.packaged.URLWeblet</weblet-class>
+	    <weblet-version>1.0</weblet-version>
+	      
+	    <init-param>
+	      <param-name>rootaddress</param-name>
+	      <param-value>http://localhost:8080/test4Web</param-value>
+	    </init-param>
+	
+	  </weblet>
+	
+	  <weblet-mapping>
+	    <weblet-name>weblets.demo</weblet-name>
+	    <url-pattern>/demo/*</url-pattern>
+	  </weblet-mapping>
+	  
+	  
+	
+	  <weblet-mapping>
+	    <weblet-name>weblets.remote</weblet-name>
+	    <url-pattern>/remote/*</url-pattern>
+	  </weblet-mapping>
+	  
+	  
+	</weblets-config>
+ +---------------------------------
+ 
 
 Summary
 

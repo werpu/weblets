@@ -39,11 +39,11 @@ Resources Weblets Usage Guide
    <Code 0: Javascript Usage of the weblet api >
 
 +----------------------------------------------------
-   alert('weblet:url( weblets.demo , /welcome.js )');
+   alert('weblet:url( "weblets.demo" , "/welcome.js" )');
    expands to alert('/myapp/weblets/demo/welcome.js')
 
-   alert('weblet:resource( weblets.demo , /welcome.js )');
-   expands to alert('/weblets/demo/welcome.js')
+   alert("weblet:resource( 'weblets.demo' , '/welcome.js' )");
+   expands to alert("/weblets/demo/welcome.js")
 +----------------------------------------------------
 
    <<Note: To ease the integration into various text based resource languages,
@@ -57,7 +57,7 @@ Resources Weblets Usage Guide
    <Code 1: CSS Usage of the weblet api >
 
 +-----------------------------------------------------
-     background-image: url( weblet:resource( weblets.demo , /myimage.png ) );
+     background-image: url( weblet:resource( "weblets.demo" , "/myimage.png" ) );
 
      will be expanded to
      background-image: url( /myapp/weblets/demo/myimage.png );

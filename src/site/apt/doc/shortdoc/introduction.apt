@@ -257,9 +257,9 @@ Loading Resources with Weblets
         jspweblet.getURL( "org.myapp.html","/myresource.js")
 
        MIME text/ resources and CSS loaded from weblet:
-        weblet:url( org.myapp.html , //myresource.js )
-        weblet:resource( org.myapp.html , //myresource.js )
-       (example:  alert('weblet:url( weblets.demo , /welcome.js )'); )
+        weblet:url( "org.myapp.htm"l , "//myresource.js" )
+        weblet:resource( "org.myapp.html , "//myresource.js" )
+       (example:  alert("weblet:url( 'weblets.demo' , '/welcome.js' )"); )
 +----------------------------------------------------------------------
 
    <Code sample 6. Using the API Utils classes and contractual methods to serve up resources.>
