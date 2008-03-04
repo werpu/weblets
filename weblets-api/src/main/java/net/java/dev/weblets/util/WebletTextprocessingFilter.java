@@ -27,9 +27,9 @@ import java.util.regex.Pattern;
 public class WebletTextprocessingFilter extends StreamingFilter {
 
     public static final Pattern _WEBLET_URL =
-            Pattern.compile("weblet:\\s*url\\s*\\(([^\"\\'/]+)\\,([^\"\\'\\)]+)\\)?(.*)");
+            Pattern.compile("weblet:\\s*url\\s*\\(\\s*[\"\\']([^\"\\']+)[\"\\']\\s*\\,\\s*[\"\\']([^\"\\'\\)]+)[\"\\']\\s*\\)?(.*)");
     public static final Pattern _WEBLET_RESOURCE =
-            Pattern.compile("weblet:\\s*resource\\s*\\(([^\"\\'/]+)\\,([^\"\\'\\)]+)\\)?(.*)");
+            Pattern.compile("weblet:\\s*resource\\s*\\(\\s*[\"\\']([^\"\\'/]+)[\"\\']\\s*\\,\\s*[\"\\']([^\"\\'\\)]+)[\"\\']\\s*\\)?(.*)");
 
     public void addFilter(StreamingFilter filter) {
         parentFilter = filter;
