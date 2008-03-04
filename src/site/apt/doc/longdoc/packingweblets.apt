@@ -68,7 +68,7 @@ Introduction into the <<<Weblets>>> Resource Packing
 
 +--------------------------------------------------------------
 
-This is a weblet definition, it is very similar to a <<<web.xml>>> servlet definition
+ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet definition
 
 +--------------------------------------------------------------
     <weblet-name>myweblet</weblet-name>
@@ -185,13 +185,13 @@ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet defin
     Now if a browser calls this resource, the weblet class and its underlying weblet-container will serve the
     resource transparently.
 
- * Generating a Weblets JAR 
+* Generating a Weblets JAR 
  
 	 In the examples you can find a subproject weblets-exampleweblet. This subproject should serve
 	 as a blueprint on how to package your own weblets jar, the pom.xml can serve as a blueprint
 	 for your own maven build to organize your resources in their own resource packages.
 	 
- ** Deployment and dependencies
+** Deployment and dependencies
 
 	Deployment, usually once you have a running weblets web application working adding additonal resource packs
 	is plug and play. Weblets automatically will discover new resource packs in your web application and will enable
@@ -209,7 +209,7 @@ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet defin
 	is mandatory!
 	
  
- * Additional Weblets
+* Additional Weblets
  
 	 As of Weblets 1.0 only two options for weblets packaging are given,
 	 the Packaged Weblets class and the URLWeblet, as a late addition to 1.0.
@@ -228,23 +228,23 @@ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet defin
       <param-name>rootaddress</param-name>
       <param-value>http://localhost:8080/test4Web</param-value>
     </init-param>
- +--------------------------------
++--------------------------------
  
  As we can see it is very similar to the packaged Weblet, just the init params are different
  the calling api for the application developer stays the same
  
- +----------------------------------
++----------------------------------
  
- 		<%= jspweblet.getResource( "weblets.remote","/scripts/helloworld.js") %>
+   <%= jspweblet.getResource( "weblets.remote","/scripts/helloworld.js") %>
  
- +----------------------------------
++----------------------------------
  
  
 * Multiple Weblets per weblets config
  
  	Of course this is also possible the following configuration should give an example on how to do this
  
- +---------------------------------
++---------------------------------
 	 <weblets-config xmlns="http://weblets.dev.java.net/config">
 	  <weblet>
 	    <weblet-name>weblets.demo</weblet-name>
@@ -284,7 +284,7 @@ This is a weblet definition, it is very similar to a <<<web.xml>>> servlet defin
 	  
 	  
 	</weblets-config>
- +---------------------------------
++---------------------------------
  
 
 Summary
