@@ -58,12 +58,23 @@
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  
+ <servlet>
+    <servlet-name>Weblets Servlet</servlet-name>
+    <servlet-class>net.java.dev.weblets.WebletsServlet</servlet-class>
+  </servlet>
 
+  <servlet-mapping>
+    <servlet-name>Weblets Servlet</servlet-name>
+    <url-pattern>/weblets/*</url-pattern>
+  </servlet-mapping>
+  
 
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>/faces/*</url-pattern>
   </servlet-mapping>
+  
   
    
   <servlet-mapping>
@@ -81,6 +92,10 @@
   <session-config>
     <session-timeout>35</session-timeout>
   </session-config>
-
+  
+  <welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
   
 </web-app>

@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
+import net.java.dev.weblets.WebletUtils;
 import net.java.dev.weblets.util.FilterThread;
 import net.java.dev.weblets.util.StreamingFilter;
 
@@ -76,7 +77,7 @@ public class WebletsSourcepageFilter extends StreamingFilter {
 
 	private void writehttpbottom(PrintWriter writer) {
 		writer.write("\n");
-		writer.write("</pre></body></html>");
+		writer.write("</pre></div></body></html>");
 	}
 
 	private void writeResource(BufferedReader reader, PrintWriter writer) throws IOException {
@@ -90,7 +91,11 @@ public class WebletsSourcepageFilter extends StreamingFilter {
 
 	private void writehttphead(PrintWriter writer) {
 		writer.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		writer.write("<html><head></head><body><pre>");
+		writer.write("<html><head>");
+		writer.write("<link rel=\"stylesheet\" href=\"");
+		writer.write(WebletUtils.getURL("weblets.demo", "/styles/weblets.css"));
+		writer.write("\" ></link>");
+		writer.write("</head><body><div class=\"header_bg\" /><div class=\"content\"><pre>");
 		writer.write("\n");
 	}
 
