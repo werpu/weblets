@@ -22,7 +22,7 @@ xmlns:wbl="http://weblets.dev.java.net/tags_jsp2"
 					<h:form id="form">
 						<demo:outputCustom value="Welcome to Weblets!" />
 					</h:form>
-					<h:outputLink value='#{weblet.url[ "weblets.source"]["/outputcustom.jspx"]}' target="_new"><h:outputFormat value="[Get the page source]" /></h:outputLink>
+					<h:outputLink value='#{weblet.url[ "weblets.source"]["/outputCustom.jspx"]}' target="_new"><h:outputFormat value="[Get the page source]" /></h:outputLink>
 				</div>
 			</body>
 		</html>
