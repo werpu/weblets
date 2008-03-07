@@ -45,6 +45,9 @@
 					<a href="./jsfeltest.jsf">A simple weblet include via a jsf managed bean map</a>
 				</li>
 				<li>
+					<a href="./faces/outputCustom.jspx">A simple demo of a jsf control utilizing weblets</a>
+				</li>
+				<li>
 					<a href="./jspdojotest.jsp">A big demo utilizing weblets and the dojo toolkit</a>
 				</li>
 			</ul>

@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2"
-          xmlns:demo="http://projsf.apress.com/weblets/demo" 
-          xmlns:f="http://java.sun.com/jsf/core"
-          xmlns:h="http://java.sun.com/jsf/html" >
-  <jsp:directive.page contentType="text/html" />
-  <f:view>
-    <html>
-      <head>
-        <title>Weblets Demo</title>
-      </head>
-      <body>
-        <h:form id="form" >
-          <demo:outputCustom value="Welcome to Weblets!" />
-        </h:form>
-      </body>
-    </html>
-  </f:view>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2" 
+xmlns:demo="http://projsf.apress.com/weblets/demo" 
+xmlns:f="http://java.sun.com/jsf/core" 
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:wbl="http://weblets.dev.java.net/tags_jsp2"
+>
+	<jsp:directive.page contentType="text/html" isELIgnored="false" />
+
+	<f:view>
+		<html>
+			
+			<head>
+				<link rel="stylesheet" href="${wbl:url('weblets.demo', '/styles/weblets.css')}"></link>
+			</head>
+			
+			<body>
+				<div class="header_bg">
+					
+				</div>
+				<div class="content">
+					<h:form id="form">
+						<demo:outputCustom value="Welcome to Weblets!" />
+					</h:form>
+					<h:outputLink value='#{weblet.url[ "weblets.source"]["/outputcustom.jspx"]}' target="_new"><h:outputFormat value="[Get the page source]" /></h:outputLink>
+				</div>
+			</body>
+		</html>
+	</f:view>
 </jsp:root>
