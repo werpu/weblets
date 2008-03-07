@@ -20,7 +20,7 @@
 			&nbsp;
 		</div>
 		<div class="content">
-			<%=((HttpServletRequest) pageContext.getRequest()).getContextPath()%>
+			
 			<p>
 				the getResource results are relative to the context so that you can map it to any url you want / !!!
 			</p>
