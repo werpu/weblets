@@ -1,66 +1,239 @@
 <html>
   <head>
-    <title>Introduction</title>
+    <title>Weblets - Introduction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
   </head>
   <body>
     <div class="app" >
-      <div class="section"><h2>Loading Resources with Weblets</h2><p>The goal of this open source project is to provide JSF component writers with a facility that can serve resource files out of a Java archive (JAR), rather than serving them from the web application root file system. Unlike traditional web applications, which have statically configured URL mappings defined in <tt>web.xml</tt>, there is a need for dynamic configuration of URL mappings, based on the presence of a component library JAR. In essence, Weblets provide developers with an easy way to package web application resources in the same Java archive (JAR) that their implementation code resides in. </p><div class="section"><h3>Resource Loading</h3><p>Let's assume that we have a JSF component, which needs to have a JavaScript file - <tt>myScript.js</tt>, served to the client. This JavaScript file is used by the component to provide some level of richness when interacted with by the end-user. This JavaScript file is traditionally served by the web application via a relative path that is hard coded into the actual Renderer code for the JSF component. This requires the application developer to deploy additional resources that are delivered and packaged in a separate archive file e.g. ZIP, often referred to as &quot;installables&quot;. </p><p>It is important to note that the JavaServer Faces HTML basic RenderKit does not have any images, styles or scripts, so there is no standard solution to the Faces resource packaging problem.</p><p>The following sample Renderer code illustrates the installables approach to serving a JavaScript file - <tt>/myresources/myScript.js</tt> - from the web application root file system.</p><p><i>Code sample 1. The encodeBegin() method in the sample Renderer.</i></p><div class="source"><pre>  ViewHandler handler = context.getApplication().getViewHandler();
-  String resourceURL = handler.getResourceURL(context,
-                                            &quot;/myresources/myScript.js&quot;);
-  out.startElement(&quot;script&quot;, null);
-  out.writeAttribute(&quot;type&quot;, &quot;text/javascript&quot;, null);
-  out.writeAttribute(&quot;src&quot;, resourceURL, null);
-  out.endElement(&quot;script&quot;);</pre></div><p>Although the installables approach is convenient for the JSF component author, it does increase the installation burden on the application developer, who must remember to extract the installables archive each time the component library is upgraded to a new version. Therefore, we need a way to package our additional resources into the same JAR file containing the Renderer classes, simplifying deployment for application developers using our component library.</p><div class="section"><h4>Using Weblets</h4><p>The open source Weblets project aims to solve the resource-packaging problem in a generic and extensible way, so that it can be leveraged by all JavaServer Faces component writers, while placing only a minimal installation burden on the application developer.</p><p>A weblet acts as a mediator that intercepts requests from the client and uses short web URLs to serves resources from a JAR file. Unlike the <tt>Servlet</tt> or <tt>Filter</tt> approach, a Weblet can be registered and configured inside a JAR, so the component library <tt>Renderer</tt> classes, their resource files, and the Weblet configuration file (<tt>weblets-config.xml</tt>) can all be packaged together in the same JAR. The Weblet Container can be registered just once in the web application configuration file - <tt>web.xml</tt> - for all component libraries. There is no need to separately deploy additional installables when the component libraries are upgraded to new versions.</p><p>It is important to note that all resources served up by Weblets are internal resources, used only by the <tt>Renderer</tt>. Any resources, like images, which are provided by the application, are supplied as component attribute values, and loaded from the context root as external resources.</p></div></div><div class="section"><h3>Weblet Architecture</h3><p>Although Weblets were designed to be used by any web client, the Weblets implementation has been integrated with JavaServer Faces using a custom <tt>ViewHandler</tt> - <tt>WebletsViewHandler</tt>, as shown in figure 1. During rendering of the main JavaServer Faces page, the <tt>WebletsViewHandler</tt> is responsible for converting weblet specific resource URLs into the actual URLs used by the browser to request weblet-managed resources.</p><img src="images/figure1.png" alt="<i>Figure 1. High-overview of Weblet architecture</i>" /><p>After receiving the rendered markup for the main page, the browser downloads each additional resource using a separate request. Each request for a weblet-managed resource is intercepted by the <tt>WebletsPhaseListener</tt>, which then asks the <tt>WebletContainer</tt> to stream the weblet-managed resource file out of the component library JAR. </p><p>The <tt>WebletContainer</tt> is designed to leverage the browser cache where possible. This improves overall rendering performance by minimizing the total number of requests made for weblet-managed resource files.</p><p>To ensure flexibility, optimization, and avoid collisions with existing web application resources, Weblets can be configured by application developers to override any default settings provided by the component author.</p><div class="section"><h4>Using Weblets in a Component library</h4><p>Weblets are configured using a <tt>weblets-config.xml</tt> file, which must be stored in the /META-INF directory of the component library JAR. Configuring a Weblet is similar to configuring a <tt>Servlet</tt> or a <tt>Filter</tt>. Each Weblet entry in the <tt>weblets-config.xml</tt> file has a Weblet name, implementation class and initialization parameters. The weblet mapping associates a particular URL pattern with a specific Weblet name e.g. <tt>org.myapp.html</tt>. The Weblet name and default URL pattern define the public API for the weblet-managed resources and should not be modified between releases of your component library, in order to maintain backwards compatibility.</p><p>Our component library packages resources in the <tt>org.myapp.faces.renderer.html.resources</tt> Java package and makes them available to the browser using the default URL mapping of <tt>/myresources/*</tt>.</p><p><i>Code Sample 2. Weblets configuration file, weblets-config.xml.</i></p><div class="source"><pre>  &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-  &lt;weblets-config xmlns=&quot;http://weblets.dev.java.net/config&quot; &gt;
-    &lt;weblet&gt;
-      &lt;weblet-name&gt;org.myapp.html&lt;/weblet-name&gt;
-      &lt;weblet-class&gt;
-        net.java.dev.weblets.packaged.PackagedWeblet
-      &lt;/weblet-class&gt;
-      &lt;init-param&gt;
-        &lt;param-name&gt;package&lt;/param-name&gt;
-        &lt;param-value&gt;
-          org.myapp.faces.renderer.html.resources
-        &lt;/param-value&gt;
-      &lt;/init-param&gt;
-    &lt;/weblet&gt;
-    &lt;weblet-mapping&gt;
-      &lt;weblet-name&gt;org.myapp.html&lt;/weblet-name&gt;
-      &lt;url-pattern&gt;/myresources/*&lt;/url-pattern&gt;
-    &lt;/weblet-mapping&gt;
-  &lt;/weblets-config&gt;</pre></div><p>The <tt>PackagedWeblet</tt> is a built-in Weblet implementation that can read from a particular Java package using the <tt>ClassLoader</tt> and stream the result back to the browser. The package initialization parameter tells the <tt>PackagedWeblet</tt> which Java package to use as a root when resolving weblet-managed resource requests.</p></div><div class="section"><h4>Weblet versioning</h4><p>Weblets also has built-in support for versioning of the component library. This is used to allow the browser to cache packaged resources such as myScript.js when possible, preventing unnecessary roundtrips to the web server.</p><p>Each time the browser renders a page, it will ensure that all resources used by that page are available. During the initial rendering of the page, the browser populates its cache with the contents of each resource URL by downloading a fresh copy from the web server. As it does so, the browser records the Last-Modified and Expires timestamps from the response headers. The cached content is said to have expired if the current time is later than the expiration timestamp, or if no expiration timestamp information exists.</p><p>On the next render of the same page, the browser checks to see if the locally cached resource has expired. The locally cached copy is reused if it has not expired. Otherwise, a new request is made to the web server, including the last modified information in the If-Modified-Since request header. The web server responds by either indicating that the browser cache is still up-to-date, or by streaming the new resource contents back to the browser with updated Last-Modified and Expires timestamps in the response headers.</p><p>Weblets use versioning to leverage the browser cache behavior so that packaged resources can be downloaded and cached as efficiently as possible. The browser only needs to check for new updates when the cache has been emptied or when the component library has been upgraded at the web server.</p><p>The following code sample illustrates the Weblets versioning feature by adding a 1.0 version to our org.myapp.html Weblet.</p><p><i>Code Sample 3. Weblets configuration file using 1.0 versioning for production.</i></p><div class="source"><pre>  &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-  &lt;weblets-config xmlns=&quot;http://weblets.dev.java.net/config&quot; &gt;
-    &lt;weblet&gt;
-      &lt;weblet-name&gt;org.myapp.html&lt;/weblet-name&gt;
-      &lt;weblet-class&gt;net.java.dev.weblets.packaged.PackagedWeblet&lt;/weblet-class&gt;
-      &lt;weblet-version&gt;1.0&lt;/weblet-version&gt;
-      &lt;init-param&gt;
-        &lt;param-name&gt;package&lt;/param-name&gt;
-        &lt;param-value&gt;org.myapp.faces.renderer.html.resources&lt;/param-value&gt;
-      &lt;/init-param&gt;
-    &lt;/weblet&gt;
-    &lt;weblet-mapping&gt;
-      &lt;weblet-name&gt;org.myapp.html&lt;/weblet-name&gt;
-      &lt;url-pattern&gt;/myapp/*&lt;/url-pattern&gt;
-    &lt;/weblet-mapping&gt;
-  &lt;/weblets-config&gt;</pre></div><p>By specifying a weblet version, you indicate that the packaged resource is not going to change until the version number changes. Therefore, the version number is included as part of the resource URL determined at runtime by the <tt>WebletsViewHandler</tt> e.g. <tt>/myresources$1.0/myScript.js</tt>. When the <tt>WebletContainer</tt> services this request, it extracts the version number from the URL and determines that the resource should be cached, and never expire. As soon as a new version of the component library is deployed to the web application, the resource URL created at runtime by the <tt>WebletsViewHandler</tt> changes e.g. <tt>/myresources$2.0/myScript.js</tt>, thus the browser's cached copy of myScript.js for version 1.0 is no longer valid because the URL is different. </p><p>During development, the contents of packaged resources can change frequently, so it is important for the browser to keep checking back with the web server to detect the latest resource URL contents. This check happens by default every time the main Web page is rendered if the Weblet version is omitted from <tt>weblets-config.xml</tt>.</p><p>Alternatively the Weblet configuration allows component authors to append <tt>-SNAPSHOT</tt> to the version number. For example, <tt>1.0-SNAPSHOT</tt>, as shown in code sample 4, to indicate that this file is under development and should behave as though the version number has been omitted.</p><p><i>Code Sample 4. Weblets configurations file using SNAPSHOT versioning for development.</i></p><div class="source"><pre>  &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-  &lt;weblets-config xmlns=&quot;http://weblets.dev.java.net/config&quot; &gt;
-    &lt;weblet&gt;
-      &lt;weblet-name&gt;org.myapp.html&lt;/weblet-name&gt;
-      &lt;weblet-class&gt;net.java.dev.weblets.packaged.PackagedWeblet&lt;/weblet-class&gt;
-      &lt;weblet-version&gt;1.0-SNAPSHOT&lt;/weblet-version&gt;
-      ...
-    &lt;/weblet&gt;
-    ...
-  &lt;/weblets-config&gt;</pre></div></div><div class="section"><h4>Security</h4><p>When serving packaged resources from a JAR, extra care must be taken not to make Java Class files or other sensitive information accessible by URL. In desktop Java applications, resource files are often stored in a sub-package called &quot;resources&quot; underneath the Java implementation classes that use the resource files. The same strategy is also appropriate for packaged resources in JavaServer Faces component libraries, and has the security benefit of ensuring that only the resource files are accessible by URL. All other contents of the JAR file, including Java implementation classes, are not URL accessible because no Java classes exist in either the &quot;resources&quot; package, or in any sub-package of &quot;resources.&quot;</p></div><div class="section"><h4>Weblets Protocol</h4><p>Having covered how to configure Weblets, it is time to look at how we can reference resources defined by the Weblet in our Renderer. The syntax, defined by the Weblet contract, for returning a proper URL to the JSF page is as follows:</p><div class="source"><pre>  weblet://&lt;weblet name&gt;/&lt;resource&gt;</pre></div><p>The prefix indicates that this is a Weblet-managed resource, and this followed by the Weblet name and the resource requested.</p><p>Previously, in our <tt>Renderer</tt> class we passed the URL <tt>/myresources/myScript.js</tt> as an argument to the <tt>ViewHandler</tt>'s <tt>getResourceURL()</tt> method. In the code sample below, we amend this to use the Weblet protocol instead. </p><p><i>Code sample 5. Using Weblet &quot;protocol&quot; to serve up resources.</i></p><div class="source"><pre>  ViewHandler handler = context.getApplication().getViewHandler();
-  String resourceURL = 
-         handler.getResourceURL(context, 
-                                &quot;weblet://org.myapp.html/myScript.js&quot;);
-  out.startElement(&quot;script&quot;, null);
-  out.writeAttribute(&quot;type&quot;, &quot;text/javascript&quot;, null);
-  out.writeAttribute(&quot;src&quot;, resourceURL, null);
-  out.endElement(&quot;script&quot;);</pre></div><p>The Weblet protocol-like syntax is convenient and easy to understand. The syntax starts with <tt>weblet://</tt> followed by the Weblet name e.g. <tt>org.myapp.html</tt> and finally the path info, or resource file, e.g. <tt>/myScript.js</tt>. Notice that neither the URL mapping nor the version number are included in the weblet resource syntax. The Weblet URL mapping and version number are used by the <tt>WebletsViewHandler</tt> to create a resource URL that the Weblet will service.</p><p>When the component writer is not using Weblets, then they would not be using the <tt>weblet://</tt> resource path syntax, and they would distribute a separate installables zip. When the component writer moves to Weblets, they would start using <tt>weblet://</tt> resource path syntax in the <tt>Renderer</tt>, and include the resources in the JAR. There is no benefit to using a mixture of these approaches for resources in the same version of the same component library.</p></div></div><div class="section"><h3>Using Weblets in a JSF application</h3><p>In order to simplify setup for the application developer, component writers should select a default URL mapping for their component libraries. There is no need for the application developer to add any Weblet-specific configuration to the <tt>web.xml</tt> file, since the <tt>WebletsPhaseListener</tt> will be invoked automatically to service incoming requests for Weblet-managed resources.</p></div></div><div class="section"><h2>Summary</h2><p>As a new open source project, Weblets has tremendous potential to become a defacto generic and configurable resource loading facility for web clients and the JSF component community. The key differentiators are simplified packaging of JSF components and their resources, and a minimized overhead of installing and setting up JSF component libraries for a particular web application project. </p><p>This article has explored a new way of packaging resources with JSF components. You should now be able to leverage Weblets in your own component library by including a suitable weblets-config.xml file and using the <tt>weblet://</tt> protocol-style syntax to reference Weblet-managed resources.</p></div>
+      <div class="section"><h2>Loading Resources with Weblets</h2>
+<p>The goal of this open source project is to provide JSF component writers with a facility that can serve resource files out of a Java archive (JAR), rather than serving them from the web application root file system. Unlike traditional web applications, which have statically configured URL mappings defined in <tt>web.xml</tt>
+, there is a need for dynamic configuration of URL mappings, based on the presence of a component library JAR. In essence, Weblets provide developers with an easy way to package web application resources in the same Java archive (JAR) that their implementation code resides in.</p>
+<div class="section"><h3>Resource Loading</h3>
+<p>Let's assume that we have a JSF component, which needs to have a JavaScript file - <tt>myScript.js</tt>
+, served to the client. This JavaScript file is used by the component to provide some level of richness when interacted with by the end-user. This JavaScript file is traditionally served by the web application via a relative path that is hard coded into the actual Renderer code for the JSF component. This requires the application developer to deploy additional resources that are delivered and packaged in a separate archive file e.g. ZIP, often referred to as &quot;installables&quot;.</p>
+<p>It is important to note that the JavaServer Faces HTML basic RenderKit does not have any images, styles or scripts, so there is no standard solution to the Faces resource packaging problem.</p>
+<p>The following sample Renderer code illustrates the installables approach to serving a JavaScript file - <tt>/myresources/myScript.js</tt>
+ - from the web application root file system.</p>
+<p><i>Code sample 1. The encodeBegin() method in the sample Renderer.</i>
+</p>
+<div class="source"><pre>   ViewHandler handler = context.getApplication().getViewHandler();
+   String resourceURL = handler.getResourceURL(context,
+                                             &quot;/myresources/myScript.js&quot;);
+   out.startElement(&quot;script&quot;, null);
+   out.writeAttribute(&quot;type&quot;, &quot;text/javascript&quot;, null);
+   out.writeAttribute(&quot;src&quot;, resourceURL, null);
+   out.endElement(&quot;script&quot;);</pre>
+</div>
+<p>Although the installables approach is convenient for the JSF component author, it does increase the installation burden on the application developer, who must remember to extract the installables archive each time the component library is upgraded to a new version. Therefore, we need a way to package our additional resources into the same JAR file containing the Renderer classes, simplifying deployment for application developers using our component library.</p>
+<div class="section"><h4>Using Weblets</h4>
+<p>The open source Weblets project aims to solve the resource-packaging problem in a generic and extensible way, so that it can be leveraged by all JavaServer Faces component writers, while placing only a minimal installation burden on the application developer.</p>
+<p>A weblet acts as a mediator that intercepts requests from the client and uses short web URLs to serves resources from a JAR file. Unlike the <tt>Servlet</tt>
+ or <tt>Filter</tt>
+ approach, a Weblet can be registered and configured inside a JAR, so the component library <tt>Renderer</tt>
+ classes, their resource files, and the Weblet configuration file (<tt>weblets-config.xml</tt>
+) can all be packaged together in the same JAR. The Weblet Container can be registered just once in the web application configuration file - <tt>web.xml</tt>
+ - for all component libraries. There is no need to separately deploy additional installables when the component libraries are upgraded to new versions.</p>
+</div>
+</div>
+<div class="section"><h3>Weblet Architecture</h3>
+<p>Although Weblets were designed to be used by any web client, the Weblets implementation has been integrated with JavaServer Faces using a custom <tt>Utils Class</tt>
+ <tt>FacesWebletUtils</tt>
+, as shown in figure 1. During rendering of the main JavaServer Faces page, the <tt>FacesWebletUtils</tt>
+ is responsible for converting weblet specific resource URLs into the actual URLs used by the browser to request weblet-managed resources.</p>
+<img src="./images/figure1.png" alt="<i>Figure 1. High-overview of Weblet architecture</i>
+" /><p>After receiving the rendered markup for the main page, the browser downloads each additional resource using a separate request. Each request for a weblet-managed resource is intercepted by the <tt>WebletsPhaseListener</tt>
+, which then asks the <tt>WebletContainer</tt>
+ to stream the weblet-managed resource file out of the component library JAR.</p>
+<p>The <tt>WebletContainer</tt>
+ is designed to leverage the browser cache where possible. This improves overall rendering performance by minimizing the total number of requests made for weblet-managed resource files.</p>
+<p>To ensure flexibility, optimization, and avoid collisions with existing web application resources, Weblets can be configured by application developers to override any default settings provided by the component author.</p>
+<div class="section"><h4>Using Weblets in a Component library</h4>
+<p>Weblets are configured using a <tt>weblets-config.xml</tt>
+ file, which must be stored in the /META-INF directory of the component library JAR. Configuring a Weblet is similar to configuring a <tt>Servlet</tt>
+ or a <tt>Filter</tt>
+. Each Weblet entry in the <tt>weblets-config.xml</tt>
+ file has a Weblet name, implementation class and initialization parameters. The weblet mapping associates a particular URL pattern with a specific Weblet name e.g. <tt>org.myapp.html</tt>
+. The Weblet name and default URL pattern define the public API for the weblet-managed resources and should not be modified between releases of your component library, in order to maintain backwards compatibility.</p>
+<p>Our component library packages resources in the <tt>org.myapp.faces.renderer.html.resources</tt>
+ Java package and makes them available to the browser using the default URL mapping of <tt>/myresources/*</tt>
+.</p>
+<p><i>Code Sample 2. Weblets configuration file, weblets-config.xml.</i>
+</p>
+<div class="source"><pre>   &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+   &lt;weblets-config xmlns=&quot;http://weblets.dev.java.net/config&quot; &gt;
+     &lt;weblet&gt;
+       &lt;weblet-name&gt;org.myapp.html&lt;/weblet-name&gt;
+       &lt;weblet-class&gt;
+         net.java.dev.weblets.packaged.PackagedWeblet
+       &lt;/weblet-class&gt;
+       &lt;init-param&gt;
+         &lt;param-name&gt;package&lt;/param-name&gt;
+         &lt;param-value&gt;
+           org.myapp.faces.renderer.html.resources
+         &lt;/param-value&gt;
+       &lt;/init-param&gt;
+     &lt;/weblet&gt;
+     &lt;weblet-mapping&gt;
+       &lt;weblet-name&gt;org.myapp.html&lt;/weblet-name&gt;
+       &lt;url-pattern&gt;/myresources/*&lt;/url-pattern&gt;
+     &lt;/weblet-mapping&gt;
+   &lt;/weblets-config&gt;</pre>
+</div>
+<p>The <tt>PackagedWeblet</tt>
+ is a built-in Weblet implementation that can read from a particular Java package using the <tt>ClassLoader</tt>
+ and stream the result back to the browser. The package initialization parameter tells the <tt>PackagedWeblet</tt>
+ which Java package to use as a root when resolving weblet-managed resource requests.</p>
+</div>
+<div class="section"><h4>Weblet versioning</h4>
+<p>Weblets also has built-in support for versioning of the component library. This is used to allow the browser to cache packaged resources such as myScript.js when possible, preventing unnecessary roundtrips to the web server.</p>
+<p>Each time the browser renders a page, it will ensure that all resources used by that page are available. During the initial rendering of the page, the browser populates its cache with the contents of each resource URL by downloading a fresh copy from the web server. As it does so, the browser records the Last-Modified and Expires timestamps from the response headers. The cached content is said to have expired if the current time is later than the expiration timestamp, or if no expiration timestamp information exists.</p>
+<p>On the next render of the same page, the browser checks to see if the locally cached resource has expired. The locally cached copy is reused if it has not expired. Otherwise, a new request is made to the web server, including the last modified information in the If-Modified-Since request header. The web server responds by either indicating that the browser cache is still up-to-date, or by streaming the new resource contents back to the browser with updated Last-Modified and Expires timestamps in the response headers.</p>
+<p>Weblets use versioning to leverage the browser cache behavior so that packaged resources can be downloaded and cached as efficiently as possible. The browser only needs to check for new updates when the cache has been emptied or when the component library has been upgraded at the web server.</p>
+<p>The following code sample illustrates the Weblets versioning feature by adding a 1.0 version to our org.myapp.html Weblet.</p>
+<p><i>Code Sample 3. Weblets configuration file using 1.0 versioning for production.</i>
+</p>
+<div class="source"><pre>   &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+   &lt;weblets-config xmlns=&quot;http://weblets.dev.java.net/config&quot; &gt;
+     &lt;weblet&gt;
+       &lt;weblet-name&gt;org.myapp.html&lt;/weblet-name&gt;
+       &lt;weblet-class&gt;net.java.dev.weblets.packaged.PackagedWeblet&lt;/weblet-class&gt;
+       &lt;weblet-version&gt;1.0&lt;/weblet-version&gt;
+       &lt;init-param&gt;
+         &lt;param-name&gt;package&lt;/param-name&gt;
+         &lt;param-value&gt;org.myapp.faces.renderer.html.resources&lt;/param-value&gt;
+       &lt;/init-param&gt;
+     &lt;/weblet&gt;
+     &lt;weblet-mapping&gt;
+       &lt;weblet-name&gt;org.myapp.html&lt;/weblet-name&gt;
+       &lt;url-pattern&gt;/myapp/*&lt;/url-pattern&gt;
+     &lt;/weblet-mapping&gt;
+   &lt;/weblets-config&gt;</pre>
+</div>
+<p>By specifying a weblet version, you indicate that the packaged resource is not going to change until the version number changes. Therefore, the version number is included as part of the resource URL determined at runtime by the <tt>Weblets Phase Listener</tt>
+ e.g. <tt>/myresources$1.0/myScript.js</tt>
+. When the <tt>WebletContainer</tt>
+ services this request, it extracts the version number from the URL and determines that the resource should be cached, and never expire. As soon as a new version of the component library is deployed to the web application, the resource URL created at runtime by the <tt>FacesWebletUtils</tt>
+ changes e.g. <tt>/myresources$2.0/myScript.js</tt>
+, thus the browser's cached copy of myScript.js for version 1.0 is no longer valid because the URL is different.</p>
+<p>During development, the contents of packaged resources can change frequently, so it is important for the browser to keep checking back with the web server to detect the latest resource URL contents. This check happens by default every time the main Web page is rendered if the Weblet version is omitted from <tt>weblets-config.xml</tt>
+.</p>
+<p>Alternatively the Weblet configuration allows component authors to append <tt>-SNAPSHOT</tt>
+ to the version number. For example, <tt>1.0-SNAPSHOT</tt>
+, as shown in code sample 4, to indicate that this file is under development and should behave as though the version number has been omitted.</p>
+<p><i>Code Sample 4. Weblets configurations file using SNAPSHOT versioning for development.</i>
+</p>
+<div class="source"><pre>   &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+   &lt;weblets-config xmlns=&quot;http://weblets.dev.java.net/config&quot; &gt;
+     &lt;weblet&gt;
+       &lt;weblet-name&gt;org.myapp.html&lt;/weblet-name&gt;
+       &lt;weblet-class&gt;net.java.dev.weblets.packaged.PackagedWeblet&lt;/weblet-class&gt;
+       &lt;weblet-version&gt;1.0-SNAPSHOT&lt;/weblet-version&gt;
+       ...
+     &lt;/weblet&gt;
+     ...
+   &lt;/weblets-config&gt;</pre>
+</div>
+</div>
+<div class="section"><h4>Security</h4>
+<p>When serving packaged resources from a JAR, extra care must be taken not to make Java Class files or other sensitive information accessible by URL. In desktop Java applications, resource files are often stored in a sub-package called &quot;resources&quot; underneath the Java implementation classes that use the resource files. The same strategy is also appropriate for packaged resources in JavaServer Faces component libraries, and has the security benefit of ensuring that only the resource files are accessible by URL. All other contents of the JAR file, including Java implementation classes, are not URL accessible because no Java classes exist in either the &quot;resources&quot; package, or in any sub-package of &quot;resources.&quot;</p>
+</div>
+<div class="section"><h4>Weblets Accessor Methods from the Client</h4>
+<p>Having covered how to configure Weblets, it is time to look at how we can reference resources defined by the Weblet in our client (renderer, servlet, page, etc...). The syntax, defined by the Weblet contract, for returning a proper URL to the JSF page is as follows:</p>
+<div class="source"><pre>    weblet:url(&lt;weblet name&gt;, /&lt;resource&gt;)</pre>
+</div>
+<p><i>or</i>
+</p>
+<div class="source"><pre>    weblet:resource(&lt;weblet name&gt;, /&lt;resource&gt;)</pre>
+</div>
+<p>The main difference between these two contract methods is, that <tt>url</tt>
+ serves up a full url including the current web application context, while <tt>resource</tt>
+ only serves up the relative path to the resource.</p>
+<p>This contract is applied in various client technologies differently, but the basic structure is kept the same.</p>
+<p>Following code samples will explain how to utilize the weblet contract apis in various frameworks and frontend technologies:</p>
+<p><i>Code sample 5. Using Weblet &quot;apis&quot; to serve up resources</i>
+</p>
+<div class="source"><pre>      JSF:
+        FacesWebletUtils.getURL(facesContext, &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+        FacesWebletUtils.getResource(facesContext, &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+
+      Generic non JSF webframeworks:
+        WebletUtils.getInstance().getURL(&quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+        WebletUtils.getInstance().getResource(&quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+
+      Frontend: JSF dummy maps utilizing EL:
+        #{weblet.url['org.myapp.html']['/myresource.js']}
+        #{weblet.resource['org.myapp.html']['/myresource.js']}
+
+      EL functions usable from JSP2, facelets and JSF 1.2:
+        xmlns:weblet=&quot;http://weblets.dev.java.net/tags_jsp2&quot;
+        ${weblet:resource('org.myapp.html','/myresource.js')}
+        ${weblet:url('org.myapp.html','/myresource.js')}
+
+      JSP Bean for JSP 1.x:
+        jsp:useBean class=&quot;net.java.dev.weblets.WebletUtils&quot; scope=&quot;application&quot; id=&quot;jspweblet&quot;
+        jspweblet.getResource( &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+        jspweblet.getURL( &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+
+       MIME text/ resources and CSS loaded from weblet:
+        weblet:url( &quot;org.myapp.htm&quot;l , &quot;//myresource.js&quot; )
+        weblet:resource( &quot;org.myapp.html , &quot;//myresource.js&quot; )
+       (example:  alert(&quot;weblet:url( 'weblets.demo' , '/welcome.js' )&quot;); )</pre>
+</div>
+<p><i>Code sample 6. Using the API Utils classes and contractual methods to serve up resources.</i>
+</p>
+<div class="source"><pre>        String resourceURL =
+               FacesWebletUtils.getInstance().url(context,
+                                     &quot;org.myapp.html&quot;,&quot;/myScript.js&quot;);
+        out.startElement(&quot;script&quot;, null);
+        out.writeAttribute(&quot;type&quot;, &quot;text/javascript&quot;, null);
+        out.writeAttribute(&quot;src&quot;, resourceURL, null);
+        out.endElement(&quot;script&quot;);</pre>
+</div>
+<p>Basically every web framework and frontend technology can be used, by utilization of either the frontend helper methods or the backend utils APIs.</p>
+<p>The Weblet contract apis are easy to understand. The apis start with <tt>url or resource</tt>
+ followed by the Weblet name e.g. <tt>org.myapp.html</tt>
+ and finally the path info, or resource file, e.g. <tt>/myScript.js</tt>
+. Notice that neither the URL mapping nor the version number are included in the weblet api calls. The URL mapping and version number are generated internally by the <tt>Utils Classes</tt>
+ to create a resource URL that the weblet class and the <tt>Weblet Phase listener</tt>
+ will service.</p>
+<p><i>(Note for users of Weblets 0.4, the weblets protocol has been ommitted in favor of the weblet contract, the protocol is not supported anymore!!)</i>
+</p>
+<p>The main difference between the <tt>url</tt>
+ and <tt>resource</tt>
+ api is, that <tt>url</tt>
+ serves up a full url including the current web application context, while <tt>resource</tt>
+ only serves up the relative path to the resource.</p>
+<p>Following example will show the difference between <tt>url</tt>
+ and <tt>resource</tt>
+</p>
+<p><i>Code sample 6. Difference between url and resource</i>
+</p>
+<div class="source"><pre>        FacesWebletUtils.getInstance().getURL(facesContext, &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+
+        resolves to /my-webapp/faces/weblets/myapp/myresource.js
+
+        FacesWebletUtils.getInstance().getResource(facesContext, &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+
+        resolves to /faces/weblets/myapp/myresource.js
+</pre>
+</div>
+</div>
+</div>
+<div class="section"><h3>Using Weblets in generic Web Applications</h3>
+<p>Weblets tries to support as many frameworks as possible. To enable this, generic web applications have to setup a weblets servlet in the <tt>web.xml</tt>
+ file and have to set up a path pattern on this servlet. If no path pattern is set, weblets will issue a startup warning and will not work properly.</p>
+</div>
+<div class="section"><h3>Using Weblets in a JSF application</h3>
+<p>In order to simplify the setup for the application developer, component writers should select a default URL mapping for their component libraries. There is no need for the application developer to add any Weblet-specific configuration to the <tt>web.xml</tt>
+ file, since the <tt>WebletsPhaseListener</tt>
+ will be invoked automatically to service incoming requests for Weblet-managed resources. The only minor limitation due to the design of jsf is that, a path pattern as trigger for a faces servlet has to be provided, otherwise weblets will fail and issue a startup warning!</p>
+<p>If it is not possible to set this pattern or a custom faces servlet is provided, there always is the option to use the standard weblets servlet instead!</p>
+</div>
+</div>
+<div class="section"><h2>Summary</h2>
+<p>As a new open source project, Weblets has tremendous potential to become a defacto generic and configurable resource loading facility for web clients and the JSF component community. The key differentiators are simplified packaging of JSF components and their resources, and a minimized overhead of installing and setting up JSF component libraries for a particular web application project.</p>
+</div>
+
     </div>
   </body>
 </html>
