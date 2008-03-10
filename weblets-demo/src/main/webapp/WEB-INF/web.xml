@@ -6,7 +6,7 @@
     
   <!--
   <context-param>
-      <param-name>net.java632.dev.weblets.contextpath</param-name>
+      <param-name>net.java.dev.weblets.contextpath</param-name>
       <param-value>/weblets-demo/</param-value>
       <description>
            this optional param enables
