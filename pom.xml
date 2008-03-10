@@ -10,7 +10,7 @@
   <packaging>pom</packaging>
 
   <name>Weblets</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <description>Weblets</description>
   <url>http://weblets.dev.java.net</url>
 
@@ -101,9 +101,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:svn:http://weblets.dev.java.net/svn/weblets/trunk/</connection>
-    <developerConnection>scm:svn:https://weblets.dev.java.net/svn/weblets/trunk/</developerConnection>
-    <url>https://weblets.dev.java.net/source/browse/weblets/</url>
+    <connection>scm:svn:http://weblets.dev.java.net/svn/weblets/tags/weblets-1.0</connection>
+    <developerConnection>scm:svn:https://weblets.dev.java.net/svn/weblets/tags/weblets-1.0</developerConnection>
+    <url>scm:svn:https://weblets.dev.java.net/svn/weblets/tags/weblets-1.0</url>
   </scm>
 
 
