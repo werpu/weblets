@@ -15,17 +15,12 @@
  */
 package net.java.dev.weblets.packaged;
 
+import net.java.dev.weblets.*;
+import net.java.dev.weblets.util.CopyProviderImpl;
+import net.java.dev.weblets.util.CopyProvider;
+
 import java.io.IOException;
 import java.net.URL;
-
-import net.java.dev.weblets.Weblet;
-import net.java.dev.weblets.WebletConfig;
-import net.java.dev.weblets.WebletException;
-import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.WebletResponse;
-import net.java.dev.weblets.util.IStreamingFilter;
-import net.java.dev.weblets.util.WebletTextprocessingFilter;
-import net.java.dev.weblets.util.WebletsSimpleBinaryfilter;
 
 /**
  * The standard packaged weblet 
@@ -66,15 +61,13 @@ public class PackagedWeblet extends Weblet {
 		//lets build up our filter chain which in our case is a binary filter for standard
 		//processing and our text processing filter for text resources with included
 		//weblet: functions
-		IStreamingFilter filterChain = null;
-		filterChain = new WebletsSimpleBinaryfilter();
-		filterChain.addFilter(new WebletTextprocessingFilter());
-
+		CopyProvider copyProvider = new CopyProviderImpl();
 		
 		URL url = getResourceUrl(resourcePath);
 		//our utils should handle the standard case
-		WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(),
-				request, response, url, filterChain);
+
+        WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(),
+				request, response, url, copyProvider);
 	}
 
 	

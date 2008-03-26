@@ -200,7 +200,51 @@ Weblets Setup Guide
  you use weblets in a portlet environment it should work
  but you might have to add the context listener!
  
- 
+
+
+* Special configurations
+
+** Weblets in a portlet environment
+
+    As of 1.0 Weblets 1.0 can be embedded in Portlet Specification
+    1.0 enabled portlet containers.
+
+    You do not have to take too many considerations to embed it
+    both methods the <<<Weblet Servlet>>> and the <<<Faces Servlet>>>
+    based environments should work.
+
+    Internally portlet triggers both servlets outside of the portlet
+    scope and lets the servlets deliver the webapp just
+    like they would be from a standalone application
+    if your firewall or container tries to prevent this, you
+    have to enable it!
+
+
+** Weblets in a BEA Server
+
+    Weblets has not been explicitely tested against BEA app servers,
+    (every servlet spec 2.4 enabled app server should do
+    however one user has reported a successful configuration.
+    However as it seems the server itself does not come
+    configured with the basic mime types you have to define
+    them yourself.
+
+
+    This is a working example configuration reported by one
+    of the mailing list users.
+
++---------------------------------------------------------------------------------------
+
+BEA Example configuration
+
++---------------------------------------------------------------------------------------
+
+    Thank you <<<Insert Name here>>> for providing this configuration.
+    
+
+
+
+
 
 
 Summary
@@ -234,4 +278,5 @@ Summary
    [[]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
 
    [[]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
-    
+
+   [[]] {{{./faq.html} Users Documentation: Weblets General FAQ }}    

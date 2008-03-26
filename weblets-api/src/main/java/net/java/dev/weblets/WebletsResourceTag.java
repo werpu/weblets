@@ -1,7 +1,5 @@
 package net.java.dev.weblets;
 
-import net.java.dev.weblets.WebletUtils;
-
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;

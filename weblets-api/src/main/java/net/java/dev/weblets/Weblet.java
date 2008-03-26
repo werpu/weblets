@@ -25,6 +25,11 @@ import java.io.IOException;
  */
 abstract public class Weblet
 {
+
+  public int getWebletType() {
+      return WebletConfig.WEBLET_TYPE_LOCAL;
+  }
+
   public void init(WebletConfig config)
   {
     _config = config;

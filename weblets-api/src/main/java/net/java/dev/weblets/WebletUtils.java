@@ -1,7 +1,7 @@
 package net.java.dev.weblets;
 
-import net.java.dev.weblets.util.ServiceLoader;
 import net.java.dev.weblets.util.IWebletUtils;
+import net.java.dev.weblets.util.ServiceLoader;
 
 /**
  * @author Werner Punz

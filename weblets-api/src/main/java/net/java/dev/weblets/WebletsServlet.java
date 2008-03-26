@@ -17,16 +17,8 @@ package net.java.dev.weblets;
 
 import net.java.dev.weblets.util.ServiceLoader;
 
-import java.io.BufferedReader;
+import javax.servlet.*;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 /**
  * The WebletsServlet maps requested URLs to Weblet resources.

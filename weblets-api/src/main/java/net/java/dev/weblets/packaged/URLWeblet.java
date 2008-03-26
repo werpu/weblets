@@ -1,16 +1,11 @@
 package net.java.dev.weblets.packaged;
 
+import net.java.dev.weblets.*;
+import net.java.dev.weblets.util.CopyProviderImpl;
+import net.java.dev.weblets.util.CopyProvider;
+
 import java.io.IOException;
 import java.net.URL;
-
-import net.java.dev.weblets.Weblet;
-import net.java.dev.weblets.WebletConfig;
-import net.java.dev.weblets.WebletException;
-import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.WebletResponse;
-import net.java.dev.weblets.util.IStreamingFilter;
-import net.java.dev.weblets.util.WebletTextprocessingFilter;
-import net.java.dev.weblets.util.WebletsSimpleBinaryfilter;
 
 /**
  * 
@@ -27,6 +22,11 @@ import net.java.dev.weblets.util.WebletsSimpleBinaryfilter;
  * 
  */
 public class URLWeblet extends Weblet {
+
+    public int getWebletType() {
+        return WebletConfig.WEBLET_TYPE_PROXY;
+    }
+
 
     public void init(
             WebletConfig config) {
@@ -47,13 +47,11 @@ public class URLWeblet extends Weblet {
             WebletResponse response) throws IOException {
     	
     	String resourcePath = _resourceRoot + request.getPathInfo();
+        CopyProvider copyProvider = new CopyProviderImpl();
 
-        IStreamingFilter filterChain = null;
-        filterChain = new WebletsSimpleBinaryfilter();
-        filterChain.addFilter(new WebletTextprocessingFilter());
         URL url = new URL(resourcePath);
 
-        WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, filterChain);
+        WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyProvider);
     }
 
     public void destroy() {

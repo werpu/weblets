@@ -15,17 +15,10 @@
  */
 package net.java.dev.weblets;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import net.java.dev.weblets.util.ServiceLoader;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
-import net.java.dev.weblets.util.ServiceLoader;
-
-import com.sun.jmx.remote.util.Service;
 
 /**
  * The WebletContextListener is responsible for initializing the

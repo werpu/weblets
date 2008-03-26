@@ -11,8 +11,6 @@ package net.java.dev.weblets.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
@@ -25,6 +23,7 @@ import javax.servlet.ServletContextListener;
 
 import net.java.dev.weblets.WebletContainer;
 import net.java.dev.weblets.WebletsServlet;
+import net.java.dev.weblets.impl.misc.ReflectUtils;
 import net.java.dev.weblets.impl.parse.DisconnectedEntityResolver;
 
 import org.apache.commons.digester.Digester;
@@ -98,7 +97,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                     else if(parser.getFacesPattern() != null && !parser.getFacesPattern().trim().equals(""))
                         triggerPattern = parser.getFacesPattern();
 
-                    contextPath = calculateContextPath(parser, context);
+                    contextPath = ReflectUtils.calculateContextPath(parser, context);
                     handlePathPatternWarnings(parser);
                 } catch (SAXException e) {
                     throw new RuntimeException(e);
@@ -153,34 +152,6 @@ public class WebletsContextListenerImpl implements ServletContextListener {
             Log logger = LogFactory.getLog(this.getClass());
             logger.warn("Servlet Enabled Weblets but path pattern is missing, some relatively referenced resources might not load ");
         }
-    }
-
-    private String calculateContextPath(WebXmlParser parser, ServletContext context) {
-        String contextPath;
-        contextPath = parser.getWebletsContextPath();
-        if (contextPath == null || contextPath.trim().equals("")) {
-            try {
-                // lets check if we are in JEE 5 so that we can execute a
-                // getServletContextPath methid
-                Method[] methods = context.getClass().getMethods();
-
-                for (int cnt = 0; cnt < methods.length; cnt++) {
-                    if (methods[cnt].getName().equals("getContextPath")) {
-
-                        return (String) methods[cnt].invoke(context, null);
-                    }
-                }
-            } catch (IllegalAccessException e) {
-                Log log = LogFactory.getLog(this.getClass());
-                log.error("Error, trying to invoke getContextPath ", e);
-            } catch (InvocationTargetException e) {
-                Log log = LogFactory.getLog(this.getClass());
-                log.error("Error, trying to invoke getContextPath ", e);
-            }
-        } else {
-            return contextPath;
-        }
-        return "";
     }
 
     static public class WebXmlParser {

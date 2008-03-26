@@ -18,6 +18,7 @@ package net.java.dev.weblets.impl.servlets;
 import javax.servlet.ServletRequest;
 
 import net.java.dev.weblets.impl.WebletRequestBase;
+import net.java.dev.weblets.impl.misc.ReflectUtils;
 
 public class WebletRequestImpl extends WebletRequestBase {
     public WebletRequestImpl(
@@ -26,20 +27,15 @@ public class WebletRequestImpl extends WebletRequestBase {
             String contextPath,
             String pathInfo,
             long ifModifiedSince,
-            ServletRequest httpRequest) {
+            Object externalRequest) {
     
-    	super(webletName, webletPath, contextPath, pathInfo, ifModifiedSince);
-        _httpRequest = httpRequest;
+    	super(webletName, webletPath, contextPath, pathInfo, ifModifiedSince, externalRequest);
+        
 
     }
 
+    
     public String getParameter(String name) {
-        return _httpRequest.getParameter(name);
+        return (String) ReflectUtils.getParameter(getExternalRequest(), name);
     }
-
-    public ServletRequest getHttpRequest() {
-        return _httpRequest;
-    }
-
-    private final ServletRequest _httpRequest;
 }

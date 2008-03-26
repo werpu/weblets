@@ -11,9 +11,7 @@
 			<param-name>package</param-name>
 			<param-value>net.java.dev.weblets.demo.resources</param-value>
 		</init-param>
-
 		<!-- this is a weblet written specifically for the demo -->
-
 	</weblet>
 	<weblet>
 		<weblet-name>weblets.source</weblet-name>

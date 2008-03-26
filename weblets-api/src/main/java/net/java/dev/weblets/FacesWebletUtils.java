@@ -1,9 +1,8 @@
 package net.java.dev.weblets;
 
-import net.java.dev.weblets.util.ServiceLoader;
 import net.java.dev.weblets.util.IFacesWebletUtils;
+import net.java.dev.weblets.util.ServiceLoader;
 
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 /**

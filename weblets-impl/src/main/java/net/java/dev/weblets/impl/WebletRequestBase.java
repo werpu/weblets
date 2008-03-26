@@ -15,6 +15,8 @@
  */
 package net.java.dev.weblets.impl;
 
+import javax.servlet.ServletRequest;
+
 import net.java.dev.weblets.WebletRequest;
 
 public class WebletRequestBase implements WebletRequest
@@ -24,7 +26,8 @@ public class WebletRequestBase implements WebletRequest
     String webletPath,
     String contextPath,
     String pathInfo,
-    long   ifModifiedSince
+    long   ifModifiedSince,
+    Object externalRequest /*we cannot use a generic Request interface since portlets again cook their own soup by not deriving from Servlet request!!!*/
   )
   {
     _webletName = webletName;
@@ -32,6 +35,7 @@ public class WebletRequestBase implements WebletRequest
     _contextPath = contextPath;
     _pathInfo = pathInfo;
     _ifModifiedSince = ifModifiedSince;
+    _externalRequest = externalRequest;
   }
 
   public String getWebletName()
@@ -65,10 +69,16 @@ public class WebletRequestBase implements WebletRequest
   }
 
  
-  private final String _webletName;
+  public Object getExternalRequest() {
+    return _externalRequest;
+}
+
+
+private final String _webletName;
   private final String _webletPath;
   private final String _contextPath;
   private final String _pathInfo;
   private final long   _ifModifiedSince;
+  private final Object _externalRequest;
 
 }

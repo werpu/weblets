@@ -9,4 +9,6 @@ package net.java.dev.weblets.util;
 public interface IWebletUtils {
     public String getResource(String weblet, String pathInfo);
     public String getURL(String weblet, String pathInfo);
+
+   
 }

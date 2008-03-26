@@ -18,6 +18,8 @@ package net.java.dev.weblets.impl.servlets;
 import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
 import net.java.dev.weblets.impl.WebletResponseBase;
+import net.java.dev.weblets.impl.misc.ReflectUtils;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -53,42 +55,7 @@ public class WebletResponseImpl extends WebletResponseBase {
 
     public OutputStream getOutputStream() throws IOException {
         //return _httpResponse.getOutputStream();
-        Method m = null;
-
-        try {
-            m = _httpResponse.getClass().getMethod("getOutputStream", (Class[]) null);
-            try {
-                return (OutputStream) m.invoke(_httpResponse, new Class[]{});
-            } catch (IllegalAccessException e) {
-                Log log = LogFactory.getLog(getClass());
-                log.error(e);
-            } catch (InvocationTargetException e) {
-                Log log = LogFactory.getLog(getClass());
-                log.error(e);
-            }
-            return null;
-        } catch (NoSuchMethodException e) {
-            try {
-                //this should work because we are in a prerender stage but already
-                //have the response object
-                //this needs further testing of course!
-                m = _httpResponse.getClass().getMethod("getPortletOutputStream", (Class[]) null);
-                try {
-                    return (OutputStream) m.invoke(_httpResponse, new Class[]{});
-                } catch (IllegalAccessException e1) {
-                    Log log = LogFactory.getLog(getClass());
-                    log.error(e1);
-                } catch (InvocationTargetException e2) {
-                    Log log = LogFactory.getLog(getClass());
-                    log.error(e2);
-                }
-                return null;
-            } catch (NoSuchMethodException ex) {
-                Log log = LogFactory.getLog(getClass());
-                log.error(ex);
-            }
-        }
-        return null;
+    	return ReflectUtils.getOutputStream(getHttpResponse());
     }
 
     public void setStatus(int statusCode) {

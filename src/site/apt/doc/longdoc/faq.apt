@@ -1,0 +1,118 @@
+                           ------------------------
+                           Weblets General FAQ
+                           ------------------------
+
+* Weblets General FAQ
+
+    This section contains the general FAQs for common questions!
+
+**  What is this thing
+
+    Please refer to either the short documentation section or the long documentation section for
+    a thorough explanation.
+
+** Why Weblets
+
+    Well there are different frameworks for resource loading.
+    Shale Remoting, Spring Resource loading, JSF 2.0 resource loading.
+
+    It really depends on your needs of what you want to use
+
+    Shale Remoting supports JSF only since Shale is a pure JSF extension framework.
+    Spring Resource Loading does not cover the client side aspects, it is code
+    only
+    JSF 2.0 simply is not here yet, and will also be jsf only
+
+    If you feel that one of those frameworks suits your needs, feel free to use it.
+
+    However, Weblets is here and works universally!
+
+** Does Weblets have localized resources
+
+    JSF 2.0 has specified localized resources, Weblets does not have them yet,
+    however, having localized resources is a highly interesting,
+    feature and definitely will be part of a future Weblets version.
+
+** Is weblets suitable for high load sites
+
+    As of Weblets 1.0 I would not recommend to serve all resources from weblets in high load sites
+    although java has become quite fast and weblets supports mechanisms to reduce the server load
+    it depends on the configuration.
+
+    If you have a working HTTP Server serves the static resources, app server serves the dynamic ones
+    then you will not gain anything speedwise from using Weblets, on the contrary, you might lose
+    performance or increase loads because Weblets serves the resources
+    from your local classpath!
+
+    With later versions this mechanism might be expanded, if you want to use Weblets now
+    use the weblets frontend API and never direct url calls, that way you stay on the save
+    side and will get external urls once a redirection mechanism is in place!
+
+** Can Weblets be used for serving application state specific resources
+
+    Example, a web application has two customers, both of them should get different
+    resources depending on the customer.
+
+    There are several ways to do that,
+    a) You simply could use the el or dynamic string generation to switch dynamically between differente weblets
+
+    #{weblet.url[dynamicbean.customerweblet]['/path/to/resource']}
+
+
+    The other option would be to use an api extension point.
+
+    Weblets for instance has a managed bean which serves as the source of the url and
+    resource functions.
+    It does nothing fancy. It just defines two methods and returns jsf dummy maps
+
+    The class for the bean can be found under net.java.dev.weblets.impl.faces.FacesElWebletImpl
+    You could instead of using the weblet bean define your own beans
+    class which adds the customer information and alters the weblet name on the fly!
+
+
+    In other frameworks like jsp based ones you could write your own decorating
+    tools class and use that one as weblet serving bean!
+
+** Weblets does not work
+
+    Check your log for error messages or warning messages,
+    check your web.xml for path patterns which have to be set.
+    If you are in a jsf environment and you seem to have any settings
+    correct, yet it still fails to start, switch to the Weblets Servlet!
+
+
+** I use JDK 1.3 and a rather old container I tried to integrate Weblets in a legacy site!
+
+    Sorry, you are out of luck, Weblets currently supports Servlet 2.4 and JDK4+.
+
+** I have an improvement or bugfix
+
+    Please send in patches over the bugtracker or mailing lists, every donation is welcome.
+    Weblets is a non profit community project and thus is a two way street, you will
+    get a lot but also every helping hand no matter how small the help is, is welcome!
+    
+
+===============================================================
+
+* Contents
+
+   [[1]] {{{./index.html} Users Documentation: Index }}
+
+   [[]] {{{./gettingstarted.html} Users Documentation: Getting Started }}
+
+   [[]] {{{./setup.html} Users Documentation: Setup Guide }}
+
+   [[]] {{{./generalapi.html} Users Documentation: Introduction to  the API Patterns }}
+
+   [[]] {{{./usagejsp.html} Users Documentation: JSP Weblets Usage Guide }}
+
+   [[]] {{{./usagejava.html} Users Documentation: Servlet Weblets Usage Guide }}
+
+   [[]] {{{./usagejsf.html} Users Documentation: JSF Weblets Usage Guide }}
+
+   [[]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
+
+   [[]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
+
+   [[]] {{{./faq.html} Users Documentation: Weblets General FAQ }}
+
