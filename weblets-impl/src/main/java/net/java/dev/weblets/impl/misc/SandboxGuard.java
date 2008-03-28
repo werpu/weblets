@@ -1,4 +1,5 @@
-package net.java.dev.weblets.sandbox;
+package net.java.dev.weblets.impl.misc;
+
 
 import net.java.dev.weblets.WebletRequest;
 
@@ -15,7 +16,7 @@ public class SandboxGuard {
      * requests which try to
      * break through our
      * resource root
-     * 
+     *
      * @param origResourcePath the
      * original resource path which
      * will be checked for futile patterns

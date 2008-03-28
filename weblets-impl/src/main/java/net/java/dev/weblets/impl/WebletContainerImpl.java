@@ -17,6 +17,7 @@ package net.java.dev.weblets.impl;
 
 import net.java.dev.weblets.*;
 import net.java.dev.weblets.impl.parse.DisconnectedEntityResolver;
+import net.java.dev.weblets.impl.misc.SandboxGuard;
 import org.apache.commons.digester.Digester;
 import org.apache.commons.digester.ObjectCreationFactory;
 import org.apache.commons.logging.Log;
@@ -146,8 +147,8 @@ public class WebletContainerImpl extends WebletContainer {
             try {
                 WebletConfigImpl config = (WebletConfigImpl) _webletConfigs.get(webletName);
                 ClassLoader loader = Thread.currentThread().getContextClassLoader();
-                Class klass = loader.loadClass(config.getWebletClass());
-                weblet = (Weblet) klass.newInstance();
+                Class webletClass = loader.loadClass(config.getWebletClass());
+                weblet = (Weblet) webletClass.newInstance();
                 weblet.init(config);
                 _weblets.put(webletName, weblet);
             }
@@ -162,8 +163,20 @@ public class WebletContainerImpl extends WebletContainer {
             }
         }
 
+
+
         if (response.getDefaultContentType() == null) {
             String pathInfo = request.getPathInfo();
+
+            //enhanced security check
+            if(pathInfo != null && SandboxGuard.isJailBreak(pathInfo)) {
+                throw new WebletException("Security Exception, the "+ pathInfo +
+                " breaks out of the resource jail, no resource is served!");
+                //TODO add mime block lists to the security mix the jailbreak now
+                //is enabled by default it simply makes sense to have it in so
+                //that sidestepping and backstepping can be prevented
+            }
+
             WebletConfig webConfig = weblet.getWebletConfig();
             if (pathInfo != null) {
                 String mimeType = webConfig.getMimeType(pathInfo);

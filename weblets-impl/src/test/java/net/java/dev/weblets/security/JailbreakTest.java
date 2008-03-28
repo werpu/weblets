@@ -1,15 +1,9 @@
 package net.java.dev.weblets.security;
 
 import junit.framework.TestCase;
-import net.java.dev.weblets.sandbox.SandboxGuard;
+import net.java.dev.weblets.impl.misc.SandboxGuard;
 
-/**
- * Created by IntelliJ IDEA.
- * User: werpu
- * Date: 28.03.2008
- * Time: 16:01:53
- * To change this template use File | Settings | File Templates.
- */
+
 public class JailbreakTest  extends TestCase {
 
             String resourceRoot = "/resources/";
