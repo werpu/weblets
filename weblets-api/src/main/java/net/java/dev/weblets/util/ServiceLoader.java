@@ -10,11 +10,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * Created by IntelliJ IDEA.
- * User: werpu
- * Date: 30.12.2007
- * Time: 13:58:20
- * To change this template use File | Settings | File Templates.
+ * Service loader
+ * class, this is the
+ * central binding controller
+ * for our api and impl parts
+ * 
  */
 public class ServiceLoader {
 

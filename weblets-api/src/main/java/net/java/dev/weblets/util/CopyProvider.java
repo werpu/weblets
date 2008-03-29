@@ -8,11 +8,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Created by IntelliJ IDEA.
- * User: werpu
- * Date: 20.03.2008
- * Time: 19:19:38
- * To change this template use File | Settings | File Templates.
+ * Central contractual interface for
+ * our copy provider control
+ * usually a copy provider
+ * chains some input output streams together
+ * to get a certain behavior
+ * 
  */
 public interface CopyProvider {
     void copy(WebletRequest request, WebletResponse response, InputStream in, OutputStream out) throws IOException;

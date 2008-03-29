@@ -49,7 +49,9 @@ public class SandboxGuard {
            //check for empty values and double quotes
            //TODO empty value security check investigate what it does pathwise
            String pathEntry = elements[cnt].trim();
-           if(pathEntry.equals("..")) {
+           if(pathEntry.equals(".")) {
+             //do nothing this is a zeroconf entry
+           } else if(pathEntry.equals("..")) {
               backPath++;
               interimbreak --;
            } else {

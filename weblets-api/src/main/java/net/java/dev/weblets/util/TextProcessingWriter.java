@@ -8,11 +8,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by IntelliJ IDEA.
- * User: werpu
- * Date: 19.03.2008
- * Time: 21:43:12
- * To change this template use File | Settings | File Templates.
+ * our basic text processing writer
+ * it does the basic parsing of our resources
+ * and the weblet: to url substitution for our
+ * resources
  */
 class TextProcessingWriter extends Writer {
     public static final Pattern _WEBLET_URL =
