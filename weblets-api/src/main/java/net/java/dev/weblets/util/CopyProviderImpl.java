@@ -17,45 +17,66 @@ import java.io.*;
 public class CopyProviderImpl implements CopyProvider {
 
 
-    public void copy(WebletRequest request, WebletResponse response, InputStream in, OutputStream out) throws IOException {
+    public void copy(WebletRequest request, String contentType, InputStream in, OutputStream out) throws IOException {
 
-        String contentType = response.getDefaultContentType();
-        boolean isText = contentType != null && (contentType.startsWith("text/") ||
-                contentType.endsWith("xml") ||
-                contentType.equals("application/x-javascript"));
+        boolean isText = isText(contentType);
 
         if (isText)
-            copyText(request, response, new InputStreamReader(in), new OutputStreamWriter(out));
+            copyText(request,  new InputStreamReader(in), new OutputStreamWriter(out));
         else
-            copyStream(request, response, in, out);
+            copyStream(request,  in, out);
 
     }
 
-    public Writer mapResponseWriter(WebletRequest request, WebletResponse response, Writer out) {
-        return new TextProcessingWriter(out, request.getWebletName());
+    private boolean isText(String contentType) {
+        return contentType != null && (contentType.startsWith("text/") ||
+                contentType.endsWith("xml") ||
+                contentType.equals("application/x-javascript"));
     }
 
-    public Reader mapResponseReader(WebletRequest request, WebletResponse response, Reader in) {
-        return in;
+    /**
+     * wraps the input stream from our given request into another input stream
+     *
+     * @param request the request which serves as the streaming source
+     * @param mimetype the response mimetype
+     * @param in our given input steam
+     * @return
+     * @throws IOException
+     */
+    public InputStream wrapInputStream(WebletRequest request, String mimetype, InputStream in) throws IOException {
+        boolean isText = isText(mimetype);
+        if(isText) {
+            BufferedReader bufIn = new BufferedReader(mapResponseReader(request,new InputStreamReader(in)));
+            return new ReaderInputStream(bufIn);
+        }
+        return new BufferedInputStream(mapInputStream(request, in));
+    }
+
+    protected BufferedWriter mapResponseWriter(WebletRequest request, Writer out) {
+        return new BufferedWriter(out);
+    }
+
+    protected  BufferedReader mapResponseReader(WebletRequest request, Reader in) {
+        return new TextProcessingReader(in, request.getWebletName());
     }
 
 
-    public InputStream mapInputStream(WebletRequest request, WebletResponse response, InputStream in) {
-        return in;
+    protected  BufferedInputStream mapInputStream(WebletRequest request, InputStream in) {
+        return new BufferedInputStream(in);
     }
 
-    public OutputStream mapOutputStream(WebletRequest request, WebletResponse response, OutputStream out) {
-        return out;
+    protected  BufferedOutputStream mapOutputStream(WebletRequest request, OutputStream out) {
+        return new BufferedOutputStream(out);
     }
 
 
-    protected void copyText(WebletRequest request, WebletResponse response, Reader in, Writer out) throws IOException {
+    protected void copyText(WebletRequest request, Reader in, Writer out) throws IOException {
         byte[] buffer = new byte[2048];
 
         int len = 0;
         int total = 0;
-        BufferedReader bufIn = new BufferedReader(mapResponseReader(request, response, in));
-        BufferedWriter bufOut = new BufferedWriter(mapResponseWriter(request, response, out));
+        BufferedReader bufIn = mapResponseReader(request, in);
+        BufferedWriter bufOut = mapResponseWriter(request, out);
         try {
             String line = null;
             while ((line = bufIn.readLine()) != null) {
@@ -70,11 +91,12 @@ public class CopyProviderImpl implements CopyProvider {
     }
 
 
-    protected void copyStream(WebletRequest request, WebletResponse response, InputStream in, OutputStream out) throws IOException {
+    protected void copyStream(WebletRequest request, InputStream in, OutputStream out) throws IOException {
+
         byte[] buffer = new byte[2048];
 
-        BufferedInputStream bufIn = new BufferedInputStream(mapInputStream(request, response, in));
-        BufferedOutputStream bufOut = new BufferedOutputStream(mapOutputStream(request, response, out));
+        BufferedInputStream bufIn = mapInputStream(request, in);
+        BufferedOutputStream bufOut = mapOutputStream(request, out);
 
         int len = 0;
         int total = 0;

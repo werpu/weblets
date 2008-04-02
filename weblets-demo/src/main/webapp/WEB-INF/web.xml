@@ -58,7 +58,7 @@
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
-  
+  <!--
  <servlet>
     <servlet-name>Weblets Servlet</servlet-name>
     <servlet-class>net.java.dev.weblets.WebletsServlet</servlet-class>
@@ -68,7 +68,7 @@
     <servlet-name>Weblets Servlet</servlet-name>
     <url-pattern>/weblets/*</url-pattern>
   </servlet-mapping>
-  
+   -->
 
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>

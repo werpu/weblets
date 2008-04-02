@@ -16,6 +16,7 @@
 package net.java.dev.weblets;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Basic weblet class
@@ -48,6 +49,15 @@ abstract public class Weblet
   abstract public void service(
     WebletRequest  request,
     WebletResponse response) throws IOException, WebletException;
+
+    /**
+     * Service the local resource as stream
+     * @param request the local request
+     *
+     * @param mimetype the preferred mimetype for the request
+     * @return
+     */
+  abstract public InputStream serviceStream(WebletRequest request, String mimetype) throws IOException, WebletException;
 
   private WebletConfig _config;
 }

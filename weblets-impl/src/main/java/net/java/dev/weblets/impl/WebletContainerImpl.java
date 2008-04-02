@@ -104,6 +104,7 @@ public class WebletContainerImpl extends WebletContainer {
         _webletContextPath = null;
     }
 
+ 
     public Pattern getPattern() {
         return _webletURLPattern;
     }
@@ -139,29 +140,7 @@ public class WebletContainerImpl extends WebletContainer {
     public void service(
             WebletRequest request,
             WebletResponse response) throws IOException, WebletException {
-        String webletName = request.getWebletName();
-
-        Weblet weblet = (Weblet) _weblets.get(webletName);
-
-        if (weblet == null) {
-            try {
-                WebletConfigImpl config = (WebletConfigImpl) _webletConfigs.get(webletName);
-                ClassLoader loader = Thread.currentThread().getContextClassLoader();
-                Class webletClass = loader.loadClass(config.getWebletClass());
-                weblet = (Weblet) webletClass.newInstance();
-                weblet.init(config);
-                _weblets.put(webletName, weblet);
-            }
-            catch (ClassNotFoundException e) {
-                throw new WebletException(e);
-            }
-            catch (InstantiationException e) {
-                throw new WebletException(e);
-            }
-            catch (IllegalAccessException e) {
-                throw new WebletException(e);
-            }
-        }
+        Weblet weblet = getWeblet(request);
 
 
 
@@ -187,6 +166,56 @@ public class WebletContainerImpl extends WebletContainer {
 
         weblet.service(request, response);
     }
+
+    public Weblet getWeblet(WebletRequest request) {
+        String webletName = request.getWebletName();
+
+        return getWeblet(webletName);
+    }
+
+    public Weblet getWeblet(String webletName) {
+        Weblet weblet = (Weblet) _weblets.get(webletName);
+
+        if (weblet == null) {
+            try {
+                WebletConfigImpl config = (WebletConfigImpl) _webletConfigs.get(webletName);
+                ClassLoader loader = Thread.currentThread().getContextClassLoader();
+                Class webletClass = loader.loadClass(config.getWebletClass());
+                weblet = (Weblet) webletClass.newInstance();
+                weblet.init(config);
+                _weblets.put(webletName, weblet);
+            }
+            catch (ClassNotFoundException e) {
+                throw new WebletException(e);
+            }
+            catch (InstantiationException e) {
+                throw new WebletException(e);
+            }
+            catch (IllegalAccessException e) {
+                throw new WebletException(e);
+            }
+        }
+        return weblet;
+    }
+
+    /**
+     * new since 1.1 we now can get the weblet also
+     * as local stream for furhter external processing
+     * if we have our weblet request.
+     *
+     * We can add a dummy request
+     *
+     * @param request
+     * @return an input stream on our current weblet resource
+     *
+     * @throws WebletException
+     * @throws IOException
+     */
+    public InputStream serviceStream(WebletRequest request, String mimetype) throws WebletException, IOException {
+         Weblet weblet = getWeblet(request);
+         return weblet.serviceStream(request, mimetype);
+    }
+
 
     public String getResourceUri(
             String webletName,
@@ -217,6 +246,17 @@ public class WebletContainerImpl extends WebletContainer {
             webletURL = _webletURLFormat.format(new Object[]{webletURL});
 
         return webletURL;
+    }
+
+    public InputStream getResourceStream(WebletRequest request, String mimeType) throws WebletException {
+        Weblet weblet = (Weblet) _weblets.get(request.getWebletName());
+        if(weblet == null)
+            return null;
+        try {
+          return weblet.serviceStream(request,  mimeType);
+        } catch (IOException ex) {
+            return null;
+        }
     }
 
     public void registerConfig(
@@ -301,6 +341,11 @@ public class WebletContainerImpl extends WebletContainer {
             throw new IllegalArgumentException("Invalid weblet mapping: " + urlPattern);
         }
     }
+
+    public Map getRegisteredWeblets() {
+        return _weblets;
+    }
+
 
     private Format _webletURLFormat;
     private String _webletContextPath;

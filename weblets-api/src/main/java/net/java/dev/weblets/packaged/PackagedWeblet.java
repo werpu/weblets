@@ -20,7 +20,9 @@ import net.java.dev.weblets.util.CopyProviderImpl;
 import net.java.dev.weblets.util.CopyProvider;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * The standard packaged weblet 
@@ -28,8 +30,9 @@ import java.net.URL;
  * 
  */
 public class PackagedWeblet extends Weblet {
-	
-	/**
+
+
+    /**
 	 * init method which is called by default
 	 * to process the parameters
 	 * @param config the webletconfig to be processed
@@ -64,14 +67,32 @@ public class PackagedWeblet extends Weblet {
 		CopyProvider copyProvider = new CopyProviderImpl();
 		
 		URL url = getResourceUrl(resourcePath);
-		//our utils should handle the standard case
 
         WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(),
 				request, response, url, copyProvider);
 	}
 
-	
-	private URL getResourceUrl(String resourcePath) {
+
+    public InputStream serviceStream(WebletRequest request, String mimetype) throws IOException, WebletException {
+        String resourcePath = _resourceRoot + request.getPathInfo();
+        //lets build up our filter chain which in our case is a binary filter for standard
+        //processing and our text processing filter for text resources with included
+        //weblet: functions
+        CopyProvider copyProvider = new CopyProviderImpl();
+
+        URL url = getResourceUrl(resourcePath);
+        if(url == null)
+                return null;
+        //our utils should handle the standard case
+        URLConnection conn = url.openConnection();
+        long lastmodified = conn.getLastModified();
+        if(mimetype == null)
+            mimetype = getWebletConfig().getMimeType(resourcePath);
+        return copyProvider.wrapInputStream(request, mimetype, conn.getInputStream());  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+
+    private URL getResourceUrl(String resourcePath) {
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		URL url = loader.getResource(resourcePath);
 		if (url == null) {

@@ -16,6 +16,7 @@
 package net.java.dev.weblets;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
@@ -55,6 +56,16 @@ private static ClassLoader getLoader() {
   abstract public String getResourceUri(
     String webletName,
     String pathInfo) throws WebletException;
+
+    /**
+     * Method which returns the actual resource as input stream from
+     * a given weblet request
+     * @param request the current request
+     * @return an input stream on the resource
+     * @throws WebletException
+     */
+  abstract public InputStream getResourceStream(WebletRequest request, String mimetype)
+    throws WebletException;
 
   static private final Map _INSTANCES =
                               Collections.synchronizedMap(new HashMap());

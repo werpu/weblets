@@ -2,12 +2,14 @@ package net.java.dev.weblets.demo.sourcecodeweblet;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 
 import net.java.dev.weblets.Weblet;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
+import net.java.dev.weblets.WebletException;
 import net.java.dev.weblets.util.IWebletUtils;
 import net.java.dev.weblets.util.CopyProvider;
 import net.java.dev.weblets.impl.WebletRequestBase;
@@ -46,7 +48,11 @@ public class SourcecodeWeblet extends Weblet {
 	        WebletResourceloadingUtils.getInstance().loadResourceFromStream(getWebletConfig(), request, response,  copyProvider, fin);
 	    }
 
-	    public void destroy() {
+    public InputStream serviceStream(WebletRequest request, String mimetype) throws IOException, WebletException {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void destroy() {
 	        super.destroy();
 	    }
 }

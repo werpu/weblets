@@ -156,7 +156,7 @@ public class WebletResourceloadingUtils {
                                        CopyProvider copyProvider, InputStream in) throws IOException {
         OutputStream out = response.getOutputStream();
 
-        copyProvider.copy(request, response, in, out);
+        copyProvider.copy(request, response.getDefaultContentType(), in, out);
     }
 
     /* unified version checker for weblet versions maybe in existence */
