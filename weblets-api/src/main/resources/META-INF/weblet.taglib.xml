@@ -3,18 +3,18 @@
   "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
   "facelet-taglib_1_0.dtd">
 <facelet-taglib>
-    <namespace>http://weblets.dev.java.net/tags</namespace>
+	<namespace>http://weblets.dev.java.net/tags</namespace>
 
     <function>
-        <name>resource</name>
+        <function-name>resource</function-name>
         <function-class>net.java.dev.weblets.WebletUtils</function-class>
         <function-signature>java.lang.String getResource( java.lang.String, java.lang.String)</function-signature>
     </function>
 
     <function>
-          <name>url</name>
+          <function-name>url</function-name>
           <function-class>net.java.dev.weblets.WebletUtils</function-class>
           <function-signature>java.lang.String getURL( java.lang.String, java.lang.String)</function-signature>
     </function>
 
-</facelet-taglib> 
+</facelet-taglib>
