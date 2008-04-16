@@ -9,6 +9,7 @@ Getting Started with Weblets
     It should ease the beginning on how to install <<<Weblets>>> and how to get started with the
     demo applications.
 
+
 * Download Weblets
 
     Each <<<Weblets>>> release can be obtained via a the
@@ -38,6 +39,42 @@ Getting Started with Weblets
     You should get the demo page showcasing all features of weblets.
 
     The single pages can be used as references for your own development.
+
+
+* Getting started with Maven 2
+
+ Weblets can be injected via a maven build, however currently you
+ only can do it from the java.net repository.
+
+ following entries have to be added to your maven build file.
+
+
+ Under the repositories Section
+
++---------------------------------------
+  <repository>
+       <id>maven2-repository.dev.java.net</id>
+       <name>Java.net Repository for Maven</name>
+       <url>http://download.java.net/maven/2/</url>
+       <layout>default</layout>
+   </repository>
++---------------------------------------
+
+Following dependency entries have to be added:
+
++---------------------------------------
+    <dependency>
+       <groupId>net.java.dev.weblets</groupId>
+       <artifactId>weblets-api</artifactId>
+       <version>1.0</version>
+    </dependency>
+    <dependency>
+       <groupId>net.java.dev.weblets</groupId>
+       <artifactId>weblets-impl</artifactId>
+       <version>1.0</version>
+    </dependency>
++---------------------------------------
+
 
 * Getting started via Subversion
 
