@@ -55,7 +55,7 @@ public class WebletResponseImpl extends WebletResponseBase {
 
     public OutputStream getOutputStream() throws IOException {
         //return _httpResponse.getOutputStream();
-    	return ReflectUtils.getOutputStream(getHttpResponse());
+        return ReflectUtils.getOutputStream(getHttpResponse());
     }
 
     public void setStatus(int statusCode) {
@@ -92,13 +92,8 @@ public class WebletResponseImpl extends WebletResponseBase {
         setDateHeader("Last-Modified", lastModified);
     }
 
-    protected void setContentVersionImpl
-            (
-                    String
-                            contentVersion) {
-
-        long never = WebletResourceloadingUtils.getNever();
-        setDateHeader("Expires", never);
+    protected void setContentVersionImpl(String contentVersion, long timeout) {
+        setDateHeader("Expires", timeout);
     }
 
     /**
@@ -114,9 +109,7 @@ public class WebletResponseImpl extends WebletResponseBase {
      * @param entry
      * @param lastModified
      */
-    private void setDateHeader
-            (String
-                    entry, long lastModified) {
+    private void setDateHeader(String entry, long lastModified) {
         Method[] supportedMethods = _httpResponse.getClass().getMethods();
         //fetch the date header method
         Method m = null;

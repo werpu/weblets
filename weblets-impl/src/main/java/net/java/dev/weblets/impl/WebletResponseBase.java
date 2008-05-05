@@ -54,11 +54,11 @@ abstract public class WebletResponseBase implements WebletResponse
   }
 
   public final void setContentVersion(
-    String contentVersion)
+    String contentVersion, long timeout)
   {
     if (WebletResourceloadingUtils.isVersionedWeblet(contentVersion))
     {
-      setContentVersionImpl(contentVersion);
+      setContentVersionImpl(contentVersion, timeout);
     }
   }
 
@@ -69,7 +69,7 @@ abstract public class WebletResponseBase implements WebletResponse
     long lastModified);
 
   abstract protected void setContentVersionImpl(
-    String contentVersion);
+    String contentVersion, long timeout);
 
   private String _contentTypeDefault;
 }

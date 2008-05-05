@@ -24,6 +24,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * The standard packaged weblet 
  * serves resources from a standard weblet packaging
@@ -44,7 +46,10 @@ public class PackagedWeblet extends Weblet {
 		//fetch the resource root param
 		String resourceRoot = config.getInitParameter("resourceRoot");
 
-		//init param missing, lets throw an error
+ //       String cacheTimeout = config.getInitParameter("cachecontrol-timeout");
+
+
+        //init param missing, lets throw an error
 		if (packageName == null && resourceRoot == null) {
 			throw new WebletException(
 					"Missing either init parameter \"package\" or "
@@ -54,6 +59,9 @@ public class PackagedWeblet extends Weblet {
 		//the init was successful we now have all we need
 		_resourceRoot = (packageName != null) ? packageName.replace('.', '/')
 				: resourceRoot;
+
+        //optional init param
+
 
 	}
 

@@ -30,7 +30,7 @@ public interface WebletResponse
   public void setLastModified(long lastModified);
   public void setContentType(String contentType);
   public void setContentLength(int contentLength);
-  public void setContentVersion(String contentVersion);
+  public void setContentVersion(String contentVersion, long timeout);
 
   public OutputStream getOutputStream() throws IOException;
 

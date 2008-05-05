@@ -10,6 +10,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
+import java.util.TimeZone;
+import java.util.Date;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
 
 /**
  * helper class to be shared by various weblet loaders
@@ -26,10 +33,10 @@ public class WebletResourceloadingUtils {
     /**
      * loads a resource from a given url
      *
-     * @param config      the current weblet config
-     * @param request     the current weblet request
-     * @param response    the current weblet response
-     * @param url         the current url
+     * @param config       the current weblet config
+     * @param request      the current weblet request
+     * @param response     the current weblet response
+     * @param url          the current url
      * @param copyProvider the processing filter chain for the weblet serving
      */
     public void loadFromUrl(WebletConfig config, WebletRequest request,
@@ -54,7 +61,7 @@ public class WebletResourceloadingUtils {
      * @param lastmodified local resource lastmodified
      */
     private void prepareVersionedResponse(WebletConfig config,
-                                          WebletResponse response, long lastmodified) {
+                                          WebletResponse response, long lastmodified, long timeout) {
         long never;
         if (!isVersionedWeblet(config.getWebletVersion()))
             response.setLastModified(lastmodified);
@@ -68,12 +75,30 @@ public class WebletResourceloadingUtils {
             // some browsers like firefox despite
             // having a future number pass a local date on refresh maybe we
             // lock this out as well
-            never = WebletResourceloadingUtils.getNever();
-            response.setLastModified(never);
+            //<>
+
+            //Long timeout = timeoutOffset;
+            response.setLastModified(timeout);
 
             // this should prevent requests entirely!
-            response.setContentVersion(config.getWebletVersion());
+            response.setContentVersion(config.getWebletVersion(), timeout);
         }
+    }
+
+    private Long getTimeout(WebletConfig config) {
+        String cacheControlTimeout = config.getInitParameter("cachecontrol-timeout");
+        Long timeout = null;
+        if (!StringUtils.isBlank(cacheControlTimeout)) {
+            try {
+                timeout = Long.parseLong(cacheControlTimeout);
+            } catch (RuntimeException ex) {
+                Log log = LogFactory.getLog(this.getClass());
+                log.error("Weblets: Cache control is set but to an invalid value setting now never instead");
+            }
+        }
+        if (timeout == null)
+            timeout = WebletResourceloadingUtils.getNever();
+        return timeout;
     }
 
     /**
@@ -99,39 +124,63 @@ public class WebletResourceloadingUtils {
 
     /**
      * loads a given resource from an input stream
+     * it uses internal timestamps for resource handling
+     * and resource serving this works on most browser
+     * but safari seems to ignore the timestamps
+     * and always sends a modifiedSince for resources
+     * for 1.1.1970
      *
-     * @param config       the weblets config for this resource loading request
-     * @param request      the weblets request
-     * @param response     the weblets response
-     * @param copyProvider  a given processing copy provider
-     * @param in           the input stream for the processing
-     * @param lastModified the lastmodified for the given input stream
+     * @param config               the weblets config for this resource loading request
+     * @param request              the weblets request
+     * @param response             the weblets response
+     * @param copyProvider         a given processing copy provider
+     * @param in                   the input stream for the processing
+     * @param resourceLastmodified the lastmodified for the given input stream
      * @throws IOException in case of an internal processing error
      */
     public void loadResourceFromStream(WebletConfig config,
                                        WebletRequest request, WebletResponse response,
-                                       CopyProvider copyProvider, InputStream in, long lastModified)
+                                       CopyProvider copyProvider, InputStream in, long resourceLastmodified)
             throws IOException {
 
         if (in != null) {
 
-            prepareVersionedResponse(config, response, lastModified);
-            response.setContentType(null); // Bogus "text/html" overriding
             // mime-type
 
             long requestCacheState = request.getIfModifiedSince();
+            //the browser sends the utc timestamp
+
             requestCacheState = fixTimeValue(requestCacheState);
+            long resourceModifiedState = resourceLastmodified;
+            resourceModifiedState = fixTimeValue(resourceModifiedState);
 
-            long responseCacheState = lastModified;
-            responseCacheState = fixTimeValue(responseCacheState);
 
-            if (requestCacheState < responseCacheState) {
+            boolean load = false;
+
+            long currentTime = System.currentTimeMillis();
+            //utc time mapping
+            long currentUTCTime = currentTime - TimeZone.getDefault().getOffset(currentTime);
+            long utcResourceModifiedState = (resourceModifiedState - TimeZone.getDefault().getOffset(resourceModifiedState))+getTimeout(config);
+            load = (requestCacheState < utcResourceModifiedState)
+                    /*-1 or smaller value on reload pressed*/
+                    || requestCacheState < currentUTCTime;
+            /*cache control timeout reached we reload no matter what!*/
+
+
+
+            if (load) {
+                prepareVersionedResponse(config, response, resourceLastmodified, System.currentTimeMillis()+ getTimeout(config));
+                response.setContentType(null); // Bogus "text/html" overriding
 
                 loadResourceFromStream(config, request, response, copyProvider,
                         in);
                 //response.setStatus(200);
 
             } else {
+                /*we have to set the timestamps as well here*/
+                prepareVersionedResponse(config, response, resourceLastmodified, request.getIfModifiedSince()+TimeZone.getDefault().getOffset(request.getIfModifiedSince()) );
+                response.setContentType(null); // Bogus "text/html" overriding
+
                 response.setStatus(WebletResponse.SC_NOT_MODIFIED);
             }
         } else {
@@ -144,11 +193,11 @@ public class WebletResourceloadingUtils {
      * loads the resource from a given input stream note, this api is under
      * construction we have caching not enabled yet
      *
-     * @param config      the weblet config to load the resource
-     * @param request     the weblet request
-     * @param response    the weblet response
+     * @param config       the weblet config to load the resource
+     * @param request      the weblet request
+     * @param response     the weblet response
      * @param copyProvider the processing copy provider
-     * @param in          the resource serving input stream
+     * @param in           the resource serving input stream
      * @throws IOException
      */
     public void loadResourceFromStream(WebletConfig config,
@@ -167,8 +216,8 @@ public class WebletResourceloadingUtils {
 
     /* defined never value used system internally */
     public static long getNever() {
-		long now = System.currentTimeMillis();
-		return now + 100l * 60l * 60l * 24l * 365l;
-	}
+        long now = System.currentTimeMillis();
+        return now + 100l * 60l * 60l * 24l * 365l;
+    }
 
 }

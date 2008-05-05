@@ -385,6 +385,7 @@ public class WebletContainerImpl extends WebletContainer {
                 digester.addCallParam("weblets-config/weblet/init-param/param-value", 1);
                 digester.addCallMethod("weblets-config/weblet/mime-mapping",
                         "addMimeMapping", 2);
+   
                 digester.addCallParam("weblets-config/weblet/mime-mapping/extension", 0);
                 digester.addCallParam("weblets-config/weblet/mime-mapping/mime-type", 1);
                 digester.addCallMethod("weblets-config/weblet-mapping",

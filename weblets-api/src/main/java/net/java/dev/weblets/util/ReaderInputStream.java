@@ -16,7 +16,7 @@ public class ReaderInputStream extends InputStream {
     private final Writer writer;
     private final PipedInputStream inputStream;
 
-    private static final int COPY_BUFFER = 2048;
+    private static final int COPY_BUFFER = 4096;
 
     public ReaderInputStream(Reader reader) throws IOException {
         this(reader, null);
