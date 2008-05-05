@@ -71,7 +71,8 @@
 </p>
 <div class="source"><pre>svn checkout https://weblets.dev.java.net/svn/weblets/trunk &lt;&lt;&lt;Weblets&gt;&gt;&gt; --username username</pre>
 </div>
-<p>For the username and password you need to give your java.net account username and password (both can be obtained for free). Currently java.net does not seem to allow anonymous readonly access to the svn servers.</p>
+<p>For the username and password you need to give your java.net account username and password (both can be obtained for free)
+     or alternatively the username <b>guest</b> with an empty password also works for pure read access.</p>
 <p>After checking out simply do a mvn clean install from your checkout dir, and then, after the build process simply go to the weblets-demo subdir and call <tt>mvn jetty:run</tt>
 .</p>
 <p>After that a jetty servlet runner should be available on port 9090 with the weblets demo application deployed in it.</p>
