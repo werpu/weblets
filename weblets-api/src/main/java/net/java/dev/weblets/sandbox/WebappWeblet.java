@@ -79,7 +79,7 @@ public class WebappWeblet extends Weblet {
 				request, response, url, copyProvider);
     }
 
-    public InputStream serviceStream(WebletRequest request, String mimetype) throws IOException, WebletException {
+    public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

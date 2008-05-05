@@ -54,7 +54,7 @@ public class RedirectionWeblet extends Weblet {
         //api will take care of it
     }
 
-    public InputStream serviceStream(WebletRequest request, String mimetype) throws IOException, WebletException {
+    public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

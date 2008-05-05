@@ -316,7 +316,7 @@ public class WebletContainerImpl extends WebletContainer {
      */
     public InputStream serviceStream(WebletRequest request, String mimetype) throws WebletException, IOException {
         Weblet weblet = getWeblet(request);
-        return weblet.serviceStream(request, mimetype);
+        return weblet.serviceStream(request.getPathInfo(), mimetype);
     }
 
 
@@ -356,7 +356,7 @@ public class WebletContainerImpl extends WebletContainer {
         if (weblet == null)
             return null;
         try {
-            return weblet.serviceStream(request, mimeType);
+            return weblet.serviceStream(request.getPathInfo(), mimeType);
         } catch (IOException ex) {
             return null;
         }

@@ -48,7 +48,7 @@ public class SourcecodeWeblet extends Weblet {
 	        WebletResourceloadingUtils.getInstance().loadResourceFromStream(getWebletConfig(), request, response,  copyProvider, fin);
 	    }
 
-    public InputStream serviceStream(WebletRequest request, String mimetype) throws IOException, WebletException {
+    public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

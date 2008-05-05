@@ -17,14 +17,14 @@ import java.io.*;
 public class CopyProviderImpl implements CopyProvider {
 
 
-    public void copy(WebletRequest request, String contentType, InputStream in, OutputStream out) throws IOException {
+    public void copy(String webletName, String contentType, InputStream in, OutputStream out) throws IOException {
 
         boolean isText = isText(contentType);
 
         if (isText)
-            copyText(request,  new InputStreamReader(in), new OutputStreamWriter(out));
+            copyText(webletName,  new InputStreamReader(in), new OutputStreamWriter(out));
         else
-            copyStream(request,  in, out);
+            copyStream(  in, out);
 
     }
 
@@ -37,46 +37,46 @@ public class CopyProviderImpl implements CopyProvider {
     /**
      * wraps the input stream from our given request into another input stream
      *
-     * @param request the request which serves as the streaming source
+     * @param webletName the name of the affected weblet
      * @param mimetype the response mimetype
      * @param in our given input steam
      * @return
      * @throws IOException
      */
-    public InputStream wrapInputStream(WebletRequest request, String mimetype, InputStream in) throws IOException {
+    public InputStream wrapInputStream(String webletName, String mimetype, InputStream in) throws IOException {
         boolean isText = isText(mimetype);
         if(isText) {
-            BufferedReader bufIn = new BufferedReader(mapResponseReader(request,new InputStreamReader(in)));
+            BufferedReader bufIn = new BufferedReader(mapResponseReader(webletName,new InputStreamReader(in)));
             return new ReaderInputStream(bufIn);
         }
-        return new BufferedInputStream(mapInputStream(request, in));
+        return new BufferedInputStream(mapInputStream( in));
     }
 
-    protected BufferedWriter mapResponseWriter(WebletRequest request, Writer out) {
+    protected BufferedWriter mapResponseWriter( Writer out) {
         return new BufferedWriter(out);
     }
 
-    protected  BufferedReader mapResponseReader(WebletRequest request, Reader in) {
-        return new TextProcessingReader(in, request.getWebletName());
+    protected  BufferedReader mapResponseReader(String webletName, Reader in) {
+        return new TextProcessingReader(in, webletName);
     }
 
 
-    protected  BufferedInputStream mapInputStream(WebletRequest request, InputStream in) {
+    protected  BufferedInputStream mapInputStream( InputStream in) {
         return new BufferedInputStream(in);
     }
 
-    protected  BufferedOutputStream mapOutputStream(WebletRequest request, OutputStream out) {
+    protected  BufferedOutputStream mapOutputStream( OutputStream out) {
         return new BufferedOutputStream(out);
     }
 
 
-    protected void copyText(WebletRequest request, Reader in, Writer out) throws IOException {
+    protected void copyText(String webletName, Reader in, Writer out) throws IOException {
         byte[] buffer = new byte[2048];
 
         int len = 0;
         int total = 0;
-        BufferedReader bufIn = mapResponseReader(request, in);
-        BufferedWriter bufOut = mapResponseWriter(request, out);
+        BufferedReader bufIn = mapResponseReader(webletName, in);
+        BufferedWriter bufOut = mapResponseWriter( out);
         try {
             String line = null;
             while ((line = bufIn.readLine()) != null) {
@@ -91,12 +91,12 @@ public class CopyProviderImpl implements CopyProvider {
     }
 
 
-    protected void copyStream(WebletRequest request, InputStream in, OutputStream out) throws IOException {
+    protected void copyStream(InputStream in, OutputStream out) throws IOException {
 
         byte[] buffer = new byte[2048];
 
-        BufferedInputStream bufIn = mapInputStream(request, in);
-        BufferedOutputStream bufOut = mapOutputStream(request, out);
+        BufferedInputStream bufIn = mapInputStream( in);
+        BufferedOutputStream bufOut = mapOutputStream( out);
 
         int len = 0;
         int total = 0;

@@ -18,21 +18,21 @@ import java.io.*;
  */
 public class SourcecodeCopyProvider extends CopyProviderImpl implements CopyProvider {
 
-       public void copy(WebletRequest request, String mimeType, InputStream in, OutputStream out) throws IOException {
+       public void copy(String webletName, String mimeType, InputStream in, OutputStream out) throws IOException {
 
 
-            copyText(request,  new InputStreamReader(in), new OutputStreamWriter(out));
+            copyText(webletName,  new InputStreamReader(in), new OutputStreamWriter(out));
         
         }
 
 
-    protected void copyText(WebletRequest request,  Reader in, Writer out) throws IOException {
+    protected void copyText(String webletName,  Reader in, Writer out) throws IOException {
         byte[] buffer = new byte[2048];
 
         int len = 0;
         int total = 0;
-        BufferedReader bufIn = new BufferedReader(mapResponseReader(request,  in));
-        PrintWriter bufOut = new PrintWriter(mapResponseWriter(request,  out));
+        BufferedReader bufIn = new BufferedReader(mapResponseReader(webletName,  in));
+        PrintWriter bufOut = new PrintWriter(mapResponseWriter(  out));
         try {
             writehttphead(bufOut);
 

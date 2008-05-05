@@ -81,8 +81,27 @@ public class PackagedWeblet extends Weblet {
 	}
 
 
-    public InputStream serviceStream(WebletRequest request, String mimetype) throws IOException, WebletException {
-        String resourcePath = _resourceRoot + request.getPathInfo();
+    /**
+     * Second Weblet entry point the service stream method
+     * is used internally for Weblets 1.1 by our asynchronous
+     * reporting interface
+     *
+     * It basically does the same as service but
+     * must be servlet independend (aka it cannot rely
+     * on a base servlet or the external request of the weblet request object
+     *
+     * If you do not trigger the reporting subengine
+     * then you can omit this interface it is not used internally
+     * 
+     *
+     * @param request
+     * @param mimetype
+     * @return
+     * @throws IOException
+     * @throws WebletException
+     */
+    public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException {
+        String resourcePath = _resourceRoot + pathInfo;
         //lets build up our filter chain which in our case is a binary filter for standard
         //processing and our text processing filter for text resources with included
         //weblet: functions
@@ -96,7 +115,7 @@ public class PackagedWeblet extends Weblet {
         long lastmodified = conn.getLastModified();
         if(mimetype == null)
             mimetype = getWebletConfig().getMimeType(resourcePath);
-        return copyProvider.wrapInputStream(request, mimetype, conn.getInputStream());  //To change body of implemented methods use File | Settings | File Templates.
+        return copyProvider.wrapInputStream(getWebletConfig().getWebletName(), mimetype, conn.getInputStream());  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 
