@@ -149,9 +149,7 @@ public class WebletResponseImpl extends WebletResponseBase {
      */
     static boolean responsestatus_warn = false;
 
-    private void setResponseStatus
-            (
-                    int status) {
+    private void setResponseStatus( int status) {
         Method[] supportedMethods = _httpResponse.getClass().getMethods();
         //fetch the date header method
         Method m = null;
