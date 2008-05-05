@@ -31,16 +31,16 @@ abstract public class WebletContainer
     _INSTANCES.put(loader, container);
   }
 
-private static ClassLoader getLoader() {
-	ClassLoader loader = Thread.currentThread().getContextClassLoader();
-	URL testRes = loader.getResource("META-INF/services/"+WebletContainer.class.getName());
-	if(testRes == null) {
-    	loader = WebletContainer.class.getClassLoader();
+    private static ClassLoader getLoader() {
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        URL testRes = loader.getResource("META-INF/services/" + WebletContainer.class.getName());
+        if (testRes == null) {
+            loader = WebletContainer.class.getClassLoader();
+        }
+        return loader;
     }
-	return loader;
-}
 
-  static public WebletContainer getInstance() throws WebletException
+    static public WebletContainer getInstance() throws WebletException
   {
 	ClassLoader loader = getLoader();
     return (WebletContainer)_INSTANCES.get(loader);

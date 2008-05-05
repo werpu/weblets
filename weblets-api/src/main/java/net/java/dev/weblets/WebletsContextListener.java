@@ -44,10 +44,9 @@ public final class WebletsContextListener implements ServletContextListener
         {
           _delegate = (ServletContextListener)_WEBLETS_CONTEXT_LISTENER_CLASS.newInstance();
         }
-        catch (IllegalAccessException e)
-        {
-          throw new RuntimeException("Unable to access " +
-                                     "WebletsContextListener implementation", e);
+        catch (IllegalAccessException e) {
+            throw new RuntimeException("Unable to access " +
+                    "WebletsContextListener implementation", e);
         }
         catch (InstantiationException e)
         {

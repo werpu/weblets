@@ -13,18 +13,10 @@
 		</init-param>
 		<!-- this is a weblet written specifically for the demo -->
 	</weblet>
-	<weblet>
-		<weblet-name>weblets.source</weblet-name>
-		<weblet-class>net.java.dev.weblets.demo.sourcecodeweblet.SourcecodeWeblet</weblet-class>
-	</weblet>
 
-	<weblet-mapping>
+    	<weblet-mapping>
 		<weblet-name>weblets.demo</weblet-name>
 		<url-pattern>/demo/*</url-pattern>
-	</weblet-mapping>
-	<weblet-mapping>
-		<weblet-name>weblets.source</weblet-name>
-		<url-pattern>/source/*</url-pattern>
 	</weblet-mapping>
 	
 </weblets-config>

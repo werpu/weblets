@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<weblets-config xmlns="http://weblets.dev.java.net/config">
+
+    <weblet>
+        <weblet-name>weblets.source</weblet-name>
+        <weblet-class>net.java.dev.weblets.demo.sourcecodeweblet.SourcecodeWeblet</weblet-class>
+    </weblet>
+
+    <weblet-mapping>
+        <weblet-name>weblets.source</weblet-name>
+        <url-pattern>/source/*</url-pattern>
+    </weblet-mapping>
+    
+</weblets-config>    
+    

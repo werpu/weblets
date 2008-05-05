@@ -22,15 +22,20 @@ import org.apache.commons.digester.Digester;
 import org.apache.commons.digester.ObjectCreationFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.lang.StringUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.net.URL;
 import java.text.Format;
 import java.util.*;
+import java.util.jar.JarFile;
+import java.util.jar.JarEntry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,29 +56,128 @@ public class WebletContainerImpl extends WebletContainer {
         try
 
         {
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            Enumeration e = loader.getResources("META-INF/weblets-config.xml");
-            if(e == null) {
-            	loader = WebletContainerImpl.class.getClassLoader();
-            	e = loader.getResources("META-INF/weblets-config.xml");
-            }
+          //  Enumeration e = getConfigEnumeration("weblets-config.xml"); /*lets find the root configs first*/
+            Set configs = getValidConfigFiles();
+            Iterator configNameIterator = configs.iterator();
+
             // Defensive: Glassfish.v2.b25 produces duplicates in Enumeration
             //            returned by loader.getResources()
-            Set urls = new HashSet();
-            while (e.hasMoreElements()) {
-                urls.add(e.nextElement());
+
+            Set urls = new HashSet();     //      urls.add(element);
+
+
+            while (configNameIterator.hasNext()) {
+                Enumeration theUrlEnum = getConfigEnumeration((String) configNameIterator.next());
+                while (theUrlEnum.hasMoreElements()) {
+                    URL resource = (URL) theUrlEnum.nextElement();
+                    urls.add(resource);
+                }
             }
 
-            for (Iterator i = urls.iterator(); i.hasNext();) {
-                URL resource = (URL) i.next();
+
+            Iterator urlIterator = urls.iterator();
+            while (urlIterator.hasNext()) {
+                URL resource = (URL) urlIterator.next();
                 registerConfig(resource);
             }
+
 
             WebletContainer.setInstance(this);
         }
         catch (IOException e) {
             throw new WebletException(e);
         }
+    }
+
+
+    /**
+     * Gets a list of wildarded config files if
+     * a root weblets-config is present!
+     *
+     * @return
+     * @throws IOException
+     */
+
+    private String getPackageExtension(String incomingPath) {
+        //currently allowed package extensions for resource bundles
+        if(incomingPath.indexOf(".jar!") != -1)
+            return ".jar";
+        else if(incomingPath.indexOf(".zip!") != -1)
+            return ".zip";
+        else if(incomingPath.indexOf(".ear!") != -1)
+            return ".ear";
+        else if(incomingPath.indexOf(".par!") != -1)
+            return ".par";
+
+        return null;        
+    }
+
+    private Set getValidConfigFiles() throws IOException {
+        Enumeration e = getConfigEnumeration("weblets-config.xml"); /*lets find the root configs first*/
+        Set namesToSearchFor = new HashSet();
+
+        while (e.hasMoreElements()) {
+            //we also check for subconfics
+            URL element = (URL) e.nextElement();
+            String pathToOtherResources = element.getFile();
+            if (!StringUtils.isBlank(pathToOtherResources)) {
+                pathToOtherResources = pathToOtherResources.replaceAll("META-INF/weblets-config.xml", "META-INF/");
+                String pkgExt = getPackageExtension(pathToOtherResources);
+                if (pkgExt != null) {
+
+
+                    String jarPath = pathToOtherResources.substring(0, pathToOtherResources.indexOf(pkgExt+"!"));
+                    jarPath += pkgExt;
+                    if (jarPath.startsWith("file:"))
+                        jarPath = jarPath.replaceFirst("file:", "");
+                    else if(jarPath.matches("^[A-Za-z]+\\:.*")) { //only file protocols are allowed for now
+                        Log log = LogFactory.getLog(this.getClass());
+                        log.warn("Weblets initialisation Warning: "+jarPath + " Only file protocol is allowed for resource bundles for now ");
+                        log.warn("continuing with the initialisation ");
+                        continue;
+                    }
+                    JarFile file = new JarFile(jarPath);
+                    Enumeration entries = file.entries();
+                    while (entries.hasMoreElements()) {
+                        JarEntry entry = (JarEntry) entries.nextElement();
+                        String fileName = entry.getName();
+                        fileName = fileName.replaceAll("\\\\", "/"); //lets normalize first
+                        if (!fileName.startsWith("/"))
+                            fileName = "/" + fileName;
+                        if (fileName.matches("^\\/META-INF\\/.*weblets\\-config.*\\.xml$")) {
+
+                            fileName = fileName.replaceFirst("/META-INF/", "");
+                            namesToSearchFor.add(fileName);
+                        }
+                    }
+                } else {
+
+                    File file = null;
+                    file = new File(pathToOtherResources);
+                    String[] files = file.list(new FilenameFilter() {
+                        public boolean accept(File dir, String name) {
+                            return name.matches("^.*weblets\\-config\\.xml$");
+                        }
+                    });
+                    for (int cnt = 0; cnt < files.length; cnt++) { //end for declaration
+                        namesToSearchFor.add(files[cnt]);
+                    }
+                }
+            }
+        }
+        return namesToSearchFor;
+
+    }
+
+
+    private Enumeration getConfigEnumeration(String configFile) throws IOException {
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        Enumeration e = loader.getResources("META-INF/" + configFile);
+        if (e == null) {
+            loader = WebletContainerImpl.class.getClassLoader();
+            e = loader.getResources("META-INF/" + configFile);
+        }
+        return e;
     }
 
     private void checkWebletsContextPath() {
@@ -104,7 +208,7 @@ public class WebletContainerImpl extends WebletContainer {
         _webletContextPath = null;
     }
 
- 
+
     public Pattern getPattern() {
         return _webletURLPattern;
     }
@@ -131,8 +235,9 @@ public class WebletContainerImpl extends WebletContainer {
 
     /*setter and getter to access the context path*/
     public String getWebletContextPath() {
-       return _webletContextPath;
+        return _webletContextPath;
     }
+
     public void setWebletContextPath(String contextPath) {
         _webletContextPath = contextPath;
     }
@@ -143,14 +248,13 @@ public class WebletContainerImpl extends WebletContainer {
         Weblet weblet = getWeblet(request);
 
 
-
         if (response.getDefaultContentType() == null) {
             String pathInfo = request.getPathInfo();
 
             //enhanced security check
-            if(pathInfo != null && SandboxGuard.isJailBreak(pathInfo)) {
-                throw new WebletException("Security Exception, the "+ pathInfo +
-                " breaks out of the resource jail, no resource is served!");
+            if (pathInfo != null && SandboxGuard.isJailBreak(pathInfo)) {
+                throw new WebletException("Security Exception, the " + pathInfo +
+                        " breaks out of the resource jail, no resource is served!");
                 //TODO add mime block lists to the security mix the jailbreak now
                 //is enabled by default it simply makes sense to have it in so
                 //that sidestepping and backstepping can be prevented
@@ -202,18 +306,17 @@ public class WebletContainerImpl extends WebletContainer {
      * new since 1.1 we now can get the weblet also
      * as local stream for furhter external processing
      * if we have our weblet request.
-     *
+     * <p/>
      * We can add a dummy request
      *
      * @param request
      * @return an input stream on our current weblet resource
-     *
      * @throws WebletException
      * @throws IOException
      */
     public InputStream serviceStream(WebletRequest request, String mimetype) throws WebletException, IOException {
-         Weblet weblet = getWeblet(request);
-         return weblet.serviceStream(request, mimetype);
+        Weblet weblet = getWeblet(request);
+        return weblet.serviceStream(request, mimetype);
     }
 
 
@@ -250,10 +353,10 @@ public class WebletContainerImpl extends WebletContainer {
 
     public InputStream getResourceStream(WebletRequest request, String mimeType) throws WebletException {
         Weblet weblet = (Weblet) _weblets.get(request.getWebletName());
-        if(weblet == null)
+        if (weblet == null)
             return null;
         try {
-          return weblet.serviceStream(request,  mimeType);
+            return weblet.serviceStream(request, mimeType);
         } catch (IOException ex) {
             return null;
         }
