@@ -17,20 +17,25 @@ package net.java.dev.weblets;
 
 import java.util.Iterator;
 
-public interface WebletConfig
-{
+public interface WebletConfig {
 
-  static int WEBLET_TYPE_LOCAL = 1;
-  static int WEBLET_TYPE_PROXY = 2;
-  static int WEBLET_TYPE_REDIRECT = 3;
-  static int WEBLET_TYPE_OTHER = 100;
+    static int WEBLET_TYPE_LOCAL = 1;
+    static int WEBLET_TYPE_PROXY = 2;
+    static int WEBLET_TYPE_REDIRECT = 3;
+    static int WEBLET_TYPE_OTHER = 100;
 
-  public WebletContainer getWebletContainer();
-  
-  public String   getWebletName();
-  public String   getWebletVersion();
-  public String   getInitParameter(String paramName);
-  public Iterator getInitParameterNames();
-  public String   getMimeType(String resourcePath);
+
+
+    public WebletContainer getWebletContainer();
+
+    public String getWebletName();
+
+    public String getWebletVersion();
+
+    public String getInitParameter(String paramName);
+
+    public Iterator getInitParameterNames();
+
+    public String getMimeType(String resourcePath);
 //  public int      getWebletType(); /*disable some subsystems if this type of*/
 }

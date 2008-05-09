@@ -18,6 +18,7 @@ package net.java.dev.weblets.impl;
 import net.java.dev.weblets.*;
 import net.java.dev.weblets.impl.parse.DisconnectedEntityResolver;
 import net.java.dev.weblets.impl.misc.SandboxGuard;
+import net.java.dev.weblets.impl.util.ConfigurationUtils;
 import org.apache.commons.digester.Digester;
 import org.apache.commons.digester.ObjectCreationFactory;
 import org.apache.commons.logging.Log;
@@ -44,7 +45,8 @@ public class WebletContainerImpl extends WebletContainer {
             ServletContext servletContext,
             String webletContextPath,
             Format webletURLFormat,
-            Pattern webletURLPattern) throws WebletException {
+            Pattern webletURLPattern,
+            boolean multipleConfigs) throws WebletException {
         _servletContext = servletContext;
         _webletURLFormat = webletURLFormat;
         _webletURLPattern = webletURLPattern;
@@ -56,18 +58,32 @@ public class WebletContainerImpl extends WebletContainer {
         try
 
         {
-          //  Enumeration e = getConfigEnumeration("weblets-config.xml"); /*lets find the root configs first*/
-            Set configs = getValidConfigFiles();
-            Iterator configNameIterator = configs.iterator();
-
-            // Defensive: Glassfish.v2.b25 produces duplicates in Enumeration
-            //            returned by loader.getResources()
-
+            Set configs = new HashSet();
+            //  Enumeration e = getConfigEnumeration("weblets-config.xml"); /*lets find the root configs first*/
             Set urls = new HashSet();     //      urls.add(element);
 
+            if (multipleConfigs) {
+                ConfigurationUtils.getValidConfigFiles("META-INF/", "weblets-config.xml", configs);
+  
+                ConfigurationUtils.getValidConfigFiles("META-INF/", "Manifest.mf", configs);
+                Iterator configNameIterator = configs.iterator();
 
-            while (configNameIterator.hasNext()) {
-                Enumeration theUrlEnum = getConfigEnumeration((String) configNameIterator.next());
+                // Defensive: Glassfish.v2.b25 produces duplicates in Enumeration
+                //            returned by loader.getResources()
+
+
+
+                while (configNameIterator.hasNext()) {
+                    Enumeration theUrlEnum = ConfigurationUtils.getConfigEnumeration("META-INF/", (String) configNameIterator.next());
+                    while (theUrlEnum.hasMoreElements()) {
+                        URL resource = (URL) theUrlEnum.nextElement();
+                        urls.add(resource);
+                    }
+                }
+
+
+            } else {
+                Enumeration theUrlEnum = ConfigurationUtils.getConfigEnumeration("META-INF/", "weblets-config.xml");
                 while (theUrlEnum.hasMoreElements()) {
                     URL resource = (URL) theUrlEnum.nextElement();
                     urls.add(resource);
@@ -89,96 +105,6 @@ public class WebletContainerImpl extends WebletContainer {
         }
     }
 
-
-    /**
-     * Gets a list of wildarded config files if
-     * a root weblets-config is present!
-     *
-     * @return
-     * @throws IOException
-     */
-
-    private String getPackageExtension(String incomingPath) {
-        //currently allowed package extensions for resource bundles
-        if(incomingPath.indexOf(".jar!") != -1)
-            return ".jar";
-        else if(incomingPath.indexOf(".zip!") != -1)
-            return ".zip";
-        else if(incomingPath.indexOf(".ear!") != -1)
-            return ".ear";
-        else if(incomingPath.indexOf(".par!") != -1)
-            return ".par";
-
-        return null;        
-    }
-
-    private Set getValidConfigFiles() throws IOException {
-        Enumeration e = getConfigEnumeration("weblets-config.xml"); /*lets find the root configs first*/
-        Set namesToSearchFor = new HashSet();
-
-        while (e.hasMoreElements()) {
-            //we also check for subconfics
-            URL element = (URL) e.nextElement();
-            String pathToOtherResources = element.getFile();
-            if (!StringUtils.isBlank(pathToOtherResources)) {
-                pathToOtherResources = pathToOtherResources.replaceAll("META-INF/weblets-config.xml", "META-INF/");
-                String pkgExt = getPackageExtension(pathToOtherResources);
-                if (pkgExt != null) {
-
-
-                    String jarPath = pathToOtherResources.substring(0, pathToOtherResources.indexOf(pkgExt+"!"));
-                    jarPath += pkgExt;
-                    if (jarPath.startsWith("file:"))
-                        jarPath = jarPath.replaceFirst("file:", "");
-                    else if(jarPath.matches("^[A-Za-z]+\\:.*")) { //only file protocols are allowed for now
-                        Log log = LogFactory.getLog(this.getClass());
-                        log.warn("Weblets initialisation Warning: "+jarPath + " Only file protocol is allowed for resource bundles for now ");
-                        log.warn("continuing with the initialisation ");
-                        continue;
-                    }
-                    JarFile file = new JarFile(jarPath);
-                    Enumeration entries = file.entries();
-                    while (entries.hasMoreElements()) {
-                        JarEntry entry = (JarEntry) entries.nextElement();
-                        String fileName = entry.getName();
-                        fileName = fileName.replaceAll("\\\\", "/"); //lets normalize first
-                        if (!fileName.startsWith("/"))
-                            fileName = "/" + fileName;
-                        if (fileName.matches("^\\/META-INF\\/.*weblets\\-config.*\\.xml$")) {
-
-                            fileName = fileName.replaceFirst("/META-INF/", "");
-                            namesToSearchFor.add(fileName);
-                        }
-                    }
-                } else {
-
-                    File file = null;
-                    file = new File(pathToOtherResources);
-                    String[] files = file.list(new FilenameFilter() {
-                        public boolean accept(File dir, String name) {
-                            return name.matches("^.*weblets\\-config\\.xml$");
-                        }
-                    });
-                    for (int cnt = 0; cnt < files.length; cnt++) { //end for declaration
-                        namesToSearchFor.add(files[cnt]);
-                    }
-                }
-            }
-        }
-        return namesToSearchFor;
-
-    }
-
-
-    private Enumeration getConfigEnumeration(String configFile) throws IOException {
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        Enumeration e = loader.getResources("META-INF/" + configFile);
-        if (e == null) {
-            loader = WebletContainerImpl.class.getClassLoader();
-            e = loader.getResources("META-INF/" + configFile);
-        }
-        return e;
-    }
 
     private void checkWebletsContextPath() {
         if (_webletContextPath == null || _webletContextPath.trim().equals("")) {
@@ -385,7 +311,7 @@ public class WebletContainerImpl extends WebletContainer {
                 digester.addCallParam("weblets-config/weblet/init-param/param-value", 1);
                 digester.addCallMethod("weblets-config/weblet/mime-mapping",
                         "addMimeMapping", 2);
-   
+
                 digester.addCallParam("weblets-config/weblet/mime-mapping/extension", 0);
                 digester.addCallParam("weblets-config/weblet/mime-mapping/mime-type", 1);
                 digester.addCallMethod("weblets-config/weblet-mapping",

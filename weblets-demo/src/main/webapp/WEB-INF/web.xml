@@ -3,7 +3,18 @@
 <web-app>
   <description>Weblets Demo</description>
 
-    
+    <!--
+    this context param enables multiple config files
+    per resource bundle, default it is turned off because
+    only a handful of use cases need more than one weblet-config
+
+    we have it in the demo thoughs
+    -->
+    <context-param>
+        <param-name>net.java.dev.weblets.multipleconfigs</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
   <!--
   <context-param>
       <param-name>net.java.dev.weblets.contextpath</param-name>
