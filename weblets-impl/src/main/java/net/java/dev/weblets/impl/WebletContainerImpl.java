@@ -65,7 +65,7 @@ public class WebletContainerImpl extends WebletContainer {
             if (multipleConfigs) {
                 ConfigurationUtils.getValidConfigFiles("META-INF/", "weblets-config.xml", configs);
   
-                ConfigurationUtils.getValidConfigFiles("META-INF/", "Manifest.mf", configs);
+                ConfigurationUtils.getValidConfigFiles("META-INF/", "MANIFEST.MF", configs);
                 Iterator configNameIterator = configs.iterator();
 
                 // Defensive: Glassfish.v2.b25 produces duplicates in Enumeration
