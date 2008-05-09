@@ -150,6 +150,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                     if (multipleConfigs) {
                         ConfigurationUtils.getValidConfigFiles("/WEB-INF/", "web.xml", configs);
                         ConfigurationUtils.getValidConfigFiles("/META-INF/", "weblets-config.xml", configs);
+                        ConfigurationUtils.getValidConfigFiles("/META-INF/", "MANIFEST.MF", configs);
                         ConfigurationUtils.getValidConfigFiles("/META-INF/", "context.xml", configs);
                     }
                     Iterator configNameIterator = configs.iterator();
