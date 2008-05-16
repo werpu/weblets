@@ -25,6 +25,7 @@ import org.apache.commons.logging.Log;
  */
 public class WebletResourceloadingUtils {
     static WebletResourceloadingUtils instance = new WebletResourceloadingUtils();
+    private static final long MILLIS_PER_YEAR = 1000l * 60l * 60l * 24l * 365l;
 
     public static WebletResourceloadingUtils getInstance() {
         return instance;
@@ -62,7 +63,7 @@ public class WebletResourceloadingUtils {
      */
     private void prepareVersionedResponse(WebletConfig config,
                                           WebletResponse response, long lastmodified, long timeout) {
-        long never;
+
         if (!isVersionedWeblet(config.getWebletVersion()))
             response.setLastModified(lastmodified);
         else {
@@ -75,9 +76,7 @@ public class WebletResourceloadingUtils {
             // some browsers like firefox despite
             // having a future number pass a local date on refresh maybe we
             // lock this out as well
-            //<>
 
-            //Long timeout = timeoutOffset;
             response.setLastModified(timeout);
 
             // this should prevent requests entirely!
@@ -85,9 +84,9 @@ public class WebletResourceloadingUtils {
         }
     }
 
-    private Long getTimeout(WebletConfig config) {
+    private long getTimeout(WebletConfig config) {
         String cacheControlTimeout = config.getInitParameter("cachecontrol-timeout");
-        Long timeout = null;
+        long timeout = WebletResourceloadingUtils.getNever();
         if (!StringUtils.isBlank(cacheControlTimeout)) {
             try {
                 timeout = Long.parseLong(cacheControlTimeout);
@@ -96,8 +95,7 @@ public class WebletResourceloadingUtils {
                 log.error("Weblets: Cache control is set but to an invalid value setting now never instead");
             }
         }
-        if (timeout == null)
-            timeout = WebletResourceloadingUtils.getNever();
+
         return timeout;
     }
 
@@ -217,7 +215,7 @@ public class WebletResourceloadingUtils {
     /* defined never value used system internally */
     public static long getNever() {
         long now = System.currentTimeMillis();
-        return now + 100l * 60l * 60l * 24l * 365l;
+        return now + MILLIS_PER_YEAR;
     }
 
 }
