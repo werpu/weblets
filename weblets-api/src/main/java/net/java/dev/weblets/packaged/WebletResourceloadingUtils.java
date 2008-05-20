@@ -25,7 +25,10 @@ import org.apache.commons.logging.Log;
  */
 public class WebletResourceloadingUtils {
     static WebletResourceloadingUtils instance = new WebletResourceloadingUtils();
+
+
     private static final long MILLIS_PER_YEAR = 1000l * 60l * 60l * 24l * 365l;
+
 
     public static WebletResourceloadingUtils getInstance() {
         return instance;
@@ -64,9 +67,15 @@ public class WebletResourceloadingUtils {
     private void prepareVersionedResponse(WebletConfig config,
                                           WebletResponse response, long lastmodified, long timeout) {
 
-        if (!isVersionedWeblet(config.getWebletVersion()))
+        String webletVersion = config.getWebletVersion();
+        if (!isVersionedWeblet(webletVersion)) {
+
             response.setLastModified(lastmodified);
-        else {
+            /*
+             *set the expires and content version in the head
+             */
+            response.setContentVersion((webletVersion == null) ? "" : webletVersion, getPast());
+        } else {
             // we lock out resource loading once versioned, we do not run
             // into the chain
             // just in case the expires is ignored
@@ -78,9 +87,8 @@ public class WebletResourceloadingUtils {
             // lock this out as well
 
             response.setLastModified(timeout);
-
             // this should prevent requests entirely!
-            response.setContentVersion(config.getWebletVersion(), timeout);
+            response.setContentVersion(webletVersion, timeout);
         }
     }
 
@@ -158,25 +166,22 @@ public class WebletResourceloadingUtils {
             long currentTime = System.currentTimeMillis();
             //utc time mapping
             long currentUTCTime = currentTime - TimeZone.getDefault().getOffset(currentTime);
-            long utcResourceModifiedState = (resourceModifiedState - TimeZone.getDefault().getOffset(resourceModifiedState))+getTimeout(config);
+            long utcResourceModifiedState = (resourceModifiedState - TimeZone.getDefault().getOffset(resourceModifiedState)) + getTimeout(config);
             load = (requestCacheState < utcResourceModifiedState)
                     /*-1 or smaller value on reload pressed*/
                     || requestCacheState < currentUTCTime;
             /*cache control timeout reached we reload no matter what!*/
 
 
-
             if (load) {
-                prepareVersionedResponse(config, response, resourceLastmodified, System.currentTimeMillis()+ getTimeout(config));
+                prepareVersionedResponse(config, response, resourceLastmodified, System.currentTimeMillis() + getTimeout(config));
                 response.setContentType(null); // Bogus "text/html" overriding
-
-                loadResourceFromStream(config, request, response, copyProvider,
-                        in);
+                loadResourceFromStream(config, request, response, copyProvider,in);
                 //response.setStatus(200);
 
             } else {
                 /*we have to set the timestamps as well here*/
-                prepareVersionedResponse(config, response, resourceLastmodified, request.getIfModifiedSince()+TimeZone.getDefault().getOffset(request.getIfModifiedSince()) );
+                prepareVersionedResponse(config, response, resourceLastmodified, request.getIfModifiedSince() + TimeZone.getDefault().getOffset(request.getIfModifiedSince()));
                 response.setContentType(null); // Bogus "text/html" overriding
 
                 response.setStatus(WebletResponse.SC_NOT_MODIFIED);
@@ -217,5 +222,11 @@ public class WebletResourceloadingUtils {
         long now = System.currentTimeMillis();
         return now + MILLIS_PER_YEAR;
     }
+
+    public static long getPast() {
+        long now = System.currentTimeMillis();
+        return now - MILLIS_PER_YEAR;
+    }
+
 
 }
