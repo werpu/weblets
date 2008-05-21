@@ -90,7 +90,7 @@ public class ConfigurationUtils {
                     file = new File(pathToOtherResources);
                     String[] files = file.list(new FilenameFilter() {
                         public boolean accept(File dir, String name) {
-                            return name.matches("^.*weblets\\-config\\.xml$");
+                            return name.matches("^.*weblets\\-config.*\\\.xml$");
                         }
                     });
                     for (int cnt = 0; cnt < files.length; cnt++) { //end for declaration
