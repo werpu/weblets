@@ -22,6 +22,8 @@ import net.java.dev.weblets.impl.WebletContainerImpl;
 import net.java.dev.weblets.impl.misc.WebletUtilsImpl;
 import net.java.dev.weblets.impl.servlets.WebletRequestImpl;
 import net.java.dev.weblets.impl.servlets.WebletResponseImpl;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.faces.FacesException;
 import javax.faces.context.ExternalContext;
@@ -32,12 +34,13 @@ import javax.faces.event.PhaseListener;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import java.io.*;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
 import java.util.regex.Matcher;
+
 
 public class WebletsPhaseListener implements PhaseListener {
 
@@ -138,7 +141,18 @@ public class WebletsPhaseListener implements PhaseListener {
             pathInfo = context.getViewRoot().getViewId();
 
 
-        Matcher matcher = container.getPattern().matcher(pathInfo);
+        Matcher matcher = null;
+        try {
+           matcher = container.getPattern().matcher(pathInfo);
+        } catch (NullPointerException ex) {
+            Log log = LogFactory.getLog(this.getClass());
+            log.error("An error has occurred no pattern or matcher has been detected, this is probably a sign that the weblets context listener has not been started. please add following lines to your web.xml \n"+
+                        " <listener>\n" +
+                        "       <listener-class>net.java.dev.weblets.WebletsContextListener</listener-class>\n" +
+                        " </listener>");
+            log.error("Details of the original Error:" + ex.toString());
+                    return;
+        }
         if (matcher.matches()) {
             Map requestHeaders = external.getRequestHeaderMap();
             String contextPath = external.getRequestContextPath();
