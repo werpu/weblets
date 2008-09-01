@@ -22,51 +22,75 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-abstract public class WebletContainer
-{
-  static protected void setInstance(
-    WebletContainer container) throws WebletException
-  {
-	ClassLoader loader = getLoader();
-    _INSTANCES.put(loader, container);
-  }
+abstract public class WebletContainer {
+    static protected void setInstance(
+            WebletContainer container) throws WebletException {
+        ClassLoader loader = getLoader();
+        _INSTANCES.put(loader, container);
+    }
+    /*we store the valid classoader on a per thread base to bypass a performance leak*/
 
+    static final int CLASSLOADER_CONTEXT = 0;
+    static final int CLASSLOADER_LOCAL = 1;
+    static final int CLASSLOADER_UNDEFINED = -1;
+
+    static int classloaderType = CLASSLOADER_UNDEFINED;/*we do not keep the classloader only the type*/
+    /**
+     * caching loader determination algorithm
+     *
+     * @return a valid classloader with access to our resources
+     */
     private static ClassLoader getLoader() {
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        URL testRes = loader.getResource("META-INF/services/" + WebletContainer.class.getName());
-        if (testRes == null) {
-            loader = WebletContainer.class.getClassLoader();
+        /*once we are at a classloader we have to stay there!*/
+
+        if (classloaderType != CLASSLOADER_UNDEFINED) {
+            switch (classloaderType) {
+                case CLASSLOADER_LOCAL:
+                    return WebletContainer.class.getClassLoader();
+                default:
+                    return Thread.currentThread().getContextClassLoader();
+            }
+        } else {
+            ClassLoader loader = null;
+            loader = Thread.currentThread().getContextClassLoader();
+            URL testRes = loader.getResource("META-INF/services/" + WebletContainer.class.getName());
+            classloaderType = CLASSLOADER_CONTEXT;
+            if (testRes == null) { /*on some containers we do not have access to the resources over the context classloader at certain times*/
+                loader = WebletContainer.class.getClassLoader();
+                classloaderType = CLASSLOADER_LOCAL;
+            }
+            return loader;
         }
-        return loader;
     }
 
-    static public WebletContainer getInstance() throws WebletException
-  {
-	ClassLoader loader = getLoader();
-    return (WebletContainer)_INSTANCES.get(loader);
-  }
+    static public WebletContainer getInstance() throws WebletException {
+        ClassLoader loader = getLoader();
+        return (WebletContainer) _INSTANCES.get(loader);
+    }
 
-  abstract public String getWebletContextPath();
-  abstract public void setWebletContextPath(String contextPath);
+    abstract public String getWebletContextPath();
 
-  abstract public void service(
-    WebletRequest  request,
-    WebletResponse response) throws IOException, WebletException;
+    abstract public void setWebletContextPath(String contextPath);
 
-  abstract public String getResourceUri(
-    String webletName,
-    String pathInfo) throws WebletException;
+    abstract public void service(
+            WebletRequest request,
+            WebletResponse response) throws IOException, WebletException;
+
+    abstract public String getResourceUri(
+            String webletName,
+            String pathInfo) throws WebletException;
 
     /**
      * Method which returns the actual resource as input stream from
      * a given weblet request
+     *
      * @param request the current request
      * @return an input stream on the resource
      * @throws WebletException
      */
-  abstract public InputStream getResourceStream(WebletRequest request, String mimetype)
-    throws WebletException;
+    abstract public InputStream getResourceStream(WebletRequest request, String mimetype)
+            throws WebletException;
 
-  static private final Map _INSTANCES =
-                              Collections.synchronizedMap(new HashMap());
+    static private final Map _INSTANCES =
+            Collections.synchronizedMap(new HashMap());
 }
