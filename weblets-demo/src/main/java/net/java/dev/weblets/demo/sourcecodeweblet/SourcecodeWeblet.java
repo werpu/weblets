@@ -48,8 +48,18 @@ public class SourcecodeWeblet extends Weblet {
 	        WebletResourceloadingUtils.getInstance().loadResourceFromStream(getWebletConfig(), request, response,  copyProvider, fin);
 	    }
 
+    /**
+     * Handle reporting cases of containers which are initialized
+     * but do not have an active request
+     *
+     * @param pathInfo The pathinfo to the resource
+     * @param mimetype The mimetype
+     * @return
+     * @throws IOException
+     * @throws WebletException
+     */
     public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     public void destroy() {

@@ -1,0 +1,88 @@
+                                    ------------------------
+                                    Programming Your Own Weblets
+                                    ------------------------
+
+
+Introduction into the weblets API
+
+    As of version 1.1 a programming API is exposed to program your own Weblets. Weblets uses a servlet
+    like internal API to handle the resource loading. The Resource Loading is a multi step process covered
+    by this API. As of 1.1 only following Weblets are predefined:
+    A package weblet which allows the resource serving from resources located in the classpath!
+    A sourcecode Weblet in the demo application which serves the JSP pages as source listings
+    into the webapp and a proxying Weblet which allows proxying of resources hosted at another location
+    like a resource server to be served transparently.
+
+
+
+* Programming Weblets a step by step introduction
+** Why Your Own Weblets?
+
+    Sometimes it is desireable to build your own weblet containers, which serve special needs.
+    For instance, a custom container could serve resources the webapp way, with resources located
+    directly in the web application file structure.
+    Another one could stream resources from datasources like blobs in a database.
+    Another one could redirect to a dedicated clustered resource server to handle
+    high volume loads.
+    The possibilites are endless.
+    But before reaching the goal some effort has to be put into it.
+
+** Basic Structures of a Weblet
+
+    Weblets follows an api which is very similar to the servlet API.
+    A basic hello world weblet would look like this:
+
++----------------------------------------------------------------------------
+public class SourcecodeWeblet extends Weblet {
+
+	    public void service(
+	            WebletRequest request,
+	            WebletResponse response) throws IOException {
+
+	    	//hello world, we have to do something in here
+	    }
+}
++----------------------------------------------------------------------------    
+
+The central callback point is the method service, with a request and response
+object very similar to the servlet request and response objects.
+(In fact in most containers they just build a facade over exactly those
+two objects adding certain behavioral methods to the request response
+Objects of the underlying servlet container.
+
++----------------------------------------------------------------------------
+    public void service WebletRequest request, WebletResponse response) throws IOException;
++----------------------------------------------------------------------------
+
+However if you work with weblets it is recommended to use exactly those two objects
+access the needed request and response data!
+
+** Servicing a Weblet
+
+We have the request and response objects but we do not know how to handle the resources.
+Theoretically we now could do it manually by just streaming resources  like we
+would do it in a servlet.
+Yes this would work, but we would lose things like browser cache control,
+versioning etc...
+
+There is a better way. Weblets provides its own API for streaming resources.
+
++----------------------------------------------------------------------------
+
+public class SourcecodeWeblet extends Weblet {
+
+	    public void service(WebletRequest request, WebletResponse response) throws IOException {
+            String resourcePath = _resourceRoot + request.getPathInfo();
+            CopyProvider copyProvider = new CopyProviderImpl();
+            URL url = WebletResourceloadingUtils.getInstance().getResourceUrl(request, resourcePath);
+            WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(),
+                    request, response, url, copyProvider);
+        }
+}
++----------------------------------------------------------------------------
+
+This is the simplest case of a packaged weblet.
+What happens here, is that we 
+
+
+

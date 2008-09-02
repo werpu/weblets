@@ -286,6 +286,21 @@ Introduction into the <<<Weblets>>> Resource Packing
 	</weblets-config>
 +---------------------------------
  
+* Multiple Weblets Config Files
+
+    Since <<<Weblets>>> 1.1 it has become possible to have multiple configuration files
+    within one weblets package.
+
+    The <<<Weblets>>> config files themselves are the same as with a one file configuration.
+    Certain naming conventions, however have to be applied to enable this possibility.
+
+    * There must be at least one META-INF/<<<weblets-config.xml>>> or META-INF/Manifest.mf this marks the package location of all other
+    <<<Weblets>>> configuration files.
+
+    * The naming of the configuration files must follow the regexp pattern META-INF\/.*weblets-config.*\.xml
+    IE: <<<META-INF/1-weblets-config-1.xml>>> is a valid name <<<META-INF/myconfig.xml>>> however is not!
+
+
 
 Summary
 

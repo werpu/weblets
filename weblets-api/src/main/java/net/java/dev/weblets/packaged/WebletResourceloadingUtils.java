@@ -10,13 +10,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Calendar;
-import java.util.TimeZone;
-import java.util.Date;
+import java.util.*;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
+
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * helper class to be shared by various weblet loaders
@@ -26,9 +27,62 @@ import org.apache.commons.logging.Log;
 public class WebletResourceloadingUtils {
     static WebletResourceloadingUtils instance = new WebletResourceloadingUtils();
 
-
     private static final long MILLIS_PER_YEAR = 1000l * 60l * 60l * 24l * 365l;
 
+    static final int CACHED_URLS = 3000;
+    static final String CACHE_KEY = "WEBLET_CACHE";
+
+    public URL getResourceUrl(WebletRequest request, String resourcePath) {
+        Map urlCache = getResourceURLCache(request);
+        URL url = null;
+        if (urlCache.containsKey(resourcePath)) {
+            return (URL) urlCache.get(resourcePath);
+        }
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        url = loader.getResource(resourcePath);
+        if (url == null) {
+            loader = getClass().getClassLoader();
+            url = loader.getResource(resourcePath);
+        }
+        urlCache.put(resourcePath, url);
+        return url;
+    }
+
+    /**
+     * fetches the resource url from a given resource path (uncached for reporting only)
+     * TODO add a better cache (LRU if possible)
+     *
+     * @param resourcePath
+     * @return
+     */
+    public URL getResourceUrl(String resourcePath) {
+        URL url = null;
+        if (url != null) return url;
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        url = loader.getResource(resourcePath);
+        if (url == null) {
+            loader = getClass().getClassLoader();
+            url = loader.getResource(resourcePath);
+        }
+        return url;
+    }
+
+    /*entry cache per session*/
+    private Map getResourceURLCache(WebletRequest request) {
+        HttpSession session = ((HttpServletRequest) request.getExternalRequest()).getSession();
+        //session
+        Map cache = (Map) session.getAttribute(CACHE_KEY);
+        if (cache == null) {
+            cache = Collections.synchronizedMap(new HashMap(CACHED_URLS));
+            session.setAttribute(CACHE_KEY, cache);
+        }
+        if (cache.size() >= CACHED_URLS) {
+            cache.clear();
+        }
+        return cache;
+    }
+
+    ;
 
     public static WebletResourceloadingUtils getInstance() {
         return instance;
@@ -47,11 +101,9 @@ public class WebletResourceloadingUtils {
                             WebletResponse response, URL url, CopyProvider copyProvider)
             throws IOException {
         if (url != null) {
-
             URLConnection conn = url.openConnection();
             long lastmodified = conn.getLastModified();
             loadResourceFromStream(config, request, response, copyProvider, conn.getInputStream(), lastmodified);
-
         } else {
             response.setStatus(WebletResponse.SC_NOT_FOUND);
         }
@@ -66,10 +118,8 @@ public class WebletResourceloadingUtils {
      */
     private void prepareVersionedResponse(WebletConfig config,
                                           WebletResponse response, long lastmodified, long timeout) {
-
         String webletVersion = config.getWebletVersion();
         if (!isVersionedWeblet(webletVersion)) {
-
             response.setLastModified(lastmodified);
             /*
              *set the expires and content version in the head
@@ -85,7 +135,6 @@ public class WebletResourceloadingUtils {
             // some browsers like firefox despite
             // having a future number pass a local date on refresh maybe we
             // lock this out as well
-
             response.setLastModified(timeout);
             // this should prevent requests entirely!
             response.setContentVersion(webletVersion, timeout);
@@ -103,7 +152,6 @@ public class WebletResourceloadingUtils {
                 log.error("Weblets: Cache control is set but to an invalid value setting now never instead");
             }
         }
-
         return timeout;
     }
 
@@ -122,7 +170,6 @@ public class WebletResourceloadingUtils {
         // we cannot tamper the cache state here, because
         // otherwise firefox will fail with an emptied page resource cache
         // (shift f5)
-
         if (browserTimeValue > 1000)
             browserTimeValue = browserTimeValue - browserTimeValue % 1000;
         return browserTimeValue;
@@ -148,21 +195,15 @@ public class WebletResourceloadingUtils {
                                        WebletRequest request, WebletResponse response,
                                        CopyProvider copyProvider, InputStream in, long resourceLastmodified)
             throws IOException {
-
         if (in != null) {
 
             // mime-type
-
             long requestCacheState = request.getIfModifiedSince();
             //the browser sends the utc timestamp
-
             requestCacheState = fixTimeValue(requestCacheState);
             long resourceModifiedState = resourceLastmodified;
             resourceModifiedState = fixTimeValue(resourceModifiedState);
-
-
             boolean load = false;
-
             long currentTime = System.currentTimeMillis();
             //utc time mapping
             long currentUTCTime = currentTime - TimeZone.getDefault().getOffset(currentTime);
@@ -171,25 +212,20 @@ public class WebletResourceloadingUtils {
                     /*-1 or smaller value on reload pressed*/
                     || requestCacheState < currentUTCTime;
             /*cache control timeout reached we reload no matter what!*/
-
-
             if (load) {
                 prepareVersionedResponse(config, response, resourceLastmodified, System.currentTimeMillis() + getTimeout(config));
                 response.setContentType(null); // Bogus "text/html" overriding
-                loadResourceFromStream(config, request, response, copyProvider,in);
+                loadResourceFromStream(config, request, response, copyProvider, in);
                 //response.setStatus(200);
-
             } else {
                 /*we have to set the timestamps as well here*/
                 prepareVersionedResponse(config, response, resourceLastmodified, request.getIfModifiedSince() + TimeZone.getDefault().getOffset(request.getIfModifiedSince()));
                 response.setContentType(null); // Bogus "text/html" overriding
-
                 response.setStatus(WebletResponse.SC_NOT_MODIFIED);
             }
         } else {
             response.setStatus(WebletResponse.SC_NOT_FOUND);
         }
-
     }
 
     /**
@@ -207,7 +243,6 @@ public class WebletResourceloadingUtils {
                                        WebletRequest request, WebletResponse response,
                                        CopyProvider copyProvider, InputStream in) throws IOException {
         OutputStream out = response.getOutputStream();
-
         copyProvider.copy(request.getWebletName(), response.getDefaultContentType(), in, out);
     }
 
@@ -227,6 +262,4 @@ public class WebletResourceloadingUtils {
         long now = System.currentTimeMillis();
         return now - MILLIS_PER_YEAR;
     }
-
-
 }
