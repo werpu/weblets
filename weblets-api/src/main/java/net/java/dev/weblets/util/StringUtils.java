@@ -10,4 +10,13 @@ public class StringUtils {
 	public static final boolean isBlank(String in) {
 		return (in == null || in.trim().equals(""));
 	}
+	
+	public static final String getExtension(String in) {
+		   int lastDot = in.lastIndexOf('.');
+           if (lastDot != -1) {
+               String extension = in.substring(lastDot + 1);
+               return extension.trim();
+           }
+           return in;
+	}
 }

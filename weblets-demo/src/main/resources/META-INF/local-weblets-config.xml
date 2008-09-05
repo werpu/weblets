@@ -19,7 +19,7 @@
 	    </init-param>
 	    <init-param>
 	      <param-name>allowedResources</param-name>
-	      <param-value> jpg, png</param-value>
+	      <param-value> jpg, png </param-value>
 	    </init-param>
 	   
     </weblet>

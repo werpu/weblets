@@ -21,6 +21,7 @@ import java.util.Map;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletContainer;
+import net.java.dev.weblets.util.StringUtils;
 
 public class WebletConfigImpl implements WebletConfig {
     public WebletConfigImpl(WebletContainerImpl container) {
@@ -73,9 +74,8 @@ public class WebletConfigImpl implements WebletConfig {
 
     public String getMimeType(String resourcePath) {
         if (resourcePath != null) {
-            int lastDot = resourcePath.lastIndexOf('.');
-            if (lastDot != -1) {
-                String extension = resourcePath.substring(lastDot + 1);
+        	String extension = StringUtils.getExtension(resourcePath);
+            if (extension.length() < resourcePath.length()) {
                 String retVal =  (String) _mimeMappings.get(extension);
                 /*no local mimetype we try the servlet context mime type*/
                 if(retVal == null) {

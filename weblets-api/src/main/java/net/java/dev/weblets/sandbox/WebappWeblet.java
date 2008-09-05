@@ -81,17 +81,15 @@ public class WebappWeblet extends Weblet {
 				fileType = fileType.replaceAll("\\*", "");
 				fileType = fileType.replaceAll("\\.", "");
 				fileType = fileType.trim();
-				String mimeType = config.getMimeType("test."+fileType);
-				if (!StringUtils.isBlank(mimeType)) {
-					if (_allowedResources == null) {
-						_allowedResources = new HashSet();
-					}
-					_allowedResources.add(mimeType);
-				} else {
-					Log logger = LogFactory.getLog(this.getClass());
-					logger.warn("Mimetype of type:" + fileType
-							+ " was not defined please check your container settings or set the mimetype in your weblet definition");
+				if(fileType.equals("*")) { /* all are allowed */
+					_allowedResources = null;
+					return;
 				}
+				if(_allowedResources == null) {
+					_allowedResources = new HashSet();
+				}
+				_allowedResources.add(fileType);
+				
 			}
 		}
 	}
@@ -106,14 +104,17 @@ public class WebappWeblet extends Weblet {
 		// yet it will be substantially reworked in 1.1 after that
 		// it will be fully documented and opened for third party
 		// extensions, the current piping api is to complicated
+		
+		/*we now have the resource handling decoupled from the mimetypes*/
+		
 		CopyProvider copyProvider = new CopyProviderImpl();
 		if (resourcePath.indexOf("WEB-INF/") != -1 || resourcePath.indexOf("WEB-INF\\") != -1) {
 			// security breach nothing in WEB-INF is allowed to be accessed
 			return;
 		}
 		if (_allowedResources != null) {
-			String mimeType = super.getWebletConfig().getMimeType(resourcePath);
-			if (!_allowedResources.contains(mimeType)) {
+			String filetype = StringUtils.getExtension(resourcePath);
+			if (!_allowedResources.contains(filetype)) {
 				return;/* not allowed no content delivered */
 			}
 		}
