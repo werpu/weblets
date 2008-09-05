@@ -80,7 +80,7 @@ public class WebappWeblet extends Weblet {
 				String fileType = filetypesArr[cnt];
 				fileType = fileType.replaceAll("\\*", "");
 				fileType = fileType.replaceAll("\\.", "");
-				fileType = fileType.trim();
+				fileType = fileType.trim().toLowerCase();
 				if(fileType.equals("*")) { /* all are allowed */
 					_allowedResources = null;
 					return;
@@ -114,7 +114,7 @@ public class WebappWeblet extends Weblet {
 		}
 		if (_allowedResources != null) {
 			String filetype = StringUtils.getExtension(resourcePath);
-			if (!_allowedResources.contains(filetype)) {
+			if (!_allowedResources.contains(filetype.toLowerCase())) {
 				return;/* not allowed no content delivered */
 			}
 		}
