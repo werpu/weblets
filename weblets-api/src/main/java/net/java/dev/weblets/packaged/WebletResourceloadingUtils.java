@@ -214,9 +214,12 @@ public class WebletResourceloadingUtils {
 			/*-1 or smaller value on reload pressed*/
 			|| requestCacheState < currentUTCTime;
 			/* cache control timeout reached we reload no matter what! */
+	
+
 			if (load) {
 				prepareVersionedResponse(config, response, resourceLastmodified, System.currentTimeMillis() + getTimeout(config));
-				response.setContentType(null); // Bogus "text/html" overriding
+				//response.setContentType(finalMimetype);
+				
 				loadResourceFromStream(config, request, response, copyProvider, in);
 				// response.setStatus(200);
 			} else {
@@ -249,7 +252,12 @@ public class WebletResourceloadingUtils {
 	public void loadResourceFromStream(WebletConfig config, WebletRequest request, WebletResponse response, CopyProvider copyProvider, InputStream in)
 			throws IOException {
 		OutputStream out = response.getOutputStream();
-		copyProvider.copy(request.getWebletName(), response.getDefaultContentType(), in, out);
+		String finalMimetype = config.getMimeType(request.getPathInfo());
+		if(StringUtils.isBlank(finalMimetype)) {
+			finalMimetype = response.getDefaultContentType();
+		}
+		response.setContentType(finalMimetype);
+		copyProvider.copy(request.getWebletName(), finalMimetype, in, out);
 	}
 
 	/* unified version checker for weblet versions maybe in existence */

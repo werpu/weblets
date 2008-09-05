@@ -80,7 +80,8 @@ public class WebappWeblet extends Weblet {
 				String fileType = filetypesArr[cnt];
 				fileType = fileType.replaceAll("\\*", "");
 				fileType = fileType.replaceAll("\\.", "");
-				String mimeType = config.getMimeType(fileType);
+				fileType = fileType.trim();
+				String mimeType = config.getMimeType("test."+fileType);
 				if (!StringUtils.isBlank(mimeType)) {
 					if (_allowedResources == null) {
 						_allowedResources = new HashSet();
@@ -88,7 +89,7 @@ public class WebappWeblet extends Weblet {
 					_allowedResources.add(mimeType);
 				} else {
 					Log logger = LogFactory.getLog(this.getClass());
-					logger.warn("Mimetype of type:" + mimeType
+					logger.warn("Mimetype of type:" + fileType
 							+ " was not defined please check your container settings or set the mimetype in your weblet definition");
 				}
 			}
