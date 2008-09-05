@@ -46,7 +46,14 @@ public class WebappWeblet extends Weblet {
 		// fetch the weblets init param
 		_packageName = config.getInitParameter("package");
 		// fetch the resource root param
+		/*auto fix path according to the specs the root must begin with a leading /*/
 		_resourceRoot = config.getInitParameter("resourceRoot");
+		if(StringUtils.isBlank(_resourceRoot))
+			_resourceRoot = "/";
+		_resourceRoot = _resourceRoot.trim();
+		if(!_resourceRoot.startsWith("/")&& !_resourceRoot.startsWith("\\"))
+			_resourceRoot = "/"+_resourceRoot;
+			
 		// init param missing, lets throw an error
 		if (_packageName == null && _resourceRoot == null) {
 			throw new WebletException("Missing either init parameter \"package\" or " + " or init parameter \"resourceRoot\" for " + " Weblet \""
@@ -109,7 +116,7 @@ public class WebappWeblet extends Weblet {
 				return;/* not allowed no content delivered */
 			}
 		}
-		URL url = httpRequest.getSession().getServletContext().getResource(resourcePath);
+		URL url = httpRequest.getSession().getServletContext().getResource("/"+resourcePath);
 		WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyProvider);
 	}
 

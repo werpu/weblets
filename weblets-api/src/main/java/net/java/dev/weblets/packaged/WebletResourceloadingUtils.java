@@ -33,9 +33,11 @@ public class WebletResourceloadingUtils {
 	public URL getResourceUrl(WebletRequest request, String resourcePath) {
 		Map urlCache = getResourceURLCache(request);
 		URL url = null;
-		if (urlCache.containsKey(resourcePath)) {
-			return (URL) urlCache.get(resourcePath);
-		}
+		
+		url = (URL) urlCache.get(resourcePath);
+		if(url != null)
+			return url;
+		
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		url = loader.getResource(resourcePath);
 		if (url == null) {
