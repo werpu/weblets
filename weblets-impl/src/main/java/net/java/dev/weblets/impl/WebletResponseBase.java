@@ -18,58 +18,42 @@ package net.java.dev.weblets.impl;
 import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
 
-abstract public class WebletResponseBase implements WebletResponse
-{
-  public WebletResponseBase(
-    String contentTypeDefault)
-  {
-    _contentTypeDefault = contentTypeDefault;
-  }
+abstract public class WebletResponseBase implements WebletResponse {
+	public WebletResponseBase(String contentTypeDefault) {
+		_contentTypeDefault = contentTypeDefault;
+	}
 
-  public final void setDefaultContentType(
-    String contentTypeDefault)
-  {
-    _contentTypeDefault = contentTypeDefault;
-  }
+	public final void setDefaultContentType(String contentTypeDefault) {
+		_contentTypeDefault = contentTypeDefault;
+	}
 
-  public final String getDefaultContentType()
-  {
-    return _contentTypeDefault;
-  }
+	public final String getDefaultContentType() {
+		return _contentTypeDefault;
+	}
 
-  public final void setContentType(
-    String contentType)
-  {
-    if (contentType == null || "content/unknown".equals(contentType))
-      contentType = _contentTypeDefault;
-    setContentTypeImpl(contentType);
-  }
+	public final void setContentType(String contentType) {
+		if (contentType == null || "content/unknown".equals(contentType))
+			contentType = _contentTypeDefault;
+		setContentTypeImpl(contentType);
+	}
 
-  public final void setLastModified(
-    long lastModified)
-  {
-    // Detect unknown-last-modified
-    if (lastModified != 0)
-      setLastModifiedImpl(lastModified);
-  }
+	public final void setLastModified(long lastModified) {
+		// Detect unknown-last-modified
+		if (lastModified != 0)
+			setLastModifiedImpl(lastModified);
+	}
 
-  public final void setContentVersion(
-    String contentVersion, long timeout)
-  {
-    if (WebletResourceloadingUtils.isVersionedWeblet(contentVersion))
-    {
-      setContentVersionImpl(contentVersion, timeout);
-    }
-  }
+	public final void setContentVersion(String contentVersion, long timeout) {
+		if (WebletResourceloadingUtils.isVersionedWeblet(contentVersion)) {
+			setContentVersionImpl(contentVersion, timeout);
+		}
+	}
 
-  abstract protected void setContentTypeImpl(
-    String contentType);
+	abstract protected void setContentTypeImpl(String contentType);
 
-  abstract protected void setLastModifiedImpl(
-    long lastModified);
+	abstract protected void setLastModifiedImpl(long lastModified);
 
-  abstract protected void setContentVersionImpl(
-    String contentVersion, long timeout);
+	abstract protected void setContentVersionImpl(String contentVersion, long timeout);
 
-  private String _contentTypeDefault;
+	private String	_contentTypeDefault;
 }

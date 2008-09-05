@@ -29,73 +29,51 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class WebletsServletImpl extends HttpServlet
-{
-  public void init(
-    ServletConfig config) throws ServletException
-  {
-    super.init(config);
-//    _webletContainer = (WebletContainerImpl)getServletContext().getAttribute(WebletsContextListenerImpl.WEBLET_CONTAINER_KEY);
-    _webletContainer = (WebletContainerImpl)WebletContainer.getInstance();
-  }
+public class WebletsServletImpl extends HttpServlet {
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		// _webletContainer = (WebletContainerImpl)getServletContext().getAttribute(WebletsContextListenerImpl.WEBLET_CONTAINER_KEY);
+		_webletContainer = (WebletContainerImpl) WebletContainer.getInstance();
+	}
 
-  public void destroy()
-  {
-    _webletContainer = null;
-  }
+	public void destroy() {
+		_webletContainer = null;
+	}
 
-  protected void doGet(
-    HttpServletRequest  httpRequest,
-    HttpServletResponse httpResponse) throws IOException, ServletException
-  {
-    String contextPath = httpRequest.getContextPath();
-    String requestURI = getCanonicalPath(httpRequest.getPathInfo());
-    long ifModifiedSince = httpRequest.getDateHeader("If-Modified-Since");
+	protected void doGet(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException, ServletException {
+		String contextPath = httpRequest.getContextPath();
+		String requestURI = getCanonicalPath(httpRequest.getPathInfo());
+		long ifModifiedSince = httpRequest.getDateHeader("If-Modified-Since");
+		try {
+			String[] parsed = _webletContainer.parseWebletRequest(contextPath, requestURI, ifModifiedSince);
+			if (parsed != null) {
+				String webletName = parsed[0];
+				String webletPath = parsed[1];
+				String webletPathInfo = parsed[2];
+				WebletRequest webRequest = new WebletRequestImpl(webletName, webletPath, contextPath, webletPathInfo, ifModifiedSince, httpRequest);
+				ServletContext servletContext = getServletContext();
+				String contentName = webRequest.getPathInfo();
+				String contentTypeDefault = getServletContext().getMimeType(contentName);
+				WebletResponse webResponse = new WebletResponseImpl(contentTypeDefault, httpResponse);
+				_webletContainer.service(webRequest, webResponse);
+			}
+		} catch (WebletException e) {
+			throw new ServletException(e);
+		}
+	}
 
-    try
-    {
-      String[] parsed =
-        _webletContainer.parseWebletRequest(contextPath, requestURI, ifModifiedSince);
+	private String getCanonicalPath(String path) {
+		int len;
+		do {
+			len = path.length();
+			path = path.replaceAll("/[^/]+/\\.\\.", "");
+		} while (path.length() != len);
+		return path;
+	}
 
-      if (parsed != null)
-      {
-        String webletName = parsed[0];
-        String webletPath = parsed[1];
-        String webletPathInfo = parsed[2];
-        WebletRequest webRequest = 
-          new WebletRequestImpl(webletName, webletPath, contextPath, webletPathInfo, 
-                                ifModifiedSince, httpRequest);
-        ServletContext servletContext = getServletContext();
-        String contentName = webRequest.getPathInfo();
-        String contentTypeDefault = getServletContext().getMimeType(contentName);
-        WebletResponse webResponse =
-          new WebletResponseImpl(contentTypeDefault, httpResponse);
-        _webletContainer.service(webRequest, webResponse);
-      }
-    }
-    catch (WebletException e)
-    {
-      throw new ServletException(e);
-    }
-  }
-
-  private String getCanonicalPath(
-    String path)
-  {
-    int len;
-    do
-    {
-      len = path.length();
-      path = path.replaceAll("/[^/]+/\\.\\.", "");
-    } while (path.length() != len);
-
-    return path;
-  }
-
-  private WebletContainerImpl _webletContainer;
-  
-  /**
-   * The serialization version. 
-   */
-  private static final long serialVersionUID = 1L;
+	private WebletContainerImpl	_webletContainer;
+	/**
+	 * The serialization version.
+	 */
+	private static final long	serialVersionUID	= 1L;
 }

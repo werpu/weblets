@@ -22,95 +22,78 @@ import java.io.IOException;
 
 /**
  * The WebletsServlet maps requested URLs to Weblet resources.
- *
- * The <code>META-INF/services/net.java.dev.weblets.WebletsServlet</code>
- * Service Provider configuration file is used to lookup the implementation
- * class for this Servlet, as defined by the JAR file specification.
+ * 
+ * The <code>META-INF/services/net.java.dev.weblets.WebletsServlet</code> Service Provider configuration file is used to lookup the implementation class for
+ * this Servlet, as defined by the JAR file specification.
  */
-public final class WebletsServlet implements Servlet
-{
-  /**
-   * Initializes this Servlet.
-   *
-   * @param config  the servlet configuration
-   *
-   * @throws ServletException  if an error occurs
-   */
-  public void init(
-    ServletConfig config) throws ServletException
-  {
-    try
-    {
-      _delegate = (Servlet)_WEBLETS_SERVLET_CLASS.newInstance();
-      _delegate.init(config);
-    }
-    catch (IllegalAccessException e)
-    {
-      throw new ServletException("Unable to access " +
-                                 "WebletsServlet implementation", e);
-    }
-    catch (InstantiationException e)
-    {
-      throw new ServletException("Unable to instantiate " +
-                                 "WebletsServlet implementation", e);
-    }
-  }
+public final class WebletsServlet implements Servlet {
+	/**
+	 * Initializes this Servlet.
+	 * 
+	 * @param config
+	 *            the servlet configuration
+	 * 
+	 * @throws ServletException
+	 *             if an error occurs
+	 */
+	public void init(ServletConfig config) throws ServletException {
+		try {
+			_delegate = (Servlet) _WEBLETS_SERVLET_CLASS.newInstance();
+			_delegate.init(config);
+		} catch (IllegalAccessException e) {
+			throw new ServletException("Unable to access " + "WebletsServlet implementation", e);
+		} catch (InstantiationException e) {
+			throw new ServletException("Unable to instantiate " + "WebletsServlet implementation", e);
+		}
+	}
 
-  /**
-   * Destroys this Servlet.
-   */
-  public void destroy()
-  {
-    _delegate.destroy();
-  }
+	/**
+	 * Destroys this Servlet.
+	 */
+	public void destroy() {
+		_delegate.destroy();
+	}
 
-  /**
-   * Returns the configuration for this Servlet.
-   *
-   * @return  the configuration for this Servlet
-   */
-  public ServletConfig getServletConfig()
-  {
-    return _delegate.getServletConfig();
-  }
+	/**
+	 * Returns the configuration for this Servlet.
+	 * 
+	 * @return the configuration for this Servlet
+	 */
+	public ServletConfig getServletConfig() {
+		return _delegate.getServletConfig();
+	}
 
-  /**
-   * Returns the information describing this Servlet.
-   *
-   * @return  the information describing this Servlet
-   */
-  public String getServletInfo()
-  {
-    return _delegate.getServletInfo();
-  }
+	/**
+	 * Returns the information describing this Servlet.
+	 * 
+	 * @return the information describing this Servlet
+	 */
+	public String getServletInfo() {
+		return _delegate.getServletInfo();
+	}
 
-  /**
-   * Processes the incoming request, by looking up the Weblet
-   * mapped to the incoming request URL pattern, and dispatching
-   * to the Weblet if found, otherise sends 404 Not Found response.
-   *
-   * @param request   the servlet request
-   * @param response  the servlet response
-   *
-   * @throws IOException       if an I/O error occurs
-   * @throws ServletException  if an error occurs
-   */
-  public void service(
-    ServletRequest  request,
-    ServletResponse response) throws IOException, ServletException
-  {
-    _delegate.service(request, response);
-  }
+	/**
+	 * Processes the incoming request, by looking up the Weblet mapped to the incoming request URL pattern, and dispatching to the Weblet if found, otherise
+	 * sends 404 Not Found response.
+	 * 
+	 * @param request
+	 *            the servlet request
+	 * @param response
+	 *            the servlet response
+	 * 
+	 * @throws IOException
+	 *             if an I/O error occurs
+	 * @throws ServletException
+	 *             if an error occurs
+	 */
+	public void service(ServletRequest request, ServletResponse response) throws IOException, ServletException {
+		_delegate.service(request, response);
+	}
 
-  private Servlet _delegate;
-
-  // the WebletsServlet Service Provider implementation class
-  static private final Class _WEBLETS_SERVLET_CLASS;
-
-  static
-
-
-  {
-     _WEBLETS_SERVLET_CLASS = ServiceLoader.loadService(WebletsServlet.class.getName());
-  }
+	private Servlet				_delegate;
+	// the WebletsServlet Service Provider implementation class
+	static private final Class	_WEBLETS_SERVLET_CLASS;
+	static {
+		_WEBLETS_SERVLET_CLASS = ServiceLoader.loadService(WebletsServlet.class.getName());
+	}
 }

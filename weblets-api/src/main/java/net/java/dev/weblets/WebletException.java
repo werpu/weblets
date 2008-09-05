@@ -15,34 +15,25 @@
  */
 package net.java.dev.weblets;
 
-public class WebletException extends RuntimeException
-{
-  public WebletException()
-  {
-    super();
-  }
+public class WebletException extends RuntimeException {
+	public WebletException() {
+		super();
+	}
 
-  public WebletException(
-    String message)
-  {
-    super(message);
-  }
+	public WebletException(String message) {
+		super(message);
+	}
 
-  public WebletException(
-    String    message,
-    Throwable cause)
-  {
-    super(message, cause);
-  }
+	public WebletException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-  public WebletException(
-    Throwable cause)
-  {
-    super(cause);
-  }
+	public WebletException(Throwable cause) {
+		super(cause);
+	}
 
-  /**
-   * The serialization version. 
-   */
-  private static final long serialVersionUID = 1L;
+	/**
+	 * The serialization version.
+	 */
+	private static final long	serialVersionUID	= 1L;
 }

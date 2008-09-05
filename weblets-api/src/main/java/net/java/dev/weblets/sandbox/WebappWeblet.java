@@ -8,9 +8,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import net.java.dev.weblets.Weblet;
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletException;
@@ -20,6 +17,9 @@ import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
 import net.java.dev.weblets.util.CopyProvider;
 import net.java.dev.weblets.util.CopyProviderImpl;
 import net.java.dev.weblets.util.StringUtils;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Weblet for serving resources from a classical webapp structures This is currently only working in a portlet environment if weblets is triggered outside of

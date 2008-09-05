@@ -6,51 +6,45 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
 /**
- * Weblets Tag
- * for misc
- * @author Werner Punz
- * werner.punz@gmail.com
+ * Weblets Tag for misc
+ * 
+ * @author Werner Punz werner.punz@gmail.com
  */
 public class WebletsResourceTag extends TagSupport {
-    String weblet = "";
-    String pathInfo = "";
+	String	weblet		= "";
+	String	pathInfo	= "";
 
+	public WebletsResourceTag() {
+	}
 
+	public int doStartTag() throws JspException {
+		return super.doStartTag();
+	}
 
-    public WebletsResourceTag() {
-    }
+	public int doEndTag() throws JspException {
+		JspWriter writer = pageContext.getOut();
+		try {
+			writer.print(WebletUtils.getResource(weblet, pathInfo));
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new JspException(e);
+		}
+		return super.doEndTag();
+	}
 
-    public int doStartTag() throws JspException {
-        return super.doStartTag();
-    }
+	public String getWeblet() {
+		return weblet;
+	}
 
+	public void setWeblet(String weblet) {
+		this.weblet = weblet;
+	}
 
-    public int doEndTag() throws JspException {
-        JspWriter writer = pageContext.getOut();
-        try {
-            writer.print(WebletUtils.getResource(weblet, pathInfo));
-        } catch (IOException e) {
-            e.printStackTrace();  
-            throw new JspException(e);
-        }
-        return super.doEndTag();
-    }
+	public String getPathInfo() {
+		return pathInfo;
+	}
 
-
-    public String getWeblet() {
-           return weblet;
-       }
-
-       public void setWeblet(String weblet) {
-           this.weblet = weblet;
-       }
-
-       public String getPathInfo() {
-           return pathInfo;
-       }
-
-       public void setPathInfo(String pathInfo) {
-           this.pathInfo = pathInfo;
-       }
-
+	public void setPathInfo(String pathInfo) {
+		this.pathInfo = pathInfo;
+	}
 }

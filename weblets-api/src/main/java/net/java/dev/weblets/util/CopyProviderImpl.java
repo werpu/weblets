@@ -5,110 +5,91 @@ import net.java.dev.weblets.WebletResponse;
 
 import java.io.*;
 
-
 /**
- * A provider which does
- * the central copy operation
- * the valve knows its filtering
- * pipes and is returned by
- * the central processing
- * factory
+ * A provider which does the central copy operation the valve knows its filtering pipes and is returned by the central processing factory
  */
 public class CopyProviderImpl implements CopyProvider {
+	public void copy(String webletName, String contentType, InputStream in, OutputStream out) throws IOException {
+		boolean isText = isText(contentType);
+		if (isText)
+			copyText(webletName, new InputStreamReader(in), new OutputStreamWriter(out));
+		else
+			copyStream(in, out);
+	}
 
+	private boolean isText(String contentType) {
+		return contentType != null && (contentType.startsWith("text/") || contentType.endsWith("xml") || contentType.equals("application/x-javascript"));
+	}
 
-    public void copy(String webletName, String contentType, InputStream in, OutputStream out) throws IOException {
+	/**
+	 * wraps the input stream from our given request into another input stream
+	 * 
+	 * @param webletName
+	 *            the name of the affected weblet
+	 * @param mimetype
+	 *            the response mimetype
+	 * @param in
+	 *            our given input steam
+	 * @return
+	 * @throws IOException
+	 */
+	public InputStream wrapInputStream(String webletName, String mimetype, InputStream in) throws IOException {
+		boolean isText = isText(mimetype);
+		if (isText) {
+			BufferedReader bufIn = new BufferedReader(mapResponseReader(webletName, new InputStreamReader(in)));
+			return new ReaderInputStream(bufIn);
+		}
+		return new BufferedInputStream(mapInputStream(in));
+	}
 
-        boolean isText = isText(contentType);
+	protected BufferedWriter mapResponseWriter(Writer out) {
+		return new BufferedWriter(out);
+	}
 
-        if (isText)
-            copyText(webletName,  new InputStreamReader(in), new OutputStreamWriter(out));
-        else
-            copyStream(  in, out);
+	protected BufferedReader mapResponseReader(String webletName, Reader in) {
+		return new TextProcessingReader(in, webletName);
+	}
 
-    }
+	protected BufferedInputStream mapInputStream(InputStream in) {
+		return new BufferedInputStream(in);
+	}
 
-    private boolean isText(String contentType) {
-        return contentType != null && (contentType.startsWith("text/") ||
-                contentType.endsWith("xml") ||
-                contentType.equals("application/x-javascript"));
-    }
+	protected BufferedOutputStream mapOutputStream(OutputStream out) {
+		return new BufferedOutputStream(out);
+	}
 
-    /**
-     * wraps the input stream from our given request into another input stream
-     *
-     * @param webletName the name of the affected weblet
-     * @param mimetype the response mimetype
-     * @param in our given input steam
-     * @return
-     * @throws IOException
-     */
-    public InputStream wrapInputStream(String webletName, String mimetype, InputStream in) throws IOException {
-        boolean isText = isText(mimetype);
-        if(isText) {
-            BufferedReader bufIn = new BufferedReader(mapResponseReader(webletName,new InputStreamReader(in)));
-            return new ReaderInputStream(bufIn);
-        }
-        return new BufferedInputStream(mapInputStream( in));
-    }
+	protected void copyText(String webletName, Reader in, Writer out) throws IOException {
+		byte[] buffer = new byte[2048];
+		int len = 0;
+		int total = 0;
+		BufferedReader bufIn = mapResponseReader(webletName, in);
+		BufferedWriter bufOut = mapResponseWriter(out);
+		try {
+			String line = null;
+			while ((line = bufIn.readLine()) != null) {
+				bufOut.write(line);
+				bufOut.write("\n");
+			}
+		} finally {
+			bufIn.close();
+			bufOut.close();
+		}
+	}
 
-    protected BufferedWriter mapResponseWriter( Writer out) {
-        return new BufferedWriter(out);
-    }
-
-    protected  BufferedReader mapResponseReader(String webletName, Reader in) {
-        return new TextProcessingReader(in, webletName);
-    }
-
-
-    protected  BufferedInputStream mapInputStream( InputStream in) {
-        return new BufferedInputStream(in);
-    }
-
-    protected  BufferedOutputStream mapOutputStream( OutputStream out) {
-        return new BufferedOutputStream(out);
-    }
-
-
-    protected void copyText(String webletName, Reader in, Writer out) throws IOException {
-        byte[] buffer = new byte[2048];
-
-        int len = 0;
-        int total = 0;
-        BufferedReader bufIn = mapResponseReader(webletName, in);
-        BufferedWriter bufOut = mapResponseWriter( out);
-        try {
-            String line = null;
-            while ((line = bufIn.readLine()) != null) {
-                bufOut.write(line);
-                bufOut.write("\n");
-            }
-        } finally {
-            bufIn.close();
-            bufOut.close();
-        }
-
-    }
-
-
-    protected void copyStream(InputStream in, OutputStream out) throws IOException {
-
-        byte[] buffer = new byte[2048];
-
-        BufferedInputStream bufIn = mapInputStream( in);
-        BufferedOutputStream bufOut = mapOutputStream( out);
-
-        int len = 0;
-        int total = 0;
-        try {
-            while ((len = bufIn.read(buffer)) > 0) {
-                bufOut.write(buffer, 0, len);
-                total += len;
-            }
-        } finally {
-            bufIn.close();
-            bufOut.close();
-        }
-    }
-
+	protected void copyStream(InputStream in, OutputStream out) throws IOException {
+		byte[] buffer = new byte[2048];
+		BufferedInputStream bufIn = mapInputStream(in);
+		BufferedOutputStream bufOut = mapOutputStream(out);
+		int len = 0;
+		int total = 0;
+		try {
+			while ((len = bufIn.read(buffer)) > 0) {
+				bufOut.write(buffer, 0, len);
+				total += len;
+			}
+		} finally {
+			bufIn.close();
+			bufOut.close();
+		}
+	}
 }

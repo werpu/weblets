@@ -19,64 +19,49 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Basic weblet class
- * all resource loading
- * handlers must extend this class
+ * Basic weblet class all resource loading handlers must extend this class
  * 
  */
-abstract public class Weblet
-{
+abstract public class Weblet {
+	public int getWebletType() {
+		return WebletConfig.WEBLET_TYPE_LOCAL;
+	}
 
-  public int getWebletType() {
-      return WebletConfig.WEBLET_TYPE_LOCAL;
-  }
+	public void init(WebletConfig config) {
+		_config = config;
+	}
 
-  public void init(WebletConfig config)
-  {
-    _config = config;
-  }
+	public void destroy() {
+		_config = null;
+	}
 
-  public void destroy()
-  {
-    _config = null;
-  }
+	public WebletConfig getWebletConfig() {
+		return _config;
+	}
 
-  public WebletConfig getWebletConfig()
-  {
-    return _config;
-  }
+	abstract public void service(WebletRequest request, WebletResponse response) throws IOException, WebletException;
 
-  abstract public void service(
-    WebletRequest  request,
-    WebletResponse response) throws IOException, WebletException;
+	/**
+	 * Second Weblet entry point the service stream method is used internally for Weblets 1.1 by our asynchronous reporting interface
+	 * 
+	 * It basically does the same as service but must be servlet independend (aka it cannot rely on a base servlet or the external request of the weblet request
+	 * object
+	 * 
+	 * If you do not trigger the reporting subengine then you can omit this interface it is not used internally
+	 * 
+	 * Note, we limit our params here to pathInfo and mimetype since we cannot rely on having a valid external context available weblets themselves know their
+	 * config params hence all config params can be reached via their internal settings, but in no circumstance you can rely on the weblets having any context
+	 * whatsoever in this case!
+	 * 
+	 * 
+	 * @param pathInfo
+	 *            the pathinfo for the local resource
+	 * 
+	 * @param mimetype
+	 *            the preferred mimetype for the request
+	 * @return
+	 */
+	abstract public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException;
 
-    /**
-     * Second Weblet entry point the service stream method
-     * is used internally for Weblets 1.1 by our asynchronous
-     * reporting interface
-     *
-     * It basically does the same as service but
-     * must be servlet independend (aka it cannot rely
-     * on a base servlet or the external request of the weblet request object
-     *
-     * If you do not trigger the reporting subengine
-     * then you can omit this interface it is not used internally
-     *
-     * Note, we limit our params here to pathInfo and mimetype
-     * since we cannot rely on having a valid
-     * external context available
-     * weblets themselves know their config params
-     * hence all config params can be reached via their internal
-     * settings, but in no circumstance you can rely on
-     * the weblets having any context whatsoever in this case!
-     * 
-     *
-     * @param pathInfo the pathinfo for the local resource
-     *
-     * @param mimetype the preferred mimetype for the request
-     * @return
-     */
-  abstract public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException;
-
-  private WebletConfig _config;
+	private WebletConfig	_config;
 }

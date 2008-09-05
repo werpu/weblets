@@ -15,30 +15,38 @@
  */
 package net.java.dev.weblets.impl;
 
-import net.java.dev.weblets.*;
-import net.java.dev.weblets.impl.parse.DisconnectedEntityResolver;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.text.Format;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.ServletContext;
+
+import net.java.dev.weblets.Weblet;
+import net.java.dev.weblets.WebletConfig;
+import net.java.dev.weblets.WebletContainer;
+import net.java.dev.weblets.WebletException;
+import net.java.dev.weblets.WebletRequest;
+import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.impl.misc.SandboxGuard;
+import net.java.dev.weblets.impl.parse.DisconnectedEntityResolver;
 import net.java.dev.weblets.impl.util.ConfigurationUtils;
+
 import org.apache.commons.digester.Digester;
 import org.apache.commons.digester.ObjectCreationFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import net.java.dev.weblets.util.StringUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
-import javax.servlet.ServletContext;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.File;
-import java.io.FilenameFilter;
-import java.net.URL;
-import java.text.Format;
-import java.util.*;
-import java.util.jar.JarFile;
-import java.util.jar.JarEntry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class WebletContainerImpl extends WebletContainer {
     public WebletContainerImpl(

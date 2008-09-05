@@ -21,62 +21,41 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
- * The WebletContextListener is responsible for initializing the
- * WebletContainer.
- *so
- * The <code>META-INF/services/net.java.dev.weblets.WebletsContextListener</code>
- * Service Provider configuration file is used to lookup the implementation
- * class for this ServletContextListener, as defined by the JAR file specification.
+ * The WebletContextListener is responsible for initializing the WebletContainer. so The
+ * <code>META-INF/services/net.java.dev.weblets.WebletsContextListener</code> Service Provider configuration file is used to lookup the implementation class for
+ * this ServletContextListener, as defined by the JAR file specification.
  */
-public final class WebletsContextListener implements ServletContextListener 
-{
+public final class WebletsContextListener implements ServletContextListener {
+	/**
+	 * Callback when the ServletContext is initialized.
+	 * 
+	 * @param event
+	 *            the servlet context event
+	 */
+	public void contextInitialized(ServletContextEvent event) {
+		if (_WEBLETS_CONTEXT_LISTENER_CLASS == null)
+			_WEBLETS_CONTEXT_LISTENER_CLASS = ServiceLoader.loadService(WebletsContextListener.class);
+		try {
+			_delegate = (ServletContextListener) _WEBLETS_CONTEXT_LISTENER_CLASS.newInstance();
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException("Unable to access " + "WebletsContextListener implementation", e);
+		} catch (InstantiationException e) {
+			throw new RuntimeException("Unable to instantiate " + "WebletsContextListener implementation", e);
+		}
+		_delegate.contextInitialized(event);
+	}
 
+	/**
+	 * Callback when the ServletContext is destroyed.
+	 * 
+	 * @param event
+	 *            the servlet context event
+	 */
+	public void contextDestroyed(ServletContextEvent event) {
+		_delegate.contextDestroyed(event);
+	}
 
-
-    /**
-     * Callback when the ServletContext is initialized.
-     * 
-     * @param event  the servlet context event
-     */
-    public void contextInitialized(ServletContextEvent event)
-    {
-    	if(_WEBLETS_CONTEXT_LISTENER_CLASS == null)
-    		_WEBLETS_CONTEXT_LISTENER_CLASS = ServiceLoader.loadService( WebletsContextListener.class);
-    	
-        try
-        {
-          _delegate = (ServletContextListener)_WEBLETS_CONTEXT_LISTENER_CLASS.newInstance();
-        }
-        catch (IllegalAccessException e) {
-            throw new RuntimeException("Unable to access " +
-                    "WebletsContextListener implementation", e);
-        }
-        catch (InstantiationException e)
-        {
-          throw new RuntimeException("Unable to instantiate " +
-                                     "WebletsContextListener implementation", e);
-        }
-
-        _delegate.contextInitialized(event);
-    }
-
-    /**
-     * Callback when the ServletContext is destroyed.
-     * 
-     * @param event  the servlet context event
-     */
-    public void contextDestroyed(ServletContextEvent event) 
-    {
-        _delegate.contextDestroyed(event);
-    }
-
-  private ServletContextListener _delegate;
-
-  // the WebletsContextListener Service Provider implementation class
-  static private  Class _WEBLETS_CONTEXT_LISTENER_CLASS;
-
- 
-  
-  
-  
+	private ServletContextListener	_delegate;
+	// the WebletsContextListener Service Provider implementation class
+	static private Class			_WEBLETS_CONTEXT_LISTENER_CLASS;
 }

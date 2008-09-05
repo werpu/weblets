@@ -15,14 +15,18 @@
  */
 package net.java.dev.weblets;
 
-public interface WebletRequest
-{
-  public String getWebletName();
-  public String getWebletPath();
-  public String getContextPath();
-  public String getPathInfo();
-  public String getParameter(String name);
-  public Object getExternalRequest();
+public interface WebletRequest {
+	public String getWebletName();
 
-  public long getIfModifiedSince();
+	public String getWebletPath();
+
+	public String getContextPath();
+
+	public String getPathInfo();
+
+	public String getParameter(String name);
+
+	public Object getExternalRequest();
+
+	public long getIfModifiedSince();
 }

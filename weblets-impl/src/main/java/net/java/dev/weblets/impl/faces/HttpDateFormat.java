@@ -20,33 +20,26 @@ import java.util.Locale;
 
 /**
  * HttpDateFormat implements HTTP Protocol RFC2616 Section 3.3.1 Full Date
- *
- * Sun, 06 Nov 1994 08:49:37 GMT  ; RFC 822, updated by RFC 1123
- *
+ * 
+ * Sun, 06 Nov 1994 08:49:37 GMT ; RFC 822, updated by RFC 1123
+ * 
  * rfc1123-date = wkday "," SP date1 SP time SP "GMT"
- *
- * wkday        = "Mon" | "Tue" | "Wed"
- *              | "Thu" | "Fri" | "Sat" | "Sun"
- * date1        = 2DIGIT SP month SP 4DIGIT
- *                ; day month year (e.g., 02 Jun 1982)
- * time         = 2DIGIT ":" 2DIGIT ":" 2DIGIT
- *                ; 00:00:00 - 23:59:59
+ * 
+ * wkday = "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun" date1 = 2DIGIT SP month SP 4DIGIT ; day month year (e.g., 02 Jun 1982) time = 2DIGIT ":" 2DIGIT
+ * ":" 2DIGIT ; 00:00:00 - 23:59:59
  */
-public class HttpDateFormat extends SimpleDateFormat
-{
-  /**
-   * Creates a new HttpDateFormat.
-   */
-  public HttpDateFormat()
-  {
-    super("EEE, dd MMM yyyy HH:mm:ss 'GMT'", Locale.ENGLISH);
-    
-    // match the pattern exactly, or fail to parse
-    setLenient(false);
-  }
-  
-  /**
-   * The serialization version. 
-   */
-  private static final long serialVersionUID = 1L;
+public class HttpDateFormat extends SimpleDateFormat {
+	/**
+	 * Creates a new HttpDateFormat.
+	 */
+	public HttpDateFormat() {
+		super("EEE, dd MMM yyyy HH:mm:ss 'GMT'", Locale.ENGLISH);
+		// match the pattern exactly, or fail to parse
+		setLenient(false);
+	}
+
+	/**
+	 * The serialization version.
+	 */
+	private static final long	serialVersionUID	= 1L;
 }
