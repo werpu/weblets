@@ -80,6 +80,15 @@ abstract public class WebletContainer {
             String webletName,
             String pathInfo) throws WebletException;
 
+    
+    /**
+     * returns the mimetype of the underlying hosting container
+     * 
+     * @param pattern
+     * @return
+     */
+    public abstract String getContainerMimeType(String pattern);
+    
     /**
      * Method which returns the actual resource as input stream from
      * a given weblet request

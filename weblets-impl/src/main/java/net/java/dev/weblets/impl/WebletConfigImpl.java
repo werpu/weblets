@@ -76,7 +76,16 @@ public class WebletConfigImpl implements WebletConfig {
             int lastDot = resourcePath.lastIndexOf('.');
             if (lastDot != -1) {
                 String extension = resourcePath.substring(lastDot + 1);
-                return (String) _mimeMappings.get(extension);
+                String retVal =  (String) _mimeMappings.get(extension);
+                /*no local mimetype we try the servlet context mime type*/
+                if(retVal == null) {
+                	/**
+                	 *  we check for the underlying container mimetype if we dont have a valid one
+                	 *  set via our overrides
+                	 */
+                	retVal = _container.getContainerMimeType(resourcePath);
+                }
+                return retVal;
             }
         }
         return null;

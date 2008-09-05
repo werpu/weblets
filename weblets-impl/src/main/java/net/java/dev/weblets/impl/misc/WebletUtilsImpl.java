@@ -11,7 +11,7 @@ import net.java.dev.weblets.util.IWebletUtils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.lang.StringUtils;
+import net.java.dev.weblets.util.StringUtils;
 
 import java.util.Map;
 import java.util.Iterator;

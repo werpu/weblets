@@ -23,7 +23,7 @@ import org.apache.commons.digester.Digester;
 import org.apache.commons.digester.ObjectCreationFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.lang.StringUtils;
+import net.java.dev.weblets.util.StringUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -403,6 +403,13 @@ public class WebletContainerImpl extends WebletContainer {
         private Digester digester;
     };
 
+    /**
+     * Returns the mimetype of a file for the underlying hosting container
+     */
+    public String getContainerMimeType(String pattern) {
+    	return _servletContext.getMimeType(pattern);
+    }
+    
     static private final Pattern _WEBLET_PATH_PATTERN =
             Pattern.compile("(/[^\\*]+)?/\\*");
 }
