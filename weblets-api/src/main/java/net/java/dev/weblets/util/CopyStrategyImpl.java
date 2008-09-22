@@ -1,15 +1,13 @@
 package net.java.dev.weblets.util;
 
-import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.WebletResponse;
-
 import java.io.*;
 
 /**
- * A provider which does the central copy operation the valve knows its filtering pipes and is returned by the central processing factory
+ * @author werpu
+ * @date: 22.09.2008
  */
-public class CopyProviderImpl implements CopyProvider {
-	public void copy(String webletName, String contentType, InputStream in, OutputStream out) throws IOException {
+public class CopyStrategyImpl implements CopyStrategy {
+    	public void copy(String webletName, String contentType, InputStream in, OutputStream out) throws IOException {
 		boolean isText = isText(contentType);
 		if (isText)
 			copyText(webletName, new InputStreamReader(in), new OutputStreamWriter(out));
@@ -23,7 +21,7 @@ public class CopyProviderImpl implements CopyProvider {
 
 	/**
 	 * wraps the input stream from our given request into another input stream
-	 * 
+	 *
 	 * @param webletName
 	 *            the name of the affected weblet
 	 * @param mimetype

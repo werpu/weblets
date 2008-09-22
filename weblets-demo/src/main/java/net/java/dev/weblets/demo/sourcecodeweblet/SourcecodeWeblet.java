@@ -12,6 +12,8 @@ import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.WebletException;
 import net.java.dev.weblets.util.IWebletUtils;
 import net.java.dev.weblets.util.CopyProvider;
+import net.java.dev.weblets.util.CopyStrategy;
+import net.java.dev.weblets.util.CopyStrategyImpl;
 import net.java.dev.weblets.impl.WebletRequestBase;
 import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
 
@@ -40,7 +42,7 @@ public class SourcecodeWeblet extends Weblet {
 	    	String resourcePath = fullAddr.toString();
 	    
 	    	
-	    	CopyProvider copyProvider = new SourcecodeCopyProvider();
+	    	CopyStrategy copyProvider = new CopyStrategyImpl();
 	       
 	        response.setContentType("text/html");
 	        FileInputStream fin = new FileInputStream(resourcePath);

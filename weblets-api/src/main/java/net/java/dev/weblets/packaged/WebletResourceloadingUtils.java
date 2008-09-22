@@ -13,6 +13,7 @@ import java.net.URLConnection;
 import java.util.*;
 
 import net.java.dev.weblets.util.StringUtils;
+import net.java.dev.weblets.util.CopyStrategy;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
@@ -100,7 +101,7 @@ public class WebletResourceloadingUtils {
 	 * @param copyProvider
 	 *            the processing filter chain for the weblet serving
 	 */
-	public void loadFromUrl(WebletConfig config, WebletRequest request, WebletResponse response, URL url, CopyProvider copyProvider) throws IOException {
+	public void loadFromUrl(WebletConfig config, WebletRequest request, WebletResponse response, URL url, CopyStrategy copyProvider) throws IOException {
 		if (url != null) {
 			URLConnection conn = url.openConnection();
 			long lastmodified = conn.getLastModified();
@@ -196,7 +197,7 @@ public class WebletResourceloadingUtils {
 	 * @throws IOException
 	 *             in case of an internal processing error
 	 */
-	public void loadResourceFromStream(WebletConfig config, WebletRequest request, WebletResponse response, CopyProvider copyProvider, InputStream in,
+	public void loadResourceFromStream(WebletConfig config, WebletRequest request, WebletResponse response, CopyStrategy copyProvider, InputStream in,
 			long resourceLastmodified) throws IOException {
 		if (in != null) {
 			// mime-type
@@ -249,7 +250,7 @@ public class WebletResourceloadingUtils {
 	 *            the resource serving input stream
 	 * @throws IOException
 	 */
-	public void loadResourceFromStream(WebletConfig config, WebletRequest request, WebletResponse response, CopyProvider copyProvider, InputStream in)
+	public void loadResourceFromStream(WebletConfig config, WebletRequest request, WebletResponse response, CopyStrategy copyProvider, InputStream in)
 			throws IOException {
 		OutputStream out = response.getOutputStream();
 		String finalMimetype = config.getMimeType(request.getPathInfo());

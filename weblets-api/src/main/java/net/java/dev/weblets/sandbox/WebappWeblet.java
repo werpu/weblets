@@ -14,9 +14,7 @@ import net.java.dev.weblets.WebletException;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
-import net.java.dev.weblets.util.CopyProvider;
-import net.java.dev.weblets.util.CopyProviderImpl;
-import net.java.dev.weblets.util.StringUtils;
+import net.java.dev.weblets.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -107,7 +105,7 @@ public class WebappWeblet extends Weblet {
 		
 		/*we now have the resource handling decoupled from the mimetypes*/
 		
-		CopyProvider copyProvider = new CopyProviderImpl();
+		CopyStrategy copyProvider = new CopyStrategyImpl();
 		if (resourcePath.indexOf("WEB-INF/") != -1 || resourcePath.indexOf("WEB-INF\\") != -1) {
 			// security breach nothing in WEB-INF is allowed to be accessed
 			return;
