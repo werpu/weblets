@@ -3,7 +3,7 @@ package net.java.dev.weblets.packaged;
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
-import net.java.dev.weblets.util.CopyProvider;
+import net.java.dev.weblets.util.CopyStrategy;
 
 import java.io.IOException;
 import java.io.InputStream;

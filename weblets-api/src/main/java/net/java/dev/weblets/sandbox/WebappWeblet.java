@@ -29,7 +29,6 @@ import org.apache.commons.logging.LogFactory;
  * 
  */
 public class WebappWeblet extends Weblet {
-	Set				_allowedResources	= null;
 	String			_packageName		= "";
 	private String	_resourceRoot;
 
@@ -59,49 +58,15 @@ public class WebappWeblet extends Weblet {
 		}
 		// the init was successful we now have all we need
 		_resourceRoot = (_packageName != null) ? _packageName.replace('.', '/') : _resourceRoot;
-		/*
-		 * optional inclusion list, if not set all files are served which are in valid resource dirs
-		 */
-		initAllowedFiletypes(config);
 	}
 
-	/**
-	 * initialization code for the allowed filetypes list
-	 * @param config
-	 */
-	private void initAllowedFiletypes(WebletConfig config) {
-		String allowedFiletypes = config.getInitParameter("allowedResources");
-		// we now determine the allowed mime types for this weblet
-		if (!StringUtils.isBlank(allowedFiletypes)) {
-			String[] filetypesArr = allowedFiletypes.split("[\\,\\;]");
-			for (int cnt = 0; cnt < filetypesArr.length; cnt++) {
-				String fileType = filetypesArr[cnt];
-				fileType = fileType.replaceAll("\\*", "");
-				fileType = fileType.replaceAll("\\.", "");
-				fileType = fileType.trim().toLowerCase();
-				if(fileType.equals("*")) { /* all are allowed */
-					_allowedResources = null;
-					return;
-				}
-				if(_allowedResources == null) {
-					_allowedResources = new HashSet();
-				}
-				_allowedResources.add(fileType);
-				
-			}
-		}
-	}
+
 
 	public void service(WebletRequest request, WebletResponse response) throws IOException {
 		String resourcePath = _resourceRoot + request.getPathInfo();
-		// WebletRequestImpl webletRequest = (WebletRequestImpl) request;
 		// this might fail on some containers overriding the HttpServlet
 		// but for demo purposes this is ok
 		HttpServletRequest httpRequest = (HttpServletRequest) request.getExternalRequest();
-		// note, please do not use the filter api for your own filters
-		// yet it will be substantially reworked in 1.1 after that
-		// it will be fully documented and opened for third party
-		// extensions, the current piping api is to complicated
 		
 		/*we now have the resource handling decoupled from the mimetypes*/
 		
@@ -110,12 +75,11 @@ public class WebappWeblet extends Weblet {
 			// security breach nothing in WEB-INF is allowed to be accessed
 			return;
 		}
-		if (_allowedResources != null) {
-			String filetype = StringUtils.getExtension(resourcePath);
-			if (!_allowedResources.contains(filetype.toLowerCase())) {
-				return;/* not allowed no content delivered */
-			}
-		}
+        if (resourcePath.indexOf("META-INF/") != -1 || resourcePath.indexOf("META-INF\\") != -1) {
+            // security breach nothing in WEB-INF is allowed to be accessed
+            return;
+        }
+
 		URL url = httpRequest.getSession().getServletContext().getResource("/"+resourcePath);
 		WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyProvider);
 	}
@@ -128,7 +92,6 @@ public class WebappWeblet extends Weblet {
 	public void destroy() {
 		_resourceRoot = null;
 		_packageName = null;
-		_allowedResources = null;
-		super.destroy();
+        super.destroy();
 	}
 }

@@ -16,6 +16,7 @@
 package net.java.dev.weblets;
 
 import java.util.Iterator;
+import java.util.Set;
 
 public interface WebletConfig {
 	static int	WEBLET_TYPE_LOCAL		= 1;
@@ -34,5 +35,13 @@ public interface WebletConfig {
 	public Iterator getInitParameterNames();
 
 	public String getMimeType(String resourcePath);
-	// public int getWebletType(); /*disable some subsystems if this type of*/
+
+    /**
+     *
+     * @return a list of allowed resources depending on the init params
+     * of the weblet
+     */
+
+    public Set getAllowedResources();
+    // public int getWebletType(); /*disable some subsystems if this type of*/
 }

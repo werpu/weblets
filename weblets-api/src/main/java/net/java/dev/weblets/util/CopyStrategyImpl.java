@@ -7,7 +7,7 @@ import java.io.*;
  * @date: 22.09.2008
  */
 public class CopyStrategyImpl implements CopyStrategy {
-    	public void copy(String webletName, String contentType, InputStream in, OutputStream out) throws IOException {
+    public void copy(String webletName, String contentType, InputStream in, OutputStream out) throws IOException {
 		boolean isText = isText(contentType);
 		if (isText)
 			copyText(webletName, new InputStreamReader(in), new OutputStreamWriter(out));

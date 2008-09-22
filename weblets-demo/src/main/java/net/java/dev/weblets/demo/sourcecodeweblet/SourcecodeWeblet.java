@@ -1,21 +1,17 @@
 package net.java.dev.weblets.demo.sourcecodeweblet;
 
+import net.java.dev.weblets.Weblet;
+import net.java.dev.weblets.WebletException;
+import net.java.dev.weblets.WebletRequest;
+import net.java.dev.weblets.WebletResponse;
+import net.java.dev.weblets.impl.WebletRequestBase;
+import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
+import net.java.dev.weblets.util.CopyStrategy;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import javax.servlet.http.HttpServletRequest;
-
-import net.java.dev.weblets.Weblet;
-import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.WebletResponse;
-import net.java.dev.weblets.WebletException;
-import net.java.dev.weblets.util.IWebletUtils;
-import net.java.dev.weblets.util.CopyProvider;
-import net.java.dev.weblets.util.CopyStrategy;
-import net.java.dev.weblets.util.CopyStrategyImpl;
-import net.java.dev.weblets.impl.WebletRequestBase;
-import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
 
 /**
  * a weblet for serving the sourcecode 
@@ -42,7 +38,7 @@ public class SourcecodeWeblet extends Weblet {
 	    	String resourcePath = fullAddr.toString();
 	    
 	    	
-	    	CopyStrategy copyProvider = new CopyStrategyImpl();
+	    	CopyStrategy copyProvider = new SourcecodeCopyStrategy();
 	       
 	        response.setContentType("text/html");
 	        FileInputStream fin = new FileInputStream(resourcePath);
@@ -65,6 +61,6 @@ public class SourcecodeWeblet extends Weblet {
     }
 
     public void destroy() {
-	        super.destroy();
-	    }
+	    super.destroy();
+    }
 }

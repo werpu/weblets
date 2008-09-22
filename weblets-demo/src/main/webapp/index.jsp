@@ -50,6 +50,10 @@
 				<li>
 					<a href="./jspdojotest.jsp">A big demo utilizing weblets and the dojo toolkit</a>
 				</li>
+                <li>
+                    <a href="./localresource.jsp">A demo utilizing the webapp weblet to serve resources from the local web application</a>
+                </li>
+
 			</ul>
 		</div>
 	</body>

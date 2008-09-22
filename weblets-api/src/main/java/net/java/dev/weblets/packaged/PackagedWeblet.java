@@ -16,9 +16,8 @@
 package net.java.dev.weblets.packaged;
 
 import net.java.dev.weblets.*;
-import net.java.dev.weblets.util.CopyProvider;
-import net.java.dev.weblets.util.CopyProviderImpl;
 import net.java.dev.weblets.util.CopyStrategyImpl;
+import net.java.dev.weblets.util.CopyStrategy;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -77,7 +76,7 @@ public class PackagedWeblet extends Weblet {
         // lets build up our filter chain which in our case is a binary filter for standard
         // processing and our text processing filter for text resources with included
         // weblet: functions
-        CopyProvider copyProvider = new CopyProviderImpl();
+        CopyStrategy copyProvider = new CopyStrategyImpl();
         URL url = WebletResourceloadingUtils.getInstance().getResourceUrl(resourcePath);
         if (url == null)
             return null;

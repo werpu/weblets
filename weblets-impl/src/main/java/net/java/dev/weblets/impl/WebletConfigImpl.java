@@ -15,9 +15,7 @@
  */
 package net.java.dev.weblets.impl;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletContainer;
@@ -26,6 +24,7 @@ import net.java.dev.weblets.util.StringUtils;
 public class WebletConfigImpl implements WebletConfig {
     public WebletConfigImpl(WebletContainerImpl container) {
         _container = container;
+        initAllowedFiletypes();
     }
 
     public WebletContainer getWebletContainer() {
@@ -74,16 +73,16 @@ public class WebletConfigImpl implements WebletConfig {
 
     public String getMimeType(String resourcePath) {
         if (resourcePath != null) {
-        	String extension = StringUtils.getExtension(resourcePath);
+            String extension = StringUtils.getExtension(resourcePath);
             if (extension.length() < resourcePath.length()) {
-                String retVal =  (String) _mimeMappings.get(extension);
+                String retVal = (String) _mimeMappings.get(extension);
                 /*no local mimetype we try the servlet context mime type*/
-                if(retVal == null) {
-                	/**
-                	 *  we check for the underlying container mimetype if we dont have a valid one
-                	 *  set via our overrides
-                	 */
-                	retVal = _container.getContainerMimeType(resourcePath);
+                if (retVal == null) {
+                    /**
+                     *  we check for the underlying container mimetype if we dont have a valid one
+                     *  set via our overrides
+                     */
+                    retVal = _container.getContainerMimeType(resourcePath);
                 }
                 return retVal;
             }
@@ -91,15 +90,40 @@ public class WebletConfigImpl implements WebletConfig {
         return null;
     }
 
+    public Set getAllowedResources() {
+        return _allowedResources;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 
-   
+    /**
+     * lazy initialization code for the allowed filetypes list
+     */
+    private void initAllowedFiletypes() {
+        String allowedFiletypes = this.getInitParameter("allowedResources");
+        // we now determine the allowed mime types for this weblet
+        if (!StringUtils.isBlank(allowedFiletypes)) {
+            String[] filetypesArr = allowedFiletypes.split("[\\,\\;]");
+            for (int cnt = 0; cnt < filetypesArr.length; cnt++) {
+                String fileType = filetypesArr[cnt];
+                fileType = fileType.replaceAll("\\*", "");
+                fileType = fileType.replaceAll("\\.", "");
+                fileType = fileType.trim().toLowerCase();
+                if (fileType.equals("*")) { /* all are allowed */
+                    _allowedResources = null;
+                    return;
+                }
+                if (_allowedResources == null) {
+                    _allowedResources = new HashSet();
+                }
+                _allowedResources.add(fileType);
+            }
+        }
+    }
 
+    private Set _allowedResources = null;
     private WebletContainerImpl _container;
     private String _webletName;
     private String _webletClass;
     private String _webletVersion;
     private Map _initParams = new HashMap(3);
     private Map _mimeMappings = new HashMap(3);
-
-
 }

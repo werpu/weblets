@@ -37,6 +37,7 @@ import net.java.dev.weblets.WebletContainer;
 import net.java.dev.weblets.WebletException;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
+import net.java.dev.weblets.util.StringUtils;
 import net.java.dev.weblets.impl.misc.SandboxGuard;
 import net.java.dev.weblets.impl.parse.DisconnectedEntityResolver;
 import net.java.dev.weblets.impl.util.ConfigurationUtils;
@@ -72,7 +73,7 @@ public class WebletContainerImpl extends WebletContainer {
 
             if (multipleConfigs) {
                 ConfigurationUtils.getValidConfigFiles("META-INF/", "weblets-config.xml", configs);
-  
+
                 ConfigurationUtils.getValidConfigFiles("META-INF/", "MANIFEST.MF", configs);
                 Iterator configNameIterator = configs.iterator();
 
@@ -181,17 +182,14 @@ public class WebletContainerImpl extends WebletContainer {
             WebletResponse response) throws IOException, WebletException {
         Weblet weblet = getWeblet(request);
 
-
+        String pathInfo = request.getPathInfo();
         if (response.getDefaultContentType() == null) {
-            String pathInfo = request.getPathInfo();
+
 
             //enhanced security check
             if (pathInfo != null && SandboxGuard.isJailBreak(pathInfo)) {
                 throw new WebletException("Security Exception, the " + pathInfo +
                         " breaks out of the resource jail, no resource is served!");
-                //TODO add mime block lists to the security mix the jailbreak now
-                //is enabled by default it simply makes sense to have it in so
-                //that sidestepping and backstepping can be prevented
             }
 
             WebletConfig webConfig = weblet.getWebletConfig();
@@ -201,6 +199,18 @@ public class WebletContainerImpl extends WebletContainer {
             }
         }
 
+
+        WebletConfig webConfig = weblet.getWebletConfig();
+        Set allowedResources = webConfig.getAllowedResources();
+
+        if (allowedResources != null) {
+             String filetype = StringUtils.getExtension(pathInfo);
+             if (!allowedResources.contains(filetype.toLowerCase())) {
+                 throw new WebletException("Security Exception, the " + pathInfo +
+                         "  resource cannot be served!");
+                /* not allowed no content delivered */
+             }
+         }
 
         weblet.service(request, response);
     }
@@ -417,7 +427,7 @@ public class WebletContainerImpl extends WebletContainer {
     public String getContainerMimeType(String pattern) {
     	return _servletContext.getMimeType(pattern);
     }
-    
+
     static private final Pattern _WEBLET_PATH_PATTERN =
             Pattern.compile("(/[^\\*]+)?/\\*");
 }

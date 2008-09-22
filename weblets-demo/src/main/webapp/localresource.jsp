@@ -35,6 +35,9 @@
 			<img src="<%=jspweblet.getURL("weblets.webapp", "/helloworld.png")%>" />
 			the image can be found locally under resources/helloworld.png!!!
 			<a href="<%=jspweblet.getURL("weblets.source", "/localresource.jsp")%>" target="_new">[Get the page source]</a>
-		</div>
+		    <br />
+            <h:outputLink value='#{weblet.url[ "weblets.source"]["/localresource.jsp"]}' target="_new"><h:outputFormat value="[Get the page source]" /></h:outputLink>
+
+        </div>
 	</body>
 </html>
