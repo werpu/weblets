@@ -4,6 +4,10 @@
     <weblet>
         <weblet-name>weblets.source</weblet-name>
         <weblet-class>net.java.dev.weblets.demo.sourcecodeweblet.SourcecodeWeblet</weblet-class>
+        <init-param>
+               <param-name>allowedResources</param-name>
+               <param-value> jsp, jspx, html </param-value>
+        </init-param>
     </weblet>
 
     <weblet-mapping>
@@ -15,10 +19,6 @@
     We only allow jsp jspx or html extensions to be used by this
     weblet, so no triggering of unwanted ressources can occur
     -->
-    <init-param>
-	    <param-name>allowedResources</param-name>
-	    <param-value> jsp, jspx, html </param-value>
-	</init-param>
-    
+   
 </weblets-config>    
     
