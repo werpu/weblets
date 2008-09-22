@@ -300,6 +300,49 @@ Introduction into the <<<Weblets>>> Resource Packing
     * The naming of the configuration files must follow the regexp pattern META-INF\/.*weblets-config.*\.xml
     IE: <<<META-INF/1-weblets-config-1.xml>>> is a valid name <<<META-INF/myconfig.xml>>> however is not!
 
+* Mime Mapping
+
+	Weblets per default uses the default mimetype of the underlying container by serving resources, however some containers
+	do not have their own mimetypes or you want to set your own mimetypes for certain files on a resource bundle
+	level. Since Weblets 1.1, it is possible to do mime type overrides for serving resources.
+	
+	You simply can add or override your own mimetypes the following way:
+	
++---------------------------------
+	<weblet>
+      <weblet-name>weblets.webapp</weblet-name>
+      <weblet-class>net.java.dev.weblets.sandbox.WebappWeblet</weblet-class>
+      <!-- dedicated mime mapping override -->
+  	  <mime-mapping>
+  		<extension>jpg</extension>
+  		<mime-type>image/jpeg</mime-type>
+  	  </mime-mapping>
+  	  <mime-mapping>
+  		<extension>png</extension>
+  		<mime-type>image/png</mime-type>
+  	  </mime-mapping>	   
+  </weblet>
++---------------------------------
+	
+The optional mime mapping parameters provide whatever mime mapping overrides you need in your resource bundle!
+
+* Security
+Weblets itself come with a few security addons which try to prevent jailbreaking from programs out of the sandbox
+the weblets provide for serving resources. Additionally you can add file locks so that only certain resources can be served.
+As of Weblets 1.1 file locking has been added optionally, if it is left out no file type locks are enabled and
+all resources within the Weblet resource pack can be served.
+
+Following configuration example shows how to enabled file type locking:
+
++---------------------------------
+	<init-param>
+      <param-name>allowedResources</param-name>
+      <param-value> jpg, png </param-value>
+    </init-param>	
++---------------------------------
+
+This init parameter allows only jpg and png files to be served, all other filetype accesses served from this Weblet
+would result in a security error!
 
 
 Summary

@@ -21,7 +21,7 @@ Introduction
 
 * Contents
 
-   [[1]] {{{./index.html} Users Documentation: Index }}
+   [[1]] {{{./index.html} Users and Developers Documentation: Index }}
 
    [[]] {{{./gettingstarted.html} Users Documentation: Getting Started }}
 
@@ -38,6 +38,8 @@ Introduction
    [[]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
 
    [[]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
+
+   [[]] {{{./programmingweblets.html} Developers Documentation: Programming Weblets }}
 
    [[]] {{{./faq.html} Users Documentation: Weblets General FAQ }}
    

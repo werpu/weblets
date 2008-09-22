@@ -120,10 +120,10 @@ Usage of Weblets in a jsf centric environment
 
     The next example shows how to use the <<<EL>>> functions:
 
-    <Code 5: Usage of EL functions>
+    <Code 5: Usage of EL functions in faclets>
 
 +----------------------------------------------
-     xmlns:wbl="http://weblets.dev.java.net/tags_jsp2" this has to be added to your namespace definitions
+     xmlns:wbl="http://weblets.dev.java.net/tags" this has to be added to your namespace definitions
 
       <h:outputText value="${weblet:url('weblets.demo','/welcome.js')}" />
       <h:graphicImage value="${weblet:resource('weblets.demo','/img/icon_alert.gif')}" />

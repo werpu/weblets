@@ -46,10 +46,10 @@ Getting Started with Weblets
  Weblets can be injected via a maven build, however currently you
  only can do it from the java.net repository.
 
- following entries have to be added to your maven build file.
+ following entries have to be added to your Maven build file.
 
 
- Under the repositories Section
+ Under the repositories section
 
 +---------------------------------------
   <repository>
@@ -60,7 +60,7 @@ Getting Started with Weblets
    </repository>
 +---------------------------------------
 
-Following dependency entries have to be added:
+    Following dependency entries have to be added:
 
 +---------------------------------------
     <dependency>
@@ -88,6 +88,13 @@ Following dependency entries have to be added:
 
     To get started with subversion simply check out one of the version tags
     from
+
++---------------------------------------
+    https://weblets.dev.java.net/svn/weblets/tags/weblets-1.0
++---------------------------------------
+
+
+
     or the current trunk with the latest code from
 
 +---------------------------------------
@@ -97,7 +104,7 @@ Following dependency entries have to be added:
     <example>
 
 +---------------------------------------------
-svn checkout https://weblets.dev.java.net/svn/weblets/tags/1.0 <<<Weblets>>> --username username
+svn checkout https://weblets.dev.java.net/svn/weblets/tags/weblets-1.0 <<<Weblets>>> --username username
 +---------------------------------------------
 
     <example>
@@ -105,6 +112,12 @@ svn checkout https://weblets.dev.java.net/svn/weblets/tags/1.0 <<<Weblets>>> --u
 +---------------------------------------------
 svn checkout https://weblets.dev.java.net/svn/weblets/trunk <<<Weblets>>> --username username
 +---------------------------------------------
+
+    For the username and password you need to give your java.net account username
+    and password (both can be obtained for free), or alternatively the username
+    <<<guest>>> with an empty password.
+
+
 
     After checking out simply do a mvn clean install from your checkout dir, and
     then, after the build process simply go to the weblets-demo subdir
