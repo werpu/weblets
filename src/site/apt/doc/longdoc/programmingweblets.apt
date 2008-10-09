@@ -44,7 +44,7 @@ public class SourcecodeWeblet extends Weblet {
 	
 	    public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException {
 				return null; 
-			}
+		}
 		
 	
 }
@@ -81,16 +81,16 @@ public class SourcecodeWeblet extends Weblet {
 
 +----------------------------------------------------------------------------
 
-public class SourcecodeWeblet extends Weblet {
+	public class SourcecodeWeblet extends Weblet {
 
-	    public void service(WebletRequest request, WebletResponse response) throws IOException {
-            String resourcePath = _resourceRoot + request.getPathInfo();
-            CopyStrategy CopyStrategy = new CopyStrategyImpl();
-            URL url = WebletResourceloadingUtils.getInstance().getResourceUrl(request, resourcePath);
-            WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(),
-                    request, response, url, CopyStrategy);
-        }
-}
+		    public void service(WebletRequest request, WebletResponse response) throws IOException {
+	            String resourcePath = _resourceRoot + request.getPathInfo();
+	            CopyStrategy CopyStrategy = new CopyStrategyImpl();
+	            URL url = WebletResourceloadingUtils.getInstance().getResourceUrl(request, resourcePath);
+	            WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(),
+	                    request, response, url, CopyStrategy);
+	        }
+	}
 +----------------------------------------------------------------------------
 
 	This is the simplest case of a packaged weblet.
@@ -110,15 +110,15 @@ public class SourcecodeWeblet extends Weblet {
 	a weblet which serves resources directly from a webapp has to use a different mechanism to define the root of the resource
 
 +------------------------------------------------------------------------------
-URL url = httpRequest.getSession().getServletContext().getResource("/"+resourcePath);
-WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyStrategy);
+	URL url = httpRequest.getSession().getServletContext().getResource("/"+resourcePath);
+	WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyStrategy);
 +------------------------------------------------------------------------------
 
 	Other input source types would be feasible for instance a proxying of servers would be possible the following way:
 
 +--------------------------------------------------------------------------------
-URL url = new URL("http://www.john-doe.com/"+resourcePath);
-WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyStrategy);
+	URL url = new URL("http://www.john-doe.com/"+resourcePath);
+	WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyStrategy);
 +--------------------------------------------------------------------------------
 
 	This would stream in resources from a remote server by using the facilities the url class provides.
@@ -128,8 +128,8 @@ WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request,
 	The other way would be to use the internal apis for streaming from input streams from the WebletResourceLoadingUtils class.
 	
 +---------------------------------------------------------------------------------
-loadResourceFromStream(WebletConfig config, WebletRequest request, WebletResponse response, CopyStrategy copyStrategy, InputStream in,
-			long resourceLastmodified) throws IOException;
+	loadResourceFromStream(WebletConfig config, WebletRequest request, WebletResponse response, CopyStrategy copyStrategy, InputStream in,
+				long resourceLastmodified) throws IOException;
 +---------------------------------------------------------------------------------	
 
 	This method allows the same as with our URLs as inputs, but replaces the URL with an input stream and a resourceLastModified parameter.
@@ -145,11 +145,16 @@ loadResourceFromStream(WebletConfig config, WebletRequest request, WebletRespons
    
    However, there are cases where you need to write your own copy strategy, for instance 
 
-	* if you need javascript on the fly compression or 
-	* if you want to add advanced caching mechanisms to the already existing browser cache control and stream buffering. 
-	* Watermarking with on the fly image watermarks also would be a feasible option to be done by the Copy Strategy implementing class.
+	[[]] if you need javascript on the fly compression or 
 
-	Lets dissect the parts of an implemented copy strategy class for easier understanding:
+	[[]] if you want to add advanced caching mechanisms to the already existing browser cache control and stream buffering. 
+
+	[[]] Watermarking with on the fly image watermarks also would be a feasible option to be done by the Copy Strategy implementing class.
+
+
+   Lets dissect the parts of an implemented copy strategy class for easier understanding:
+
+
 	
 +---------------------------------------------------------------------------------
 
@@ -201,7 +206,6 @@ loadResourceFromStream(WebletConfig config, WebletRequest request, WebletRespons
 	}
 
 +---------------------------------------------------------------------------------
-
 
 	This is a simple copy strategy which does some post processing on sourcecode to beautify it with
 	a little bit of decoration.
@@ -343,7 +347,7 @@ loadResourceFromStream(WebletConfig config, WebletRequest request, WebletRespons
 
 	For a caller outside nothing has changed everything still is an input stream.
 
-* Security
+** Security
 
 	Lets face it, the world is insecure, web applications can insecure and serving resources opens security holes.
 	Following code would serve anything to the world (probably even your grandmother if she would be there).
@@ -395,42 +399,42 @@ loadResourceFromStream(WebletConfig config, WebletRequest request, WebletRespons
 	
 
 +---------------------------------------------------------------------------------
-public void service(
-        WebletRequest request,
-        WebletResponse response) throws IOException, WebletException {
-    Weblet weblet = getWeblet(request);
+	public void service(
+	        WebletRequest request,
+	        WebletResponse response) throws IOException, WebletException {
+	    Weblet weblet = getWeblet(request);
 
-    String pathInfo = request.getPathInfo();
-    if (response.getDefaultContentType() == null) {
-
-
-        //enhanced security check
-        if (pathInfo != null && SandboxGuard.isJailBreak(pathInfo)) {
-            throw new WebletException("Security Exception, the " + pathInfo +
-                    " breaks out of the resource jail, no resource is served!");
-        }
-
-        WebletConfig webConfig = weblet.getWebletConfig();
-        if (pathInfo != null) {
-            String mimeType = webConfig.getMimeType(pathInfo);
-            response.setDefaultContentType(mimeType);
-        }
-    }
+	    String pathInfo = request.getPathInfo();
+	    if (response.getDefaultContentType() == null) {
 
 
-    WebletConfig webConfig = weblet.getWebletConfig();
-    Set allowedResources = webConfig.getAllowedResources();
+	        //enhanced security check
+	        if (pathInfo != null && SandboxGuard.isJailBreak(pathInfo)) {
+	            throw new WebletException("Security Exception, the " + pathInfo +
+	                    " breaks out of the resource jail, no resource is served!");
+	        }
 
-    if (allowedResources != null) {
-         String filetype = StringUtils.getExtension(pathInfo);
-         if (!allowedResources.contains(filetype.toLowerCase())) {
-             throw new WebletException("Security Exception, the " + pathInfo +
-                     "  resource cannot be served!");
-            /* not allowed no content delivered */
-         }
-     }
+	        WebletConfig webConfig = weblet.getWebletConfig();
+	        if (pathInfo != null) {
+	            String mimeType = webConfig.getMimeType(pathInfo);
+	            response.setDefaultContentType(mimeType);
+	        }
+	    }
 
-    weblet.service(request, response);
+
+	    WebletConfig webConfig = weblet.getWebletConfig();
+	    Set allowedResources = webConfig.getAllowedResources();
+
+	    if (allowedResources != null) {
+	         String filetype = StringUtils.getExtension(pathInfo);
+	         if (!allowedResources.contains(filetype.toLowerCase())) {
+	             throw new WebletException("Security Exception, the " + pathInfo +
+	                     "  resource cannot be served!");
+	            /* not allowed no content delivered */
+	         }
+	     }
+
+	    weblet.service(request, response);
 +---------------------------------------------------------------------------------	
 	
 	This means, every Weblet already has sidestepping and downstepping prevention and every
@@ -459,27 +463,27 @@ public void service(
 	
 	
 +---------------------------------------------------------------------------------
-public void service(WebletRequest request, WebletResponse response) throws IOException {
-	String resourcePath = _resourceRoot + request.getPathInfo();
-	// this might fail on some containers overriding the HttpServlet
-	// but for demo purposes this is ok
-	HttpServletRequest httpRequest = (HttpServletRequest) request.getExternalRequest();
+	public void service(WebletRequest request, WebletResponse response) throws IOException {
+		String resourcePath = _resourceRoot + request.getPathInfo();
+		// this might fail on some containers overriding the HttpServlet
+		// but for demo purposes this is ok
+		HttpServletRequest httpRequest = (HttpServletRequest) request.getExternalRequest();
 	
-	/*we now have the resource handling decoupled from the mimetypes*/
+		/*we now have the resource handling decoupled from the mimetypes*/
 	
-	CopyStrategy copyProvider = new CopyStrategyImpl();
-	if (resourcePath.indexOf("WEB-INF/") != -1 || resourcePath.indexOf("WEB-INF\\") != -1) {
-		// security breach nothing in WEB-INF is allowed to be accessed
-		return;
-	}
-    if (resourcePath.indexOf("META-INF/") != -1 || resourcePath.indexOf("META-INF\\") != -1) {
-        // security breach nothing in WEB-INF is allowed to be accessed
-        return;
-    }
+		CopyStrategy copyProvider = new CopyStrategyImpl();
+		if (resourcePath.indexOf("WEB-INF/") != -1 || resourcePath.indexOf("WEB-INF\\") != -1) {
+			// security breach nothing in WEB-INF is allowed to be accessed
+			return;
+		}
+	    if (resourcePath.indexOf("META-INF/") != -1 || resourcePath.indexOf("META-INF\\") != -1) {
+	        // security breach nothing in WEB-INF is allowed to be accessed
+	        return;
+	    }
 
-	URL url = httpRequest.getSession().getServletContext().getResource("/"+resourcePath);
-	WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyProvider);
-}
+        URL url = httpRequest.getSession().getServletContext().getResource("/"+resourcePath);
+        WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyProvider);
+	}
 +---------------------------------------------------------------------------------	
 
 
