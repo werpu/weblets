@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.net.URL;
+import java.net.URLDecoder;
 
 import net.java.dev.weblets.impl.WebletContainerImpl;
 
@@ -21,7 +22,7 @@ import net.java.dev.weblets.impl.WebletContainerImpl;
 public class ConfigurationUtils {
 	/**
 	 * Gets a list of wildarded config files if a root weblets-config is present!
-	 * 
+	 *
 	 * @return
 	 * @throws java.io.IOException
 	 */
@@ -45,7 +46,8 @@ public class ConfigurationUtils {
 		while (e.hasMoreElements()) {
 			// we also check for subconfics
 			URL element = (URL) e.nextElement();
-			String pathToOtherResources = element.getFile();
+
+			String pathToOtherResources = URLDecoder.decode(element.getFile(), "UTF-8");
 			if (!StringUtils.isBlank(pathToOtherResources)) {
 				pathToOtherResources = pathToOtherResources.replaceAll("META-INF/" + rootFilename, "META-INF/");
 				String pkgExt = getPackageExtension(pathToOtherResources);
@@ -81,7 +83,7 @@ public class ConfigurationUtils {
 							return name.matches("^.*weblets\\-config.*\\.xml$");
 						}
 					});
-					for (int cnt = 0; cnt < files.length; cnt++) { // end for declaration
+					for (int cnt = 0; files != null && cnt < files.length; cnt++) { // end for declaration
 						namesToSearchFor.add(files[cnt]);
 					}
 				}
