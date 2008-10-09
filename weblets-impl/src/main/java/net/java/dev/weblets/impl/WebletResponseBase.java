@@ -39,8 +39,9 @@ abstract public class WebletResponseBase implements WebletResponse {
 
 	public final void setLastModified(long lastModified) {
 		// Detect unknown-last-modified
-		if (lastModified != 0)
+		if (lastModified != 0) {
 			setLastModifiedImpl(lastModified);
+		}
 	}
 
 	public final void setContentVersion(String contentVersion, long timeout) {

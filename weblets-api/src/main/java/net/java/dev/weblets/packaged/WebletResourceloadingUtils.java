@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * helper class to be shared by various weblet loaders
- * 
+ *
  * @author Werner Punz
  */
 public class WebletResourceloadingUtils {
@@ -34,11 +34,11 @@ public class WebletResourceloadingUtils {
 	public URL getResourceUrl(WebletRequest request, String resourcePath) {
 		Map urlCache = getResourceURLCache(request);
 		URL url = null;
-		
+
 		url = (URL) urlCache.get(resourcePath);
 		if(url != null)
 			return url;
-		
+
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		url = loader.getResource(resourcePath);
 		if (url == null) {
@@ -51,7 +51,7 @@ public class WebletResourceloadingUtils {
 
 	/**
 	 * fetches the resource url from a given resource path (uncached for reporting only) TODO add a better cache (LRU if possible)
-	 * 
+	 *
 	 * @param resourcePath
 	 * @return
 	 */
@@ -89,7 +89,7 @@ public class WebletResourceloadingUtils {
 
 	/**
 	 * loads a resource from a given url
-	 * 
+	 *
 	 * @param config
 	 *            the current weblet config
 	 * @param request
@@ -113,7 +113,7 @@ public class WebletResourceloadingUtils {
 
 	/**
 	 * sets initial response params upon the version state
-	 * 
+	 *
 	 * @param config
 	 *            the weblet config
 	 * @param response
@@ -161,7 +161,7 @@ public class WebletResourceloadingUtils {
 
 	/**
 	 * fixes internal time values browsers deliver time values on seconds internally it is calculated in miliseconds
-	 * 
+	 *
 	 * @param browserTimeValue
 	 *            the browser time value
 	 * @return returns a fixed second time value for the input
@@ -181,7 +181,7 @@ public class WebletResourceloadingUtils {
 	/**
 	 * loads a given resource from an input stream it uses internal timestamps for resource handling and resource serving this works on most browser but safari
 	 * seems to ignore the timestamps and always sends a modifiedSince for resources for 1.1.1970
-	 * 
+	 *
 	 * @param config
 	 *            the weblets config for this resource loading request
 	 * @param request
@@ -215,19 +215,19 @@ public class WebletResourceloadingUtils {
 			/*-1 or smaller value on reload pressed*/
 			|| requestCacheState < currentUTCTime;
 			/* cache control timeout reached we reload no matter what! */
-	
+
 
 			if (load) {
 				prepareVersionedResponse(config, response, resourceLastmodified, System.currentTimeMillis() + getTimeout(config));
 				//response.setContentType(finalMimetype);
-				
+
 				loadResourceFromStream(config, request, response, copyProvider, in);
 				// response.setStatus(200);
 			} else {
 				/* we have to set the timestamps as well here */
 				prepareVersionedResponse(config, response, resourceLastmodified, request.getIfModifiedSince()
 						+ TimeZone.getDefault().getOffset(request.getIfModifiedSince()));
-				response.setContentType(null); // Bogus "text/html" overriding
+				//response.setContentType(null); // Bogus "text/html" overriding
 				response.setStatus(WebletResponse.SC_NOT_MODIFIED);
 			}
 		} else {
@@ -237,7 +237,7 @@ public class WebletResourceloadingUtils {
 
 	/**
 	 * loads the resource from a given input stream note, this api is under construction we have caching not enabled yet
-	 * 
+	 *
 	 * @param config
 	 *            the weblet config to load the resource
 	 * @param request
@@ -254,11 +254,7 @@ public class WebletResourceloadingUtils {
 			throws IOException {
 		OutputStream out = response.getOutputStream();
 		String finalMimetype = config.getMimeType(request.getPathInfo());
-		if(StringUtils.isBlank(finalMimetype)) {
-			finalMimetype = response.getDefaultContentType();
-		}
-		
-		response.setContentType(finalMimetype);
+
 		copyProvider.copy(request.getWebletName(), finalMimetype, in, out);
 	}
 

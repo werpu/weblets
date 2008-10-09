@@ -4,20 +4,20 @@
  */
 package net.java.dev.weblets.impl.misc;
 
-import net.java.dev.weblets.*;
+import java.io.InputStream;
+import java.util.Map;
+
+import net.java.dev.weblets.Weblet;
+import net.java.dev.weblets.WebletContainer;
+import net.java.dev.weblets.WebletException;
+import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.impl.WebletContainerImpl;
 import net.java.dev.weblets.impl.servlets.WebletRequestImpl;
 import net.java.dev.weblets.util.IWebletUtils;
+import net.java.dev.weblets.util.StringUtils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import net.java.dev.weblets.util.StringUtils;
-
-import java.util.Map;
-import java.util.Iterator;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.io.InputStream;
 
 /**
  * A small el function to ease the use of weblets in misc or jsf/faclets jsf 1.2 contexts
