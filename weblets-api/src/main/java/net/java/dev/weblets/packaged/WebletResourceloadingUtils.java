@@ -1,24 +1,26 @@
 package net.java.dev.weblets.packaged;
 
-import net.java.dev.weblets.WebletConfig;
-import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.WebletResponse;
-import net.java.dev.weblets.util.CopyStrategy;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
 
-import net.java.dev.weblets.util.StringUtils;
-import net.java.dev.weblets.util.CopyStrategy;
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
-
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import net.java.dev.weblets.WebletConfig;
+import net.java.dev.weblets.WebletRequest;
+import net.java.dev.weblets.WebletResponse;
+import net.java.dev.weblets.util.CopyStrategy;
+import net.java.dev.weblets.util.StringUtils;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * helper class to be shared by various weblet loaders
