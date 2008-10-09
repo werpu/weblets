@@ -15,26 +15,28 @@
  */
 package net.java.dev.weblets.impl.servlets;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Calendar;
+
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
+
 import net.java.dev.weblets.WebletResponse;
-import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
 import net.java.dev.weblets.impl.WebletResponseBase;
 import net.java.dev.weblets.impl.misc.ReflectUtils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 /**
  * Weblets Response impl object implementation of the internal weblets response object <p/> TODO check out how to enable all the header params in portlet
  * environments which do not provide the needed methods but follow the pure ri interfaces
  */
 public class WebletResponseImpl extends WebletResponseBase {
+
 	public WebletResponseImpl(String contentTypeDefault, ServletResponse httpResponse) {
 		super(contentTypeDefault);
 		// new GZIPResponseWrapper(
@@ -71,39 +73,77 @@ public class WebletResponseImpl extends WebletResponseBase {
 	}
 
 	protected void setContentTypeImpl(String contentType) {
-		_httpResponse.setContentType(contentType);
+		if(contentType != null) { //needed to avoid npes in was!
+			_httpResponse.setContentType(contentType);
+		}
 	}
 
 	protected void setLastModifiedImpl(long lastModified) {
-		setDateHeader("Last-Modified", lastModified);
+		if(_y2038_bug) {
+			lastModified = y2038k_fix(lastModified);
+		}
+		try {
+			setDateHeader(WebletResponse.HTTP_LAST_MODIFIED, lastModified);
+		} catch (IndexOutOfBoundsException ex) { // websphere 6.1 has a y2038k bug
+			_y2038_bug = true;
+			lastModified = y2038k_fix(lastModified);
+			setDateHeader(WebletResponse.HTTP_EXPIRES, lastModified);
+		}
 	}
 
 	protected void setContentVersionImpl(String contentVersion, long timeout) {
-		setDateHeader("Expires", timeout);
+		if(_y2038_bug) {
+			timeout = y2038k_fix(timeout);
+		}
+		try {
+			setDateHeader(WebletResponse.HTTP_EXPIRES, timeout);
+		} catch (IndexOutOfBoundsException ex) { // websphere 6.1 has a y2038k bug
+			_y2038_bug = true;
+			timeout = y2038k_fix(timeout);
+			setDateHeader(WebletResponse.HTTP_EXPIRES, timeout);
+		}
 	}
 
 	/**
-	 * locking singleton to prevent too many warnings in certain portlet environments which dont have the needed methods implemented (which follow the pure ri)
+	 * y2038k fix for certain servers (aka WAS 6.1)
+	 *
+	 * @param timeout the incoming time value to be fixed
+	 * @return
 	 */
-	static boolean	dateheader_warn	= false;
+	private long y2038k_fix(long timeout) {
+		java.util.Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(timeout);
+		if(cal.get(Calendar.YEAR) >= Y2038_BOUNDARY) {
+			cal.set(Calendar.YEAR, Y0238_VALIDYEAR);
+		}
+		return cal.getTimeInMillis();
+	}
+
 
 	/**
 	 * we fallback to various introspection methods to support portlet environments as well
-	 * 
+	 *
 	 * @param entry
 	 * @param lastModified
 	 */
 	private void setDateHeader(String entry, long lastModified) {
+		/*we can cover a simple httpservletresponse*/
+		/*we do it that way to improve speed*/
+ 		if(_httpResponse instanceof HttpServletResponse) {
+			((HttpServletResponse)_httpResponse).addDateHeader(entry, lastModified);
+			return;
+		}
+		/*with others we give introspection a try*/
 		Method[] supportedMethods = _httpResponse.getClass().getMethods();
 		// fetch the date header method
 		Method m = null;
 		try {
-			m = _httpResponse.getClass().getMethod("setDateHeader", new Class[] { String.class, long.class });
+			m = _httpResponse.getClass().getMethod(SETDATEHEADER, new Class[] { String.class, long.class });
 		} catch (NoSuchMethodException e) {
-			if (!dateheader_warn) {
-				dateheader_warn = true; // we do not want to flood warnings one is enough
+			if (!_dateheader_warn) {
+				_dateheader_warn = true; // we do not want to flood warnings one is enough
 				Log log = LogFactory.getLog(getClass());
-				log.warn("No date header setting possible reason: ");
+				log.warn(ERR_NODATEHEADERSET);
 				log.warn(e);
 				return;
 			}
@@ -111,7 +151,7 @@ public class WebletResponseImpl extends WebletResponseBase {
 		try {
 			Object[] params = new Object[2];
 			params[0] = entry;
-			params[1] = new Long(lastModified);
+			params[1] = new Long( lastModified );
 			m.invoke(_httpResponse, params);
 		} catch (IllegalAccessException e) {
 			Log log = LogFactory.getLog(getClass());
@@ -129,6 +169,12 @@ public class WebletResponseImpl extends WebletResponseBase {
 	static boolean	responsestatus_warn	= false;
 
 	private void setResponseStatus(int status) {
+
+		if(_httpResponse instanceof HttpServletResponse) {
+			((HttpServletResponse)_httpResponse).setStatus(status);
+			return;
+		}
+
 		Method[] supportedMethods = _httpResponse.getClass().getMethods();
 		// fetch the date header method
 		Method m = null;
@@ -157,5 +203,17 @@ public class WebletResponseImpl extends WebletResponseBase {
 		return;
 	}
 
+
+	private static final int	Y0238_VALIDYEAR	= 2037;
+	private static final int	Y2038_BOUNDARY	= 2038;
+	private static final String	ERR_NODATEHEADERSET	= "No date header setting possible reason: ";
+	private static final String	SETDATEHEADER	= "setDateHeader";
+
+
+	/**
+	 * locking singleton to prevent too many warnings in certain portlet environments which dont have the needed methods implemented (which follow the pure ri)
+	 */
+	static boolean	_dateheader_warn	= false;
+	static boolean  _y2038_bug = false;	/*y2038 bug affected system, aka WAS <=6.1+*/
 	ServletResponse	_httpResponse	= null;
 }

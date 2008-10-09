@@ -257,6 +257,7 @@ public class WebletResourceloadingUtils {
 		if(StringUtils.isBlank(finalMimetype)) {
 			finalMimetype = response.getDefaultContentType();
 		}
+		
 		response.setContentType(finalMimetype);
 		copyProvider.copy(request.getWebletName(), finalMimetype, in, out);
 	}

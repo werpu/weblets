@@ -42,7 +42,12 @@ public final class WebletsContextListener implements ServletContextListener {
 		} catch (InstantiationException e) {
 			throw new RuntimeException("Unable to instantiate " + "WebletsContextListener implementation", e);
 		}
-		_delegate.contextInitialized(event);
+		try {
+			_delegate.contextInitialized(event);
+		} catch (RuntimeException e) {
+			System.err.println(e.toString());
+			throw e;
+		}
 	}
 
 	/**

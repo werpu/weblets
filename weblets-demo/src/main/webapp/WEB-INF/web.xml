@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+                         "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
-  <description>Weblets Demo</description>
-
-    <!--
+ <description>Weblets Demo</description>
+ <!--
     this context param enables multiple config files
     per resource bundle, default it is turned off because
     only a handful of use cases need more than one weblet-config
 
     we have it in the demo thoughs
     -->
-    <context-param>
-        <param-name>net.java.dev.weblets.multipleconfigs</param-name>
-        <param-value>true</param-value>
-    </context-param>
-
-  <!--
+ <context-param>
+  <param-name>net.java.dev.weblets.multipleconfigs</param-name>
+  <param-value>true</param-value>
+ </context-param>
+ <listener>
+  <listener-class>net.java.dev.weblets.WebletsContextListener</listener-class>
+ </listener>
+ <!--
   <context-param>
       <param-name>net.java.dev.weblets.contextpath</param-name>
       <param-value>/weblets-demo/</param-value>
@@ -37,10 +39,8 @@
 
       </description>
   </context-param>
-  -->
- 
-    
-  <!--
+  
+
   <filter>
       <filter-name>WebletsContextFilter</filter-name>
       <description>
@@ -63,13 +63,12 @@
       <url-pattern>*.html</url-pattern>
   </filter-mapping>
   -->
+ <servlet>
+  <servlet-name>Faces Servlet</servlet-name>
+  <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+  <load-on-startup>1</load-on-startup>
+ </servlet>
 
-  <servlet>
-    <servlet-name>Faces Servlet</servlet-name>
-    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <!--
  <servlet>
     <servlet-name>Weblets Servlet</servlet-name>
     <servlet-class>net.java.dev.weblets.WebletsServlet</servlet-class>
@@ -79,26 +78,23 @@
     <servlet-name>Weblets Servlet</servlet-name>
     <url-pattern>/weblets/*</url-pattern>
   </servlet-mapping>
-   -->
 
-  <servlet-mapping>
-    <servlet-name>Faces Servlet</servlet-name>
-    <url-pattern>/faces/*</url-pattern>
-  </servlet-mapping>
-  
-   
-  <servlet-mapping>
-    <servlet-name>Faces Servlet</servlet-name>
-    <url-pattern>*.jsf</url-pattern>
-  </servlet-mapping>
-
-  <session-config>
-    <session-timeout>35</session-timeout>
-  </session-config>
-  
-  <welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
-  
+ <servlet-mapping>
+  <servlet-name>Faces Servlet</servlet-name>
+  <url-pattern>/faces/*</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>Faces Servlet</servlet-name>
+  <url-pattern>*.jsf</url-pattern>
+ </servlet-mapping>
+ <session-config>
+  <session-timeout>35</session-timeout>
+ </session-config>
+ <welcome-file-list>
+  <welcome-file>index.html</welcome-file>
+  <welcome-file>index.jsp</welcome-file>
+ </welcome-file-list>
+ <login-config>
+  <auth-method>BASIC</auth-method>
+ </login-config>
 </web-app>

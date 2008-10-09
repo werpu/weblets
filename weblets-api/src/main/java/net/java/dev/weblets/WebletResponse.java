@@ -22,6 +22,8 @@ public interface WebletResponse {
 	static public final int	SC_ACCEPTED		= 0;
 	static public final int	SC_NOT_FOUND	= 1;
 	static public final int	SC_NOT_MODIFIED	= 2;
+	public static final String	HTTP_EXPIRES	= "Expires";
+	public static final String	HTTP_LAST_MODIFIED	= "Last-Modified";
 
 	/**
 	 * default content type set by the container according to the mime mapping

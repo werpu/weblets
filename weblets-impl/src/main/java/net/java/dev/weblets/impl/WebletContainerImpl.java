@@ -37,10 +37,10 @@ import net.java.dev.weblets.WebletContainer;
 import net.java.dev.weblets.WebletException;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
-import net.java.dev.weblets.util.StringUtils;
 import net.java.dev.weblets.impl.misc.SandboxGuard;
 import net.java.dev.weblets.impl.parse.DisconnectedEntityResolver;
 import net.java.dev.weblets.impl.util.ConfigurationUtils;
+import net.java.dev.weblets.util.StringUtils;
 
 import org.apache.commons.digester.Digester;
 import org.apache.commons.digester.ObjectCreationFactory;
@@ -48,6 +48,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+
 
 public class WebletContainerImpl extends WebletContainer {
     public WebletContainerImpl(
@@ -73,8 +75,13 @@ public class WebletContainerImpl extends WebletContainer {
 
             if (multipleConfigs) {
                 ConfigurationUtils.getValidConfigFiles("META-INF/", "weblets-config.xml", configs);
+                try {
+                	ConfigurationUtils.getValidConfigFiles("META-INF/", "MANIFEST.MF", configs);
+                } catch (NullPointerException ex) {
+                	Log log = LogFactory.getLog(this.getClass());
+                	log.info("MANIFEST.MF search failed for configurations, if you use Websphere, then you can safely ignore this please use a weblets-config.xml as entry point for your weblets configuration, please !");
+                }
 
-                ConfigurationUtils.getValidConfigFiles("META-INF/", "MANIFEST.MF", configs);
                 Iterator configNameIterator = configs.iterator();
 
                 // Defensive: Glassfish.v2.b25 produces duplicates in Enumeration
@@ -371,7 +378,7 @@ public class WebletContainerImpl extends WebletContainer {
             //we have to prepend some optional mapping to cover
             //the servlet case and some frameworks
             //which add their own subcontext before triggering
-            //in framework servlets 
+            //in framework servlets
             buffer.append(".*(\\Q");
             buffer.append(webletPath);
             buffer.append("\\E)");
