@@ -3,7 +3,7 @@
 
     <weblet>
         <weblet-name>weblets.webapp</weblet-name>
-        <weblet-class>net.java.dev.weblets.sandbox.WebappWeblet</weblet-class>
+        <weblet-class>net.java.dev.weblets.packaged.WebappWeblet</weblet-class>
         <!-- dedicated mime mapping override -->
     	<mime-mapping>
     		<extension>jpg</extension>
@@ -21,7 +21,7 @@
 	      <param-name>allowedResources</param-name>
 	      <param-value> jpg, png </param-value>
 	    </init-param>
-	   
+
     </weblet>
 	
 

@@ -1,4 +1,4 @@
-package net.java.dev.weblets.sandbox;
+package net.java.dev.weblets.packaged;
 
 import net.java.dev.weblets.*;
 import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
