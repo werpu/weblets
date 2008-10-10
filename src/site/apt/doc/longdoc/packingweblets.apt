@@ -70,7 +70,7 @@ Introduction into the <<<Weblets>>> Resource Packing
 
 
 
- This is a weblet definition, it is very similar to a <<<web.xml>>> servlet definition
+	This is a weblet definition, it is very similar to a <<<web.xml>>> servlet definition
 
 +--------------------------------------------------------------
     <weblet-name>myweblet</weblet-name>
@@ -227,12 +227,14 @@ Introduction into the <<<Weblets>>> Resource Packing
  
 * Additional Weblets
  
-	 As of Weblets 1.0 only two options for weblets packaging are given,
+	 As of Weblets 1.0 two options for weblets packaging are given,
 	 the Packaged Weblets class and the URLWeblet, as a late addition to 1.0.
 	 The URL weblet is a preview of what is up and coming post Weblets 1.0.
 	 It allows to stream any url based resource as weblet into your web application.
+	 Weblets 1.1 added an additional option the <<<Webapp Weblet>>>!
+	
 	 
-** Usage 
+** Usage of the URLWeblet
 
 +--------------------------------- 	
 	<weblet>
@@ -249,7 +251,7 @@ Introduction into the <<<Weblets>>> Resource Packing
  	<Code: URL Weblet>
 	
 
- As we can see it is very similar to the packaged Weblet, just the init params are different
+ As we can see it is very similar to the packaged Weblet, just the init params are different,
  the calling api for the application developer stays the same
  
 +----------------------------------
@@ -258,7 +260,52 @@ Introduction into the <<<Weblets>>> Resource Packing
  
 +----------------------------------
  
+
+** Usage of the Webapp Weblet
+
++------------------------------------
+<?xml version="1.0" encoding="UTF-8" ?>
+<weblets-config xmlns="http://weblets.dev.java.net/config">
+
+	<weblet>
+		<weblet-name>weblets.webapp</weblet-name>
+		<weblet-class>net.java.dev.weblets.packaged.WebappWeblet</weblet-class>
+		<init-param>
+			<param-name>resourceRoot</param>
+			<param-value>resources</param-value>
+		</init-param>	
+	</weblet>
+	<weblet-mapping>
+		<weblet-name>weblets.webapp</weblet-name>
+		<url-pattern>/webapp/*</url-pattern>
+	</weblet-mapping>
+	
+</weblets-config>    
+
++------------------------------------
  
+	As you can see the initialization code for a Weball weblet is identical to the 
+	the normal Weblets.
+	Resources then are streamed from <contextroot>/<resourceRoot>!
+	
+	ie:
++------------------------------------	
+	<img src="<%=jspweblet.getURL("weblets.webapp", "/helloworld.png")%>" />
++------------------------------------
+	Would stream the resource from:
+
++------------------------------------		
+	<contextroot>/resources/helloworld.png
++------------------------------------		
+	
+	Security: Security can be a big issue with Webapp weblets. If you set your resourceRoot to the context root
+	you can basically expose every file there is except the ones in the META-INF and WEB-INF dirs.
+	It is advicable to either set your resourceRoot to a sandbox directory, which is then under jailbreak protection
+	and host only resources there.
+	Or to use the weblets whitelist feature for the resource types you want to expose!
+	
+	
+
 * Multiple Weblets per weblets config
  
  	Of course this is also possible the following configuration should give an example on how to do this
@@ -329,7 +376,7 @@ Introduction into the <<<Weblets>>> Resource Packing
 +---------------------------------
 	<weblet>
 		<weblet-name>weblets.webapp</weblet-name>
-		<weblet-class>net.java.dev.weblets.sandbox.WebappWeblet</weblet-class>
+		<weblet-class>net.java.dev.weblets.packaged.WebappWeblet</weblet-class>
 		<!-- dedicated mime mapping override -->
 		<mime-mapping>
 			<extension>jpg</extension>
@@ -361,7 +408,7 @@ Following configuration example shows how to enabled file type locking:
 		<param-value> jpg, png </param-value>
 	</init-param>	
 +---------------------------------
-	<Code: File Type Blacklists>
+	<Code: File Type Whitelists>
 	
 
 	This init parameter allows only jpg and png files to be served, all other filetype accesses served from this Weblet
