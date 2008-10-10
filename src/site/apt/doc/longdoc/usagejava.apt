@@ -110,22 +110,24 @@ Summary
 
 * Contents
 
-   [[1]] {{{./index.html} Users Documentation: Index }}
+ 
+	 [[1]] {{{./index.html} Users Documentation: Index }}
 
-   [[]] {{{./gettingstarted.html} Users Documentation: Getting Started }}
+	 [[]] {{{./gettingstarted.html} Users Documentation: Getting Started }}
 
-   [[]] {{{./setup.html} Users Documentation: Setup Guide }}
+	 [[]] {{{./setup.html} Users Documentation: Setup Guide }}
 
-   [[]] {{{./generalapi.html} Users Documentation: Introduction to  the API Patterns }}
+	 [[]] {{{./generalapi.html} Users Documentation: Introduction to  the API Patterns }}
 
-   [[]] {{{./usagejsp.html} Users Documentation: JSP Weblets Usage Guide }}
+	 [[]] {{{./usagejsp.html} Users Documentation: JSP Weblets Usage Guide }}
 
-   [[]] {{{./usagejava.html} Users Documentation: Servlet Weblets Usage Guide }}
+	 [[]] {{{./usagejava.html} Users Documentation: Servlet Weblets Usage Guide }}
 
-   [[]] {{{./usagejsf.html} Users Documentation: JSF Weblets Usage Guide }}
+	 [[]] {{{./usagejsf.html} Users Documentation: JSF Weblets Usage Guide }}
 
-   [[]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
+	 [[]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
 
-   [[]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
+	 [[]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
 
-   [[]] {{{./faq.html} Users Documentation: Weblets General FAQ }}
+	 [[]] {{{./faq.html} Users Documentation: Weblets General FAQ }}
+
