@@ -250,8 +250,9 @@ public class SourcecodeWeblet extends Weblet {
 	<<The central operation itself is the copy operation>>
 	In our example we have overriden the copy operation by decorating the incoming text with our own html code to beautify it a little bit.
 
-	The second operation is the exposed method <<<wrapInputStream>>> which allows the wrapping of the filter chains this one is called
-	by other subsystems and may be removed in later versions
+	The second operation is the exposed method <<<wrapInputStream>>> which builds up the input stream chain
+	for the reporting subsystem.
+	
 	If you run your own filter chains which you want to implement your own filter chains and have them exposed
 	to other subsystems like reporting, then use this method. Normally it should be sufficient to
 	simply derive from CopyStrategyImpl and then implement your own copy operation!

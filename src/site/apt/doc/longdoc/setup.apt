@@ -280,5 +280,8 @@ Summary
 
 	[[]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
 
-	[[]] {{{./faq.html} Users Documentation: Weblets General FAQ }}
+	[[]] {{{./reporting.html} Users Documentation: Weblets Reporting Guide }}
 
+	[[]] {{{./programmingweblets.html} Developers Documentation: Programming Weblets }}
+
+	[[]] {{{./faq.html} Users Documentation: Weblets General FAQ }}
