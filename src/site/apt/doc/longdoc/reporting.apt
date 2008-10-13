@@ -7,12 +7,12 @@ Introduction
     Reporting is a general problem within the domain of web applications.
     Usually three Methods of reporting are applied within a web application.
 
-    [[]] On demand reporting, reports are generated on demand within a request
+    [[]] On demand reporting, reports are generated on demand within a request.
 
     [[]] In Server Reporting, reports are generated within a single server but
     may be generated asynchronously within a separated reporting task.
 
-    [[]] Stand alone reporting server. The reports are generated within a separated reporting server which runs
+    [[]] Stand alone reporting server. The reports are generated within a separated reporting server, which runs
     in its own process space!
 
     []
@@ -25,18 +25,18 @@ Introduction
 
     This is the easiest method. Basically an on demand report is generated on the fly within a single request.
 
-[../images/weblets-reporting-1.png] <Figure 1. On Demand Reporting>
+[../images/weblets-reporting-1.png] <Figure 1.: On Demand Reporting>
 
     As we can see in <<<Figure 1>>> <<<Weblets>>> supports this reporting case with its own frontend apis.
-    Weblets always serves a valid URL String to the resource via its frontend apis which then can
-    be processed by the standard java URL api of java for further processing.
+    <<<Weblets>>> always serves a valid URL String to the resource via its frontend apis, which then can
+    be processed by the standard java URL api of Java for further processing.
 
 
-    The processing flow for this case looks like following:
+    The following picture displays the execution flow for this reporting usecase:
 
 [../images/weblets-reporting-2.png] <Figure 2. On Demand Reporting Workflow>
 
-    As we can see only the calls to our frontend API are utilized, the
+    As displayed, only the calls to the frontend api are utilized, the
     other parts are pure Java calls!!
     To enable the reporting capabilities in this case the WebletUtils class can be used with its
     helper methods.
@@ -57,44 +57,54 @@ Introduction
 
 ** Introduction
 
-    As of <<<Weblets 1.1>>> in server reporting was added as a new feature. Currently this feature only works
-    with <<<packaged weblets>>>. Additional Weblet implementations might be enabled for this feature in future
-    revisions!
 
     <<In server reporting>> is a common reporting case. Longer running reports are triggered and executed
     within the same process space hosting also the web application. This is very common in small to medium size web
-    applications, delivering reports which take longer to generate, than which is tolerable for a single
+    applications, delivering reports which take longer, than tolerable for a single
     user request. Also asynchronously periodically generated reports (like static pages of a CMS system or downloadable
-    monthly PDF reports) are such a typical usecase. Often it is not needed to run a separate reporting server
-    or running one one would be overkill for the web application installation
+    monthly PDF reports) are  usecases for this reporting type.
+    Often it is not needed to run a separate reporting server
+    or running one one would be overkill for the web application installation.
 
-    <Weblets supports also exactly this usecase by an API extension added to Weblets 1.1>.
+    In <<<Weblets 1.1>>> support for in server reporting has been added. Currently this feature only works
+    with <<<Packaged Weblets>>>. Additional Weblet implementations might be enabled for this feature in future
+    revisions!
+
+
 
 [../images/weblets-reporting-3.png] <Figure 3. In Server Reporting>
 
 
 ** Problem and Solution
 
-    One major problem comes with this kind of reporting. The reports run most of the times asynchronously,
-    hence there is no servlet API available, although the container itself serves the servlet API!
+    One major problem comes hand in hand, with this kind of reporting.
+    The reports run most of the times asynchronously,
+    hence there is no servlet API available,
+    although the container itself serves the servlet API!
 
-    <<<Weblets>>> added support to exactly this case by the internal addition of a <<<serviceStream>>> method on
+    <<<Weblets>>> adds support  by the internal addition of a <<<serviceStream>>> method on
     the weblet api level.
-    Additionally to that on the copy provider level the input chain creation methid also was refactored out
-    to the <<<wrapInputStream>>>.
-    Note if you do not program your own Weblets, only the serviceStream method must be a concern to you.
+    Additionally on the copy provider level the input chain creation method  <<<wrapInputStream>>> is provided.
+
+    <<<Note if you do not program your own Weblets, only the serviceStream method must be a concern to you.>>>
 
     (See {{{./programmingweblets.html} Programmers Documentation: Programming Weblets }} for further reference on both API calls)
 
-    As we said before only the service stream method has to be applied by the user trying to trigger
+    As we said before only the <<<serviceStream >>>method has to be applied by the user trying to trigger
     weblets over asynchronous reporting calls.
 
-    How do we apply the API to a report.
-    Following code example should give you an idea:
+    Following code example displays how to call apply the Weblets API to asynchronous reporting calls:
 
 
-    
-    //TODO service stream
++-------------------------------------------
+    InputStream istr = WebletUtils.getResourceAsStream(<weblet name>, <resource path>, mimetype);
++-------------------------------------------
+
+    <Code 1: Resource Streaming via weblets>
+
+    Note that in Weblets 1.1 the mime types still have to be determined manually for the reporting
+    case! This limitation might be removed for later versions!
+
 
 * Reporting Server
 
