@@ -5,11 +5,13 @@
 
 Introduction into the <<<Weblets>>> Resource Packing
 
-    As of <<<Weblets>>> 1.0 there are two packaging formats for weblet resources:
+    As of <<<Weblets>>> 1.1 there are three packaging formats for weblet resources:
 
-     * expanded resources in a normal web application
+     * Proxied resources via URL Weblet
 
-     * packed resources as simple jar packages.
+     * Packed resources as simple jar packages.
+
+     * Webapp weblets for expanded resources hosted within a web application 
 
     []
 
@@ -89,13 +91,17 @@ Introduction into the <<<Weblets>>> Resource Packing
 	<Code: Weblet Class>
 
     Defines a weblet class. Weblet classes are different implementations of resource loading
-    mechanisms, currently only net.java.dev.weblets.packaged.PackagedWeblet is supported.
-    PackagedWeblet basically does the resource streaming of packed and unpacked resources.
-    It might be possible that Weblet provides other weblet classes in the long run.
-    The possibilities are limitless. It is also possible to provide your own weblet-class
-    for instance, which would stream resources from database clobs or act as proxies streaming
-    resources from the net. Everything would be possible, but for <<<Weblets>>> 1.0 only the
-    PackagedWeblet class is provided.
+    mechanisms, currently only
+
+
+    * net.java.dev.weblets.packaged.PackagedWeblet
+
+    * net.java.dev.weblets.packaged.URLWeblet
+
+    * net.java.dev.weblets.packaged.WebappWeblet
+
+    are supported.
+
 
 +--------------------------------------------------------------
     <weblet-version>1.02</weblet-version>
@@ -133,6 +139,26 @@ Introduction into the <<<Weblets>>> Resource Packing
 +--------------------------------------------------------------
 	<Code: Init Params>
 
+
+    Every versioned weblet has a timeout date set into the far future, if you need a periodical timeout
+    you can override this setting by setting following parameter.
+
++---------------------------------------------------------------
+    <init-param>
+           <param-name>cachecontrol-timeout</param-name>
+           <param-value>61000</param-value>
+    </init-param>
++---------------------------------------------------------------
+
+    Note the value is a lont value set to be in miliseconds!
+
+
+    <Additional information Websphere 6.1+ users: Due to a year 2038k bug in the 32 bit version
+    of WAS 6.1 the maximum year to be settable beginning from 1970, is 2037, you cannot go higher.
+    The cause of this is a bug in one of the date classes implemented by Websphere and has to be
+    fixed by IBM currently there is no workaround to this, but it also for now is no showstopper!
+    IBM might have fixed this issue already in newer versions of Websphere!>
+    
     Every weblet class takes a set of init parameters, which are different
     from weblet-class to weblet class. For the packaged weblet only the
 
@@ -197,6 +223,9 @@ Introduction into the <<<Weblets>>> Resource Packing
 
     Now if a browser calls this resource, the weblet class and its underlying weblet-container will serve the
     resource transparently.
+
+
+
 
 * Generating a Weblets JAR 
  

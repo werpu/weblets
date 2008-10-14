@@ -77,7 +77,7 @@ Introduction
 
 ** Problem and Solution
 
-    One major problem comes hand in hand, with this kind of reporting.
+    This kind of reporting causes one major problem however.
     The reports run most of the times asynchronously,
     hence there is no servlet API available,
     although the container itself serves the servlet API!
@@ -105,6 +105,10 @@ Introduction
     Note that in Weblets 1.1 the mime types still have to be determined manually for the reporting
     case! This limitation might be removed for later versions!
 
+    The advantage of this method is you can get a stream which points to the post processed resource
+    and can deal with it like you would do with any other datasource in a reporting system.
+    The call can be done outside of a regular request it is not dependend on an actual request being present.
+    However <<<Weblets>>> itself must be preinitialized (aka. being started within a web container!)
 
 * Reporting Server
 
@@ -118,6 +122,10 @@ Introduction
         * Reporting gets its own process space or even a physical machine and cannot compromise the other subsystems
 
         *the processor load is given fully to the web application in case of dedicated physical reporting servers.
+
+[../images/weblets-reporting-4.png] <Figure 4: Dedicated Reporting Server>
+
+
 
 ** Problem and solution
 

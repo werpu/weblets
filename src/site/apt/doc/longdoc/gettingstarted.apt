@@ -5,7 +5,7 @@
 
 Getting Started with Weblets
 
-    This basic guide should give you a small introduction into getting started with <<<Weblets>>>.
+    This basic guide gives a small introduction into getting started with <<<Weblets>>>.
     It should ease the beginning on how to install <<<Weblets>>> and how to get started with the
     demo applications.
 
@@ -41,7 +41,7 @@ Getting Started with Weblets
     The single pages can be used as references for your own development.
 
 
-* Getting started with Maven 2
+* Getting started with Maven2
 
  Weblets can be injected via a maven build, however currently you
  only can do it from the java.net repository.
@@ -84,13 +84,13 @@ Getting Started with Weblets
 
         ** a valid java.net account (which is free)
 
-        ** a working maven2 configuration
+        ** a working <<<Maven2>>> configuration
 
     To get started with subversion simply check out one of the version tags
     from
 
 +---------------------------------------
-    https://weblets.dev.java.net/svn/weblets/tags/weblets-1.0
+    https://weblets.dev.java.net/svn/weblets/tags/weblets-1.1
 +---------------------------------------
 
 
@@ -104,7 +104,7 @@ Getting Started with Weblets
     <example>
 
 +---------------------------------------------
-svn checkout https://weblets.dev.java.net/svn/weblets/tags/weblets-1.0 <<<Weblets>>> --username username
+svn checkout https://weblets.dev.java.net/svn/weblets/tags/weblets-1.1 <<<Weblets>>> --username username
 +---------------------------------------------
 
     <example>
