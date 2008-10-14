@@ -77,7 +77,7 @@ Introduction
 
 ** Problem and Solution
 
-    This kind of reporting causes one major problem however.
+    This kind of reporting causes one major problem:
     The reports run most of the times asynchronously,
     hence there is no servlet API available,
     although the container itself serves the servlet API!
