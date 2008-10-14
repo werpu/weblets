@@ -5,25 +5,33 @@
 
 Introduction into the weblets API
 
-    As of version 1.1 a programming API is exposed to program your own Weblets. Weblets uses a servlet
+    Since version 1.1 a programming API is exposed to program your own Weblets. Weblets uses a servlet
     like internal API to handle the resource loading. The Resource Loading is a multi step process covered
     by this API. As of 1.1 only following Weblets are predefined:
-    A package weblet which allows the resource serving from resources located in the classpath!
-    A sourcecode Weblet in the demo application which serves the JSP pages as source listings
-    into the webapp and a proxying Weblet which allows proxying of resources hosted at another location
+
+        * A package weblet which allows the resource serving from resources located in the classpath!
+
+
+        * a proxying Weblet which allows proxying of resources hosted at another location
     like a resource server to be served transparently.
 
+        * A Web application weblet which allows the streaming of resources
+        from your local web application
+
+        * A demo sourcecode Weblet hosted in the examples application which serves the JSP pages as source listings
+    into the webapp
+
+[../images/various-weblets.png] <Figure 1: Various Weblets in action>
 
 
 * Programming <<<Weblets>>> a step by step introduction
 ** Why Your Own <<<Weblets>>>?
 
-    Sometimes it is desirable to build your own weblet containers, which serve special needs.
-    For instance, a custom container could serve resources the webapp way, with resources located
-    directly in the web application file structure.
-    Another one could stream resources from data sources like blobs in a database.
+    Sometimes it is desirable to build your own weblets, which serve special needs.
+    For instance, a custom weblet could serve resources from different datasources!
     Another one could redirect to a dedicated clustered resource server to handle
     high volume loads.
+
     The possibilities are endless.
     But before reaching the goal some effort has to be put into it.
 
@@ -60,13 +68,11 @@ public class SourcecodeWeblet extends Weblet {
 +----------------------------------------------------------------------------
 
 	The second callback point is the serviceStream method. It has been added in <<<Weblets>>> 1.1
-	to allow the streaming of resources into reporting systems or other batch like systems
+	to allow the streaming of resources into reporting systems or other batch like systems,
 	which can live inside the server but do not necessarily have a request scope at the time of calling.
 	But later to that. Under normal circumstances you can keep this method empty unless you need
 	your resources in such a system.
 
-	However if you work with <<<Weblets>>> it is recommended to use exactly those two objects
-	access the needed request and response data!
 
 ** Servicing a Weblet
 
@@ -142,7 +148,7 @@ public class SourcecodeWeblet extends Weblet {
    replaces them with the correct urls for calling our resources. Under normal circumstances nothing else has to be done in this regard.
    Normally if you program a weblet using the CopyStrategyImpl class should be enough to enable all your processing needs for resources.
    
-   However, there are cases where you need to write your own copy strategy, for instance 
+   However, there are cases when you need to write your own copy strategy, for instance 
 
 	[[]] if you need javascript on the fly compression or 
 
@@ -248,15 +254,17 @@ public class SourcecodeWeblet extends Weblet {
 
 
 	<<The central operation itself is the copy operation>>
-	In our example we have overriden the copy operation by decorating the incoming text with our own html code to beautify it a little bit.
+	In our example we have overriden the copy operation by decorating the incoming text with our own html code for beautification.
 
-	The second operation is the exposed method <<<wrapInputStream>>> which builds up the input stream chain
+	The second operation is the exposed method <<<wrapInputStream>>>, which builds up the input stream chain
 	for the reporting subsystem.
 	
-	If you run your own filter chains which you want to implement your own filter chains and have them exposed
+	If you run your own filter chains, which you want to implement your own filter chains and have them exposed
 	to other subsystems like reporting, then use this method. Normally it should be sufficient to
 	simply derive from CopyStrategyImpl and then implement your own copy operation!
 	
+
+
 
 +---------------------------------------------------------------------------------
 
@@ -353,6 +361,45 @@ public class SourcecodeWeblet extends Weblet {
 
 	For a caller outside nothing has changed everything still is an input stream.
 
+    The second operation <<<wrapInputStream>>> builds up the filter cascade for your input streams depending on the
+    mime type delivered. This method <must> be able to handle everything without referring to a request
+    or response object delivered by the underlying container.
+    The reason for this limitation is caused by the fact, that this method can be and will be called
+    only by the reporting subsystem of weblets.
+
+    Following code shows an example on how to implement such a filter cascade:
+
+
++---------------------------------------------------------------------------------
+	/**
+	 * wraps the input stream from our given request into another input stream
+	 *
+	 * @param webletName  the name of the affected weblet
+	 * @param mimetype the response mimetype
+	 * @param in our given input steam
+	 * @return  a wrapped input stream with our filterng cascade in place
+	 * @throws IOException in case of an error
+	 */
+	public InputStream wrapInputStream(String webletName, String mimetype, InputStream in) throws IOException {
+		if (isText(mimetype)) {
+			BufferedReader bufIn = new BufferedReader(mapResponseReader(webletName, new InputStreamReader(in)));
+			return new ReaderInputStream(bufIn);
+		}
+		return new BufferedInputStream(in);
+	}
++---------------------------------------------------------------------------------
+
+    This code example shows how to build up such a cascade. While the details themselves are not that important
+    (It basically builds up a parsing input chain for text files which do the weblets:<function> processing)
+    the important part is, <you have to use an input stream as incoming parameter> and <the outgoing
+    parameter must be another input stream>.
+
+    However one important point is, if you have to revert to readers for simpler text processing weblets
+    provides a helper class missing in the java api, which does the reader -> inputstream back-conversion
+    the <<<ReaderInputStream>>> class.
+
+
+
 ** Security
 
 	Lets face it, the world is insecure, web applications can insecure and serving resources opens security holes.
@@ -372,7 +419,7 @@ public class SourcecodeWeblet extends Weblet {
 	
 +---------------------------------------------------------------------------------	
 
-   This theoretically can serve every resource in your filesystem to the frontend.
+    This example theoretically can serve every resource in your filesystem to the frontend.
 
     Basically what we have to deal with are two security concerns we have to address:
 
@@ -382,7 +429,7 @@ public class SourcecodeWeblet extends Weblet {
 
 	For packaged resources a) should not be of importance unless you do not address b. Only resources located
 	in the package under normal circumstances can be affected.
-	However if you serve resources from the local filesystem a) becomes an issue. The problem lies in the servlet API
+	However if you serve resources from the local filesystem a) becomes an issue. The problem is caused by the servlet API
 	itself. While servlets and their configuration have good shields of not providing resources they should not provide, they
 	do not have those shields at their api level. You can access the path information  via the servlet api, but it does not block you
 	from accessing the WEB-INF directories or the context directories, jsp files are not translated into html either, this way.
@@ -402,12 +449,10 @@ public class SourcecodeWeblet extends Weblet {
 
 	This basically means your resources are located within a root which only can host resources, nothing else.
 	<<<Weblets>>> adresses jailbreak prevention already on container level (From the Weblet container implementation):
-	
+    (Note this code part is provided already nothing has to be implemented)	
 
 +---------------------------------------------------------------------------------
-	public void service(
-	        WebletRequest request,
-	        WebletResponse response) throws IOException, WebletException {
+	public void service(WebletRequest request, WebletResponse response) throws IOException, WebletException {
 	    Weblet weblet = getWeblet(request);
 
 	    String pathInfo = request.getPathInfo();
@@ -416,8 +461,7 @@ public class SourcecodeWeblet extends Weblet {
 
 	        //enhanced security check
 	        if (pathInfo != null && SandboxGuard.isJailBreak(pathInfo)) {
-	            throw new WebletException("Security Exception, the " + pathInfo +
-	                    " breaks out of the resource jail, no resource is served!");
+	            throw new WebletException(PATHINFO_EXCEPTION);
 	        }
 
 	        WebletConfig webConfig = weblet.getWebletConfig();
@@ -434,8 +478,7 @@ public class SourcecodeWeblet extends Weblet {
 	    if (allowedResources != null) {
 	         String filetype = StringUtils.getExtension(pathInfo);
 	         if (!allowedResources.contains(filetype.toLowerCase())) {
-	             throw new WebletException("Security Exception, the " + pathInfo +
-	                     "  resource cannot be served!");
+	             throw new WebletException(PATHINFO_EXCEPTION
 	            /* not allowed no content delivered */
 	         }
 	     }
@@ -463,10 +506,13 @@ public class SourcecodeWeblet extends Weblet {
 	    </init-param>
 +---------------------------------------------------------------------------------	
 
-	If this parameter is set then the file extension protection is on in "full force". Only
-	jpg and png extensions are allowed in this case no other file can be served from the filesystem.
+	If this parameter is set then the file extension protection is on in <<full force>>. Only
+	jpg and png extensions are allowed in this case no other file can be served from the filesystem,
+	also those extensions are handled in a case insenstive manner, which is important
+	for hosting systems not using case sensitive filenames.
+
 	For the programmer this comes free, you do not have to take care of it, all you have to do is
-	to make sure this option is enabled by default!
+	to make sure this option is enabled (which it is not by default)!
 	
     <<<Now what about directory exclusion>>>
 	For now Weblets has no dedicated mechanism for doing that, if you want to do that you can
@@ -477,16 +523,14 @@ public class SourcecodeWeblet extends Weblet {
 	
 		CopyStrategy copyProvider = new CopyStrategyImpl();
 		if (resourcePath.indexOf("WEB-INF/") != -1 || resourcePath.indexOf("WEB-INF\\") != -1) {
-			 throw new WebletException("Security Exception, the " + resourcePath +
-                     "  resource cannot be served!");
+			 throw new WebletException(PATHINFO_EXCEPTION);
 		}
 	    if (resourcePath.indexOf("META-INF/") != -1 || resourcePath.indexOf("META-INF\\") != -1) {
-	         throw new WebletException("Security Exception, the " + resourcePath +
-                     "  resource cannot be served!");
+	         throw new WebletException(PATHINFO_EXCEPTION);
 	    }
 
- 
 +---------------------------------------------------------------------------------	
+
 
 
 	Summary:
