@@ -22,18 +22,14 @@ public class CopyStrategyImpl implements CopyStrategy {
 	/**
 	 * wraps the input stream from our given request into another input stream
 	 *
-	 * @param webletName
-	 *            the name of the affected weblet
-	 * @param mimetype
-	 *            the response mimetype
-	 * @param in
-	 *            our given input steam
-	 * @return
-	 * @throws IOException
+	 * @param webletName  the name of the affected weblet
+	 * @param mimetype the response mimetype
+	 * @param in our given input steam
+	 * @return  a wrapped input stream with our filterng cascade in place
+	 * @throws IOException in case of an error
 	 */
 	public InputStream wrapInputStream(String webletName, String mimetype, InputStream in) throws IOException {
-		boolean isText = isText(mimetype);
-		if (isText) {
+		if (isText(mimetype)) {
 			BufferedReader bufIn = new BufferedReader(mapResponseReader(webletName, new InputStreamReader(in)));
 			return new ReaderInputStream(bufIn);
 		}

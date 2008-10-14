@@ -3,6 +3,8 @@ package net.java.dev.weblets;
 import net.java.dev.weblets.util.IWebletUtils;
 import net.java.dev.weblets.util.ServiceLoader;
 
+import java.io.InputStream;
+
 /**
  * @author Werner Punz Date: 30.12.2007 Time: 18:00:04
  */
@@ -33,7 +35,22 @@ public class WebletUtils {
 		return instance.getURL(weblet, pathInfo);
 	}
 
-	/**
+
+    /**
+     * Reporting case for weblets
+     * this methid must be able to deal with requests being null
+     * (Special testcases have to be applied to check this!
+     *
+     * @param weblet    the weblet name
+     * @param pathInfo  the pathinfo
+     * @param mimeType  the mimetype
+     * @return
+     */
+    public static InputStream getResourceAsStream(String weblet, String pathInfo, String mimeType) {
+        return instance.getResourceStream(weblet, pathInfo, mimeType);
+    }
+
+    /**
 	 * kind of a weird construct but definitely faster than doing all the calls over introspection, the internal contract is defined by the IJSFWebletsUtils
 	 * interface
 	 */

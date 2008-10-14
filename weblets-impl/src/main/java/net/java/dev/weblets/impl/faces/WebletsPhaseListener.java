@@ -67,6 +67,7 @@ public class WebletsPhaseListener implements PhaseListener {
 		// test stuff remove me once verified
 		WebletUtilsImpl utils = new WebletUtilsImpl();
 		WebletRequest req = null;
+        
 		/*
 		 * req = utils.getRequestFromPath(external.getRequest(), "/weblets-demo/faces/weblets/demo$1.0/welcome.js");
 		 * 

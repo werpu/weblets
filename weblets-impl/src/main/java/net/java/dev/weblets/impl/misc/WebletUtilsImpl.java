@@ -50,7 +50,24 @@ public class WebletUtilsImpl implements IWebletUtils {
 		return container.getResourceUri(weblet, pathInfo);
 	}
 
-	private void initError() {
+    /**
+     * Reporting case for weblets
+     * this methid must be able to deal with requests being null
+     * (Special testcases have to be applied to check this!
+     * 
+     * @param weblet    the weblet name
+     * @param pathInfo  the pathinfo
+     * @param mimeType  the mimetype
+     * @return
+     */
+    public InputStream getResourceStream(String weblet, String pathInfo, String mimeType) {
+        String resourcePath = getResource(weblet, pathInfo);
+        WebletRequest request = getRequestFromPath(null, resourcePath);
+        
+        return getResourceAsStream(request, mimeType);
+    }
+
+    private void initError() {
 		Log log = LogFactory.getLog(getClass());
 		log.error("The weblet container is null");
 		log.error("This is an indication that weblets is not initialized");

@@ -5,30 +5,26 @@
         <weblet-name>weblets.webapp</weblet-name>
         <weblet-class>net.java.dev.weblets.packaged.WebappWeblet</weblet-class>
         <!-- dedicated mime mapping override -->
-    	<mime-mapping>
-    		<extension>jpg</extension>
-    		<mime-type>image/jpeg</mime-type>
-    	</mime-mapping>
-    	<mime-mapping>
-    		<extension>png</extension>
-    		<mime-type>image/png</mime-type>
-    	</mime-mapping>
-    	<init-param>
-	      <param-name>resourceRoot</param-name>
-	      <param-value>resources</param-value>
-	    </init-param>
-	    <init-param>
-	      <param-name>allowedResources</param-name>
-	      <param-value> jpg, png </param-value>
-	    </init-param>
-
+        <mime-mapping>
+            <extension>jpg</extension>
+            <mime-type>image/jpeg</mime-type>
+        </mime-mapping>
+        <mime-mapping>
+            <extension>png</extension>
+            <mime-type>image/png</mime-type>
+        </mime-mapping>
+        <init-param>
+            <param-name>resourceRoot</param-name>
+            <param-value>resources</param-value>
+        </init-param>
+        <init-param>
+            <param-name>allowedResources</param-name>
+            <param-value>jpg, png</param-value>
+        </init-param>
     </weblet>
-	
-
     <weblet-mapping>
         <weblet-name>weblets.webapp</weblet-name>
         <url-pattern>/webapp/*</url-pattern>
     </weblet-mapping>
-    
 </weblets-config>    
     
