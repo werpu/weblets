@@ -10,7 +10,7 @@ Introduction to the API Patterns
      a url resolution stage, which intercepts the actual resource call and serves the
     resource from a given datasource.
 
-[../images/webletstages.png]
+[../images/figure1.png]
 
 * General Functions 
 
