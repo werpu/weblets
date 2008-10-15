@@ -66,12 +66,12 @@ Getting Started with Weblets
     <dependency>
        <groupId>net.java.dev.weblets</groupId>
        <artifactId>weblets-api</artifactId>
-       <version>1.0</version>
+       <version>1.1</version>
     </dependency>
     <dependency>
        <groupId>net.java.dev.weblets</groupId>
        <artifactId>weblets-impl</artifactId>
-       <version>1.0</version>
+       <version>1.1</version>
     </dependency>
 +---------------------------------------
 

@@ -256,11 +256,16 @@ Introduction into the <<<Weblets>>> Resource Packing
  
 * Additional Weblets
  
-	 As of Weblets 1.0 two options for weblets packaging are given,
-	 the Packaged Weblets class and the URLWeblet, as a late addition to 1.0.
-	 The URL weblet is a preview of what is up and coming post Weblets 1.0.
-	 It allows to stream any url based resource as weblet into your web application.
-	 Weblets 1.1 added an additional option the <<<Webapp Weblet>>>!
+	 As of Weblets 1.1 three options for weblets packaging are given,
+
+
+	 * The Packaged Weblets class as standard weblet sufficient for most cases
+
+	 * The URL weblet as proxying weblet. It allows to stream any url based resource as weblet into your web application.
+
+	 * The <<<Webapp Weblet>>> as option to host local resources within your web application
+
+	 []
 	
 	 
 ** Usage of the URLWeblet
@@ -293,6 +298,7 @@ Introduction into the <<<Weblets>>> Resource Packing
 ** Usage of the Webapp Weblet
 
 +------------------------------------
+
 <?xml version="1.0" encoding="UTF-8" ?>
 <weblets-config xmlns="http://weblets.dev.java.net/config">
 
@@ -319,12 +325,16 @@ Introduction into the <<<Weblets>>> Resource Packing
 	
 	ie:
 +------------------------------------	
+
 	<img src="<%=jspweblet.getURL("weblets.webapp", "/helloworld.png")%>" />
+
 +------------------------------------
 	Would stream the resource from:
 
 +------------------------------------		
+
 	<contextroot>/resources/helloworld.png
+
 +------------------------------------		
 	
 	Security: Security can be a big issue with Webapp weblets. If you set your resourceRoot to the context root
@@ -340,6 +350,7 @@ Introduction into the <<<Weblets>>> Resource Packing
  	Of course this is also possible the following configuration should give an example on how to do this
  
 +---------------------------------
+
 	<weblets-config xmlns="http://weblets.dev.java.net/config">
 
 		<weblet>
@@ -354,7 +365,7 @@ Introduction into the <<<Weblets>>> Resource Packing
 		</weblet>
 	
 		<weblet>
-			<weblet-name>weblets.remote</weblet-name>
+	        <weblet-name>weblets.remote</weblet-name>
 			<weblet-class>net.java.dev.weblets.packaged.URLWeblet</weblet-class>
 			<weblet-version>1.0</weblet-version>
 	      
@@ -376,6 +387,7 @@ Introduction into the <<<Weblets>>> Resource Packing
 		</weblet-mapping>
 	  
 	</weblets-config>
+
 +---------------------------------
  	<Code: Multiple Weblets per Configuration>
 
