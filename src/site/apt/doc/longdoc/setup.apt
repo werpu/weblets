@@ -239,8 +239,11 @@ Weblets Setup Guide
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
-    or the weblets servlet depending on your needs
 
+    <!--
+    or the weblets servlet depending on your needs
+    -->
+    
     <listener>
         <listener-class>net.java.dev.weblets.WebletsContextListener</listener-class>
     </listener>
@@ -270,20 +273,16 @@ Weblets Setup Guide
 
 +---------------------------------------------------------------------------------------
 
-    They key here is that Weblogic does not seem to have auto mimetype mapping, and
+    As it seems, Weblogic does not have auto mimetype mapping, and
     does not load the context listener automatically.
-    By Providing both. Weblets should run. Alternatively
-    the new Weblets mime type handling facilities also might work.
+    By Providing both, <<<Weblets>>> should run. Alternatively
+    the new <<<Weblets>>> mime type handling facilities also might work.
     Providing mime type mappings on bundle level!
 
 
     Thank you <<<Wim Bervoets>>> for providing this configuration in
     [http://javablog.be/java/setup-weblets-10-for-jsf-on-weblogic-81/].
     
-
-
-
-
 
 
 Summary

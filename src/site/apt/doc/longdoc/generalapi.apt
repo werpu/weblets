@@ -26,8 +26,10 @@ Introduction to the API Patterns
   <Code 1: Contract Functions/Methods>
 
 +--------------------------------------------------
+
     url(<webletname>,<path to resource>)
     resource(<webletname>,<path to resource>)
+
 +--------------------------------------------------
 
     In every framework supported, you always will find those in one way or the other.
@@ -41,11 +43,13 @@ Introduction to the API Patterns
     <Code 2: Difference between url and resource in a pseudo  API>
 
 +----------------------------------------------------------------------
+
         url ("org.myapp.html","/myresource.js")
         resolves to /my-webapp/faces/weblets/myapp/myresource.js
 
         resource( "org.myapp.html","/myresource.js")
         resolves to /faces/weblets/myapp/myresource.js
+
 +----------------------------------------------------------------------
 
 ===============================================================

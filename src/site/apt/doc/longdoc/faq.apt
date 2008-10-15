@@ -80,6 +80,9 @@ Weblets General FAQ
     If you are in a jsf environment and you seem to have any settings
     correct, yet it still fails to start, switch to the Weblets Servlet!
 
+    Also if you cannot find the cause of your problem, consult the mailing lists
+    the developers lurk in the weblets mailinglist, happy to answer every question.
+
 
 * I use JDK 1.3 and a rather old container I tried to integrate Weblets in a legacy site!
 
@@ -90,7 +93,9 @@ Weblets General FAQ
     Please send in patches over the bugtracker or mailing lists, every donation is welcome.
     Weblets is a non profit community project and thus is a two way street, you will
     get a lot but also every helping hand no matter how small the help is, is welcome!
+    Even documentation error reports and/or fixes are welcome!
     
+
 
 ===============================================================
 

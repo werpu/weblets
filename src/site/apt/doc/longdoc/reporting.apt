@@ -97,10 +97,13 @@ Introduction
 
 
 +-------------------------------------------
+
     InputStream istr = WebletUtils.getResourceAsStream(<weblet name>, <resource path>, mimetype);
+
 +-------------------------------------------
 
     <Code 1: Resource Streaming via weblets>
+
 
     Note that in Weblets 1.1 the mime types still have to be determined manually for the reporting
     case! This limitation might be removed for later versions!
@@ -109,6 +112,7 @@ Introduction
     and can deal with it like you would do with any other datasource in a reporting system.
     The call can be done outside of a regular request it is not dependend on an actual request being present.
     However <<<Weblets>>> itself must be preinitialized (aka. being started within a web container!)
+
 
 * Reporting Server
 
