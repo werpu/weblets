@@ -103,15 +103,14 @@
     <url>scm:svn:https://weblets.dev.java.net/svn/weblets/tags/weblets-1.0</url>
   </scm>
 
-
+<!--
   <modules>
     <module>weblets-api</module>
     <module>weblets-impl</module>
     <module>weblets-exampleweblet</module>  
     <module>weblets-demo</module>
   </modules>
-
-
+-->
   <build>
     <plugins>
       <plugin>
