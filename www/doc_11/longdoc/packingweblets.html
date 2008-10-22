@@ -217,131 +217,97 @@ function</p>
 &lt;/weblets-config&gt;    
 </pre>
 </div>
-<p>As you can see the initialization code for a Weball weblet is identical to the the normal Weblets. Resources then are streamed from <i>contextroot</i>
-/<i>resourceRoot</i>
-!</p>
-<p>ie: +------------------------------------ </p>
-<p><i>img src=&quot;&lt;%=jspweblet.getURL(&quot;weblets.webapp&quot;, &quot;/helloworld.png&quot;)%</i>
-&quot; /&gt;</p>
-<div class="source"><pre>        Would stream the resource from:
+<p>As you can see the initialization code for a Weball weblet is identical to the the normal Weblets. # Resources then are streamed from &lt;contextroot&gt;/&lt;resourceRoot&gt;!</p>
+<p>ie:</p>
+<div class="source"><pre>
+        &lt;img src=&quot;&lt;%=jspweblet.getURL(&quot;weblets.webapp&quot;, &quot;/helloworld.png&quot;)%&gt;&quot; /&gt;
 </pre>
 </div>
-<p><i>contextroot</i>
-/resources/helloworld.png</p>
-<div class="source"><pre>        
-        Security: Security can be a big issue with Webapp weblets. If you set your resourceRoot to the context root
-        you can basically expose every file there is except the ones in the META-INF and WEB-INF dirs.
-        It is advicable to either set your resourceRoot to a sandbox directory, which is then under jailbreak protection
-        and host only resources there.
-        Or to use the weblets whitelist feature for the resource types you want to expose!
-        
-        
-
-* Multiple Weblets per weblets config
- 
-        Of course this is also possible the following configuration should give an example on how to do this
- </pre>
+<p>Would stream the resource from:</p>
+<div class="source"><pre>
+        &lt;contextroot&gt;/resources/helloworld.png
+</pre>
 </div>
-<p><i>weblets-config xmlns=&quot;http://weblets.dev.java.net/config&quot;</i>
-</p>
-<p><i>weblet</i>
- <i>weblet-name</i>
-weblets.demo<i>/weblet-name</i>
- <i>weblet-class</i>
-net.java.dev.weblets.packaged.PackagedWeblet<i>/weblet-class</i>
- <i>weblet-version</i>
-1.0<i>/weblet-version</i>
-</p>
-<p><i>init-param</i>
- <i>param-name</i>
-package<i>/param-name</i>
- <i>param-value</i>
-net.java.dev.weblets.demo.resources<i>/param-value</i>
- <i>/init-param</i>
- <i>/weblet</i>
-</p>
-<p><i>weblet</i>
- <i>weblet-name</i>
-weblets.remote<i>/weblet-name</i>
- <i>weblet-class</i>
-net.java.dev.weblets.packaged.URLWeblet<i>/weblet-class</i>
- <i>weblet-version</i>
-1.0<i>/weblet-version</i>
-</p>
-<p><i>init-param</i>
- <i>param-name</i>
-rootaddress<i>/param-name</i>
- <i>param-value</i>
-http://localhost:8080/test4Web<i>/param-value</i>
- <i>/init-param</i>
-</p>
-<p><i>/weblet</i>
-</p>
-<p><i>weblet-mapping</i>
- <i>weblet-name</i>
-weblets.demo<i>/weblet-name</i>
- <i>url-pattern</i>
-/demo/*<i>/url-pattern</i>
- <i>/weblet-mapping</i>
-</p>
-<p><i>weblet-mapping</i>
- <i>weblet-name</i>
-weblets.remote<i>/weblet-name</i>
- <i>url-pattern</i>
-/remote/*<i>/url-pattern</i>
- <i>/weblet-mapping</i>
-</p>
-<p><i>/weblets-config</i>
-</p>
-<div class="source"><pre>        &lt;Code: Multiple Weblets per Configuration&gt;
-
-
-* Multiple Weblets Config Files
-
-    Since &lt;&lt;&lt;Weblets&gt;&gt;&gt; 1.1 it has become possible to have multiple configuration files
-    within one weblets package.
-
-    The &lt;&lt;&lt;Weblets&gt;&gt;&gt; config files themselves are the same as with a one file configuration.
-    Certain naming conventions, however have to be applied to enable this possibility.
-
-    * There must be at least one META-INF/&lt;&lt;&lt;weblets-config.xml&gt;&gt;&gt; or META-INF/Manifest.mf this marks the package location of all other
-    &lt;&lt;&lt;Weblets&gt;&gt;&gt; configuration files.
-
-    * The naming of the configuration files must follow the regexp pattern META-INF\/.*weblets-config.*\.xml
-    IE: &lt;&lt;&lt;META-INF/1-weblets-config-1.xml&gt;&gt;&gt; is a valid name &lt;&lt;&lt;META-INF/myconfig.xml&gt;&gt;&gt; however is not!
-
-* Mime Mapping
-
-        Weblets per default uses the default mimetype of the underlying container by serving resources, however some containers
-        do not have their own mimetypes or you want to set your own mimetypes for certain files on a resource bundle
-        level. Since Weblets 1.1, it is possible to do mime type overrides for serving resources.
-        
-        You simply can add or override your own mimetypes the following way:
-        </pre>
+<p>Security: Security can be a big issue with Webapp weblets. If you set your resourceRoot to the context root you can basically expose every file there is except the ones in the META-INF and WEB-INF dirs. It is advicable to either set your resourceRoot to a sandbox directory, which is then under jailbreak protection and host only resources there. Or to use the weblets whitelist feature for the resource types you want to expose!</p>
 </div>
-<p><i>weblet</i>
- <i>weblet-name</i>
-weblets.webapp<i>/weblet-name</i>
- <i>weblet-class</i>
-net.java.dev.weblets.packaged.WebappWeblet<i>/weblet-class</i>
- <i>!-- dedicated mime mapping override --</i>
- <i>mime-mapping</i>
- <i>extension</i>
-jpg<i>/extension</i>
- <i>mime-type</i>
-image/jpeg<i>/mime-type</i>
- <i>/mime-mapping</i>
- <i>mime-mapping</i>
- <i>extension</i>
-png<i>/extension</i>
- <i>mime-type</i>
-image/png<i>/mime-type</i>
- <i>/mime-mapping</i>
- <i>/weblet</i>
- +--------------------------------- <i>Code: Mime Type overrides</i>
+</div>
+<div class="section"><h3>Multiple Weblets per weblets config</h3>
+<p>Of course this is also possible the following configuration should give an example on how to do this</p>
+<div class="source"><pre>
+        &lt;weblets-config xmlns=&quot;http://weblets.dev.java.net/config&quot;&gt;
+
+                &lt;weblet&gt;
+                        &lt;weblet-name&gt;weblets.demo&lt;/weblet-name&gt;
+                        &lt;weblet-class&gt;net.java.dev.weblets.packaged.PackagedWeblet&lt;/weblet-class&gt;
+                        &lt;weblet-version&gt;1.0&lt;/weblet-version&gt;
+              
+                        &lt;init-param&gt;
+                                &lt;param-name&gt;package&lt;/param-name&gt;
+                                &lt;param-value&gt;net.java.dev.weblets.demo.resources&lt;/param-value&gt;
+                        &lt;/init-param&gt;
+                &lt;/weblet&gt;
+        
+                &lt;weblet&gt;
+                &lt;weblet-name&gt;weblets.remote&lt;/weblet-name&gt;
+                        &lt;weblet-class&gt;net.java.dev.weblets.packaged.URLWeblet&lt;/weblet-class&gt;
+                        &lt;weblet-version&gt;1.0&lt;/weblet-version&gt;
+              
+                        &lt;init-param&gt;
+                                &lt;param-name&gt;rootaddress&lt;/param-name&gt;
+                                &lt;param-value&gt;http://localhost:8080/test4Web&lt;/param-value&gt;
+                        &lt;/init-param&gt;
+        
+                &lt;/weblet&gt;
+        
+                &lt;weblet-mapping&gt;
+                        &lt;weblet-name&gt;weblets.demo&lt;/weblet-name&gt;
+                        &lt;url-pattern&gt;/demo/*&lt;/url-pattern&gt;
+                &lt;/weblet-mapping&gt;
+        
+                &lt;weblet-mapping&gt;
+                        &lt;weblet-name&gt;weblets.remote&lt;/weblet-name&gt;
+                        &lt;url-pattern&gt;/remote/*&lt;/url-pattern&gt;
+                &lt;/weblet-mapping&gt;
+          
+        &lt;/weblets-config&gt;
+</pre>
+</div>
+<p><i>Code: Multiple Weblets per Configuration</i>
+</p>
+</div>
+<div class="section"><h3>Multiple Weblets Config Files</h3>
+<p>Since <tt>Weblets</tt>
+ 1.1 it has become possible to have multiple configuration files within one weblets package.</p>
+<p>The <tt>Weblets</tt>
+ config files themselves are the same as with a one file configuration. Certain naming conventions, however have to be applied to enable this possibility.</p>
+<ul><li>There must be at least one META-INF/<tt>weblets-config.xml</tt>
+ or META-INF/Manifest.mf this marks the package location of all other <tt>Weblets</tt>
+ configuration files.</li>
+<li>The naming of the configuration files must follow the regexp pattern META-INF\/.*weblets-config.*\.xml IE: <tt>META-INF/1-weblets-config-1.xml</tt>
+ is a valid name <tt>META-INF/myconfig.xml</tt>
+ however is not!</li>
+</ul>
+</div>
+<div class="section"><h3>Mime Mapping</h3>
+<p>Weblets per default uses the default mimetype of the underlying container by serving resources, however some containers do not have their own mimetypes or you want to set your own mimetypes for certain files on a resource bundle level. Since Weblets 1.1, it is possible to do mime type overrides for serving resources.</p>
+<p>You simply can add or override your own mimetypes the following way:</p>
+<div class="source"><pre>        &lt;weblet&gt;
+                &lt;weblet-name&gt;weblets.webapp&lt;/weblet-name&gt;
+                &lt;weblet-class&gt;net.java.dev.weblets.packaged.WebappWeblet&lt;/weblet-class&gt;
+                &lt;!-- dedicated mime mapping override --&gt;
+                &lt;mime-mapping&gt;
+                        &lt;extension&gt;jpg&lt;/extension&gt;
+                        &lt;mime-type&gt;image/jpeg&lt;/mime-type&gt;
+                &lt;/mime-mapping&gt;
+                &lt;mime-mapping&gt;
+                        &lt;extension&gt;png&lt;/extension&gt;
+                        &lt;mime-type&gt;image/png&lt;/mime-type&gt;
+                &lt;/mime-mapping&gt;    
+        &lt;/weblet&gt;</pre>
+</div>
+<p><i>Code: Mime Type overrides</i>
 </p>
 <p>The optional mime mapping parameters provide whatever mime mapping overrides you need in your resource bundle!</p>
-</div>
 </div>
 <div class="section"><h3>Security</h3>
 <p>Weblets itself come with a few security addons which try to prevent jailbreaking from programs out of the sandbox the weblets provide for serving resources. Additionally you can add file locks so that only certain resources can be served. As of Weblets 1.1 file locking has been added optionally, if it is left out no file type locks are enabled and all resources within the Weblet resource pack can be served.</p>
