@@ -321,9 +321,11 @@ Introduction into the <<<Weblets>>> Resource Packing
  
 	As you can see the initialization code for a Weball weblet is identical to the 
 	the normal Weblets.
-	Resources then are streamed from <contextroot>/<resourceRoot>!
+	# Resources then are streamed from \<contextroot\>/\<resourceRoot\>!
 	
 	ie:
+	
+	
 +------------------------------------	
 
 	<img src="<%=jspweblet.getURL("weblets.webapp", "/helloworld.png")%>" />

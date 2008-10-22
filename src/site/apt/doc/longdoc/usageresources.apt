@@ -22,8 +22,8 @@ Resources Weblets Usage Guide
 
 ** <<<Weblets>>> and Javascript
 
-    To support resource cross refencing in a neutral manner, <<<Weblets>>> adds another parsing step to
-    generic text resources which preparses the resource for the occurence of the contractual functions
+    To support resource cross referencing in a neutral manner, <<<Weblets>>> adds another parsing step to
+    generic text resources which pre-parses the resource for the occurrence of the contractual functions
     and then replaces them on the fly with the weblet url calls.\
     The browser, after the parsing step, can resolve the urls
     and can trigger the second weblet stage which serves the resources!
