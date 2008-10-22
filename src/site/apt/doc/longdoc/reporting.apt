@@ -18,27 +18,27 @@ Introduction
     []
 
 
-    All of the above metioned methods can be covered by <<<Weblets>>> via separate access methods!
+    All of the above mentioned methods can be covered by <<<Weblets>>> via separate access methods!
 
 * On Demand Reporting
 
 
-    This is the easiest method. Basically an on demand report is generated on the fly within a single request.
+    The easiest method, basically an on demand report, is generated on the fly within a single request.
 
 [../images/weblets-reporting-1.png] <Figure 1.: On Demand Reporting>
 
     As we can see in <<<Figure 1>>> <<<Weblets>>> supports this reporting case with its own frontend apis.
-    <<<Weblets>>> always serves a valid URL String to the resource via its frontend apis, which then can
+    <<<Weblets>>> always serves a valid URL String to the resource, which then can
     be processed by the standard java URL api of Java for further processing.
 
 
-    The following picture displays the execution flow for this reporting usecase:
+    The following picture displays the execution flow for this reporting case:
 
 [../images/weblets-reporting-2.png] <Figure 2. On Demand Reporting Workflow>
 
-    As displayed, only the calls to the frontend api are utilized, the
+    As displayed, only the calls to the frontend API are utilized. The
     other parts are pure Java calls!!
-    To enable the reporting capabilities in this case the WebletUtils class can be used with its
+    To enable the reporting capabilities in this case the <<<WebletUtils>>> class can be used with its
     helper methods.
 
 
@@ -59,14 +59,15 @@ Introduction
 
 
     <<In server reporting>> is a common reporting case. Longer running reports are triggered and executed
-    within the same process space hosting also the web application. This is very common in small to medium size web
-    applications, delivering reports which take longer, than tolerable for a single
-    user request. Also asynchronously periodically generated reports (like static pages of a CMS system or downloadable
+    within the same process space which also hosts the running web application. 
+	This is very common in small to medium size web applications, delivering reports which take longer, 
+	than tolerable for a single user request. 
+	
+	Also asynchronously periodically generated reports (like static pages of a CMS system or downloadable
     monthly PDF reports) are  usecases for this reporting type.
-    Often it is not needed to run a separate reporting server
-    or running one one would be overkill for the web application installation.
+    Often it is not needed to run a separate reporting server or running one one would be overkill for the web application installation.
 
-    In <<<Weblets 1.1>>> support for in server reporting has been added. Currently this feature only works
+    As of <<<Weblets 1.1>>> support for in server reporting has been added. Currently this feature only works
     with <<<Packaged Weblets>>>. Additional Weblet implementations might be enabled for this feature in future
     revisions!
 
@@ -82,16 +83,18 @@ Introduction
     hence there is no servlet API available,
     although the container itself serves the servlet API!
 
-    <<<Weblets>>> adds support  by the internal addition of a <<<serviceStream>>> method on
-    the weblet api level.
+    <<<Weblets>>> adds support  via the addition of a <<<serviceStream>>> method on
+    the Weblet api level.
     Additionally on the copy provider level the input chain creation method  <<<wrapInputStream>>> is provided.
 
     <<<Note if you do not program your own Weblets, only the serviceStream method must be a concern to you.>>>
 
     (See {{{./programmingweblets.html} Programmers Documentation: Programming Weblets }} for further reference on both API calls)
 
-    As we said before only the <<<serviceStream >>>method has to be applied by the user trying to trigger
-    weblets over asynchronous reporting calls.
+    As we said before only the <<<serviceStream >>>method has to be applied internally by the user trying to trigger
+    weblets over asynchronous reporting calls. However, <<<Weblets>>> shields the user from the proper application
+	of the entire internal call chain. As usual, a helper method defined in the <<<WebletUtils>>> can be called
+	to obtain the proper behavior. 
 
     Following code example displays how to call apply the Weblets API to asynchronous reporting calls:
 
@@ -105,17 +108,16 @@ Introduction
     <Code 1: Resource Streaming via weblets>
 
 
-    Note that in Weblets 1.1 the mime types still have to be determined manually for the reporting
+    Note that in <<<Weblets 1.1>>> the mime types still have to be determined manually for the reporting
     case! This limitation might be removed for later versions!
 
-    The advantage of this method is you can get a stream which points to the post processed resource
-    and can deal with it like you would do with any other datasource in a reporting system.
-    The call can be done outside of a regular request it is not dependend on an actual request being present.
+    The advantage is, you can get a stream which points to the post processed resource
+    and you can do the processing in your report like you would do with any other datasource.
+    The call can be done outside of a regular request it is not dependent on an actual request being present.
     However <<<Weblets>>> itself must be preinitialized (aka. being started within a web container!)
 
 
 * Reporting Server
-
 
 ** Introduction
 
@@ -134,9 +136,9 @@ Introduction
 ** Problem and solution
 
     Admittably currently <<<Weblets>>> support for this usecase is not very extensive.
-    There are no dedicated helper classes to support this case due to its remote nature.
+    There are no dedicated helper classes which make things easier for us.
 
-    But, since Weblets 1.0 there haven been several constructs in place aiding in the integration
+    But, since <<<Weblets 1.0>>> there haven been several constructs in place aiding in the integration
     of this reporting case, although probably adjustments on the build level are required!
 
 
@@ -151,13 +153,12 @@ Introduction
     
     This method can be used but is error prone. Every version change of your resource hosting source
     needs readjustments on the reporting server part!
-    But this solution is the only viable one, if you cannot alter or tamper
-    with the web configuration of your reporting server, or if your reporting
-    server does not run within a web application!
+    But this solution is the only viable one, if you cannot alter the web configuration of your reporting server, 
+	or if your reporting server does not run within a web container!
 
 *** Solution 2, utilizing the URL Weblet and dual packaging!
 
-    This solution works if your reporting server runs within the scope of a dedicated
+    This solution works, if your reporting server runs within the scope of a dedicated
     web application and you have write access to the configuration!
 
     To overcome the versioning problem we can use the URL Weblet which has been introduced
@@ -170,7 +171,7 @@ Introduction
     For the application programmer utilizing this Weblet, it looks exactly like a local one,
     only the generated URL patterns redirect to remotely hosted resources!
 
-    The advantage of this method is, that resources can be outsourced to a dedicated resource
+    The advantage of this method is, resources can be outsourced to a dedicated resource
     serving server, without having to change a single line of code.
 
     (See also {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }} for further documentation)
@@ -180,7 +181,7 @@ Introduction
     We then can use our frontend APIs to gain access to the correct resources and then use,
     the IO and URL apis from java to get a proper input stream on the resource!
 
-    By applying this solution we have pushed the entire configuration aspects
+    By application of this solution we have pushed the entire configuration aspects
     down to one single point of configuration which theoretically could be handled
     by a centralized build process!
 
@@ -190,9 +191,9 @@ Introduction
 
 *** Synopsis of both solutions
 
-    As we can see neither solution to this problem is ideal, however Solution 2 is recommendable over
+    As we can see neither solution to this problem is ideal, however solution 2 is recommendable over
     the direct url generation solution. If you can gain access to the web configuration and can
-    add <<<Weblets>>> to your reporting server configuration, use the proxying solution!
+    add <<<Weblets>>> to your reporting server configuration, <<use the proxying solution>>!
 
 
 =======================================================================
