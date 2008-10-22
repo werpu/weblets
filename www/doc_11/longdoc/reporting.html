@@ -40,7 +40,8 @@
 <p>As of <tt>Weblets 1.1</tt>
  support for in server reporting has been added. Currently this feature only works with <tt>Packaged Weblets</tt>
 . Additional Weblet implementations might be enabled for this feature in future revisions!</p>
-<img src="../images/weblets-reporting-3.png" alt="<i>Figure 3. In Server Reporting</i>
+
+<img src="../images/2-weblets-reporting-3.png" alt="<i>Figure 3. In Server Reporting</i>
 " /></div>
 <div class="section"><h4>Problem and Solution</h4>
 <p>This kind of reporting causes one major problem: The reports run most of the times asynchronously, hence there is no servlet API available, although the container itself serves the servlet API!</p>
@@ -73,7 +74,7 @@ method has to be applied internally by the user trying to trigger weblets over a
 <div class="section"><h4>Introduction</h4>
 <p>A dedicated reporting server is a very common use case for big installations or cluster systems. The idea behind it is to outsource the reporting to a dedicated installation only doing reporting. Advantages of such systems are:</p>
 <ul><li>Reporting gets its own process space or even a physical machine and cannot compromise the other subsystems</li>
-<li>the processor load is given fully to the web application in case of dedicated physical reporting servers.<img src="../images/weblets-reporting-4.png" alt="<i>Figure 4: Dedicated Reporting Server</i>
+<li>the processor load is given fully to the web application in case of dedicated physical reporting servers.<img src="../images/2-weblets-reporting-4.png" alt="<i>Figure 4: Dedicated Reporting Server</i>
 " /></li>
 </ul>
 </div>
