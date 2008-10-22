@@ -6,76 +6,99 @@
   <body>
     <div class="app" >
       <div class="section"><h2>Introduction into the weblets API</h2>
-<p>Since version 1.1 a programming API is exposed to program your own Weblets. Weblets uses a servlet like internal API to handle the resource loading. The Resource Loading is a multi step process covered by this API. As of 1.1 only following Weblets are predefined:</p>
-<ul><li>A package weblet which allows the resource serving from resources located in the classpath!</li>
-<li>a proxying Weblet which allows proxying of resources hosted at another location like a resource server to be served transparently.</li>
+<p>Since version 1.1 a programming <tt>API</tt>
+ is exposed to program your own <tt>Weblets</tt>
+. <tt>Weblets</tt>
+ uses a servlet like internal API to handle the resource loading. As of <tt>Weblets</tt>
+ 1.1 following <tt>Weblets</tt>
+ are predefined:</p>
+<ul><li>A package Weblet which allows the resource serving from resources located in the classpath!</li>
+<li>a proxying Weblet which allows proxying of resources hosted at another location like a resource server, to be served transparently.</li>
 <li>A Web application weblet which allows the streaming of resources from your local web application</li>
-<li>A demo sourcecode Weblet hosted in the examples application which serves the JSP pages as source listings into the webapp</li>
+<li>A demo sourcecode Weblet hosted in the examples application, which serves the JSP pages as source listings into the webapp</li>
 </ul>
 <img src="../images/various-weblets.png" alt="<i>Figure 1: Various Weblets in action</i>
 " /><div class="section"><h3>Programming <tt>Weblets</tt>
  a step by step introduction ** Why Your Own <tt>Weblets</tt>
 ?</h3>
-<p>Sometimes it is desirable to build your own weblets, which serve special needs. For instance, a custom weblet could serve resources from different datasources! Another one could redirect to a dedicated clustered resource server to handle high volume loads.</p>
-<p>The possibilities are endless. But before reaching the goal some effort has to be put into it.</p>
+<p>Sometimes it is desirable to build custom <tt>Weblets</tt>
+ which fulfill special purposes. For instance, a custom Weblet could serve resources from different datasources! Another one could redirect to a dedicated clustered resource server to handle high volume loads.</p>
+<p>The possibilities are endless. But before reaching the goal, some effort has to be put into it.</p>
 <div class="section"><h4>Basic Structures of a Weblet</h4>
 <p><tt>Weblets</tt>
- follows an api which is very similar to the servlet API. A basic hello world weblet would look like this:</p>
-<div class="source"><pre>public class SourcecodeWeblet extends Weblet {
+ follows an API which is very similar to the servlets. A basic hello world weblet would look like this:</p>
+<div class="source"><pre>
+        public class SourcecodeWeblet extends Weblet {
 
-                public void service(
-                    WebletRequest request,
-                    WebletResponse response) throws IOException {
-
-                //hello world, we have to do something in here
-            }
+                        public void service(WebletRequest request, WebletResponse response) throws IOException {
+                        //HELLO WORLD: we have to do something in here
+                        }
         
-            public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException {
-                                return null; 
-                }
-        
-}</pre>
+                        public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException {
+                                        return null; 
+                        }
+        }
+        </pre>
 </div>
-<p>The central callback point is the method service, with a request and response object very similar to the servlet request and response objects. (In fact in most containers they just build a facade over exactly those two objects adding certain behavioral methods to the request response Objects of the underlying servlet container.</p>
+<p>The central callback point is the method <tt>service</tt>
+, with a request and response object very similar to the servlet request and response objects. (<b>In fact in most containers they just build a facade over exactly those two objects adding certain behavioral methods to the request response objects of the underlying servlet container.</b>
+)</p>
 <div class="source"><pre>    public void service WebletRequest request, WebletResponse response) throws IOException;</pre>
 </div>
 <p>The second callback point is the serviceStream method. It has been added in <tt>Weblets</tt>
- 1.1 to allow the streaming of resources into reporting systems or other batch like systems, which can live inside the server but do not necessarily have a request scope at the time of calling. But later to that. Under normal circumstances you can keep this method empty unless you need your resources in such a system.</p>
+ 1.1 to allow the streaming of resources into reporting or other batch like systems, which can live inside the server but do not necessarily have a request scope at the time of calling. But later to that. Under normal circumstances you can keep this method empty.</p>
 </div>
 <div class="section"><h4>Servicing a Weblet</h4>
-<p>We have the request and response objects but we do not know how to handle the resources. Theoretically we now could do it manually by just streaming resources like we would do it in a servlet. Yes this would work, but we would lose things like browser cache control, versioning etc...</p>
+<p>We have the request and response objects but we do not know how to handle the resources. Theoretically we could do it manually by just streaming the resources via the plain servlet API.</p>
+<p>Yes, this would work, but we would lose things like browser cache control, versioning etc...</p>
 <p>There is a better way. <tt>Weblets</tt>
  provides its own API for streaming resources.</p>
 <div class="source"><pre>
         public class SourcecodeWeblet extends Weblet {
 
-                    public void service(WebletRequest request, WebletResponse response) throws IOException {
-                    String resourcePath = _resourceRoot + request.getPathInfo();
-                    CopyStrategy CopyStrategy = new CopyStrategyImpl();
-                    URL url = WebletResourceloadingUtils.getInstance().getResourceUrl(request, resourcePath);
-                    WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(),
-                            request, response, url, CopyStrategy);
+                public void service(WebletRequest request, WebletResponse response) throws IOException {
+                        String resourcePath = _resourceRoot + request.getPathInfo();
+                        CopyStrategy CopyStrategy = new CopyStrategyImpl();
+                        URL url = WebletResourceloadingUtils.getInstance().getResourceUrl(request, resourcePath);
+                        WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(),
+                                request, response, url, CopyStrategy);
                 }
-        }</pre>
+        }
+        </pre>
 </div>
-<p>This is the simplest case of a packaged weblet. What happens here, is that we basically generate our path from the path info part of our weblet request (the weblet name itself already is covered by the weblet name part and calls our weblet itself) and then we use the default copy strategy, which is a simple file copy on binary files and <tt>Weblets</tt>
- notation parsing and replacing on text files to copy the files. The browser cache control part and mime type handling part, is handled before the copying in the WebletResourceloadingUtils class.</p>
-<p>The Versioning notation etc... all comes from request.getPathInfo();</p>
-<p>Now we can see there are two several points for interference, the service part as central resource loading part the input url or input stream as central root of your resource which can be any location, and the CopyStrategy implementation which does the central copying from an input source to an output source.</p>
+<p>This is the simplest case of a packaged weblet. What happens here, is that the result resource path is generated from the path info part of our weblet request (the weblet name itself already is covered by the weblet name part and calls our weblet itself) and then the default copy strategy ise used for serving the resources. The default copy strategy is the standard implementation of the copy behavior we need. It implements a simple copy on binary files and does the frontend api postprocessing on textual files like CSS and JavaScript!</p>
+<p>The browser cache control part and mime type handling part, is handled before the copying in the <tt>WebletResourceloadingUtils</tt>
+ class.</p>
+<p>The Versioning notation is handled within the <tt>request.getPathInfo()</tt>
+ call!</p>
+<p>Now we can see there are three entry points for programmatic interference by the programmer, </p>
+<ul><li>the service part as central resource loading part</li>
+<li>the input url or input stream as central root of your resource which can be any location,</li>
+<li>and the CopyStrategy implementation which does the central copying from an input source to an output source.</li>
+</ul>
 <p>Most of the times you just have to tinker with the input sources to reach a certain result, for instance a weblet which serves resources directly from a webapp has to use a different mechanism to define the root of the resource</p>
-<div class="source"><pre>        URL url = httpRequest.getSession().getServletContext().getResource(&quot;/&quot;+resourcePath);
-        WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyStrategy);</pre>
+<div class="source"><pre>
+        URL url = httpRequest.getSession().getServletContext().getResource(&quot;/&quot;+resourcePath);
+        WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyStrategy);
+        </pre>
 </div>
 <p>Other input source types would be feasible for instance a proxying of servers would be possible the following way:</p>
-<div class="source"><pre>        URL url = new URL(&quot;http://www.john-doe.com/&quot;+resourcePath);
-        WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyStrategy);</pre>
+<div class="source"><pre>
+        URL url = new URL(&quot;http://www.john-doe.com/&quot;+resourcePath);
+        WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyStrategy);
+        </pre>
 </div>
 <p>This would stream in resources from a remote server by using the facilities the url class provides.</p>
-<p>Now what happens if we have a data source which is not url-able. There would be several ways, the apache <tt>commons-vfs</tt>
+<p>Now what happens if we have a data source which is not url-able? Several ways to achieve the wanted results are applicapable:</p>
+<ul><li>the apache <tt>commons-vfs</tt>
  provides a way to <tt>url</tt>
-ify every resource there is via a vfs like system. The other way would be to use the internal apis for streaming from input streams from the WebletResourceLoadingUtils class.</p>
-<div class="source"><pre>        loadResourceFromStream(WebletConfig config, WebletRequest request, WebletResponse response, CopyStrategy copyStrategy, InputStream in,
-                                long resourceLastmodified) throws IOException;</pre>
+, every resource handled by it can be described as a vfs like URL!</li>
+<li>The other way would be to use the internal apis for streaming from input streams from the WebletResourceLoadingUtils class.</li>
+</ul>
+<div class="source"><pre>
+        loadResourceFromStream(WebletConfig config, WebletRequest request, WebletResponse response, CopyStrategy copyStrategy, InputStream in,
+                                long resourceLastmodified) throws IOException;
+                                </pre>
 </div>
 <p>This method allows the same as with our URLs as inputs, but replaces the URL with an input stream and a resourceLastModified parameter.</p>
 </div>
@@ -94,78 +117,77 @@ ify every resource there is via a vfs like system. The other way would be to use
 <div class="source"><pre>
         public class SourcecodeCopyStrategy extends CopyStrategyImpl implements CopyStrategy {
 
-            public void copy(String webletName, String mimeType, InputStream in, OutputStream out) throws IOException {
-                copyText(webletName, new InputStreamReader(in), new OutputStreamWriter(out));
-            }
-
-            protected void copyText(String webletName, Reader in, Writer out) throws IOException {
-                byte[] buffer = new byte[2048];
-                int len = 0;
-                int total = 0;
-                BufferedReader bufIn = new BufferedReader(mapResponseReader(webletName, in));
-                PrintWriter bufOut = new PrintWriter(mapResponseWriter(out));
-                try {
-                    writehttphead(bufOut);
-                    writeResource(bufIn, bufOut);
-                    writehttpbottom(bufOut);
-                } finally {
-                    bufIn.close();
-                    bufOut.close();
+                public void copy(String webletName, String mimeType, InputStream in, OutputStream out) throws IOException {
+                        copyText(webletName, new InputStreamReader(in), new OutputStreamWriter(out));
                 }
-            }
 
-            private void writehttpbottom(PrintWriter writer) {
-                writer.write(&quot;\n&quot;);
-                writer.write(&quot;&lt;/pre&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;&quot;);
-            }
-
-            private void writeResource(BufferedReader reader, PrintWriter writer) throws IOException {
-                while (reader.ready()) {
-                    String line = reader.readLine();
-                    line = line.replaceAll(&quot;&lt;&quot;, &quot;&amp;lt;&quot;).replaceAll(&quot;&gt;&quot;, &quot;&amp;gt;&quot;);
-                    writer.write(line);
-                    writer.println();
+                protected void copyText(String webletName, Reader in, Writer out) throws IOException {
+                        byte[] buffer = new byte[2048];
+                        int len = 0;
+                        int total = 0;
+                        BufferedReader bufIn = new BufferedReader(mapResponseReader(webletName, in));
+                        PrintWriter bufOut = new PrintWriter(mapResponseWriter(out));
+                        try {
+                                writehttphead(bufOut);
+                                writeResource(bufIn, bufOut);
+                                writehttpbottom(bufOut);
+                        } finally {
+                                bufIn.close();
+                                bufOut.close();
+                        }
                 }
-            }
 
-            private void writehttphead(PrintWriter writer) {
-                writer.write(&quot;&lt;!DOCTYPE HTML PUBLIC \&quot;-//W3C//DTD HTML 4.01 Transitional//EN\&quot;&gt;&quot;);
-                writer.write(&quot;&lt;html&gt;&lt;head&gt;&quot;);
-                writer.write(&quot;&lt;link rel=\&quot;stylesheet\&quot; href=\&quot;&quot;);
-                writer.write(WebletUtils.getURL(&quot;weblets.demo&quot;, &quot;/styles/weblets.css&quot;));
-                writer.write(&quot;\&quot; &gt;&lt;/link&gt;&quot;);
-                writer.write(&quot;&lt;/head&gt;&lt;body&gt;&lt;div class=\&quot;header_bg\&quot; /&gt;&lt;div class=\&quot;content\&quot;&gt;&lt;pre&gt;&quot;);
-                writer.write(&quot;\n&quot;);
-            }
+                private void writehttpbottom(PrintWriter writer) {
+                        writer.write(&quot;\n&quot;);
+                        writer.write(&quot;&lt;/pre&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;&quot;);
+                }
+
+                private void writeResource(BufferedReader reader, PrintWriter writer) throws IOException {
+                        while (reader.ready()) {
+                                String line = reader.readLine();
+                                line = line.replaceAll(&quot;&lt;&quot;, &quot;&amp;lt;&quot;).replaceAll(&quot;&gt;&quot;, &quot;&amp;gt;&quot;);
+                                writer.write(line);
+                                writer.println();
+                        }
+                }
+
+                private void writehttphead(PrintWriter writer) {
+                        writer.write(&quot;&lt;!DOCTYPE HTML PUBLIC \&quot;-//W3C//DTD HTML 4.01 Transitional//EN\&quot;&gt;&quot;);
+                        writer.write(&quot;&lt;html&gt;&lt;head&gt;&quot;);
+                        writer.write(&quot;&lt;link rel=\&quot;stylesheet\&quot; href=\&quot;&quot;);
+                        writer.write(WebletUtils.getURL(&quot;weblets.demo&quot;, &quot;/styles/weblets.css&quot;));
+                        writer.write(&quot;\&quot; &gt;&lt;/link&gt;&quot;);
+                        writer.write(&quot;&lt;/head&gt;&lt;body&gt;&lt;div class=\&quot;header_bg\&quot; /&gt;&lt;div class=\&quot;content\&quot;&gt;&lt;pre&gt;&quot;);
+                        writer.write(&quot;\n&quot;);
+                }
         }
 </pre>
 </div>
 <p>This is a simple copy strategy which does some post processing on sourcecode to beautify it with a little bit of decoration.</p>
 <p>The main entry points are defined by the CopyStrategy interface</p>
 <div class="source"><pre>        /**
-         * Central contractual interface for our copy strategy control usually a copy provider chains some input output streams together to get a certain behavior
-         */
+        * Central contractual interface for our copy strategy control usually a copy provider chains some input output streams together to get a certain behavior
+        */
         public interface CopyStrategy {
-            /**
-             * central copy method
-             *
-             * @param the weblet name the weblet name
-             * @param mimetype the response mimetype
-             * @param in the incoming data input stream
-             * @param out the receiving steam
-             * @throws java.io.IOException in case of an error
-             */
-            void copy(String webletName, String mimetype, InputStream in, OutputStream out) throws IOException;
-
-            /**
-             * wraps the incoming input stream with post processing filters
-             * @param the weblet name
-             * @param in the incoming stream
-             *
-             * @return an inputstream with the resource or null if none is found
-             * @throws IOException  in case of a severe error
-             */
-            public InputStream wrapInputStream(String webletName, String mimetype, InputStream in) throws IOException;
+                /**
+                * central copy method
+                *
+                * @param the weblet name the weblet name
+                * @param mimetype the response mimetype
+                * @param in the incoming data input stream
+                * @param out the receiving steam
+                * @throws java.io.IOException in case of an error
+                */
+                void copy(String webletName, String mimetype, InputStream in, OutputStream out) throws IOException;
+                /**
+                * wraps the incoming input stream with post processing filters
+                * @param the weblet name
+                * @param in the incoming stream
+                *
+                * @return an inputstream with the resource or null if none is found
+                * @throws IOException  in case of a severe error
+                */
+                public InputStream wrapInputStream(String webletName, String mimetype, InputStream in) throws IOException;
 
         }</pre>
 </div>
@@ -182,28 +204,28 @@ ify every resource there is via a vfs like system. The other way would be to use
 
         public class SourcecodeCopyStrategy extends CopyStrategyImpl implements CopyStrategy {
 
-            public void copy(String webletName, String mimeType, InputStream in, OutputStream out) throws IOException {
-                copyText(webletName, new InputStreamReader(in), new OutputStreamWriter(out));
-            }
+                public void copy(String webletName, String mimeType, InputStream in, OutputStream out) throws IOException {
+                        copyText(webletName, new InputStreamReader(in), new OutputStreamWriter(out));
+                }
 
-                 protected void copyText(String webletName, Reader in, Writer out) throws IOException {
+                protected void copyText(String webletName, Reader in, Writer out) throws IOException {
                         byte[] buffer = new byte[2048];
                         int len = 0;
                         int total = 0;
                         BufferedReader bufIn = new BufferedReader(mapResponseReader(webletName, in));
                         PrintWriter bufOut = new PrintWriter(mapResponseWriter(out));
                         try {
-                            writehttphead(bufOut);
-                            writeResource(bufIn, bufOut);
-                            writehttpbottom(bufOut);
-                        } finally {
-                            bufIn.close();
-                            bufOut.close();
-                        }
-                  }
+                                writehttphead(bufOut);
+                                writeResource(bufIn, bufOut);
+                                writehttpbottom(bufOut);
+                        }       finally {
+                                bufIn.close();
+                                bufOut.close();
+                        }       
+                }
                 ...     </pre>
 </div>
-<p>Another example would be our packaged weblet with the default CopyProviderImpl. The main issue with this class was that text and binary streams had to be processed differently, different chains, different copy behavior depending on the type of file:</p>
+<p>Another example would be our packaged Weblet with the default CopyProviderImpl. This class changes its copy post processing on the fly depending on the mime type of the served file. Every binary file is served as is, and every text file is post processed for weblet frontend functions and replaced in the fly with their appropriate URL calls!</p>
 <div class="source"><pre>
    public void copy(String webletName, String contentType, InputStream in, OutputStream out) throws IOException {
                 boolean isText = isText(contentType);
@@ -257,25 +279,26 @@ ify every resource there is via a vfs like system. The other way would be to use
         }
         </pre>
 </div>
-<p>Now here we see that from the input stream to the input stream after the processing we use a reader in the chain which does the entire text processing. To map it back into a stream <tt>Weblets</tt>
- provides its own Reader -&gt; InputStream mapping class <tt>InputStreamReader</tt>
- (there is a hole in the java api, java does not provide such a backwards class).</p>
-<p>What happens, a filter chain is built on top of the input stream, and in the middle of this chain the text is changed on the fly with a parsing class <tt>TextProcessingReader</tt>
-, which parses for weblets:url and resource patterns.</p>
-<p>For a caller outside nothing has changed everything still is an input stream.</p>
+<p>Now, as we can see, a builder chain is built up especially for text files, with only one purpose, the dynamic input stream processing for the Weblet functions. A reader is used internally to achieve this behavior in a proper manner! However the API enforces that a stream is served, and the reader has to be mapped into a stream. There is a huge gap in the java API which does not allow that without going through huge problems!</p>
+<p>However, <tt>Weblets</tt>
+ provides its own Reader -&gt; InputStream chaining class <tt>InputStreamReader</tt>
+, to bypass this limitation!</p>
+<p>A filter chain then is built on top of the input stream, and in the middle of this chain the text is changed on the fly with a parsing class <tt>TextProcessingReader</tt>
+, which parses for weblets:url and resource patterns. For a caller outside nothing has changed everything still is an input stream.</p>
 <p>The second operation <tt>wrapInputStream</tt>
- builds up the filter cascade for your input streams depending on the mime type delivered. This method <i>must</i>
- be able to handle everything without referring to a request or response object delivered by the underlying container. The reason for this limitation is caused by the fact, that this method can be and will be called only by the reporting subsystem of weblets.</p>
+ builds up the filter cascade for your input streams depending on the mime type delivered for reporting cases!</p>
+<p>This method <i>must</i>
+ be able to handle everything without referring to a request or response object delivered by the underlying container. Due to the nature of reports of being able to work outside of a single request parallely to the running servlet processes. This method should only be called for reporting purposes!</p>
 <p>Following code shows an example on how to implement such a filter cascade:</p>
 <div class="source"><pre>        /**
-         * wraps the input stream from our given request into another input stream
-         *
-         * @param webletName  the name of the affected weblet
-         * @param mimetype the response mimetype
-         * @param in our given input steam
-         * @return  a wrapped input stream with our filterng cascade in place
-         * @throws IOException in case of an error
-         */
+        * wraps the input stream from our given request into another input stream
+        *
+        * @param webletName  the name of the affected weblet
+        * @param mimetype the response mimetype
+        * @param in our given input steam
+        * @return  a wrapped input stream with our filterng cascade in place
+        * @throws IOException in case of an error
+        */
         public InputStream wrapInputStream(String webletName, String mimetype, InputStream in) throws IOException {
                 if (isText(mimetype)) {
                         BufferedReader bufIn = new BufferedReader(mapResponseReader(webletName, new InputStreamReader(in)));
@@ -320,37 +343,36 @@ ify every resource there is via a vfs like system. The other way would be to use
 <p>This basically means your resources are located within a root which only can host resources, nothing else. <tt>Weblets</tt>
  adresses jailbreak prevention already on container level (From the Weblet container implementation): (Note this code part is provided already nothing has to be implemented) </p>
 <div class="source"><pre>        public void service(WebletRequest request, WebletResponse response) throws IOException, WebletException {
-            Weblet weblet = getWeblet(request);
+                Weblet weblet = getWeblet(request);
 
-            String pathInfo = request.getPathInfo();
-            if (response.getDefaultContentType() == null) {
+                String pathInfo = request.getPathInfo();
+                if (response.getDefaultContentType() == null) {
 
+                        //enhanced security check
+                        if (pathInfo != null &amp;&amp; SandboxGuard.isJailBreak(pathInfo)) {
+                                throw new WebletException(PATHINFO_EXCEPTION);
+                        }
 
-                //enhanced security check
-                if (pathInfo != null &amp;&amp; SandboxGuard.isJailBreak(pathInfo)) {
-                    throw new WebletException(PATHINFO_EXCEPTION);
+                        WebletConfig webConfig = weblet.getWebletConfig();
+                        if (pathInfo != null) {
+                                String mimeType = webConfig.getMimeType(pathInfo);
+                                response.setDefaultContentType(mimeType);
+                        }
                 }
+
 
                 WebletConfig webConfig = weblet.getWebletConfig();
-                if (pathInfo != null) {
-                    String mimeType = webConfig.getMimeType(pathInfo);
-                    response.setDefaultContentType(mimeType);
+                Set allowedResources = webConfig.getAllowedResources();
+
+                if (allowedResources != null) {
+                        String filetype = StringUtils.getExtension(pathInfo);
+                        if (!allowedResources.contains(filetype.toLowerCase())) {
+                                throw new WebletException(PATHINFO_EXCEPTION
+                                /*not allowed no content delivered */
+                        }
                 }
-            }
 
-
-            WebletConfig webConfig = weblet.getWebletConfig();
-            Set allowedResources = webConfig.getAllowedResources();
-
-            if (allowedResources != null) {
-                 String filetype = StringUtils.getExtension(pathInfo);
-                 if (!allowedResources.contains(filetype.toLowerCase())) {
-                     throw new WebletException(PATHINFO_EXCEPTION
-                    /* not allowed no content delivered */
-                 }
-             }
-
-            weblet.service(request, response);</pre>
+                weblet.service(request, response);</pre>
 </div>
 <p>The important code part is: <tt>SandboxGuard.isJailBreak(pathInfo)</tt>
  This is a small test against jailbreaking within the path info passed down to Weblets!</p>
@@ -358,9 +380,9 @@ ify every resource there is via a vfs like system. The other way would be to use
  takes care of those issues.</p>
 <p>The second part is the mime type handling and resource whitelisting, this is an opt in option. Every Weblet now also allows the setting of whitelisted allowedResources in its config:</p>
 <div class="source"><pre>                &lt;init-param&gt;
-              &lt;param-name&gt;allowedResources&lt;/param-name&gt;
-              &lt;param-value&gt; jpg, png &lt;/param-value&gt;
-            &lt;/init-param&gt;</pre>
+                        &lt;param-name&gt;allowedResources&lt;/param-name&gt;
+                        &lt;param-value&gt; jpg, png &lt;/param-value&gt;
+                &lt;/init-param&gt;</pre>
 </div>
 <p>If this parameter is set then the file extension protection is on in <b>full force</b>
 . Only jpg and png extensions are allowed in this case no other file can be served from the filesystem, also those extensions are handled in a case insenstive manner, which is important for hosting systems not using case sensitive filenames.</p>
@@ -372,9 +394,9 @@ ify every resource there is via a vfs like system. The other way would be to use
                 if (resourcePath.indexOf(&quot;WEB-INF/&quot;) != -1 || resourcePath.indexOf(&quot;WEB-INF\\&quot;) != -1) {
                          throw new WebletException(PATHINFO_EXCEPTION);
                 }
-            if (resourcePath.indexOf(&quot;META-INF/&quot;) != -1 || resourcePath.indexOf(&quot;META-INF\\&quot;) != -1) {
-                 throw new WebletException(PATHINFO_EXCEPTION);
-            }
+                if (resourcePath.indexOf(&quot;META-INF/&quot;) != -1 || resourcePath.indexOf(&quot;META-INF\\&quot;) != -1) {
+                        throw new WebletException(PATHINFO_EXCEPTION);
+                }
 </pre>
 </div>
 <p>Summary:</p>
@@ -395,8 +417,8 @@ ify every resource there is via a vfs like system. The other way would be to use
  per default at least takes care of sidestepping and trying to break out of the resource root (in this case probably the webapp itself and its root context)</p>
 <p>Adding following lines to the weblets-config.xml would add additional filetype security:</p>
 <div class="source"><pre>        &lt;init-param&gt;
-            &lt;param-name&gt;allowedResources&lt;/param-name&gt;
-            &lt;param-value&gt; jsp, jspx, html &lt;/param-value&gt;
+                &lt;param-name&gt;allowedResources&lt;/param-name&gt;
+                &lt;param-value&gt; jsp, jspx, html &lt;/param-value&gt;
         &lt;/init-param&gt;</pre>
 </div>
 <p>So only jsp, jspx and html files can be served, an attempt to serve anything else would result in a security exception!</p>

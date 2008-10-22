@@ -174,11 +174,48 @@ Every weblet url request will default to</p>
 <p>Weblets has not been explicitely tested against BEA app servers, (every servlet spec 2.4 enabled app server should do however one user has reported a successful configuration. However as it seems the server itself does not come configured with the basic mime types you have to define them yourself.</p>
 <p>This is a working example configuration reported by one of the mailing list users.</p>
 <div class="source"><pre>
-BEA Example configuration
+   &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;Faces Servlet&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/faces/*&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+
+    &lt;!--
+    or the weblets servlet depending on your needs
+    --&gt;
+    
+    &lt;listener&gt;
+        &lt;listener-class&gt;net.java.dev.weblets.WebletsContextListener&lt;/listener-class&gt;
+    &lt;/listener&gt;
+
+    &lt;mime-mapping&gt;
+        &lt;extension&gt;css&lt;/extension&gt;
+        &lt;mime-type&gt;text/css&lt;/mime-type&gt;
+    &lt;/mime-mapping&gt;
+    &lt;mime-mapping&gt;
+        &lt;extension&gt;js&lt;/extension&gt;
+        &lt;mime-type&gt;application/x-javascript&lt;/mime-type&gt;
+    &lt;/mime-mapping&gt;
+    &lt;mime-mapping&gt;
+        &lt;extension&gt;gif&lt;/extension&gt;
+        &lt;mime-type&gt;image/gif&lt;/mime-type&gt;
+    &lt;/mime-mapping&gt;
+
+    &lt;mime-mapping&gt;
+        &lt;extension&gt;png&lt;/extension&gt;
+        &lt;mime-type&gt;image/png&lt;/mime-type&gt;
+    &lt;/mime-mapping&gt;
+
+    &lt;mime-mapping&gt;
+        &lt;extension&gt;jpg&lt;/extension&gt;
+        &lt;mime-type&gt;image/jpg&lt;/mime-type&gt;
+    &lt;/mime-mapping&gt;
 </pre>
 </div>
-<p>Thank you <tt>Insert Name here</tt>
- for providing this configuration.</p>
+<p>As it seems, Weblogic does not have auto mimetype mapping, and does not load the context listener automatically. By Providing both, <tt>Weblets</tt>
+ should run. Alternatively the new <tt>Weblets</tt>
+ mime type handling facilities also might work. Providing mime type mappings on bundle level!</p>
+<p>Thank you <tt>Wim Bervoets</tt>
+ for providing this configuration in [http://javablog.be/java/setup-weblets-10-for-jsf-on-weblogic-81/].</p>
 </div>
 </div>
 </div>
