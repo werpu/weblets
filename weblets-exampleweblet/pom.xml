@@ -12,7 +12,7 @@
 	<packaging>jar</packaging>
 
 	<name>Weblets Example Weblet</name>
-	<version>1.1-B</version>
+	<version>1.1-SNAPSHOT</version>
 	<description>Weblets API</description>
 	<url>http://weblets.dev.java.net</url>
 
