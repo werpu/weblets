@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -8,7 +7,7 @@
     <packaging>pom</packaging>
 
     <name>Weblets</name>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <description>Weblets</description>
     <url>http://weblets.dev.java.net</url>
 
@@ -37,56 +36,56 @@
             <id>jfallows</id>
             <name>John R. Fallows</name>
             <email>john.r.fallows@gmail.com</email>
-            <url/>
-            <organization/>
-            <organizationUrl/>
+            <url />
+            <organization />
+            <organizationUrl />
             <roles>
                 <role>Project Owner</role>
             </roles>
             <timezone>-8</timezone>
-            <properties/>
+            <properties />
         </developer>
 
         <developer>
             <id>jjacobi</id>
             <name>Jonas Jacobi</name>
             <email>jonas.jacobi@gmail.com</email>
-            <url/>
-            <organization/>
-            <organizationUrl/>
+            <url />
+            <organization />
+            <organizationUrl />
             <roles>
                 <role>Developer</role>
             </roles>
             <timezone>-8</timezone>
-            <properties/>
+            <properties />
         </developer>
 
         <developer>
             <id>mwessendorf</id>
             <name>Matthias Wessendorf</name>
-            <email/>
-            <url/>
-            <organization/>
-            <organizationUrl/>
+            <email />
+            <url />
+            <organization />
+            <organizationUrl />
             <roles>
                 <role>Developer</role>
             </roles>
             <timezone>1</timezone>
-            <properties/>
+            <properties />
         </developer>
 
         <developer>
             <id>werpu12</id>
             <name>Werner Punz</name>
-            <email/>
-            <url/>
-            <organization/>
-            <organizationUrl/>
+            <email />
+            <url />
+            <organization />
+            <organizationUrl />
             <roles>
                 <role>Developer</role>
             </roles>
             <timezone>1</timezone>
-            <properties/>
+            <properties />
         </developer>
     </developers>
 
@@ -99,9 +98,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:svn:http://weblets.dev.java.net/svn/weblets/tags/weblets-1.0</connection>
-        <developerConnection>scm:svn:https://weblets.dev.java.net/svn/weblets/tags/weblets-1.0</developerConnection>
-        <url>scm:svn:https://weblets.dev.java.net/svn/weblets/tags/weblets-1.0</url>
+        <connection>scm:svn:http://weblets.dev.java.net/svn/weblets/tags/weblets-1.1</connection>
+        <developerConnection>scm:svn:https://weblets.dev.java.net/svn/weblets/tags/weblets-1.1</developerConnection>
+        <url>scm:svn:https://weblets.dev.java.net/svn/weblets/tags/weblets-1.1</url>
     </scm>
 
     <modules>
