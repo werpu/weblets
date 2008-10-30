@@ -1,19 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <parent>
-    <groupId>net.java.dev.weblets</groupId>
-    <artifactId>weblets</artifactId>
-    <version>1.1-SNAPSHOT</version>
-  </parent>
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>net.java.dev.weblets</groupId>
-  <artifactId>weblets-exampleweblet</artifactId>
-  <packaging>jar</packaging>
+	<parent>
+		<groupId>net.java.dev.weblets</groupId>
+		<artifactId>weblets</artifactId>
+		<version>1.1-SNAPSHOT</version>
+	</parent>
 
-  <name>Weblets Example Weblet</name>
-  <version>1.1-B</version>
-  <description>Weblets API</description>
-  <url>http://weblets.dev.java.net</url>
- 
+	<groupId>net.java.dev.weblets</groupId>
+	<artifactId>weblets-exampleweblet</artifactId>
+	<packaging>jar</packaging>
+
+	<name>Weblets Example Weblet</name>
+	<version>1.1-B</version>
+	<description>Weblets API</description>
+	<url>http://weblets.dev.java.net</url>
+
 </project>
