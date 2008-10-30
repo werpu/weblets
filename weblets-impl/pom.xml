@@ -37,12 +37,7 @@
       <scope>provided</scope>
     </dependency>
 
-    <dependency>
-      <groupId>commons-digester</groupId>
-      <artifactId>commons-digester</artifactId>
-      <version>1.5</version>
-    </dependency>
-
+  
      <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

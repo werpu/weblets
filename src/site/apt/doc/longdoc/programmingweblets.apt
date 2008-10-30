@@ -43,7 +43,7 @@ Introduction into the weblets API
 	public class SourcecodeWeblet extends Weblet {
 
 			public void service(WebletRequest request, WebletResponse response) throws IOException {
-	    		//HELLO WORLD: we have to do something in here
+			//HELLO WORLD: we have to do something in here
 			}
 	
 			public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException {

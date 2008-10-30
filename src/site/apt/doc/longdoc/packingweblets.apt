@@ -323,8 +323,7 @@ Introduction into the <<<Weblets>>> Resource Packing
 	the normal Weblets.
 	# Resources then are streamed from \<contextroot\>/\<resourceRoot\>!
 	
-	ie:
-	
+	ie:	
 	
 +------------------------------------	
 

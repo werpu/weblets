@@ -73,7 +73,7 @@ Introduction
 
 
 
-[../images/weblets-reporting-3.png] <Figure 3. In Server Reporting>
+[../images/2-weblets-reporting-3.png] <Figure 3. In Server Reporting>
 
 
 ** Problem and Solution
@@ -129,7 +129,7 @@ Introduction
 
         *the processor load is given fully to the web application in case of dedicated physical reporting servers.
 
-[../images/weblets-reporting-4.png] <Figure 4: Dedicated Reporting Server>
+[../images/2-weblets-reporting-4.png] <Figure 4: Dedicated Reporting Server>
 
 
 
