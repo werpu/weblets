@@ -8,7 +8,7 @@ Overview
     This chapter should give a general overview of what is new in Weblets 1.1.
 
     Despite its minor increase in the version number Weblets 1.1 provides a significant improvement
-    over Weblets 1.0. While there is no huge new feature several enhancments and a lot of small
+    over Weblets 1.0. While there is no huge new feature several enhancements and a lot of small
     features have been added to the Weblets 1.0 core.
 
     The features can be divided into following areas.
@@ -35,7 +35,7 @@ Overview
     [[]] Enabling of transitive dependencies in the maven build
 
     [[]] Bugfixes
-    
+
     []
 
 * Short Overview Of Each Feature
@@ -52,7 +52,7 @@ Overview
     documentation has been added for in server and external reporting usecases.
     See {{{./reporting.html} Weblets Reporting Guide }} for further documentation on
     this new feature!
-    
+
 ** Configurable cache timeouts for better browser cache control
 
     Weblets 1.0 only had a fixed cache timeout in a far future date (2048).
@@ -63,7 +63,7 @@ Overview
     Weblets now has added the feature of optional cache timeout periods.
     With this feature it is possible to periodically renew the browser cache
     without altering the weblets version number or doing a server reboot!
-    
+
 +---------------------------------------------------------------
     <init-param>
            <param-name>cachecontrol-timeout</param-name>
@@ -76,7 +76,7 @@ Overview
 
     See {{{./packingweblets.html} Weblets Packaging Guide  }} for additional information on
     this new feature!
-    
+
 ** Expanded Web Application Hosted Weblets
 
     <<<Weblets>>> 1.0 only had the possibility to host
@@ -107,7 +107,7 @@ Overview
      you now have the possibility to serve exactly those kind of resources
      in a performant manner!
 
-     See {{{./packingweblets.html} Weblets Packaging Guide }} for more informationr regarding
+     See {{{./packingweblets.html} Weblets Packaging Guide }} for more information regarding
      <<<Web Application Weblets>>>!
 
 
@@ -141,14 +141,14 @@ Overview
     You can add optional <<<mime-mapping>>> entries to your
     weblet configuration, which do the override for the filetypes
     defined!
-    See also  {{{./packingweblets.html} Weblets Packaging Guide }} for more 
+    See also  {{{./packingweblets.html} Weblets Packaging Guide }} for more
     additional information!
 
 ** Documentation updates and better documentation diagrams
 
     There are documentation updates all over the place.
     Most of the updated information also can be found in this document!
-    
+
     Also the diagrams which to say it mildly were not very appealing,
     were replaced by better looking, more precise ones!
 
@@ -163,7 +163,7 @@ Overview
     if you use one single weblets-config.xml as identifier file!)
 
     Note all of those problems might be fixed in WAS 7.0 and IBM has been
-    contacted and notified of the problems, they might be fixed in a bugfix update
+    contacted and notified of the problems, they might be fixed in a bug fix update
     to WAS 6.1.
     But none of those shortcomings prevents the usage of Weblets on WAS 6.1
     anymore!
@@ -173,7 +173,7 @@ Overview
     Due to user demand <<<Weblets>>> 1.1 has added the possibility
     to keep different <<<Weblets>>> within one single bundle in several configuration files!
 
-    The <<<Weblets>>> config files themselves are the same as with a one file configuration.
+    The <<<Weblets>>> configuration files themselves are the same as with a one file configuration.
     Certain naming conventions, however have to be applied to enable this possibility.
 
     * There must be at least one META-INF/<<<weblets-config.xml>>> or META-INF/Manifest.mf this marks the package location of all other
@@ -235,6 +235,36 @@ Overview
     with cache control. Path resolution, performance,
     Websphere compatibility, etc...
 
-    Consult the java.net svn log for furhter reference!
-    
+    Consult the java.net svn log for further reference!
+
+
+=======================================================================
+
+* Contents
+
+	[[1]] {{{./index.html} Users documentation: Index }}
+
+	[[]] {{{./whatsnew.html} What is new in this release }}
+
+	[[]] {{{./gettingstarted.html} Users documentation: Getting started }}
+
+	[[]] {{{./setup.html} Users documentation: Setup guide }}
+
+	[[]] {{{./generalapi.html} Users documentation: Introduction to  the api patterns }}
+
+	[[]] {{{./usagejsp.html} Users documentation: JSP Weblets usage guide }}
+
+	[[]] {{{./usagejava.html} Users documentation: Servlet Weblets usage guide }}
+
+	[[]] {{{./usagejsf.html} Users documentation: JSF Weblets usage guide }}
+
+	[[]] {{{./usageresources.html} Users documentation: Resources Weblets usage guide }}
+
+	[[]] {{{./packingweblets.html} Users documentation: Weblets packaging guide }}
+
+	[[]] {{{./reporting.html} Users documentation: Weblets reporting guide }}
+
+	[[]] {{{./programmingweblets.html} Developers documentation: Programming Weblets }}
+
+	[[]] {{{./faq.html} Users documentation: Weblets general FAQ }}
 

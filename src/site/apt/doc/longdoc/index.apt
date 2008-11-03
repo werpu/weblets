@@ -19,28 +19,31 @@ Introduction
   introduction into the usage of this small but hopefully helpful project.
 
 
+
 * Contents
 
-	[[1]] {{{./index.html} Users Documentation: Index }}
+	[[1]] {{{./index.html} Users documentation: Index }}
 
-	[[]] {{{./gettingstarted.html} Users Documentation: Getting Started }}
+	[[]] {{{./whatsnew.html} What is new in this release }}
 
-	[[]] {{{./setup.html} Users Documentation: Setup Guide }}
+	[[]] {{{./gettingstarted.html} Users documentation: Getting started }}
 
-	[[]] {{{./generalapi.html} Users Documentation: Introduction to  the API Patterns }}
+	[[]] {{{./setup.html} Users documentation: Setup guide }}
 
-	[[]] {{{./usagejsp.html} Users Documentation: JSP Weblets Usage Guide }}
+	[[]] {{{./generalapi.html} Users documentation: Introduction to  the api patterns }}
 
-	[[]] {{{./usagejava.html} Users Documentation: Servlet Weblets Usage Guide }}
+	[[]] {{{./usagejsp.html} Users documentation: JSP Weblets usage guide }}
 
-	[[]] {{{./usagejsf.html} Users Documentation: JSF Weblets Usage Guide }}
+	[[]] {{{./usagejava.html} Users documentation: Servlet Weblets usage guide }}
 
-	[[]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
+	[[]] {{{./usagejsf.html} Users documentation: JSF Weblets usage guide }}
 
-	[[]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
+	[[]] {{{./usageresources.html} Users documentation: Resources Weblets usage guide }}
 
-	[[]] {{{./reporting.html} Users Documentation: Weblets Reporting Guide }}
+	[[]] {{{./packingweblets.html} Users documentation: Weblets packaging guide }}
 
-	[[]] {{{./programmingweblets.html} Developers Documentation: Programming Weblets }}
+	[[]] {{{./reporting.html} Users documentation: Weblets reporting guide }}
 
-	[[]] {{{./faq.html} Users Documentation: Weblets General FAQ }}
+	[[]] {{{./programmingweblets.html} Developers documentation: Programming Weblets }}
+
+	[[]] {{{./faq.html} Users documentation: Weblets general FAQ }}
