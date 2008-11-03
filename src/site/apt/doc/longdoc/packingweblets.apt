@@ -407,6 +407,11 @@ Introduction into the <<<Weblets>>> Resource Packing
     * The naming of the configuration files must follow the regexp pattern META-INF\/.*weblets-config.*\.xml
     IE: <<<META-INF/1-weblets-config-1.xml>>> is a valid name <<<META-INF/myconfig.xml>>> however is not!
 
+    <Note to WAS 6.1 users>: A bug in WAS prevents the usage of the <<<Manifest.mf file>>>
+    as location point for your weblets configuration. Please use the <<<weblets-config.xml>>>
+    only as location point for additional configuration files in this case!
+    
+
 * Mime Mapping
 
 	Weblets per default uses the default mimetype of the underlying container by serving resources, however some containers

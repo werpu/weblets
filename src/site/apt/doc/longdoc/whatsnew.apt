@@ -1,0 +1,240 @@
+                           ------------------------
+                           What is new in Weblets 1.1
+                           ------------------------
+
+
+Overview
+
+    This chapter should give a general overview of what is new in Weblets 1.1.
+
+    Despite its minor increase in the version number Weblets 1.1 provides a significant improvement
+    over Weblets 1.0. While there is no huge new feature several enhancments and a lot of small
+    features have been added to the Weblets 1.0 core.
+
+    The features can be divided into following areas.
+
+
+    [[1]] General API for programming your own Weblets
+
+    [[]] General reporting API for in server reporting instances
+
+    [[]] Configurable cache timeouts for better browser cache control
+
+    [[]] Expanded web application hosted weblets
+
+    [[]] Improved mime type handling, mime overrides
+
+    [[]] Documentation updates and better documentation diagrams
+
+    [[]] WAS 6.1 compatibility
+
+    [[]] Multiple configuration files per Weblet
+
+    [[]] Optional resource whitelists and improved sandboxing of resources
+
+    [[]] Enabling of transitive dependencies in the maven build
+
+    [[]] Bugfixes
+    
+    []
+
+* Short Overview Of Each Feature
+
+** General API for programming your own Weblets
+
+    <<<Weblets>>> 1.1 provides a stable api to build your own Weblets upon.
+    see {{{./programmingweblets.html} Developers Documentation: Programming Weblets }}
+    for further reference!
+
+** General reporting API for in server reporting instances
+
+    <<<Weblets>>> 1.1 provides a stable api for in server reporting. Also
+    documentation has been added for in server and external reporting usecases.
+    See {{{./reporting.html} Weblets Reporting Guide }} for further documentation on
+    this new feature!
+    
+** Configurable cache timeouts for better browser cache control
+
+    Weblets 1.0 only had a fixed cache timeout in a far future date (2048).
+    Sometimes it is desirable to have a periodical timeout for resources
+    which for instance change on a daily base (date displaying images, or newspaper
+    reports).
+
+    Weblets now has added the feature of optional cache timeout periods.
+    With this feature it is possible to periodically renew the browser cache
+    without altering the weblets version number or doing a server reboot!
+    
++---------------------------------------------------------------
+    <init-param>
+           <param-name>cachecontrol-timeout</param-name>
+           <param-value> <<TIMEOUT_INTERVAL>> </param-value>
+    </init-param>
++---------------------------------------------------------------
+
+    Allows you to set a periodical timeout interval with
+    <<TIMEOUT_INTERVAL>> being the interval in miliseconds.
+
+    See {{{./packingweblets.html} Weblets Packaging Guide  }} for additional information on
+    this new feature!
+    
+** Expanded Web Application Hosted Weblets
+
+    <<<Weblets>>> 1.0 only had the possibility to host
+    resources within your classpath. It was only possible
+    to host <<<Weblets>>> related resources within a jar
+    or within your WEB-INF/classes directory!
+
+    <<<Weblets>>> 1.1 now enhances this with a very common usecase.
+    <<<expanded application hosted resources>>>. This means
+    you can put any resource hosted within your local web application
+    under <<<Weblet>>> control.
+
+    For instance if your application is hosted under
+    <<</myapplication>>> and your your resource under
+    <<</myapplication/images/myimage.png>>> it until now
+    was not possible to put this resource under Weblets control, unless
+    you were using the <<<Proxying Weblet>>> which slowed things down!
+
+    <<<Weblets>>> 1.1 now has its own <<<Weblet>>> to handle exactly this case.
+
+    By using
++---------------------------------
+	<weblet>
+		<weblet-name>weblets.webapp</weblet-name>
+		<weblet-class>net.java.dev.weblets.packaged.WebappWeblet</weblet-class>
+	</weblet>
++---------------------------------
+     you now have the possibility to serve exactly those kind of resources
+     in a performant manner!
+
+     See {{{./packingweblets.html} Weblets Packaging Guide }} for more informationr regarding
+     <<<Web Application Weblets>>>!
+
+
+** Improved Mime Type Handling, Mime Overrides
+
+    <<<Weblets>>> 1.1 finally allows to set your on per bundle
+    mime types and also allows to override mime types delivered by the server
+    with your own settings.
+    This can be helpful in scenarii where the server does not have default
+    mime types or where you need to provide a different mimetype for certain resources.
+
+    You can enable this feature like in following example:
+
++---------------------------------
+	<weblet>
+		<weblet-name> <<Weblet Name>> </weblet-name>
+		<weblet-class> <<Weblet class>> </weblet-class>
+		<!-- dedicated mime mapping override -->
+		<mime-mapping>
+			<extension> <<extension>> </extension>
+			<mime-type> <<mimetype>> </mime-type>
+		</mime-mapping>
+		<mime-mapping>
+			<extension>png</extension>
+			<mime-type>image/png</mime-type>
+		</mime-mapping>
+	</weblet>
+
++---------------------------------
+
+    You can add optional <<<mime-mapping>>> entries to your
+    weblet configuration, which do the override for the filetypes
+    defined!
+    See also  {{{./packingweblets.html} Weblets Packaging Guide }} for more 
+    additional information!
+
+** Documentation updates and better documentation diagrams
+
+    There are documentation updates all over the place.
+    Most of the updated information also can be found in this document!
+    
+    Also the diagrams which to say it mildly were not very appealing,
+    were replaced by better looking, more precise ones!
+
+** WAS 6.1 compatibility
+
+    Several bugs in Websphere prevented Weblets to run properly.
+    All of those issues have been worked around in Weblets 6.1.
+    Weblets 1.1 should now run properly in WAS 6.1 with some limitations.
+    (The cache control timeout for instance is only working until the year 2038
+    due to a bug in one of the WAS 6.1 core classes triggering
+    a year 2038 bug! Also multiple configuration files do only work
+    if you use one single weblets-config.xml as identifier file!)
+
+    Note all of those problems might be fixed in WAS 7.0 and IBM has been
+    contacted and notified of the problems, they might be fixed in a bugfix update
+    to WAS 6.1.
+    But none of those shortcomings prevents the usage of Weblets on WAS 6.1
+    anymore!
+
+** Multiple Configuration Files per Weblet
+
+    Due to user demand <<<Weblets>>> 1.1 has added the possibility
+    to keep different <<<Weblets>>> within one single bundle in several configuration files!
+
+    The <<<Weblets>>> config files themselves are the same as with a one file configuration.
+    Certain naming conventions, however have to be applied to enable this possibility.
+
+    * There must be at least one META-INF/<<<weblets-config.xml>>> or META-INF/Manifest.mf this marks the package location of all other
+    <<<Weblets>>> configuration files.
+
+    * The naming of the configuration files must follow the regexp pattern META-INF\/.*weblets-config.*\.xml
+    IE: <<<META-INF/1-weblets-config-1.xml>>> is a valid name <<<META-INF/myconfig.xml>>> however is not!
+
+    <Note to WAS 6.1 users>: A bug in WAS prevents the usage of the <<<Manifest.mf file>>>
+    as location point for your weblets configuration. Please use the <<<weblets-config.xml>>>
+    only as location point for additional configuration files in this case!
+
+
+** Optional Resource Whitelists and Improved Sandboxing of Resources
+
+    Weblets 1.1 adds improved security. While the sandboxing
+    of resources has been tightened to allow web application hosted
+    resources also!
+
+    The probably most important new security feature now is:
+    <<<Resource Whitelists>>>! Resource Whitelists is a mechanism
+    to allow the serving of resources only for certain filetypes
+    given in a resource whitelist!
+    This mechanism works on per bundle base:
+
++---------------------------------
+	<init-param>
+		<param-name>allowedResources</param-name>
+		<param-value> jpg, png </param-value>
+	</init-param>
++---------------------------------
+
+     In this example the resources served by the bundle are reduced
+     to jpg and png files only. Every other access results
+     in a weblets internal security exception!
+
+
+     See {{{./packingweblets.html} Weblets Packaging Guide  }}  for
+     and {{{./programmingweblets.html} Weblets Programming Guide  }}
+     for additional information on resource whitelists and the <<<Weblets>>> internal
+     sandboxing mechanisms!
+
+
+** Enabling of Transitive Dependencies in the Maven Build
+
+    This new feature only is important for the <<<Maven>>> 2.0 users
+    integrating <<<Weblets>>> by the maven internal mechanisms.
+    Up until now it was needed to add the dependencies used by
+    <<<Weblets>>> manually within the dependencies section of <<<Mavens>>>
+    <<<pom.xml>>>. This issue now has been resolved.
+    <<<Weblets>>> 1.1 adds transitive dependencies and now
+    maven should pick up all needed dependencies automatically!
+
+
+** Bugfixes
+
+    Along the addition of new features a lot of bugfixes
+    have went into the codebase, mainly dealing
+    with cache control. Path resolution, performance,
+    Websphere compatibility, etc...
+
+    Consult the java.net svn log for furhter reference!
+    
+
