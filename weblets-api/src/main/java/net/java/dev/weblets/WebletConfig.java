@@ -15,33 +15,82 @@
  */
 package net.java.dev.weblets;
 
+import net.java.dev.weblets.sandbox.Subbundle;
+
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Collection;
 
 public interface WebletConfig {
-	static int	WEBLET_TYPE_LOCAL		= 1;
-	static int	WEBLET_TYPE_PROXY		= 2;
-	static int	WEBLET_TYPE_REDIRECT	= 3;
-	static int	WEBLET_TYPE_OTHER		= 100;
-
-	public WebletContainer getWebletContainer();
-
-	public String getWebletName();
-
-	public String getWebletVersion();
-
-	public String getInitParameter(String paramName);
-
-	public Iterator getInitParameterNames();
-
-	public String getMimeType(String resourcePath);
+    static int WEBLET_TYPE_LOCAL = 1;
+    static int WEBLET_TYPE_PROXY = 2;
+    static int WEBLET_TYPE_REDIRECT = 3;
+    static int WEBLET_TYPE_OTHER = 100;
 
     /**
-     *
-     * @return a list of allowed resources depending on the init params
-     * of the weblet
+     * @return the container hosting the resources
      */
+    public WebletContainer getWebletContainer();
 
+    /**
+     * @return the name of the current weblet
+     */
+    public String getWebletName();
+
+    /**
+     * @return the version of the current weblet
+     */
+    public String getWebletVersion();
+
+    /**
+     * fetches the init param upon its given name
+     *
+     * @param paramName
+     * @return
+     */
+    public String getInitParameter(String paramName);
+
+    /**
+     * gets the list of init parameters for a
+     * given weblet
+     *
+     * @return
+     */
+    public Iterator getInitParameterNames();
+
+    /**
+     * Returns the mimetype of a given resource path
+     *
+     * @param resourcePath
+     * @return
+     */
+    public String getMimeType(String resourcePath);
+
+    /**
+     * gets a valid bundle from a given resource id
+     *
+     * @param resurcePath the resource id to be used
+     * @return a valid subbundle or null if none was found
+     */
+    public Subbundle getBundleFromResources(String resurcePath);
+
+    /**
+     * fetches the subbundle from the given subbundle id
+     *
+     * @param bundleId the bundle id to be used
+     * @return a valid subbundle or null if none was found!
+     */
+    public Subbundle getBundleFromId(String bundleId);
+
+    /**
+     * returns an entire collection of subbundles currently
+     * registered in the config
+     */
+    public Collection getSubbundles();
+
+    /**
+     * @return a list of allowed resources depending on the init params
+     *         of the weblet
+     */
     public Set getAllowedResources();
-    // public int getWebletType(); /*disable some subsystems if this type of*/
 }

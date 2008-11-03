@@ -19,9 +19,12 @@ import java.util.*;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletContainer;
+import net.java.dev.weblets.sandbox.Subbundle;
+import net.java.dev.weblets.impl.sandbox.InverseSubbundleIndex;
 import net.java.dev.weblets.util.StringUtils;
 
 public class WebletConfigImpl implements WebletConfig {
+
     public WebletConfigImpl(WebletContainerImpl container) {
         _container = container;
         initAllowedFiletypes();
@@ -63,6 +66,33 @@ public class WebletConfigImpl implements WebletConfig {
         _mimeMappings.put(extension, mimeType);
     }
 
+    /**
+     * Adds a subbundle to our
+     * parsed weblet xml!
+     *
+     * @param id        the subbundle id
+     * @param resources the resources to be handled by the subbundle defintion
+     */
+    public void addSubbundle(String id, String resources) {
+        String[] processedResources = resources.split("\\,");
+        id = id.trim();
+        Set subbundleFiles = new HashSet();
+        Subbundle subbundle = _subbundles.findBundleFromId(id);
+        if (subbundle == null) {
+            subbundle = new Subbundle();
+            subbundle.setSubbundleId(id);
+        }
+        //filter out the double bundles!
+        subbundleFiles.addAll(subbundle.getResources());
+        for (int cnt = 0; cnt < processedResources.length; cnt++) {
+            String processedRespource = processedResources[cnt].trim();
+            if (!subbundleFiles.contains(processedRespource)) {
+                _subbundles.addBundle(processedRespource, subbundle);
+                subbundleFiles.add(processedRespource);
+            }
+        }
+    }
+
     public Iterator getInitParameterNames() {
         return _initParams.keySet().iterator();
     }
@@ -98,7 +128,7 @@ public class WebletConfigImpl implements WebletConfig {
      * lazy initialization code for the allowed filetypes list
      */
     private void initAllowedFiletypes() {
-        String allowedFiletypes = this.getInitParameter("allowedResources");
+        String allowedFiletypes = this.getInitParameter(Const.ALLOWED_RESOURCES);
         // we now determine the allowed mime types for this weblet
         if (!StringUtils.isBlank(allowedFiletypes)) {
             String[] filetypesArr = allowedFiletypes.split("[\\,\\;]");
@@ -119,6 +149,34 @@ public class WebletConfigImpl implements WebletConfig {
         }
     }
 
+    /**
+     * gets a valid bundle from a given resource id
+     *
+     * @param resource the resource id to be used
+     * @return a valid subbundle or null if none was found
+     */
+    public Subbundle getBundleFromResources(String resource) {
+        return (Subbundle) _subbundles.findBundleFromResource(resource);
+    }
+
+    /**
+     * fetches the subbundle from the given subbundle id
+     *
+     * @param bundleId the bundle id to be used
+     * @return a valid subbundle or null if none was found!
+     */
+    public Subbundle getBundleFromId(String bundleId) {
+        return _subbundles.findBundleFromId(bundleId);
+    }
+
+    /**
+     * returns an entire collection of subbundles currently
+     * registered in the config
+     */
+    public Collection getSubbundles() {
+        return _subbundles.getSubbundles();
+    }
+
     private Set _allowedResources = null;
     private WebletContainerImpl _container;
     private String _webletName;
@@ -126,4 +184,6 @@ public class WebletConfigImpl implements WebletConfig {
     private String _webletVersion;
     private Map _initParams = new HashMap(3);
     private Map _mimeMappings = new HashMap(3);
+
+    private InverseSubbundleIndex _subbundles = new InverseSubbundleIndex();
 }
