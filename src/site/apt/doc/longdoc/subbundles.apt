@@ -1,0 +1,94 @@
+                                  ------------
+                                  Subbundles
+                                  ------------
+
+
+Introduction
+
+    As of <<<Weblets>>> 1.2 the possibility of subbundles has been added to the weblets core.
+    Subbundles are simply bundles within bundles which enable certain functionality.
+
+    The reason for the introduction of this new mechanism have been several constraints
+    and future extension points which are needed or have to be avoided in the average webapp.
+
+    Lets take a look at the subbundles from the problem point of view.
+
+    An average page request has several includes for instance an include to three javascript
+    files several css files.
+
+    Under normal circumstances you have one request per include, even if the request is served out of
+    the cache, which happens in 20-40% of all request that means a significant slowdown because
+    every request has to be processed separately by the browser.
+
+    Additionally to that if no cache is active or we have an empty cache hit, the server
+    has to endure a series of requests per page request to serve the needed resources!
+    Under normal circumstances it makes sense to bundle several resources which can be grouped
+    together, to reduce both browser processing time and server load!
+
+    Now to resolve this issue we have two tools.
+
+        [[1]] Our indirection API
+
+        [[]] The subbundles
+
+        []
+
+    Subbundles to make it short are a simple, but elegant extension to deal with the problem!
+
+* General Mechanism
+
+    Subbundles are lists of resources which are internally concatenated and by utilizing the indirection
+    api replaced with a single include call on the fly!
+
+
+
++--------------------------------------------------
+
+  	<weblet>
+		<weblet-name>weblets.demo</weblet-name>
+		<weblet-class>
+			net.java.dev.weblets.packaged.PackagedWeblet
+		</weblet-class>
+		<weblet-version>1.0</weblet-version>
+
+		<subbundle>
+		    <id>scripts/bundlescript1.js</id>
+		    <resources>
+		        scripts/script1.js, scripts/script2.js, scripts/script3.js
+		    </resources>
+		</subbundle>
+
+
+	    <subbundle>
+		    <id>scripts/cssbundle1.css</id>
+		    <resources>
+		        css/css1.css, css/css2.css, css/css3.css
+		    </resources>
+		</subbundle>
+
++--------------------------------------------------
+    <Code: Subbundle definition example>
+
+    In this example two bundles are defined,
+    both bundles are concatenated at indirection access to
+    the resource name defined in the \<id\> field!
+
+    Now what happens at access time?
+    The indirection api resolves the first request into the bundle
+    to the resource defined in \<id\> and ever other resource into
+    empty strings, thus omitting the additional requests.
+
+    All resources in the bundle are concatenated on the fly and served as a single resources.
+
+
+
+    Now what happens if those resources are accessed directly...
+
+
+    The first access sends the entire bundle!
+    all other accesses send empty strings (TODO or maybe resource already served)
+
+
+    TODO make pic
+
+    
