@@ -56,7 +56,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
 
     private WebletContainer createContainer(ServletContext context) {
         try {
-            URL webXml = context.getResource(Const.WEB_INF + Const.WEB_XML);
+            URL webXml = context.getResource(Const.PAR_WEB_INF + Const.WEB_XML);
             String triggerPattern = Const.FACES + Const.ALL;
             String contextPath = Const.BLANK;
             boolean multipleConfigs = false;
@@ -68,15 +68,15 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                     digester.setValidating(false);
                     digester.setEntityResolver(DisconnectedEntityResolver.sharedInstance());
                     digester.push(parser);
-                    digester.addCallMethod(Const.WEB_APP_SERVLET, Const.ADD_SERVLET, 2);
-                    digester.addCallParam(Const.WEB_APP_SERVLET + Const.SERVLET_NAME, 0);
-                    digester.addCallParam(Const.WEB_APP_SERVLET + Const.SERVLET_CLASS, 1);
-                    digester.addCallMethod(Const.WEB_APP_SERVLET_MAPPING, Const.ADD_SERVLET_MAPPING, 2);
-                    digester.addCallParam(Const.WEB_APP_SERVLET_MAPPING + Const.SERVLET_NAME, 0);
-                    digester.addCallParam(Const.WEB_APP_SERVLET_MAPPING + Const.URL_PATTERN, 1);
-                    digester.addCallMethod(Const.WEB_APP_CONTEXT_PARAM, Const.ADD_CONTEXT_PARAM, 2);
-                    digester.addCallParam(Const.WEB_APP_CONTEXT_PARAM + Const.PARAM_NAME, 0);
-                    digester.addCallParam(Const.WEB_APP_CONTEXT_PARAM + Const.PARAM_VALUE, 1);
+                    digester.addCallMethod(Const.WEB_APP_SERVLET, Const.FUNC_ADD_SERVLET, 2);
+                    digester.addCallParam(Const.WEB_APP_SERVLET + Const.PAR_SERVLET_NAME, 0);
+                    digester.addCallParam(Const.WEB_APP_SERVLET + Const.PAR_SERVLET_CLASS, 1);
+                    digester.addCallMethod(Const.WEB_APP_SERVLET_MAPPING, Const.FUNC_ADD_SERVLET_MAPPING, 2);
+                    digester.addCallParam(Const.WEB_APP_SERVLET_MAPPING + Const.PAR_SERVLET_NAME, 0);
+                    digester.addCallParam(Const.WEB_APP_SERVLET_MAPPING + Const.PAR_URL_PATTERN, 1);
+                    digester.addCallMethod(Const.WEB_APP_CONTEXT_PARAM, Const.FUNC_ADD_CONTEXT_PARAM, 2);
+                    digester.addCallParam(Const.WEB_APP_CONTEXT_PARAM + Const.PAR_PARAM_NAME, 0);
+                    digester.addCallParam(Const.WEB_APP_CONTEXT_PARAM + Const.PAR_PARAM_VALUE, 1);
                     digester.parse(in);
                     if (parser.getWebletPattern() != null && !parser.getWebletPattern().trim().equals(Const.BLANK))
                         triggerPattern = parser.getWebletPattern();
@@ -92,7 +92,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                 }
             }
             // TODO: determine Faces Weblets ViewIds, assumes /weblets/*
-            String webletsViewIds = Const.WEBLETS + Const.ALL;// we add a dedicated
+            String webletsViewIds = Const.PAR_WEBLETS + Const.ALL;// we add a dedicated
             // weblets/ to our url for
             // the filter
             // auto-prepend leading slash in case it is missing from web.xml
@@ -118,10 +118,10 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                     Set configs = new HashSet();
                     // Enumeration e = getConfigEnumeration("weblets-config.xml"); /*lets find the root configs first*/
                     if (multipleConfigs) {
-                        ConfigurationUtils.getValidConfigFiles(Const.WEB_INF, Const.WEB_XML, configs);
-                        ConfigurationUtils.getValidConfigFiles(Const.META_INF, Const.WEBLETS_CONFIG_XML, configs);
-                        ConfigurationUtils.getValidConfigFiles(Const.META_INF, Const.MANIFEST_MF, configs);
-                        ConfigurationUtils.getValidConfigFiles(Const.META_INF, Const.CONTEXT_XML, configs);
+                        ConfigurationUtils.getValidConfigFiles(Const.PAR_WEB_INF, Const.WEB_XML, configs);
+                        ConfigurationUtils.getValidConfigFiles(Const.PAR_META_INF, Const.WEBLETS_CONFIG_XML, configs);
+                        ConfigurationUtils.getValidConfigFiles(Const.PAR_META_INF, Const.MANIFEST_MF, configs);
+                        ConfigurationUtils.getValidConfigFiles(Const.PAR_META_INF, Const.CONTEXT_XML, configs);
                     }
                     Iterator configNameIterator = configs.iterator();
                     // Defensive: Glassfish.v2.b25 produces duplicates in Enumeration
@@ -140,10 +140,10 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                         container.registerConfig(resource);
                     }
                 } else {
-                    URL resource = context.getResource(Const.WEB_INF + Const.WEBLETS_CONFIG_XML);
+                    URL resource = context.getResource(Const.PAR_WEB_INF + Const.WEBLETS_CONFIG_XML);
                     if (resource != null)
                         container.registerConfig(resource);
-                    resource = context.getResource(Const.META_INF + Const.WEBLETS_CONFIG_XML);
+                    resource = context.getResource(Const.PAR_META_INF + Const.WEBLETS_CONFIG_XML);
                     if (resource != null)
                         container.registerConfig(resource);
                 }

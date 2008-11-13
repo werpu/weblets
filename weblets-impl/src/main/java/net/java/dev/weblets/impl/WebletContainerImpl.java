@@ -326,31 +326,31 @@ public class WebletContainerImpl extends WebletContainer {
                 digester.setValidating(false);
                 digester.setEntityResolver(DisconnectedEntityResolver.sharedInstance());
                 digester.push(this);
-                digester.addFactoryCreate(Const.WEBLETS_CONFIG +"/weblet", WEBLET_CONFIG_FACTORY);
-                digester.addSetNext(Const.WEBLETS_CONFIG +"/weblet", "addWeblet", WebletConfigImpl.class.getName());
-                digester.addCallMethod(Const.WEBLETS_CONFIG +"/weblet/weblet-name",
+                digester.addFactoryCreate(Const.WEBLETS_CONFIG + Const.PAR_WEBLET, WEBLET_CONFIG_FACTORY);
+                digester.addSetNext(Const.WEBLETS_CONFIG + Const.PAR_WEBLET, "addWeblet", WebletConfigImpl.class.getName());
+                digester.addCallMethod(Const.WEBLETS_CONFIG + Const.PAR_WEBLET + Const.PAR_WEBLET_NAME,
                         "setWebletName", Const.FIRST_PARAM);
-                digester.addCallMethod(Const.WEBLETS_CONFIG +"/weblet/weblet-class",
+                digester.addCallMethod(Const.WEBLETS_CONFIG + Const.PAR_WEBLET + Const.PAR_WEBLET_CLASS,
                         "setWebletClass", Const.FIRST_PARAM);
-                digester.addCallMethod(Const.WEBLETS_CONFIG +"/weblet/weblet-version",
+                digester.addCallMethod(Const.WEBLETS_CONFIG + Const.PAR_WEBLET + Const.PAR_WEBLET_VERSION,
                         "setWebletVersion", Const.FIRST_PARAM);
-                digester.addCallMethod(Const.WEBLETS_CONFIG +"/weblet/init-param",
+                digester.addCallMethod(Const.WEBLETS_CONFIG + Const.PAR_WEBLET + Const.PAR_INIT_PARAM,
                         "addInitParam", Const.TWO_PARAMS);
-                digester.addCallParam(Const.WEBLETS_CONFIG +"/weblet/init-param/param-name", Const.FIRST_PARAM);
-                digester.addCallParam(Const.WEBLETS_CONFIG +"/weblet/init-param/param-value", Const.SECOND_PARAM);
-                digester.addCallMethod(Const.WEBLETS_CONFIG +"/weblet/mime-mapping",
+                digester.addCallParam(Const.WEBLETS_CONFIG  + Const.PAR_WEBLET + Const.PAR_INIT_PARAM + Const.PAR_PARAM_NAME, Const.FIRST_PARAM);
+                digester.addCallParam(Const.WEBLETS_CONFIG  + Const.PAR_WEBLET + Const.PAR_INIT_PARAM +Const.PAR_PARAM_VALUE, Const.SECOND_PARAM);
+                digester.addCallMethod(Const.WEBLETS_CONFIG + Const.PAR_WEBLET + Const.PAR_MIME_MAPPING,
                         "addMimeMapping", Const.TWO_PARAMS);
 
-                digester.addCallParam(Const.WEBLETS_CONFIG +"/weblet/mime-mapping/extension", Const.FIRST_PARAM);
-                digester.addCallParam(Const.WEBLETS_CONFIG +"/weblet/mime-mapping/mime-type", Const.SECOND_PARAM);
-                digester.addCallMethod(Const.WEBLETS_CONFIG +"/weblet-mapping",
+                digester.addCallParam(Const.WEBLETS_CONFIG  + Const.PAR_WEBLET + Const.PAR_MIME_MAPPING + Const.PAR_EXTENSION, Const.FIRST_PARAM);
+                digester.addCallParam(Const.WEBLETS_CONFIG  + Const.PAR_WEBLET + Const.PAR_MIME_MAPPING + Const.PAR_MIME_TYPE, Const.SECOND_PARAM);
+                digester.addCallMethod(Const.WEBLETS_CONFIG + Const.PAR_WEBLET_MAPPING,
                         "setWebletMapping", Const.TWO_PARAMS);
-                digester.addCallParam(Const.WEBLETS_CONFIG +"/weblet-mapping/weblet-name", Const.FIRST_PARAM);
-                digester.addCallParam(Const.WEBLETS_CONFIG +"/weblet-mapping/url-pattern", Const.SECOND_PARAM);
+                digester.addCallParam(Const.WEBLETS_CONFIG  + Const.PAR_WEBLET_MAPPING + Const.PAR_WEBLET_NAME, Const.FIRST_PARAM);
+                digester.addCallParam(Const.WEBLETS_CONFIG  + Const.PAR_WEBLET_MAPPING +Const.PAR_URL_PATTERN, Const.SECOND_PARAM);
 
-                digester.addCallMethod(Const.WEBLETS_CONFIG +"/subbbundle","addSubbundle", Const.TWO_PARAMS);
-                digester.addCallParam(Const.WEBLETS_CONFIG +"/subbundle/id", Const.FIRST_PARAM);
-                digester.addCallParam(Const.WEBLETS_CONFIG +"/subbundle/resources", Const.SECOND_PARAM);
+                digester.addCallMethod(Const.WEBLETS_CONFIG + Const.PAR_WEBLET  + Const.PAR_SUBBUNDLE, Const.FUNC_ADD_SUBBUNDLE, Const.TWO_PARAMS);
+                digester.addCallParam(Const.WEBLETS_CONFIG  + Const.PAR_WEBLET  + Const.PAR_SUBBUNDLE + Const.PAR_ID, Const.FIRST_PARAM);
+                digester.addCallParam(Const.WEBLETS_CONFIG  + Const.PAR_WEBLET  + Const.PAR_SUBBUNDLE + Const.PAR_RESOURCES, Const.SECOND_PARAM);
 
                 digester.parse(in);
             }
@@ -380,7 +380,7 @@ public class WebletContainerImpl extends WebletContainer {
         if (webletConfig == null)
             throw new WebletException("Weblet configuration not found: " + webletName);
 
-        Matcher matcher = Const._WEBLET_PATH_PATTERN.matcher(urlPattern);
+        Matcher matcher = Const.PATTERN_WEBLET_PATH.matcher(urlPattern);
         if (matcher.matches()) {
             String webletVersion = webletConfig.getWebletVersion();
             String webletPath = matcher.group(Const.SECOND_PARAM);

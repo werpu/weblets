@@ -1,7 +1,5 @@
 package net.java.dev.weblets.impl.misc;
 
-import net.java.dev.weblets.WebletRequest;
-
 /**
  * A security enabler to jail our resources so that no request can break out of our jailed paths!
  * 

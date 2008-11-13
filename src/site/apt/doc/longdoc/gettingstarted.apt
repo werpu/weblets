@@ -139,32 +139,4 @@ Summary
     Getting started is easy, two methods are available: download or Subversion
     checkout, try it, it is easy to get started, it is easy to use.
 
-=======================================================================
-
-* Contents
-
-	[[1]] {{{./index.html} Users documentation: Index }}
-
-	[[]] {{{./whatsnew.html} What is new in this release }}
-
-	[[]] {{{./gettingstarted.html} Users documentation: Getting started }}
-
-	[[]] {{{./setup.html} Users documentation: Setup guide }}
-
-	[[]] {{{./generalapi.html} Users documentation: Introduction to  the api patterns }}
-
-	[[]] {{{./usagejsp.html} Users documentation: JSP Weblets usage guide }}
-
-	[[]] {{{./usagejava.html} Users documentation: Servlet Weblets usage guide }}
-
-	[[]] {{{./usagejsf.html} Users documentation: JSF Weblets usage guide }}
-
-	[[]] {{{./usageresources.html} Users documentation: Resources Weblets usage guide }}
-
-	[[]] {{{./packingweblets.html} Users documentation: Weblets packaging guide }}
-
-	[[]] {{{./reporting.html} Users documentation: Weblets reporting guide }}
-
-	[[]] {{{./programmingweblets.html} Developers documentation: Programming Weblets }}
-
-	[[]] {{{./faq.html} Users documentation: Weblets general FAQ }}
+wnew

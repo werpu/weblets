@@ -1,10 +1,8 @@
 package net.java.dev.weblets.packaged;
 
 import net.java.dev.weblets.*;
-import net.java.dev.weblets.util.CopyStrategyImpl;
 import net.java.dev.weblets.util.CopyStrategy;
 import net.java.dev.weblets.util.CopyStrategyImpl;
-import net.java.dev.weblets.util.CopyStrategy;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -16,7 +16,7 @@
 package net.java.dev.weblets.impl;
 
 import net.java.dev.weblets.WebletResponse;
-import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
+import net.java.dev.weblets.util.VersioningUtils;
 
 abstract public class WebletResponseBase implements WebletResponse {
 	public WebletResponseBase(String contentTypeDefault) {
@@ -45,7 +45,7 @@ abstract public class WebletResponseBase implements WebletResponse {
 	}
 
 	public final void setContentVersion(String contentVersion, long timeout) {
-		if (WebletResourceloadingUtils.isVersionedWeblet(contentVersion)) {
+		if (VersioningUtils.isVersionedWeblet(contentVersion)) {
 			setContentVersionImpl(contentVersion, timeout);
 		}
 	}

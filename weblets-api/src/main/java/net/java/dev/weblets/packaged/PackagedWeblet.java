@@ -16,8 +16,9 @@
 package net.java.dev.weblets.packaged;
 
 import net.java.dev.weblets.*;
+import net.java.dev.weblets.resource.ResourceResolver;
+import net.java.dev.weblets.resource.ClasspathResourceResolver;
 import net.java.dev.weblets.util.CopyStrategyImpl;
-import net.java.dev.weblets.util.CopyStrategy;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +29,9 @@ import java.net.URLConnection;
  * The standard packaged weblet serves resources from a standard weblet packaging
  */
 public class PackagedWeblet extends Weblet {
+
+    ResourceResolver _resolver = null;
+
     /**
      * init method which is called by default to process the parameters
      *
@@ -43,21 +47,21 @@ public class PackagedWeblet extends Weblet {
         // init param missing, lets throw an error
         if (packageName == null && resourceRoot == null) {
             throw new WebletException("Missing either init parameter \"package\" or " + " or init parameter \"resourceRoot\" for " + " Weblet \""
-                    + config.getWebletName() + "\"");
+                                      + config.getWebletName() + "\"");
         }
         // the init was successful we now have all we need
         _resourceRoot = (packageName != null) ? packageName.replace('.', '/') : resourceRoot;
+        _resolver = new ClasspathResourceResolver(config, _resourceRoot);
         // optional init param
     }
 
     public void service(WebletRequest request, WebletResponse response) throws IOException {
-        String resourcePath = _resourceRoot + request.getPathInfo();
         // lets build up our filter chain which in our case is a binary filter for standard
         // processing and our text processing filter for text resources with included
         // weblet: functions
         CopyStrategyImpl copyProvider = new CopyStrategyImpl();
-        URL url = WebletResourceloadingUtils.getInstance().getResourceUrl(request, resourcePath);
-        WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyProvider);
+
+        WebletResourceloadingUtils.getInstance().loadResource(getWebletConfig(), request, response, _resolver, copyProvider);
     }
 
     /**
@@ -76,23 +80,27 @@ public class PackagedWeblet extends Weblet {
         // lets build up our filter chain which in our case is a binary filter for standard
         // processing and our text processing filter for text resources with included
         // weblet: functions
-        CopyStrategy copyProvider = new CopyStrategyImpl();
-        URL url = WebletResourceloadingUtils.getInstance().getResourceUrl(resourcePath);
-        if (url == null)
+
+        //TODO add the new resolver API here as well!
+        
+        CopyStrategyImpl copyProvider = new CopyStrategyImpl();
+        URL url = _resolver.getURL(mimetype, pathInfo);
+        if (url == null) //TODO add shadow url mock data here
             return null;
+
         // our utils should handle the standard case
         URLConnection conn = url.openConnection();
         long lastmodified = conn.getLastModified();
         if (mimetype == null)
             mimetype = getWebletConfig().getMimeType(resourcePath);
-        return copyProvider.wrapInputStream(getWebletConfig().getWebletName(), mimetype, conn.getInputStream()); // To change body of implemented methods use
-        // File | Settings | File Templates.
+        
+        return copyProvider.wrapInputStream(getWebletConfig().getWebletName(), mimetype, conn.getInputStream()); 
     }
 
     public void destroy() {
         _resourceRoot = null;
         super.destroy();
-	}
+    }
 
-	private String	_resourceRoot;
+    private String _resourceRoot;
 }

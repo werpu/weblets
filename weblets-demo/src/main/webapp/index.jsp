@@ -53,6 +53,9 @@
                 <li>
                     <a href="./localresource.jsp">A demo utilizing the webapp weblet to serve resources from the local web application</a>
                 </li>
+                <li>
+                    <a href="./subbundle.jsp">Subbundles</a>
+                </li>
 
 			</ul>
 		</div>

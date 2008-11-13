@@ -24,11 +24,12 @@ public class InverseSubbundleIndex {
         return _subbundles.values();
     }
 
-
     public void addBundle(String resource, Subbundle subbundle) {
         synchronized (this) {   //for add we have to lock!
             _inverseIndex.put(resource, subbundle);
             _subbundles.put(subbundle.getSubbundleId(), subbundle);
+            subbundle.getResources().add(resource);
+           
         }
     }
 

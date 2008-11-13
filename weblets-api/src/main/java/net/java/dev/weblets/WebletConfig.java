@@ -93,4 +93,20 @@ public interface WebletConfig {
      *         of the weblet
      */
     public Set getAllowedResources();
+
+    /**
+     * Holder for temporary configuration
+     * parameters which can be set outside
+     * @param key the key for the configuration parameter
+     * @return an object which is the value for the config param
+     */
+    public Object getConfigParam(String key);
+
+    /**
+     * setter for the configuration params
+     * @param key the key
+     * @param value the value!
+     */
+    public void setConfigParam(String key, Object value);
+
 }

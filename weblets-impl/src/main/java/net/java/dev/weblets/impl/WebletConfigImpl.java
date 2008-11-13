@@ -15,14 +15,20 @@
  */
 package net.java.dev.weblets.impl;
 
-import java.util.*;
-
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletContainer;
-import net.java.dev.weblets.sandbox.Subbundle;
 import net.java.dev.weblets.impl.sandbox.InverseSubbundleIndex;
+import net.java.dev.weblets.sandbox.Subbundle;
 import net.java.dev.weblets.util.StringUtils;
 
+import java.util.*;
+
+/**
+ * Implementation of the weblets config
+ * class
+ * holds all the valid config and caching information
+ * inside
+ */
 public class WebletConfigImpl implements WebletConfig {
 
     public WebletConfigImpl(WebletContainerImpl container) {
@@ -89,8 +95,10 @@ public class WebletConfigImpl implements WebletConfig {
             if (!subbundleFiles.contains(processedRespource)) {
                 _subbundles.addBundle(processedRespource, subbundle);
                 subbundleFiles.add(processedRespource);
+
             }
         }
+
     }
 
     public Iterator getInitParameterNames() {
@@ -177,6 +185,16 @@ public class WebletConfigImpl implements WebletConfig {
         return _subbundles.getSubbundles();
     }
 
+    public Object getConfigParam(String key) {
+        return _configParams.get(key);
+    }
+
+    public void setConfigParam(String key, Object value) {
+        synchronized (_configParams) {
+            _configParams.put(key, value);
+        }
+    }
+
     private Set _allowedResources = null;
     private WebletContainerImpl _container;
     private String _webletName;
@@ -184,6 +202,7 @@ public class WebletConfigImpl implements WebletConfig {
     private String _webletVersion;
     private Map _initParams = new HashMap(3);
     private Map _mimeMappings = new HashMap(3);
-
+    /*internal context params holder which stores additional processing values on a per weblet base!*/
+    private Map _configParams = new HashMap(3);
     private InverseSubbundleIndex _subbundles = new InverseSubbundleIndex();
 }

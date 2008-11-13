@@ -19,7 +19,6 @@ import net.java.dev.weblets.WebletContainer;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.impl.WebletContainerImpl;
-import net.java.dev.weblets.impl.misc.WebletUtilsImpl;
 import net.java.dev.weblets.impl.servlets.WebletRequestImpl;
 import net.java.dev.weblets.impl.servlets.WebletResponseImpl;
 import org.apache.commons.logging.Log;
@@ -65,8 +64,6 @@ public class WebletsPhaseListener implements PhaseListener {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext external = context.getExternalContext();
 		// test stuff remove me once verified
-		WebletUtilsImpl utils = new WebletUtilsImpl();
-		WebletRequest req = null;
         
 		/*
 		 * req = utils.getRequestFromPath(external.getRequest(), "/weblets-demo/faces/weblets/demo$1.0/welcome.js");

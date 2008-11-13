@@ -22,7 +22,6 @@ import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.impl.WebletContainerImpl;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +50,6 @@ public class WebletsServletImpl extends HttpServlet {
 				String webletPath = parsed[1];
 				String webletPathInfo = parsed[2];
 				WebletRequest webRequest = new WebletRequestImpl(webletName, webletPath, contextPath, webletPathInfo, ifModifiedSince, httpRequest);
-				ServletContext servletContext = getServletContext();
 				String contentName = webRequest.getPathInfo();
 				String contentTypeDefault = getServletContext().getMimeType(contentName);
 				WebletResponse webResponse = new WebletResponseImpl(contentTypeDefault, httpResponse);

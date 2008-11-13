@@ -1,11 +1,8 @@
 package net.java.dev.weblets.demo.sourcecodeweblet;
 
-import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.WebletUtils;
-import net.java.dev.weblets.util.IWebletUtils;
-import net.java.dev.weblets.util.CopyStrategyImpl;
 import net.java.dev.weblets.util.CopyStrategy;
+import net.java.dev.weblets.util.CopyStrategyImpl;
 
 import java.io.*;
 
@@ -20,9 +17,6 @@ public class SourcecodeCopyStrategy extends CopyStrategyImpl implements CopyStra
     }
 
     protected void copyText(String webletName, Reader in, Writer out) throws IOException {
-        byte[] buffer = new byte[2048];
-        int len = 0;
-        int total = 0;
         BufferedReader bufIn = new BufferedReader(mapResponseReader(webletName, in));
         PrintWriter bufOut = new PrintWriter(mapResponseWriter(out));
         try {

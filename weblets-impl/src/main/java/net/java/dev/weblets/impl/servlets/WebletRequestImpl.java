@@ -15,8 +15,6 @@
  */
 package net.java.dev.weblets.impl.servlets;
 
-import javax.servlet.ServletRequest;
-
 import net.java.dev.weblets.impl.WebletRequestBase;
 import net.java.dev.weblets.impl.misc.ReflectUtils;
 

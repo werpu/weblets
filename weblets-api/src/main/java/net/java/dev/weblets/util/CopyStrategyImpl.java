@@ -53,9 +53,6 @@ public class CopyStrategyImpl implements CopyStrategy {
 	}
 
 	protected void copyText(String webletName, Reader in, Writer out) throws IOException {
-		byte[] buffer = new byte[2048];
-		int len = 0;
-		int total = 0;
 		BufferedReader bufIn = mapResponseReader(webletName, in);
 		BufferedWriter bufOut = mapResponseWriter(out);
 		try {
