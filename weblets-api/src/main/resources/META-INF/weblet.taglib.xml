@@ -7,28 +7,28 @@
 
     <function>
         <function-name>resource</function-name>
-        <function-class>net.java.dev.weblets.WebletUtils</function-class>
+        <function-class>net.java.dev.weblets.FaceletELWebletUtils</function-class>
         <function-signature>java.lang.String getResource( java.lang.String, java.lang.String)</function-signature>
     </function>
 
     <function>
         <function-name>resourceDup</function-name>
-        <function-class>net.java.dev.weblets.WebletUtils</function-class>
-        <function-signature>java.lang.String getResource(java.lang.Object, java.lang.String, java.lang.String, boolean)
+        <function-class>net.java.dev.weblets.FaceletELWebletUtils</function-class>
+        <function-signature>java.lang.String getResource(java.lang.String, java.lang.String, boolean)
         </function-signature>
     </function>
 
 
     <function>
         <function-name>url</function-name>
-        <function-class>net.java.dev.weblets.WebletUtils</function-class>
+        <function-class>net.java.dev.weblets.FaceletELWebletUtils</function-class>
         <function-signature>java.lang.String getURL( java.lang.String, java.lang.String)</function-signature>
     </function>
 
     <function>
         <function-name>urlDup</function-name>
-        <function-class>net.java.dev.weblets.WebletUtils</function-class>
-        <function-signature>java.lang.String getURL(java.lang.Object, java.lang.String, java.lang.String, boolean)
+        <function-class>net.java.dev.weblets.FaceletELWebletUtils</function-class>
+        <function-signature>java.lang.String getURL(java.lang.String, java.lang.String, boolean)
         </function-signature>
     </function>
 
