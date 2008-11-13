@@ -23,13 +23,13 @@
 
 
     <function>
-        <name>resourceDup</name>
+        <name>extResource</name>
         <function-class>net.java.dev.weblets.WebletUtils</function-class>
         <function-signature>java.lang.String getResource(java.lang.Object, java.lang.String, java.lang.String, boolean)</function-signature>
     </function>
 
     <function>
-          <name>urlDup</name>
+          <name>extUrl</name>
           <function-class>net.java.dev.weblets.WebletUtils</function-class>
           <function-signature>java.lang.String getURL(java.lang.Object, java.lang.String, java.lang.String, boolean)</function-signature>
     </function>

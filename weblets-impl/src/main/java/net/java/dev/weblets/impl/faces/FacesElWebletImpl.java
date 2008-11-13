@@ -41,14 +41,14 @@ public class FacesElWebletImpl extends net.java.dev.weblets.FacesElWeblet {
     /**
      * @return a map which allows to check for duplicate parameters
      */
-    public Map getResourceDup() {
+    public Map getExtResource() {
         return extResourceHandler;
     }
 
     /**
      * @return a map for urls which allows to check for duplicate parameters!
      */
-    public Map getUrlDup() {
+    public Map getExtUrl() {
         return extUrlHandler;
     }
 }
