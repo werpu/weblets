@@ -1,4 +1,4 @@
-package net.java.dev.weblets.impl.sandbox;
+package net.java.dev.weblets.impl;
 
 import net.java.dev.weblets.sandbox.Subbundle;
 

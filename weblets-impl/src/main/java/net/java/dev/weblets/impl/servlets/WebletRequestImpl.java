@@ -16,7 +16,7 @@
 package net.java.dev.weblets.impl.servlets;
 
 import net.java.dev.weblets.impl.WebletRequestBase;
-import net.java.dev.weblets.impl.misc.ReflectUtils;
+import net.java.dev.weblets.impl.util.ReflectUtilsImpl;
 
 public class WebletRequestImpl extends WebletRequestBase {
 	public WebletRequestImpl(String webletName, String webletPath, String contextPath, String pathInfo, long ifModifiedSince, Object externalRequest) {
@@ -24,6 +24,6 @@ public class WebletRequestImpl extends WebletRequestBase {
 	}
 
 	public String getParameter(String name) {
-		return (String) ReflectUtils.getParameter(getExternalRequest(), name);
+		return (String) ReflectUtilsImpl.getParameter(getExternalRequest(), name);
 	}
 }

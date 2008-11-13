@@ -8,31 +8,29 @@
  */
 package net.java.dev.weblets.impl;
 
+import net.java.dev.weblets.WebletContainer;
+import net.java.dev.weblets.WebletsServlet;
+import net.java.dev.weblets.impl.parse.DisconnectedEntityResolver;
+import net.java.dev.weblets.impl.util.ConfigurationUtils;
+import net.java.dev.weblets.impl.util.ReflectUtilsImpl;
+import org.apache.commons.digester.Digester;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.xml.sax.SAXException;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
-import java.util.regex.Pattern;
-import java.util.Set;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Enumeration;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-
-import net.java.dev.weblets.WebletContainer;
-import net.java.dev.weblets.WebletsServlet;
-import net.java.dev.weblets.impl.misc.ReflectUtils;
-import net.java.dev.weblets.impl.parse.DisconnectedEntityResolver;
-import net.java.dev.weblets.impl.util.ConfigurationUtils;
-
-import org.apache.commons.digester.Digester;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.xml.sax.SAXException;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * @author john.fallows
@@ -83,7 +81,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
                     else if (parser.getFacesPattern() != null && !parser.getFacesPattern().trim().equals(Const.BLANK))
                         triggerPattern = parser.getFacesPattern();
                     multipleConfigs = parser.isMultipleWebletConfigs();
-                    contextPath = ReflectUtils.calculateContextPath(parser, context);
+                    contextPath = ReflectUtilsImpl.calculateContextPath(parser, context);
                     handlePathPatternWarnings(parser);
                 } catch (SAXException e) {
                     throw new RuntimeException(e);

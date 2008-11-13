@@ -34,12 +34,6 @@ public class WebletResourceloadingUtils {
     String tempDir = "";
 
     public WebletResourceloadingUtils() {
-        //we need an upfront tempdir resolution for our swap files!
-        try {
-            File tempFile = File.createTempFile("webletsstart", "tmp");
-        } catch (IOException e) {
-            logError(e);
-        }
     }
 
     public URL getResourceUrl(WebletRequest request, String resourcePath) {

@@ -109,4 +109,17 @@ public interface WebletConfig {
      */
     public void setConfigParam(String key, Object value);
 
+    /**
+     * returns true if the config has subbundles
+     * @return
+     */
+    public boolean hasSubbundles();
+
+    /**
+     * mapping function to map a resourcePath into its subbundle resource path!
+     * @param resourcePath to be mapped
+     * @return
+     */
+    public String getSubbundleIdFromResource(String resourcePath);
+
 }

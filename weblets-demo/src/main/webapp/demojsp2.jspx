@@ -14,7 +14,8 @@ Author     : werpu
 	<jsp:element name="text">
         <jsp:attribute name="lang">EN</jsp:attribute>
         <head>
-    		<link rel="stylesheet" href="${wbl:url('weblets.demo', '/styles/weblets.css')}"></link>
+            <link rel="stylesheet" href="${wbl:urlDup(pageContext.request,'weblets.demo', '/styles/weblets.css',true)}"></link>
+            <link rel="stylesheet" href="${wbl:urlDup(pageContext.request,'weblets.demo', '/styles/weblets.css',true)}"></link>
     	</head>
         
         <jsp:body>

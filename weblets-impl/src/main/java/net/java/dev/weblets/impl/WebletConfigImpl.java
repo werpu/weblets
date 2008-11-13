@@ -17,7 +17,7 @@ package net.java.dev.weblets.impl;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletContainer;
-import net.java.dev.weblets.impl.sandbox.InverseSubbundleIndex;
+import net.java.dev.weblets.impl.InverseSubbundleIndex;
 import net.java.dev.weblets.sandbox.Subbundle;
 import net.java.dev.weblets.util.StringUtils;
 
@@ -185,6 +185,10 @@ public class WebletConfigImpl implements WebletConfig {
         return _subbundles.getSubbundles();
     }
 
+    public boolean hasSubbundles() {
+        return _subbundles.getSubbundles().size() > 0;
+    }
+
     public Object getConfigParam(String key) {
         return _configParams.get(key);
     }
@@ -193,6 +197,23 @@ public class WebletConfigImpl implements WebletConfig {
         synchronized (_configParams) {
             _configParams.put(key, value);
         }
+    }
+
+    /**
+     *
+     * @param resourcePath
+     * @return the subbundle id from a given resource path, null otherwise if none is given
+     */
+    public String getSubbundleIdFromResource(String resourcePath) {
+        Subbundle retVal = _subbundles.findBundleFromId(resourcePath);
+        if(retVal != null) {
+            return retVal.getSubbundleId();
+        }
+        retVal = _subbundles.findBundleFromResource(resourcePath);
+        if(retVal != null) {
+            return retVal.getSubbundleId();
+        }
+        return null;        
     }
 
     private Set _allowedResources = null;
