@@ -37,14 +37,16 @@ public class FacesWebletUtils {
      * @return
      */
     public static String getURL(FacesContext context, String weblet, String pathInfo, boolean suppressDoubleIncludes) {
+        String url = instance.getResource(context, weblet, pathInfo, false);
         if (suppressDoubleIncludes) {
-            String url = instance.getResource(context, weblet, pathInfo, false);
             Object req = context.getExternalContext().getRequest();
             if (AttributeUtils.getAttribute(req, RES_SERVED + url) != null) {
                 return "";
             } else {
-                AttributeUtils.setAttribute(req, RES_SERVED + url, Boolean.TRUE);
+                touch(context, url);
             }
+        } else {
+            touch(context, url);
         }
         return instance.getResource(context, weblet, pathInfo, true);
     }
@@ -67,10 +69,17 @@ public class FacesWebletUtils {
             if (AttributeUtils.getAttribute(req, RES_SERVED + url) != null) {
                 return "";
             } else {
-                AttributeUtils.setAttribute(req, RES_SERVED + url, Boolean.TRUE);
+                touch(context, url);
             }
+        } else {
+            touch(context, url);
         }
         return url;
+    }
+
+    private static void touch(FacesContext context, String url) {
+        Object req = (Object) context.getExternalContext().getRequest();
+        AttributeUtils.setAttribute(req, RES_SERVED + url, Boolean.TRUE);
     }
 
     /**

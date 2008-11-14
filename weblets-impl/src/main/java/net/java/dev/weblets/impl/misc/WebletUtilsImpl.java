@@ -47,6 +47,7 @@ public class WebletUtilsImpl implements IWebletUtils {
      */
     public String getResource(Object requestSingletonHolder, String weblet, String pathInfo, boolean suppressDuplicates) {
         if (!suppressDuplicates) {
+            touch(requestSingletonHolder, weblet, pathInfo); 
             return getResource(weblet, pathInfo);
         }
         String url = getResource(weblet, pathInfo);
@@ -69,6 +70,7 @@ public class WebletUtilsImpl implements IWebletUtils {
      */
     public String getURL(Object requestSingletonHolder, String weblet, String pathInfo, boolean suppressDuplicates) {
         if (!suppressDuplicates) {
+            touch(requestSingletonHolder, weblet, pathInfo); 
             return getURL(weblet, pathInfo);
         }
         String url = getResource(weblet, pathInfo);
@@ -78,6 +80,11 @@ public class WebletUtilsImpl implements IWebletUtils {
             AttributeUtils.setAttribute(requestSingletonHolder, RES_SERVED + url, Boolean.TRUE);
         }
         return getURL(weblet, pathInfo);
+    }
+
+    private void touch(Object requestSingletonHolder, String weblet, String pathInfo) {
+        String url = getResource(weblet, pathInfo);
+        AttributeUtils.setAttribute(requestSingletonHolder, RES_SERVED + url, Boolean.TRUE);
     }
 
     /**

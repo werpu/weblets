@@ -1,5 +1,6 @@
 <?xml version = '1.0' encoding = 'windows-1252'?>
-<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+        "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
 <taglib>
     <tlib-version>1.0</tlib-version>
     <jsp-version>2.0</jsp-version>
@@ -15,7 +16,7 @@
     <tag>
         <name>resource</name>
         <tag-class>net.java.dev.weblets.WebletsResourceTag</tag-class>
-        
+
         <attribute>
             <name>weblet</name>
             <required>true</required>
