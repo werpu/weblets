@@ -8,7 +8,6 @@ import net.java.dev.weblets.resource.WebletResource;
 import net.java.dev.weblets.resource.ResourceFactory;
 
 import java.io.IOException;
-import java.io.File;
 import java.util.*;
 
 /**

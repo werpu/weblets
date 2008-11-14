@@ -3,6 +3,7 @@ package net.java.dev.weblets.util;
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.packaged.ResourceloadingUtils;
+import net.java.dev.weblets.packaged.IResourceloadingUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -25,11 +26,11 @@ public class VersioningUtils {
     /**
      * fetches the timeout value from the given config instance!
      *
-     * @param config                     the weblet config
+     * @param config               the weblet config
      * @param resourceloadingUtils
      * @return a timeout if one is found otherwise a never value is returned marking a point in the far future
      */
-    public long getTimeout(WebletConfig config, ResourceloadingUtils resourceloadingUtils) {
+    public long getTimeout(WebletConfig config, IResourceloadingUtils resourceloadingUtils) {
         String cacheControlTimeout = config.getInitParameter(PAR_CACHECONTROL_TIMEOUT);
         long timeout = getNever();
         if (!StringUtils.isBlank(cacheControlTimeout)) {
@@ -85,13 +86,13 @@ public class VersioningUtils {
      * the calculation is done internally as utc values and the current timezone
      * shifting being done internally correctly to those utc values!
      *
-     * @param config                     the current weblets config
-     * @param request                    the weblets request
-     * @param resourceLastmodified       the last modified state of the resource
+     * @param config               the current weblets config
+     * @param request              the weblets request
+     * @param resourceLastmodified the last modified state of the resource
      * @param resourceloadingUtils
      * @return true if a reload has to be done false if not
      */
-    public boolean hasTobeLoaded(WebletConfig config, WebletRequest request, long resourceLastmodified, ResourceloadingUtils resourceloadingUtils) {
+    public boolean hasTobeLoaded(WebletConfig config, WebletRequest request, long resourceLastmodified, IResourceloadingUtils resourceloadingUtils) {
         long requestCacheState = request.getIfModifiedSince();
         // the browser sends the utc timestamp
         requestCacheState = fixTimeValue(requestCacheState);

@@ -1,16 +1,16 @@
 package net.java.dev.weblets.resource;
 
-import net.java.dev.weblets.sandbox.Subbundle;
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.packaged.ResourceloadingUtils;
+import net.java.dev.weblets.sandbox.Subbundle;
 
-import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.io.InputStream;
-import java.io.IOException;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Bundled Resource
@@ -52,7 +52,6 @@ public class SubbundleResourceImpl extends BaseWebletResourceImpl {
     }
 
     public InputStream getInputStream() throws IOException {
-
         return new FileInputStream(_temp);  //To change body of implemented methods use File | Settings | File Templates.
     }
 

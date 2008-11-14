@@ -15,11 +15,11 @@ import java.io.IOException;
  */
 public abstract class BaseWebletResourceImpl implements WebletResource {
 
-    Object _resource;
+    protected Object _resource;
 
-    File _temp; /*temp file handle for processed files being put into the temp dir*/
+    protected File _temp; /*temp file handle for processed files being put into the temp dir*/
 
-    String _resourcePath;
+    protected String _resourcePath;
 
     /**
      * if set to true the engine has to do a temp file processing

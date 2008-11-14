@@ -55,4 +55,7 @@ public interface ResourceResolver {
      * @throws IOException
      */
     public WebletResource getResource(String mimetype, String pathInfo) throws IOException;
+
+
+    
 }
