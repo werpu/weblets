@@ -23,6 +23,7 @@ public class HtmlOutputCustomRenderer extends Renderer {
     private static final String HTML_A = "a";
     private static final String HTML_HREF = "href";
     private static final String HTML_ONCLICK = "onclick";
+    protected static final String HTML_JAVASCRIPT = "text/javascript";
 
     /**
      * Encode end for rendering our
@@ -55,7 +56,7 @@ public class HtmlOutputCustomRenderer extends Renderer {
             /*We now fetch the resource and render it!*/
             String resourceURL = FacesWebletUtils.getURL(context, WEBLETS_DEMO, WELCOME_JS, true);
             out.startElement(HMTL_SCRIPT, component);
-            out.writeAttribute(HTML_TYPE, "text/javascript", null);
+            out.writeAttribute(HTML_TYPE, HTML_JAVASCRIPT, null);
             out.writeAttribute(HTML_SRC, resourceURL, null);
             out.endElement(HMTL_SCRIPT);
         }
