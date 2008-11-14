@@ -2,7 +2,7 @@ package net.java.dev.weblets.util;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
+import net.java.dev.weblets.packaged.ResourceloadingUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -26,17 +26,17 @@ public class VersioningUtils {
      * fetches the timeout value from the given config instance!
      *
      * @param config                     the weblet config
-     * @param webletResourceloadingUtils
+     * @param resourceloadingUtils
      * @return a timeout if one is found otherwise a never value is returned marking a point in the far future
      */
-    public long getTimeout(WebletConfig config, WebletResourceloadingUtils webletResourceloadingUtils) {
+    public long getTimeout(WebletConfig config, ResourceloadingUtils resourceloadingUtils) {
         String cacheControlTimeout = config.getInitParameter(PAR_CACHECONTROL_TIMEOUT);
         long timeout = getNever();
         if (!StringUtils.isBlank(cacheControlTimeout)) {
             try {
                 timeout = Long.parseLong(cacheControlTimeout);
             } catch (RuntimeException ex) {
-                Log log = LogFactory.getLog(webletResourceloadingUtils.getClass());
+                Log log = LogFactory.getLog(resourceloadingUtils.getClass());
                 log.error(ERR_INVALID_CACHECTRL_VALUE);
             }
         }
@@ -88,10 +88,10 @@ public class VersioningUtils {
      * @param config                     the current weblets config
      * @param request                    the weblets request
      * @param resourceLastmodified       the last modified state of the resource
-     * @param webletResourceloadingUtils
+     * @param resourceloadingUtils
      * @return true if a reload has to be done false if not
      */
-    public boolean hasTobeLoaded(WebletConfig config, WebletRequest request, long resourceLastmodified, WebletResourceloadingUtils webletResourceloadingUtils) {
+    public boolean hasTobeLoaded(WebletConfig config, WebletRequest request, long resourceLastmodified, ResourceloadingUtils resourceloadingUtils) {
         long requestCacheState = request.getIfModifiedSince();
         // the browser sends the utc timestamp
         requestCacheState = fixTimeValue(requestCacheState);
@@ -101,7 +101,7 @@ public class VersioningUtils {
         long currentTime = System.currentTimeMillis();
         // utc time mapping
         long currentUTCTime = currentTime - TimeZone.getDefault().getOffset(currentTime);
-        long utcResourceModifiedState = (resourceModifiedState - TimeZone.getDefault().getOffset(resourceModifiedState)) + getTimeout(config, webletResourceloadingUtils);
+        long utcResourceModifiedState = (resourceModifiedState - TimeZone.getDefault().getOffset(resourceModifiedState)) + getTimeout(config, resourceloadingUtils);
         load = (requestCacheState < utcResourceModifiedState)
                /*-1 or smaller value on reload pressed*/
                || requestCacheState < currentUTCTime;

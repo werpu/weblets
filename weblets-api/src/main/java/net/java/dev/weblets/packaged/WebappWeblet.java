@@ -2,7 +2,7 @@ package net.java.dev.weblets.packaged;
 
 import net.java.dev.weblets.*;
 import net.java.dev.weblets.resource.WebappResourceResolver;
-import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
+import net.java.dev.weblets.packaged.ResourceloadingUtils;
 import net.java.dev.weblets.util.CopyStrategy;
 import net.java.dev.weblets.util.CopyStrategyImpl;
 import net.java.dev.weblets.util.StringUtils;
@@ -55,7 +55,7 @@ public class WebappWeblet extends Weblet {
         /*we now have the resource handling decoupled from the mimetypes*/
         assertSecurity(resourcePath); //additional security constraints!
         CopyStrategy copyProvider = new CopyStrategyImpl();
-        WebletResourceloadingUtils.getInstance().loadResource(getWebletConfig(), request, response, _urlResolver, copyProvider);
+        ResourceloadingUtils.getInstance().loadResource(getWebletConfig(), request, response, _urlResolver, copyProvider);
     }
 
     private void assertSecurity(String resourcePath) {

@@ -86,6 +86,20 @@ public class FacesWebletUtils {
     }
 
     /**
+     * isResourceLoaded check
+     *
+     * @param context  the current facesContext
+     * @param weblet   the weblet
+     * @param pathInfo the pathInfo
+     * @return
+     */
+    public static boolean isResourceLoaded(FacesContext context, String weblet, String pathInfo) {
+        String url = instance.getResource(context, weblet, pathInfo, false);
+        Object req = (Object) context.getExternalContext().getRequest();
+        return AttributeUtils.getAttribute(req, RES_SERVED + url) != null;
+    }
+
+    /**
      * kind of a weird construct but definitely faster than doing all the calls over introspection, the internal contract is defined by the IFacesWebletUtils
      * interface
      */

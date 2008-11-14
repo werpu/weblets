@@ -23,8 +23,8 @@ import org.apache.commons.logging.Log;
  * @author Werner Punz
  *         TODO clean this class up
  */
-public class WebletResourceloadingUtils {
-    static WebletResourceloadingUtils instance = new WebletResourceloadingUtils();
+public class ResourceloadingUtils {
+    static ResourceloadingUtils instance = new ResourceloadingUtils();
     static final String TEMP_CACHE_KEY = "TEMP_CACHE";
 
     public static final int CACHED_URLS = 3000;
@@ -33,7 +33,7 @@ public class WebletResourceloadingUtils {
     VersioningUtils versioningUtils = new VersioningUtils();
     String tempDir = "";
 
-    public WebletResourceloadingUtils() {
+    public ResourceloadingUtils() {
     }
 
     public URL getResourceUrl(WebletRequest request, String resourcePath) {
@@ -102,7 +102,7 @@ public class WebletResourceloadingUtils {
 
     ;
 
-    public static WebletResourceloadingUtils getInstance() {
+    public static ResourceloadingUtils getInstance() {
         return instance;
     }
 
@@ -293,7 +293,7 @@ public class WebletResourceloadingUtils {
     /*loads a bundled resource!*/
     private void loadBundledResource(WebletConfig config, WebletRequest request, WebletResponse responce, Subbundle bundle, CopyStrategy copyProvider, long resourceLastmodified) {
         //first check the dates if the are already reserved
-        //URL url = WebletResourceloadingUtils.getInstance().getResourceUrl(request, resourcePath);
+        //URL url = ResourceloadingUtils.getInstance().getResourceUrl(request, resourcePath);
     }
 
     /**

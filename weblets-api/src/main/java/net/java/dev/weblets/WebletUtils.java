@@ -53,6 +53,11 @@ public class WebletUtils {
         return instance.getURL(requestSingletonHolder, weblet, pathInfo, suppressDuplicates);
     }
 
+
+    public static boolean isResourceLoaded(Object requestSingletonHolder, String weblet, String pathInfo) {
+        return instance.isResourceLoaded(requestSingletonHolder, weblet, pathInfo);
+    }
+
     /**
      * Reporting case for weblets
      * this methid must be able to deal with requests being null

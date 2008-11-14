@@ -36,7 +36,7 @@ public class URLWeblet extends Weblet {
 		String resourcePath = _resourceRoot + request.getPathInfo();
 		CopyStrategy copyProvider = new CopyStrategyImpl();
 		URL url = new URL(resourcePath);
-		WebletResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyProvider);
+		ResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyProvider);
 	}
 
 	public InputStream serviceStream(String webletname, String mimetype) throws IOException, WebletException {

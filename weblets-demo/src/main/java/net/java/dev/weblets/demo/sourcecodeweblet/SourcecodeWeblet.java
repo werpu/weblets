@@ -5,7 +5,7 @@ import net.java.dev.weblets.WebletException;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.impl.WebletRequestBase;
-import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
+import net.java.dev.weblets.packaged.ResourceloadingUtils;
 import net.java.dev.weblets.util.CopyStrategy;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +43,7 @@ public class SourcecodeWeblet extends Weblet {
 	        response.setContentType("text/html");
 	        FileInputStream fin = new FileInputStream(resourcePath);
 
-	        WebletResourceloadingUtils.getInstance().loadResourceFromStream(getWebletConfig(), request, response,  copyProvider, fin);
+	        ResourceloadingUtils.getInstance().loadResourceFromStream(getWebletConfig(), request, response,  copyProvider, fin);
 	    }
 
     /**

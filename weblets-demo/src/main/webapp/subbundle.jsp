@@ -1,6 +1,6 @@
-<%@page contentType="text/html" pageEncoding="windows-1252"%>
+<%@page contentType="text/html" pageEncoding="windows-1252" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+"http://www.w3.org/TR/html4/loose.dtd">
 <jsp:useBean class="net.java.dev.weblets.WebletUtils" scope="application" id="jspweblet"/>
 
 <html>
@@ -31,11 +31,16 @@
                 src="<%=jspweblet.getURL(request, "weblets.demo","/subbundle/script1.js",true)%>">
         </script>
 
-
+        <% if (!jspweblet.isResourceLoaded(request, "weblets.demo", "/subbundle/script2.js")) { %>
+        <!--
+             double includes can be suppressed by the resource loaded
+             method, we can add as many includes here as we want the code
+             will not be executed for any resource in the bundle
+        -->
         <script type="text/javascript" defer="true"
                 src="<%=jspweblet.getURL(request, "weblets.demo","/subbundle/script2.js",true)%>">
         </script>
-
+        <%}%>
         <p>if you check the page source the second include should be empty while we still reference
             it from our indirection call!
             We use in this case double include checks to suppress additionall calls!

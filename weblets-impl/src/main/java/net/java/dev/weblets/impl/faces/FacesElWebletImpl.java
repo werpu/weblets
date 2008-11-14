@@ -1,9 +1,6 @@
 package net.java.dev.weblets.impl.faces;
 
-import net.java.dev.weblets.impl.faces.util.FacesElWebletResource;
-import net.java.dev.weblets.impl.faces.util.FacesELWebletURL;
-import net.java.dev.weblets.impl.faces.util.FacesElExtWebletURL;
-import net.java.dev.weblets.impl.faces.util.FacesElExtWebletResource;
+import net.java.dev.weblets.impl.faces.util.*;
 import net.java.dev.weblets.FacesElWeblet;
 
 import java.util.Map;
@@ -19,6 +16,8 @@ public class FacesElWebletImpl extends net.java.dev.weblets.FacesElWeblet {
     FacesELWebletURL urlHandler = new FacesELWebletURL();
     FacesElExtWebletURL extUrlHandler = new FacesElExtWebletURL();
     FacesElExtWebletResource extResourceHandler = new FacesElExtWebletResource();
+
+    FacesElIsResourceLoaded resourceLoaded = new FacesElIsResourceLoaded();
 
     /**
      * enables a weblet.resource[][] notation on the jsf side of things
@@ -50,5 +49,15 @@ public class FacesElWebletImpl extends net.java.dev.weblets.FacesElWeblet {
      */
     public Map getExtUrl() {
         return extUrlHandler;
+    }
+
+    /**
+     * Resource loaded implementation on
+     * el dummy map level!
+     *
+     * @return
+     */
+    public Map getResourceLoaded() {
+        return resourceLoaded;
     }
 }

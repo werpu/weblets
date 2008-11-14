@@ -3,7 +3,7 @@ package net.java.dev.weblets.resource;
 import net.java.dev.weblets.sandbox.Subbundle;
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
+import net.java.dev.weblets.packaged.ResourceloadingUtils;
 
 import java.util.List;
 import java.util.Iterator;
@@ -36,7 +36,7 @@ public class SubbundleResourceImpl extends BaseWebletResourceImpl {
         _subresources = new ArrayList(resource.getResources().size());
         Iterator it = resource.getResources().iterator();
         ProcessingWebletRequest shadowRequest = new ProcessingWebletRequest(request);
-        ResourceFactory factory = WebletResourceloadingUtils.getInstance().getResourceFactory(config);
+        ResourceFactory factory = ResourceloadingUtils.getInstance().getResourceFactory(config);
         while (it.hasNext()) {
             shadowRequest.setPathInfo((String) it.next());
             WebletResource subresource = factory.getResource(shadowRequest, resolver, false);/*subbundles always temped*/

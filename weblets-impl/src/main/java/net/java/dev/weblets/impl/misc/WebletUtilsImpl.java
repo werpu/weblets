@@ -27,6 +27,10 @@ import org.apache.commons.logging.LogFactory;
  */
 public class WebletUtilsImpl implements IWebletUtils {
     private static final String WEBLETS_NOT_INITIALIZED = "weblets not initialized, please check the logs";
+    private static final String RES_SERVED = "RES_SERVED";
+    static final String URLREGEXP = "^[a-zA-Z]+:.*$";
+    // static final String URLREGEXP = "^[a-zA-Z]\\:\\/+[^\\/]+(.*)$";
+    // static final Pattern URLPATTERN = Pattern.compile(URLREGEXP);
 
     public WebletUtilsImpl() {
     }
@@ -46,10 +50,10 @@ public class WebletUtilsImpl implements IWebletUtils {
             return getResource(weblet, pathInfo);
         }
         String url = getResource(weblet, pathInfo);
-        if (AttributeUtils.getAttribute(requestSingletonHolder, "RES_SERVED" + url) != null) {
+        if (AttributeUtils.getAttribute(requestSingletonHolder, RES_SERVED + url) != null) {
             return "";
         } else {
-            AttributeUtils.setAttribute(requestSingletonHolder, "RES_SERVED" + url, Boolean.TRUE);
+            AttributeUtils.setAttribute(requestSingletonHolder, RES_SERVED + url, Boolean.TRUE);
         }
         return url;
     }
@@ -68,12 +72,25 @@ public class WebletUtilsImpl implements IWebletUtils {
             return getURL(weblet, pathInfo);
         }
         String url = getResource(weblet, pathInfo);
-        if (AttributeUtils.getAttribute(requestSingletonHolder, "RES_SERVED" + url) != null) {
+        if (AttributeUtils.getAttribute(requestSingletonHolder, RES_SERVED + url) != null) {
             return "";
         } else {
-            AttributeUtils.setAttribute(requestSingletonHolder, "RES_SERVED" + url, Boolean.TRUE);
+            AttributeUtils.setAttribute(requestSingletonHolder, RES_SERVED + url, Boolean.TRUE);
         }
         return getURL(weblet, pathInfo);
+    }
+
+    /**
+     * contractual method returns true if the resource is loaded
+     *
+     * @param requestSingletonHolder
+     * @param weblet
+     * @param pathInfo
+     * @return
+     */
+    public boolean isResourceLoaded(Object requestSingletonHolder, String weblet, String pathInfo) {
+        String url = getResource(weblet, pathInfo);
+        return AttributeUtils.getAttribute(requestSingletonHolder, RES_SERVED + url) != null;
     }
 
     /**
@@ -170,8 +187,4 @@ public class WebletUtilsImpl implements IWebletUtils {
         }
         return container.getWebletContextPath() + container.getResourceUri(weblet, pathInfo);
     }
-
-    static final String URLREGEXP = "^[a-zA-Z]+:.*$";
-    // static final String URLREGEXP = "^[a-zA-Z]\\:\\/+[^\\/]+(.*)$";
-    // static final Pattern URLPATTERN = Pattern.compile(URLREGEXP);
 }

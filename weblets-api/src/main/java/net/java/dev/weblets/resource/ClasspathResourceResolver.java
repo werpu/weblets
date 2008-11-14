@@ -2,7 +2,7 @@ package net.java.dev.weblets.resource;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.packaged.WebletResourceloadingUtils;
+import net.java.dev.weblets.packaged.ResourceloadingUtils;
 import net.java.dev.weblets.resource.ResourceResolver;
 import net.java.dev.weblets.resource.URLResourceImpl;
 import net.java.dev.weblets.resource.WebletResource;
@@ -37,7 +37,7 @@ public class ClasspathResourceResolver implements ResourceResolver {
      */
     public URL getURL(WebletRequest request) throws IOException {
         String resourcePath = _resourceRoot + request.getPathInfo();
-        return WebletResourceloadingUtils.getInstance().getResourceUrl(request, resourcePath);
+        return ResourceloadingUtils.getInstance().getResourceUrl(request, resourcePath);
     }
 
     /**
@@ -50,7 +50,7 @@ public class ClasspathResourceResolver implements ResourceResolver {
      */
     public URL getURL(String mimetype, String pathInfo) throws IOException {
         String resourcePath = _resourceRoot + pathInfo;
-        URL url = WebletResourceloadingUtils.getInstance().getResourceUrl(resourcePath);
+        URL url = ResourceloadingUtils.getInstance().getResourceUrl(resourcePath);
         return url;
     }
 

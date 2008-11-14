@@ -61,7 +61,7 @@ public class PackagedWeblet extends Weblet {
         // weblet: functions
         CopyStrategyImpl copyProvider = new CopyStrategyImpl();
 
-        WebletResourceloadingUtils.getInstance().loadResource(getWebletConfig(), request, response, _resolver, copyProvider);
+        ResourceloadingUtils.getInstance().loadResource(getWebletConfig(), request, response, _resolver, copyProvider);
     }
 
     /**

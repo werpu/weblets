@@ -32,5 +32,11 @@
         </function-signature>
     </function>
 
+    <function>
+        <function-name>isResourceLoaded</function-name>
+        <function-class>net.java.dev.weblets.FaceletELWebletUtils</function-class>
+        <function-signature>boolean isResourceLoaded(java.lang.String,java.lang.String)</function-signature>
+    </function>
+
 
 </facelet-taglib>
