@@ -40,6 +40,7 @@ public interface ResourceResolver {
 
     /**
      * returns a resource upon a given request and mimetype
+     *
      * @param request
      * @return a resource if the resource itself can be determined<b> null if none can be found </b>
      * @throws IOException
@@ -48,14 +49,11 @@ public interface ResourceResolver {
 
     /**
      * returns a resource upon a given path and mimetype!
-     * 
+     *
      * @param mimetype
      * @param pathInfo
      * @return
      * @throws IOException
      */
     public WebletResource getResource(String mimetype, String pathInfo) throws IOException;
-
-
-    
 }

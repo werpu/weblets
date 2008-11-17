@@ -1,17 +1,11 @@
 package net.java.dev.weblets;
 
-import net.java.dev.weblets.util.IFacesWebletUtils;
-import net.java.dev.weblets.util.ServiceLoader;
-import net.java.dev.weblets.util.AttributeUtils;
-
 import javax.faces.context.FacesContext;
 
 /**
  * @author Werner Punz Weblet Utils class which gives the interfaces for the JSF part of weblets
  */
 public class FacesWebletUtils {
-    private static final String RES_SERVED = "RES_SERVED";
-    private static final String ERR_INSTANTIATION = "Error instantiating IJSFWebletsUtils";
 
     /**
      * returns the absolute url with the context path
@@ -22,7 +16,7 @@ public class FacesWebletUtils {
      * @return a url with the current web-app context path to the weblet
      */
     public static String getURL(FacesContext context, String weblet, String pathInfo) {
-        return instance.getResource(context, weblet, pathInfo, true);
+        return WebletUtils.getResource(weblet, pathInfo);
     }
 
     /**
@@ -37,18 +31,7 @@ public class FacesWebletUtils {
      * @return
      */
     public static String getURL(FacesContext context, String weblet, String pathInfo, boolean suppressDoubleIncludes) {
-        String url = instance.getResource(context, weblet, pathInfo, false);
-        if (suppressDoubleIncludes) {
-            Object req = context.getExternalContext().getRequest();
-            if (AttributeUtils.getAttribute(req, RES_SERVED + url) != null) {
-                return "";
-            } else {
-                touch(context, url);
-            }
-        } else {
-            touch(context, url);
-        }
-        return instance.getResource(context, weblet, pathInfo, true);
+        return WebletUtils.getURL(context.getExternalContext().getRequest(), weblet, pathInfo, suppressDoubleIncludes);
     }
 
     /**
@@ -63,23 +46,7 @@ public class FacesWebletUtils {
      * @return
      */
     public static String getResource(FacesContext context, String weblet, String pathInfo, boolean suppressDoubleIncludes) {
-        String url = instance.getResource(context, weblet, pathInfo, false);
-        if (suppressDoubleIncludes) {
-            Object req = (Object) context.getExternalContext().getRequest();
-            if (AttributeUtils.getAttribute(req, RES_SERVED + url) != null) {
-                return "";
-            } else {
-                touch(context, url);
-            }
-        } else {
-            touch(context, url);
-        }
-        return url;
-    }
-
-    private static void touch(FacesContext context, String url) {
-        Object req = (Object) context.getExternalContext().getRequest();
-        AttributeUtils.setAttribute(req, RES_SERVED + url, Boolean.TRUE);
+        return WebletUtils.getResource(context.getExternalContext(), weblet, pathInfo, suppressDoubleIncludes);
     }
 
     /**
@@ -91,7 +58,7 @@ public class FacesWebletUtils {
      * @return a url with the current web-app context path to the weblet
      */
     public static String getResource(FacesContext context, String weblet, String pathInfo) {
-        return instance.getResource(context, weblet, pathInfo, false);
+        return WebletUtils.getResource(weblet, pathInfo);
     }
 
     /**
@@ -103,30 +70,6 @@ public class FacesWebletUtils {
      * @return
      */
     public static boolean isResourceLoaded(FacesContext context, String weblet, String pathInfo) {
-        String url = instance.getResource(context, weblet, pathInfo, false);
-        Object req = (Object) context.getExternalContext().getRequest();
-        return AttributeUtils.getAttribute(req, RES_SERVED + url) != null;
-    }
-
-    /**
-     * kind of a weird construct but definitely faster than doing all the calls over introspection, the internal contract is defined by the IFacesWebletUtils
-     * interface
-     */
-    static IFacesWebletUtils instance = getInstance();
-
-    static IFacesWebletUtils getInstance() throws WebletException {
-        synchronized (FacesWebletUtils.class) {
-            if (instance == null) {
-                Class instantiation = ServiceLoader.loadService(FacesWebletUtils.class.getName());
-                try {
-                    instance = (IFacesWebletUtils) instantiation.newInstance();
-                } catch (InstantiationException e) {
-                    throw new WebletException(ERR_INSTANTIATION, e);
-                } catch (IllegalAccessException e) {
-                    throw new WebletException(ERR_INSTANTIATION, e);
-                }
-            }
-        }
-        return instance;
+        return WebletUtils.isResourceLoaded(context.getExternalContext().getRequest(), weblet, pathInfo);
     }
 }

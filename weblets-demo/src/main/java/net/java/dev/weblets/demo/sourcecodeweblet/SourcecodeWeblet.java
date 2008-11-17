@@ -14,37 +14,27 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * a weblet for serving the sourcecode 
- * 
- * @author Werner Punz
+ * a weblet for serving the sourcecode
  *
+ * @author Werner Punz
  */
 public class SourcecodeWeblet extends Weblet {
-	  
-	    public void service(
-	            WebletRequest request,
-	            WebletResponse response) throws IOException {
-	    	
-	    	
-	    	WebletRequestBase webletRequest = (WebletRequestBase) request;
-	    	
-	    	//this might fail on some containers overriding the HttpServlet
-	    	//but for demo purposes this is ok
-	    	HttpServletRequest httpRequest = (HttpServletRequest) webletRequest.getExternalRequest();
-	    	
-	    	StringBuffer fullAddr = new StringBuffer(255);
-	    	
-	    	fullAddr.append(httpRequest.getSession().getServletContext().getRealPath(request.getPathInfo()));
-	    	String resourcePath = fullAddr.toString();
-	    
-	    	
-	    	CopyStrategy copyProvider = new SourcecodeCopyStrategy();
-	       
-	        response.setContentType("text/html");
-	        FileInputStream fin = new FileInputStream(resourcePath);
 
-	        ResourceloadingUtils.getInstance().loadResourceFromStream(getWebletConfig(), request, response,  copyProvider, fin);
-	    }
+    public void service(
+            WebletRequest request,
+            WebletResponse response) throws IOException {
+        WebletRequestBase webletRequest = (WebletRequestBase) request;
+        //this might fail on some containers overriding the HttpServlet
+        //but for demo purposes this is ok
+        HttpServletRequest httpRequest = (HttpServletRequest) webletRequest.getExternalRequest();
+        StringBuffer fullAddr = new StringBuffer(255);
+        fullAddr.append(httpRequest.getSession().getServletContext().getRealPath(request.getPathInfo()));
+        String resourcePath = fullAddr.toString();
+        CopyStrategy copyProvider = new SourcecodeCopyStrategy();
+        response.setContentType("text/html");
+        FileInputStream fin = new FileInputStream(resourcePath);
+        ResourceloadingUtils.getInstance().loadResourceFromStream(getWebletConfig(), request, response, copyProvider, fin);
+    }
 
     /**
      * Handle reporting cases of containers which are initialized
@@ -61,6 +51,6 @@ public class SourcecodeWeblet extends Weblet {
     }
 
     public void destroy() {
-	    super.destroy();
+        super.destroy();
     }
 }

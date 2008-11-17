@@ -6,7 +6,6 @@ import java.io.IOException;
 
 /**
  * a simple servlet filter to enable webapp context processing from non jsf and non jee5 systems
- *
  */
 public class WebletsContextFilter implements Filter {
     WebletContainer wblContainer = null;

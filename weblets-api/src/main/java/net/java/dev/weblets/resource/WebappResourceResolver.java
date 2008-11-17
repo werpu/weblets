@@ -45,13 +45,11 @@ public class WebappResourceResolver implements ResourceResolver {
     }
 
     public WebletResource getResource(WebletRequest request) throws IOException {
-
         URL url = getURL(request);
-        if(url == null) {
+        if (url == null) {
             return null;
         }
         WebletResource retVal = new URLResourceImpl(_config, request, url);
-
         return retVal;
     }
 

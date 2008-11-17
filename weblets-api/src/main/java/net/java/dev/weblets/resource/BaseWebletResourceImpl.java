@@ -104,7 +104,6 @@ public abstract class BaseWebletResourceImpl implements WebletResource {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
-
     public boolean hasTemp() {
         return _temp != null;
     }
@@ -115,7 +114,6 @@ public abstract class BaseWebletResourceImpl implements WebletResource {
         }
         return _temp.lastModified();
     }
-    
 
     public File getTemp() {
         return _temp;

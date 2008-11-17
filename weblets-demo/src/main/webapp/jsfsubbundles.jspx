@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2"
+          xmlns:demo="http://projsf.apress.com/weblets/demo"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:wbl="http://weblets.dev.java.net/tags_jsp2"
+        >
+    <jsp:directive.page contentType="text/html" isELIgnored="false"/>
+
+    <f:view>
+        <html>
+
+        <head>
+            <link rel="stylesheet" href="${wbl:url('weblets.demo', '/styles/weblets.css')}"></link>
+        </head>
+
+        <body>
+        <div class="header_bg">
+
+        </div>
+        <div class="content">
+            <p>
+                This page demonstrates
+                subbundeling in jsf level using components.
+                The components on this page trigger a subbundle
+                include on two javascript files.
+                The bundle will only be included and called once.
+                No matter how many components are on the page
+                the double include blocking happens
+                here automatically.
+                Check the sourcecode for this
+                demo app to see the components source
+                and the includes in the renderers.
+            </p>
+
+
+            <demo:outputBundle id="component1" value=""/>
+            <demo:outputBundle id="component2" value=""/>
+
+
+            <h:outputLink value='#{weblet.url[ "weblets.source"]["/jsfsubbundles.jspx"]}' target="_new"><h:outputFormat
+                    value="[Get the page source]"/></h:outputLink>
+        </div>
+        </body>
+        </html>
+    </f:view>
+</jsp:root>

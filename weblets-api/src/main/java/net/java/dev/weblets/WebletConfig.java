@@ -97,6 +97,7 @@ public interface WebletConfig {
     /**
      * Holder for temporary configuration
      * parameters which can be set outside
+     *
      * @param key the key for the configuration parameter
      * @return an object which is the value for the config param
      */
@@ -104,22 +105,24 @@ public interface WebletConfig {
 
     /**
      * setter for the configuration params
-     * @param key the key
+     *
+     * @param key   the key
      * @param value the value!
      */
     public void setConfigParam(String key, Object value);
 
     /**
      * returns true if the config has subbundles
+     *
      * @return
      */
     public boolean hasSubbundles();
 
     /**
      * mapping function to map a resourcePath into its subbundle resource path!
+     *
      * @param resourcePath to be mapped
      * @return
      */
     public String getSubbundleIdFromResource(String resourcePath);
-
 }

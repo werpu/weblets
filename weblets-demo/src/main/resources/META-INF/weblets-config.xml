@@ -20,7 +20,7 @@
        </init-param>
         -->
         <!-- this is a weblet written specifically for the demo -->
-        
+
         <subbundle>
             <id>/bundles/script.js</id>
             <resources>

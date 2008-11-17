@@ -53,7 +53,6 @@ public class WebletUtils {
         return instance.getURL(requestSingletonHolder, weblet, pathInfo, suppressDuplicates);
     }
 
-
     public static boolean isResourceLoaded(Object requestSingletonHolder, String weblet, String pathInfo) {
         return instance.isResourceLoaded(requestSingletonHolder, weblet, pathInfo);
     }

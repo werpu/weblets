@@ -6,7 +6,7 @@
     <jsp-version>2.0</jsp-version>
     <short-name>web</short-name>
     <uri>http://weblets.dev.java.net/tags_jsp2</uri>
-    
+
 
     <function>
         <name>resource</name>

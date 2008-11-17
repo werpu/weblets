@@ -7,15 +7,13 @@ import net.java.dev.weblets.WebletRequest;
  */
 class ProcessingWebletRequest implements WebletRequest {
 
-
     WebletRequest _delegate;
 
     String _shadowPathInfo = null;
 
     public ProcessingWebletRequest(WebletRequest delegate) {
-         _delegate = delegate;
-     }
-
+        _delegate = delegate;
+    }
 
     public String getWebletName() {
         return _delegate.getWebletName();
@@ -30,7 +28,7 @@ class ProcessingWebletRequest implements WebletRequest {
     }
 
     public String getPathInfo() {
-        if(_shadowPathInfo != null) {
+        if (_shadowPathInfo != null) {
             return _shadowPathInfo;
         }
         return _delegate.getPathInfo();
@@ -39,7 +37,6 @@ class ProcessingWebletRequest implements WebletRequest {
     public void setPathInfo(String pathInfo) {
         _shadowPathInfo = pathInfo;
     }
-
 
     public String getParameter(String name) {
         return _delegate.getParameter(name);
@@ -52,8 +49,4 @@ class ProcessingWebletRequest implements WebletRequest {
     public long getIfModifiedSince() {
         return _delegate.getIfModifiedSince();
     }
-
-
-
-
 }

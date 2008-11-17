@@ -22,62 +22,54 @@ import java.io.IOException;
 
 /**
  * The WebletsFilter maps requested URLs to Weblet resources.
- * 
+ * <p/>
  * The <code>META-INF/services/net.java.dev.weblets.WebletsFilter</code> Service Provider configuration file is used to lookup the implementation class for this
  * Filter, as defined by the JAR file specification.
  */
 public final class WebletsFilter implements Filter {
-	/**
-	 * Initializes this Filter.
-	 * 
-	 * @param config
-	 *            the filter configuration
-	 * 
-	 * @throws ServletException
-	 *             if an error occurs
-	 */
-	public void init(FilterConfig config) throws ServletException {
-		try {
-			_delegate = (Filter) _WEBLETS_FILTER_CLASS.newInstance();
-		} catch (IllegalAccessException e) {
-			throw new ServletException("Unable to access " + "WebletsFilter implementation", e);
-		} catch (InstantiationException e) {
-			throw new ServletException("Unable to instantiate " + "WebletsFilter implementation", e);
-		}
-		_delegate.init(config);
-	}
+    /**
+     * Initializes this Filter.
+     *
+     * @param config the filter configuration
+     * @throws ServletException if an error occurs
+     */
+    public void init(FilterConfig config) throws ServletException {
+        try {
+            _delegate = (Filter) _WEBLETS_FILTER_CLASS.newInstance();
+        } catch (IllegalAccessException e) {
+            throw new ServletException("Unable to access " + "WebletsFilter implementation", e);
+        } catch (InstantiationException e) {
+            throw new ServletException("Unable to instantiate " + "WebletsFilter implementation", e);
+        }
+        _delegate.init(config);
+    }
 
-	/**
-	 * Destroys this Filter.
-	 */
-	public void destroy() {
-		_delegate.destroy();
-	}
+    /**
+     * Destroys this Filter.
+     */
+    public void destroy() {
+        _delegate.destroy();
+    }
 
-	/**
-	 * Processes the incoming request, by looking up the Weblet mapped to the incoming request URL pattern, and dispatching to the Weblet if found, otherwise
-	 * the filter chain is executed.
-	 * 
-	 * @param request
-	 *            the servlet request
-	 * @param response
-	 *            the servlet response
-	 * @param chain
-	 *            the filter chain
-	 * 
-	 * @throws IOException
-	 *             if an I/O error occurs
-	 * @throws ServletException
-	 *             if an error occurs
-	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		_delegate.doFilter(request, response, chain);
-	}
+    /**
+     * Processes the incoming request, by looking up the Weblet mapped to the incoming request URL pattern, and dispatching to the Weblet if found, otherwise
+     * the filter chain is executed.
+     *
+     * @param request  the servlet request
+     * @param response the servlet response
+     * @param chain    the filter chain
+     * @throws IOException      if an I/O error occurs
+     * @throws ServletException if an error occurs
+     */
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        _delegate.doFilter(request, response, chain);
+    }
 
-	private Filter				_delegate;
-	// the WebletsFilter Service Provider implementation class
-	static private final Class	_WEBLETS_FILTER_CLASS;
-	static {
-		_WEBLETS_FILTER_CLASS = ServiceLoader.loadService(WebletsFilter.class.getName());
-	}
+    private Filter _delegate;
+    // the WebletsFilter Service Provider implementation class
+    static private final Class _WEBLETS_FILTER_CLASS;
+
+    static {
+        _WEBLETS_FILTER_CLASS = ServiceLoader.loadService(WebletsFilter.class.getName());
+    }
 }

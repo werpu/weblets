@@ -12,6 +12,7 @@ import net.java.dev.weblets.WebletContainer;
 import net.java.dev.weblets.WebletException;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.impl.WebletContainerImpl;
+import net.java.dev.weblets.impl.Const;
 import net.java.dev.weblets.impl.servlets.WebletRequestImpl;
 import net.java.dev.weblets.util.IWebletUtils;
 import net.java.dev.weblets.util.StringUtils;
@@ -29,8 +30,6 @@ public class WebletUtilsImpl implements IWebletUtils {
     private static final String WEBLETS_NOT_INITIALIZED = "weblets not initialized, please check the logs";
     private static final String RES_SERVED = "RES_SERVED";
     static final String URLREGEXP = "^[a-zA-Z]+:.*$";
-    // static final String URLREGEXP = "^[a-zA-Z]\\:\\/+[^\\/]+(.*)$";
-    // static final Pattern URLPATTERN = Pattern.compile(URLREGEXP);
 
     public WebletUtilsImpl() {
     }
@@ -47,7 +46,7 @@ public class WebletUtilsImpl implements IWebletUtils {
      */
     public String getResource(Object requestSingletonHolder, String weblet, String pathInfo, boolean suppressDuplicates) {
         if (!suppressDuplicates) {
-            touch(requestSingletonHolder, weblet, pathInfo); 
+            //touch(requestSingletonHolder, weblet, pathInfo);
             return getResource(weblet, pathInfo);
         }
         String url = getResource(weblet, pathInfo);
@@ -70,7 +69,7 @@ public class WebletUtilsImpl implements IWebletUtils {
      */
     public String getURL(Object requestSingletonHolder, String weblet, String pathInfo, boolean suppressDuplicates) {
         if (!suppressDuplicates) {
-            touch(requestSingletonHolder, weblet, pathInfo); 
+            //touch(requestSingletonHolder, weblet, pathInfo); 
             return getURL(weblet, pathInfo);
         }
         String url = getResource(weblet, pathInfo);
@@ -110,8 +109,8 @@ public class WebletUtilsImpl implements IWebletUtils {
      */
     public String getResource(String weblet, String pathInfo) {
         /* lets be more tolerant regarding paths */
-        if (pathInfo == null || pathInfo.trim().equals(""))
-            pathInfo = "/";
+        if (StringUtils.isBlank(pathInfo))
+            pathInfo = Const.SLASH;
         WebletContainerImpl container = (WebletContainerImpl) WebletContainer.getInstance();
         if (container == null) {
             initError();

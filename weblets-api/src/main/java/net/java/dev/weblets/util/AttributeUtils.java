@@ -17,10 +17,9 @@ public class AttributeUtils {
         // return _httpResponse.getOutputStream();
         Method m = null;
         try {
-            Class [] paramTypes = new Class[1];
+            Class[] paramTypes = new Class[1];
             paramTypes[0] = String.class;
-
-            m = implementor.getClass().getMethod("getAttribute",paramTypes);
+            m = implementor.getClass().getMethod("getAttribute", paramTypes);
             try {
                 String[] params = new String[1];
                 params[0] = name;
@@ -44,7 +43,7 @@ public class AttributeUtils {
         // return _httpResponse.getOutputStream();
         Method m = null;
         try {
-            Class [] paramTypes = new Class[2];
+            Class[] paramTypes = new Class[2];
             paramTypes[0] = String.class;
             paramTypes[1] = Object.class;
             m = implementor.getClass().getMethod("setAttribute", paramTypes);

@@ -16,7 +16,6 @@ import java.util.*;
  */
 public class CachedResourceFactory implements ResourceFactory {
 
-
     WebletConfig _config;
 
     Map _tempfileCache = Collections.synchronizedMap(new HashMap());
@@ -65,17 +64,14 @@ public class CachedResourceFactory implements ResourceFactory {
 
     public WebletResource getResource(WebletRequest request, ResourceResolver resourceResolver, boolean resolveSubbundle) throws IOException {
         WebletResource webletResource = null;
-
-
         //ie js + compression means temp true
         //plain png means temp false!
-
         if (_cacheFile) {
             webletResource = (WebletResource) _tempfileCache.get(getWebletKey(request));
         }
         //no temp file found we create one
         Subbundle bundle = null;
-        if(resolveSubbundle) {
+        if (resolveSubbundle) {
             bundle = getResourceBundle(_config, request);
         }
         if (webletResource == null && bundle != null) {
@@ -144,8 +140,6 @@ public class CachedResourceFactory implements ResourceFactory {
         }
         webletResource.setRecreateTemp(true);
     }
-
-
 
     //TODO set one cache per weblet instead of one central cache in the long run!
     private String getWebletKey(WebletRequest request) {

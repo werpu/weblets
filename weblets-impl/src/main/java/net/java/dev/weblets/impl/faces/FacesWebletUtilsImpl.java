@@ -9,7 +9,7 @@ import javax.faces.context.FacesContext;
  * a faces util class which allows the easy inclusion of weblets for component authors this one should replace the weblets view handler in the long run
  * 
  * @author Werner Punz
- * 
+ * @deprecated
  */
 public class FacesWebletUtilsImpl implements IFacesWebletUtils {
 	/**

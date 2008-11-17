@@ -28,5 +28,4 @@ public interface ResourceFactory {
      * @throws IOException
      */
     public WebletResource getResource(WebletRequest request, ResourceResolver resourceResolver, boolean resolveBundle) throws IOException;
-
 }

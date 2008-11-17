@@ -60,7 +60,6 @@ public class PackagedWeblet extends Weblet {
         // processing and our text processing filter for text resources with included
         // weblet: functions
         CopyStrategyImpl copyProvider = new CopyStrategyImpl();
-
         ResourceloadingUtils.getInstance().loadResource(getWebletConfig(), request, response, _resolver, copyProvider);
     }
 
@@ -80,21 +79,17 @@ public class PackagedWeblet extends Weblet {
         // lets build up our filter chain which in our case is a binary filter for standard
         // processing and our text processing filter for text resources with included
         // weblet: functions
-
         //TODO add the new resolver API here as well!
-        
         CopyStrategyImpl copyProvider = new CopyStrategyImpl();
         URL url = _resolver.getURL(mimetype, pathInfo);
         if (url == null) //TODO add shadow url mock data here
             return null;
-
         // our utils should handle the standard case
         URLConnection conn = url.openConnection();
         long lastmodified = conn.getLastModified();
         if (mimetype == null)
             mimetype = getWebletConfig().getMimeType(resourcePath);
-        
-        return copyProvider.wrapInputStream(getWebletConfig().getWebletName(), mimetype, conn.getInputStream()); 
+        return copyProvider.wrapInputStream(getWebletConfig().getWebletName(), mimetype, conn.getInputStream());
     }
 
     public void destroy() {

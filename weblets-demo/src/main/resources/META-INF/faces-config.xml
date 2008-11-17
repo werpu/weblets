@@ -60,6 +60,61 @@
     </component>
 
 
+    <component>
+        <component-type>
+            net.java.dev.weblets.demo.HtmlOutputBundle
+        </component-type>
+        <component-class>
+            net.java.dev.weblets.demo.component.html.HtmlOutputBundle
+        </component-class>
+
+        <!-- UIComponent attributes -->
+        <attribute>
+            <description>
+                The component identifier for this component. This value must be
+                unique within the closest parent component that is a naming
+                container.
+            </description>
+            <attribute-name>id</attribute-name>
+            <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+            <description>
+                Flag indicating whether or not this component should be rendered
+                (during Render Response Phase), or processed on any subsequent
+                form submit.
+            </description>
+            <attribute-name>rendered</attribute-name>
+            <attribute-class>boolean</attribute-class>
+            <default-value>true</default-value>
+        </attribute>
+        <attribute>
+            <description>
+                The value binding expression linking this component to a
+                property in a backing bean.
+            </description>
+            <attribute-name>binding</attribute-name>
+            <attribute-class>javax.faces.el.ValueBinding</attribute-class>
+        </attribute>
+
+        <!-- UIOutput attributes -->
+        <attribute>
+            <description>
+                Converter instance registered with this component.
+            </description>
+            <attribute-name>converter</attribute-name>
+            <attribute-class>javax.faces.convert.Converter</attribute-class>
+        </attribute>
+        <attribute>
+            <description>
+                The current value of this component.
+            </description>
+            <attribute-name>value</attribute-name>
+            <attribute-class>java.lang.Object</attribute-class>
+        </attribute>
+    </component>
+
+
     <render-kit>
         <!-- no render-kit-id, so add to the HTML Basic RenderKit -->
         <renderer>
@@ -67,5 +122,13 @@
             <renderer-type>net.java.dev.weblets.demo.Custom</renderer-type>
             <renderer-class>net.java.dev.weblets.demo.render.html.HtmlOutputCustomRenderer</renderer-class>
         </renderer>
+        <renderer>
+            <component-family>javax.faces.Output</component-family>
+            <renderer-type>net.java.dev.weblets.demo.Bundle</renderer-type>
+            <renderer-class>net.java.dev.weblets.demo.render.html.HtmlOutputBundleRenderer</renderer-class>
+        </renderer>
+
     </render-kit>
+
+
 </faces-config>

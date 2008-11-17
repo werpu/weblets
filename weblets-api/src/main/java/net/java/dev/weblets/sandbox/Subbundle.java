@@ -6,7 +6,7 @@ import java.util.LinkedList;
 /**
  * @author werpu
  * @date: 03.11.2008
- *
+ * <p/>
  * Weblets Subbundle for further processing in the processing stage
  */
 public class Subbundle {
@@ -14,7 +14,7 @@ public class Subbundle {
     String subbundleId = "";
     /*the list of resources to be served by the subbundle
     * as unified resource*/
-    List resources =  new LinkedList();
+    List resources = new LinkedList();
 
     public Subbundle() {
     }

@@ -49,6 +49,7 @@ public interface IWebletUtils {
 
     /**
      * getURL with a simple check on double includes
+     *
      * @param requestSingletonHolder a holder with a data structure
      *                               which can block subsequet requests for this resource
      *                               the singlethon holder has to implemenent the getAttribute
@@ -67,7 +68,7 @@ public interface IWebletUtils {
     /**
      * check if a resource already is loaded
      *
-     * @param requestSingletonHolder 
+     * @param requestSingletonHolder
      * @param weblet
      * @param pathInfo
      * @return
