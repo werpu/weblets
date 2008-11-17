@@ -21,6 +21,7 @@ import org.xml.sax.SAXException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.Servlet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -38,6 +39,11 @@ import java.util.regex.Pattern;
  * have been removed <p/> We have enforced a path trigger pattern Weblets servlet overrides any other entry it has higher priority than the faces
  * servlet pattern <p/> A simplified regexp handling of the pattern parsing parts Changes from 1.0 to 1.1 multiple weblet configs added as optional
  * context param
+ * <p/>
+ * 
+ * TODO add auto filters here to enable the request handling without parameters
+ * so that we are able to plug in the current request as singleton holder
+ * for our includes!
  */
 public class WebletsContextListenerImpl implements ServletContextListener {
 

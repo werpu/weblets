@@ -221,7 +221,7 @@
 
 
         </plugins>
-        <!--
+
         <extensions>
             <extension>
                 <groupId>org.jvnet.wagon-svn</groupId>
@@ -229,7 +229,7 @@
                 <version>RELEASE</version>
             </extension>
         </extensions>
-        -->
+ 
 
     </build>
 </project>
