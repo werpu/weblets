@@ -19,7 +19,11 @@ public abstract class BaseWebletResourceImpl implements WebletResource {
 
     protected File _temp; /*temp file handle for processed files being put into the temp dir*/
 
+    protected byte[] _inMemoryTemp; /*in memory temp cache to prevent server hammering we offload small resources into the mem*/
+
     protected String _resourcePath;
+
+    String _mimeType;
 
     /**
      * if set to true the engine has to do a temp file processing
@@ -47,18 +51,6 @@ public abstract class BaseWebletResourceImpl implements WebletResource {
 
     public void setMimeType(String mimeType) {
         _mimeType = mimeType;
-    }
-
-    String _mimeType;
-
-    File _tempResource; /*handle to the temp file with a processed resource*/
-
-    public void setTempResource(Object tempFile) {
-        _tempResource = (File) tempFile;
-    }
-
-    public Object getTempResource() {
-        return _tempResource;
     }
 
     /**

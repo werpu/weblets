@@ -17,8 +17,6 @@ import java.io.InputStream;
  */
 public class FaceletELWebletUtils {
 
-    static FacesWebletUtils utils = (FacesWebletUtils) FacesWebletUtils.getInstance();
-
     /**
      * returns the relative url without the context path
      *
@@ -27,7 +25,7 @@ public class FaceletELWebletUtils {
      * @return a url with the current web-app context path to the weblet
      */
     public static String getResource(String weblet, String pathInfo) {
-        return utils.getResource(FacesContext.getCurrentInstance(), weblet, pathInfo);
+        return FacesWebletUtils.getResource(FacesContext.getCurrentInstance(), weblet, pathInfo);
     }
 
     /**
@@ -38,7 +36,7 @@ public class FaceletELWebletUtils {
      * @return a url with the current web-app context path to the weblet
      */
     public static String getURL(String weblet, String pathInfo) {
-        return utils.getURL(FacesContext.getCurrentInstance(), weblet, pathInfo);
+        return FacesWebletUtils.getURL(FacesContext.getCurrentInstance(), weblet, pathInfo);
     }
 
     /**
@@ -52,7 +50,7 @@ public class FaceletELWebletUtils {
      * @return
      */
     public static String getResource(String weblet, String pathInfo, boolean suppressDuplicates) {
-        return utils.getResource(FacesContext.getCurrentInstance(), weblet, pathInfo, suppressDuplicates);
+        return FacesWebletUtils.getResource(FacesContext.getCurrentInstance(), weblet, pathInfo, suppressDuplicates);
     }
 
     /**
@@ -66,7 +64,7 @@ public class FaceletELWebletUtils {
      * @return
      */
     public static String getURL(String weblet, String pathInfo, boolean suppressDuplicates) {
-        return utils.getURL(FacesContext.getCurrentInstance(), weblet, pathInfo, suppressDuplicates);
+        return FacesWebletUtils.getURL(FacesContext.getCurrentInstance(), weblet, pathInfo, suppressDuplicates);
     }
 
     /**
@@ -77,6 +75,6 @@ public class FaceletELWebletUtils {
      * @return
      */
     public static boolean isResourceLoaded(String weblet, String pathInfo) {
-        return utils.isResourceLoaded(FacesContext.getCurrentInstance(), weblet, pathInfo);
+        return FacesWebletUtils.isResourceLoaded(FacesContext.getCurrentInstance(), weblet, pathInfo);
     }
 }
