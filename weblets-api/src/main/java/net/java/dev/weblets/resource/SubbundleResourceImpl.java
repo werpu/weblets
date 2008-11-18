@@ -23,6 +23,7 @@ import java.util.List;
 public class SubbundleResourceImpl extends BaseWebletResourceImpl {
 
     List /*WebletResource*/ _subresources = null;
+    private static final int CACHEFILE_SIZE = 200000;
 
     /**
      * helper entry to ease the invalidation
@@ -69,7 +70,7 @@ public class SubbundleResourceImpl extends BaseWebletResourceImpl {
         if (_tempFileSize == -1) {
             _tempFileSize = _temp.length();
         }
-        if (_tempFileSize < 20000) {
+        if (_tempFileSize < CACHEFILE_SIZE) {
             CacheEntry entry = (CacheEntry) cache.get(_webletName + ":" + _pathInfo);
             if (entry != null && entry.lastAccessed >= tempLastmodified()) {
                 return new ByteArrayInputStream(entry.data);

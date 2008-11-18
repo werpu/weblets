@@ -20,6 +20,7 @@ import java.net.URLConnection;
 public class URLResourceImpl extends BaseWebletResourceImpl {
 
     long _lastModified = 0;
+    private static final int CACHE_FILESIZE = 20000;
 
     /**
      * helper entry to ease the invalidation
@@ -65,7 +66,7 @@ public class URLResourceImpl extends BaseWebletResourceImpl {
             URLConnection conn = ((URL) _resource).openConnection();
             _tempFileSize = conn.getContentLength();
         }
-        if (_tempFileSize < 20000) {
+        if (_tempFileSize < CACHE_FILESIZE) {
             return handleCachedConnection(cache);
         }
         return handleUncachedConnection();
@@ -93,7 +94,7 @@ public class URLResourceImpl extends BaseWebletResourceImpl {
             _tempFileSize = _temp.length();
             getCachedInputStream(cache, new FileInputStream(_temp));
         }
-        if (_tempFileSize < 20000) {
+        if (_tempFileSize < CACHE_FILESIZE) {
             CacheEntry entry = (CacheEntry) cache.get(_webletName + ":" + _pathInfo);
             if (entry != null && entry.lastAccessed >= lastModified()) {
                 return new ByteArrayInputStream(entry.data);

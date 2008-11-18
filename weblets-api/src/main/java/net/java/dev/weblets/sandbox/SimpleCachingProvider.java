@@ -16,7 +16,7 @@ public class SimpleCachingProvider implements CachingProvider {
     }
 
     /*Cache regions*/
-    SimpleVolatileLRUCache resourceDataCache = new SimpleVolatileLRUCache(1000);
+    SimpleVolatileLRUCache resourceDataCache = new SimpleVolatileLRUCache(100);
     NonVolatileCache tempfileCache = new NonVolatileCache();
 
     public Cache getCache(String region) {
