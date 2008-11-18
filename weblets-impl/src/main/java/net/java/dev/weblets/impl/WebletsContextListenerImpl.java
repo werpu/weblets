@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
  * servlet pattern <p/> A simplified regexp handling of the pattern parsing parts Changes from 1.0 to 1.1 multiple weblet configs added as optional
  * context param
  * <p/>
- * 
+ * <p/>
  * TODO add auto filters here to enable the request handling without parameters
  * so that we are able to plug in the current request as singleton holder
  * for our includes!

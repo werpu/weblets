@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- *
  * @author werpu
  */
 public abstract class JSFDummyMap implements Map {
@@ -60,5 +59,4 @@ public abstract class JSFDummyMap implements Map {
     public Set entrySet() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
 }

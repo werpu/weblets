@@ -167,6 +167,13 @@ public class WebletContainerImpl extends WebletContainer {
             WebletRequest request,
             WebletResponse response) throws IOException, WebletException {
         Weblet weblet = getWeblet(request);
+        if (weblet == null) {
+            Log log = LogFactory.getLog(getClass());
+            log.error("Error weblet for: " + request.getWebletName() + ":" + request.getPathInfo() + " could not be found" +
+                      " please check either your configuration or your request cause! ");
+            throw new WebletException("Error weblet for: " + request.getWebletName() + ":" + request.getPathInfo() + " could not be found" +
+                                      " please check either your configuration or your request cause! ");
+        }
         String pathInfo = request.getPathInfo();
         if (response.getDefaultContentType() == null) {
             //enhanced security check

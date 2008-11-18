@@ -29,7 +29,6 @@ public class InverseSubbundleIndex {
             _inverseIndex.put(resource, subbundle);
             _subbundles.put(subbundle.getSubbundleId(), subbundle);
             subbundle.getResources().add(resource);
-           
         }
     }
 

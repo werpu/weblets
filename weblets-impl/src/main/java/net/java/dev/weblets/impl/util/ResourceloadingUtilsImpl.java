@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
  * @author werpu
  * @date: 14.11.2008
  */
-public class ResourceloadingUtilsImpl implements IResourceloadingUtils{
+public class ResourceloadingUtilsImpl implements IResourceloadingUtils {
 
     static final String TEMP_CACHE_KEY = "TEMP_CACHE";
 
@@ -100,7 +100,6 @@ public class ResourceloadingUtilsImpl implements IResourceloadingUtils{
         }
         return cache;
     }
-
 
     /**
      * loads a resource from a given url
@@ -233,7 +232,7 @@ public class ResourceloadingUtilsImpl implements IResourceloadingUtils{
                 File subOutFile = resource.getTemp();
                 FileOutputStream subOstr = new FileOutputStream(subOutFile);
                 InputStream subInputStream = resource.getUnprocessedInputStream();
-                if(resource instanceof Subbundle) {
+                if (resource instanceof Subbundle) {
                     //no further processing the subbundles already have been processed
                     //the mime type is set to the response on the outside!
                     copyStrategy.copy(request.getWebletName(), "application/octed-stream", subInputStream, subOstr);

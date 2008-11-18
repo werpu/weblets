@@ -41,16 +41,16 @@ public class URLResourceImpl extends BaseWebletResourceImpl {
     }
 
     public InputStream getInputStream() throws IOException {
-        if (_tempResource != null) {
-            return new FileInputStream(_tempResource);
+        if (_temp != null) {
+            return new FileInputStream(_temp);
         }
         URLConnection conn = ((URL) _resource).openConnection();
         return conn.getInputStream();
     }
 
     public long lastModified() {
-        if (_tempResource != null) {
-            return _tempResource.lastModified();
+        if (_temp != null) {
+            return _temp.lastModified();
         }
         try {
             URLConnection conn = ((URL) _resource).openConnection();

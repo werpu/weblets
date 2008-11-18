@@ -23,31 +23,26 @@ import junit.framework.TestCase;
  * HttpDateFormatTest tests the HttpDateFormat implementation of
  * HTTP Protocol RFC2616 Section 3.3.1 Full Date.
  */
-public class HttpDateFormatTest extends TestCase
-{
-  /**
-   * Creates a new HttpDateFormatTest.
-   * 
-   * @param testName  the test name
-   */
-  public HttpDateFormatTest(
-    String testName)
-  {
-    super(testName);
-  }
-  
-  /**
-   * Tests parsing of HTTP Date format strings.
-   */
-  public void testParse()
-  {
-    try
-    {
-      new HttpDateFormat().parse("Tue, 24 Jan 2006 09:54:10 GMT");
+public class HttpDateFormatTest extends TestCase {
+    /**
+     * Creates a new HttpDateFormatTest.
+     *
+     * @param testName the test name
+     */
+    public HttpDateFormatTest(
+            String testName) {
+        super(testName);
     }
-    catch (ParseException e)
-    {
-      fail();
+
+    /**
+     * Tests parsing of HTTP Date format strings.
+     */
+    public void testParse() {
+        try {
+            new HttpDateFormat().parse("Tue, 24 Jan 2006 09:54:10 GMT");
+        }
+        catch (ParseException e) {
+            fail();
+        }
     }
-  }
 }

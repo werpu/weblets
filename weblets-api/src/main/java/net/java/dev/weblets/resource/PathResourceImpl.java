@@ -27,8 +27,8 @@ public class PathResourceImpl extends BaseWebletResourceImpl {
     }
 
     public InputStream getInputStream() throws IOException {
-        if (_tempResource != null) {
-            return new FileInputStream(_tempResource);
+        if (_temp != null) {
+            return new FileInputStream(_temp);
         }
         return new FileInputStream((File) _resource);
     }

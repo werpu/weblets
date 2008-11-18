@@ -19,11 +19,11 @@ import net.java.dev.weblets.impl.WebletRequestBase;
 import net.java.dev.weblets.impl.util.ReflectUtilsImpl;
 
 public class WebletRequestImpl extends WebletRequestBase {
-	public WebletRequestImpl(String webletName, String webletPath, String contextPath, String pathInfo, long ifModifiedSince, Object externalRequest) {
-		super(webletName, webletPath, contextPath, pathInfo, ifModifiedSince, externalRequest);
-	}
+    public WebletRequestImpl(String webletName, String webletPath, String contextPath, String pathInfo, long ifModifiedSince, Object externalRequest) {
+        super(webletName, webletPath, contextPath, pathInfo, ifModifiedSince, externalRequest);
+    }
 
-	public String getParameter(String name) {
-		return (String) ReflectUtilsImpl.getParameter(getExternalRequest(), name);
-	}
+    public String getParameter(String name) {
+        return (String) ReflectUtilsImpl.getParameter(getExternalRequest(), name);
+    }
 }
