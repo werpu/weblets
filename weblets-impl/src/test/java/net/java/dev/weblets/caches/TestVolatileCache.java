@@ -26,14 +26,12 @@ public class TestVolatileCache extends TestCase {
             try {
                 for (int cnt = 0; cnt < 100; cnt++) {
                     _cache.put(cnt + "", "hello world");
-                    try {
-                        Thread.sleep((cnt %10) * 5);
+                    
+                     
                         if (cnt % 67 == 0) {
                             _cache.flush();
                         }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+
                     _cache.get(cnt + "");
                 }
             } catch (Exception e) {
