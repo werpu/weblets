@@ -1,4 +1,4 @@
-package net.java.dev.weblets.sandbox;
+package net.java.dev.weblets.resource;
 
 /**
  * @author werpu

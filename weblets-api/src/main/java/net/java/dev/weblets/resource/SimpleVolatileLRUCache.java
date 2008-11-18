@@ -1,8 +1,7 @@
-package net.java.dev.weblets.sandbox;
+package net.java.dev.weblets.resource;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Collections;
 
 /**
  * @author werpu

@@ -2,8 +2,8 @@ package net.java.dev.weblets.resource;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.sandbox.SimpleCachingProvider;
-import net.java.dev.weblets.sandbox.Cache;
+import net.java.dev.weblets.resource.SimpleCachingProvider;
+import net.java.dev.weblets.resource.Cache;
 import net.java.dev.weblets.resource.Subbundle;
 import net.java.dev.weblets.resource.ResourceResolver;
 import net.java.dev.weblets.resource.WebletResource;
