@@ -12,10 +12,22 @@ import java.net.URLConnection;
 /**
  * @author werpu
  * @date: 11.11.2008
+ * <p/>
+ * <p/>
+ * An implementation of our url resource loading mechanism
+ * the entire caching aspects are handled here as well!
  */
 public class URLResourceImpl extends BaseWebletResourceImpl {
 
     long _lastModified = 0;
+
+    /**
+     * helper entry to ease the invalidation
+     */
+    class CacheEntry {
+        public byte[] data;
+        long lastAccessed = -1;
+    }
 
     public URLResourceImpl(WebletConfig config, WebletRequest request, URL resource) throws IOException {
         super(resource);
@@ -64,12 +76,12 @@ public class URLResourceImpl extends BaseWebletResourceImpl {
     }
 
     private InputStream handleCachedConnection(Cache cache) throws IOException {
-        byte[] buffer = (byte[]) cache.get(_webletName + ":" + _pathInfo);
-        if (buffer != null) {
-            return new ByteArrayInputStream(buffer);
+        CacheEntry entry = (CacheEntry) cache.get(_webletName + ":" + _pathInfo);
+        if (entry != null && entry.lastAccessed >= lastModified()) {
+            return new ByteArrayInputStream(entry.data);
         }
         URLConnection conn = ((URL) _resource).openConnection();
-        buffer = getCachedInputStream(cache, conn.getInputStream());
+        byte[] buffer = getCachedInputStream(cache, conn.getInputStream()).data;
         return new ByteArrayInputStream(buffer);
     }
 
@@ -82,24 +94,27 @@ public class URLResourceImpl extends BaseWebletResourceImpl {
             getCachedInputStream(cache, new FileInputStream(_temp));
         }
         if (_tempFileSize < 20000) {
-            byte[] buffer = (byte[]) cache.get(_webletName + ":" + _pathInfo);
-            if (buffer != null) {
-                return new ByteArrayInputStream(buffer);
+            CacheEntry entry = (CacheEntry) cache.get(_webletName + ":" + _pathInfo);
+            if (entry != null && entry.lastAccessed >= lastModified()) {
+                return new ByteArrayInputStream(entry.data);
             }
-            buffer = getCachedInputStream(cache, new FileInputStream(_temp));
-            return new ByteArrayInputStream(buffer);
+            entry = getCachedInputStream(cache, new FileInputStream(_temp));
+            return new ByteArrayInputStream(entry.data);
         }
         return new FileInputStream(_temp);
     }
 
-    private byte[] getCachedInputStream(Cache cache, InputStream istr) throws IOException {
+    private CacheEntry getCachedInputStream(Cache cache, InputStream istr) throws IOException {
         byte[] buffer;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         InputStream bis = istr;
         copyStream(bis, baos);
         buffer = baos.toByteArray();
-        cache.put(_webletName + ":" + _pathInfo, buffer);
-        return buffer;
+        CacheEntry entry = new CacheEntry();
+        entry.data = buffer;
+        entry.lastAccessed = _lastModified;
+        cache.put(_webletName + ":" + _pathInfo, entry);
+        return entry;
     }
 
     protected void copyStream(InputStream in, OutputStream out) throws IOException {

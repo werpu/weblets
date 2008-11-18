@@ -25,6 +25,14 @@ public class SubbundleResourceImpl extends BaseWebletResourceImpl {
     List /*WebletResource*/ _subresources = null;
 
     /**
+     * helper entry to ease the invalidation
+     */
+    class CacheEntry {
+        public byte[] data;
+        long lastAccessed = -1;
+    }
+
+    /**
      * constructor
      *
      * @param config   our weblets config
@@ -33,10 +41,8 @@ public class SubbundleResourceImpl extends BaseWebletResourceImpl {
      */
     public SubbundleResourceImpl(WebletConfig config, WebletRequest request, ResourceResolver resolver, Subbundle resource) throws IOException {
         super(resource);
-        
         _pathInfo = request.getPathInfo();
         _webletName = request.getWebletName();
-        
         _subresources = new ArrayList(resource.getResources().size());
         Iterator it = resource.getResources().iterator();
         ProcessingWebletRequest shadowRequest = new ProcessingWebletRequest(request);
@@ -62,30 +68,29 @@ public class SubbundleResourceImpl extends BaseWebletResourceImpl {
         /*we cache the bundles to reduce disk hits if possible*/
         if (_tempFileSize == -1) {
             _tempFileSize = _temp.length();
-            getCachedInputStream(cache);
         }
         if (_tempFileSize < 20000) {
-            byte[] buffer = (byte[]) cache.get(_temp.getAbsolutePath());
-            if (buffer != null) {
-                return new ByteArrayInputStream(buffer);
+            CacheEntry entry = (CacheEntry) cache.get(_webletName + ":" + _pathInfo);
+            if (entry != null && entry.lastAccessed >= tempLastmodified()) {
+                return new ByteArrayInputStream(entry.data);
             }
-            buffer = getCachedInputStream(cache);
-            return new ByteArrayInputStream(buffer);
+            entry = getCachedInputStream(cache);
+            return new ByteArrayInputStream(entry.data);
         }
         return new FileInputStream(_temp);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    private byte[] getCachedInputStream(Cache cache) throws IOException {
+    private CacheEntry getCachedInputStream(Cache cache) throws IOException {
         byte[] buffer;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         InputStream bis = new FileInputStream(_temp);
         copyStream(bis, baos);
-        buffer = baos.toByteArray();
-        cache.put(_temp.getAbsolutePath(), buffer);
-        return buffer;
+        CacheEntry entry = new CacheEntry();
+        entry.data = baos.toByteArray();
+        entry.lastAccessed = _temp.lastModified();
+        cache.put(_temp.getAbsolutePath(), entry);
+        return entry;
     }
-
-
 
     protected void copyStream(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[2048];
@@ -106,7 +111,7 @@ public class SubbundleResourceImpl extends BaseWebletResourceImpl {
 
     public long lastModified() {
         Iterator it = _subresources.iterator();
-        long lastModified = System.currentTimeMillis();
+        long lastModified = -1;
         while (it.hasNext()) {
             WebletResource subResource = (WebletResource) it.next();
             lastModified = Math.min(lastModified, subResource.lastModified());
