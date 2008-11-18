@@ -2,7 +2,9 @@ package net.java.dev.weblets.resource;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.sandbox.Subbundle;
+import net.java.dev.weblets.sandbox.SimpleCachingProvider;
+import net.java.dev.weblets.sandbox.Cache;
+import net.java.dev.weblets.resource.Subbundle;
 import net.java.dev.weblets.resource.ResourceResolver;
 import net.java.dev.weblets.resource.WebletResource;
 import net.java.dev.weblets.resource.ResourceFactory;
@@ -18,7 +20,7 @@ public class CachedResourceFactory implements ResourceFactory {
 
     WebletConfig _config;
 
-    Map _tempfileCache = Collections.synchronizedMap(new HashMap());
+    Cache _tempfileCache = SimpleCachingProvider.getInstance().getCache("tempfileCache");
 
     boolean _cacheFile = true;
 

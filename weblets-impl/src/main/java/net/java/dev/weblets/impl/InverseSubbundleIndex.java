@@ -1,6 +1,6 @@
 package net.java.dev.weblets.impl;
 
-import net.java.dev.weblets.sandbox.Subbundle;
+import net.java.dev.weblets.resource.Subbundle;
 
 import java.util.Map;
 import java.util.HashMap;

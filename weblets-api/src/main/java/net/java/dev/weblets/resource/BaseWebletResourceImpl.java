@@ -19,11 +19,21 @@ public abstract class BaseWebletResourceImpl implements WebletResource {
 
     protected File _temp; /*temp file handle for processed files being put into the temp dir*/
 
-    protected byte[] _inMemoryTemp; /*in memory temp cache to prevent server hammering we offload small resources into the mem*/
+    protected String _webletName;
 
-    protected String _resourcePath;
+    protected String _pathInfo;
 
     String _mimeType;
+
+    long _tempFileSize = -1;
+
+    public String getWebletName() {
+        return _webletName;
+    }
+
+    public void setWebletName(String webletName) {
+        _webletName = webletName;
+    }
 
     /**
      * if set to true the engine has to do a temp file processing
@@ -31,12 +41,21 @@ public abstract class BaseWebletResourceImpl implements WebletResource {
      */
     boolean _processTemp = false;
 
+    public Object getResource() {
+        return _resource;
+    }
+
+    public void setResource(Object resource) {
+        _resource = resource;
+    }
+
     public boolean isRecreateTemp() {
         return _recreateTemp;
     }
 
     public void setRecreateTemp(boolean recreateTemp) {
         _recreateTemp = recreateTemp;
+        _tempFileSize = -1;
     }
 
     boolean _recreateTemp = true;
@@ -45,8 +64,8 @@ public abstract class BaseWebletResourceImpl implements WebletResource {
         _resource = resource;
     }
 
-    public void setResourcePath(String resourcePath) {
-        _resourcePath = resourcePath;
+    public void setPathInfo(String pathInfo) {
+        _pathInfo = pathInfo;
     }
 
     public void setMimeType(String mimeType) {
@@ -71,8 +90,8 @@ public abstract class BaseWebletResourceImpl implements WebletResource {
      * @return a relative path to the resource
      *         sort of the resource identifier
      */
-    public String getResourcePath() {
-        return _resourcePath;
+    public String getPathInfo() {
+        return _pathInfo;
     }
 
     /**

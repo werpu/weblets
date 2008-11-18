@@ -15,7 +15,7 @@
  */
 package net.java.dev.weblets;
 
-import net.java.dev.weblets.sandbox.Subbundle;
+import net.java.dev.weblets.resource.Subbundle;
 
 import java.util.Iterator;
 import java.util.Set;

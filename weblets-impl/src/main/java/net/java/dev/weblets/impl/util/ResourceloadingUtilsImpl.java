@@ -7,7 +7,7 @@ import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.resource.SubbundleResourceImpl;
-import net.java.dev.weblets.sandbox.Subbundle;
+import net.java.dev.weblets.resource.Subbundle;
 import net.java.dev.weblets.resource.*;
 
 import javax.servlet.http.HttpSession;

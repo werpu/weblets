@@ -2,22 +2,13 @@ package net.java.dev.weblets.packaged;
 
 import java.io.*;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.servlet.ServletContextListener;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.resource.*;
-import net.java.dev.weblets.sandbox.Subbundle;
 import net.java.dev.weblets.util.*;
 import net.java.dev.weblets.util.ServiceLoader;
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
 
 /**
  * helper class to be shared by various weblet loaders

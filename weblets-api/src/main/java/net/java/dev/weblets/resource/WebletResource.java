@@ -28,7 +28,7 @@ public interface WebletResource {
      * @return a relative path to the resource
      *         sort of the resource identifier
      */
-    public String getResourcePath();
+    public String getPathInfo();
 
     /**
      * @return the processed lastmodified date

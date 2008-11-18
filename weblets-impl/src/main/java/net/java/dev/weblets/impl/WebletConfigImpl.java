@@ -17,8 +17,8 @@ package net.java.dev.weblets.impl;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletContainer;
+import net.java.dev.weblets.resource.Subbundle;
 import net.java.dev.weblets.impl.InverseSubbundleIndex;
-import net.java.dev.weblets.sandbox.Subbundle;
 import net.java.dev.weblets.util.StringUtils;
 
 import java.util.*;

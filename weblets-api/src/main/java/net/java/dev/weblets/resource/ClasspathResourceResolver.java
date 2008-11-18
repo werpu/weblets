@@ -68,7 +68,7 @@ public class ClasspathResourceResolver implements ResourceResolver {
         if (url == null) {
             return null;
         }
-        WebletResource retVal = new URLResourceImpl(_config, mimetype, url);
+        WebletResource retVal = new URLResourceImpl(_config, mimetype, _config.getWebletName(), pathInfo, url);
         return retVal;
     }
 

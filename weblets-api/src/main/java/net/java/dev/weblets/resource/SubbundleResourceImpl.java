@@ -2,12 +2,13 @@ package net.java.dev.weblets.resource;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
+import net.java.dev.weblets.sandbox.SimpleCachingProvider;
+import net.java.dev.weblets.sandbox.Cache;
 import net.java.dev.weblets.packaged.ResourceloadingUtils;
-import net.java.dev.weblets.sandbox.Subbundle;
+import net.java.dev.weblets.resource.Subbundle;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.print.DocFlavor;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,7 +33,10 @@ public class SubbundleResourceImpl extends BaseWebletResourceImpl {
      */
     public SubbundleResourceImpl(WebletConfig config, WebletRequest request, ResourceResolver resolver, Subbundle resource) throws IOException {
         super(resource);
-        String oldPathInfo = request.getPathInfo();
+        
+        _pathInfo = request.getPathInfo();
+        _webletName = request.getWebletName();
+        
         _subresources = new ArrayList(resource.getResources().size());
         Iterator it = resource.getResources().iterator();
         ProcessingWebletRequest shadowRequest = new ProcessingWebletRequest(request);
@@ -52,7 +56,52 @@ public class SubbundleResourceImpl extends BaseWebletResourceImpl {
     }
 
     public InputStream getInputStream() throws IOException {
+        // wo do a shadow copy our our stream resource if
+        //the file is smaller than 10 KB
+        Cache cache = SimpleCachingProvider.getInstance().getCache("resourceData");
+        /*we cache the bundles to reduce disk hits if possible*/
+        if (_tempFileSize == -1) {
+            _tempFileSize = _temp.length();
+            getCachedInputStream(cache);
+        }
+        if (_tempFileSize < 20000) {
+            byte[] buffer = (byte[]) cache.get(_temp.getAbsolutePath());
+            if (buffer != null) {
+                return new ByteArrayInputStream(buffer);
+            }
+            buffer = getCachedInputStream(cache);
+            return new ByteArrayInputStream(buffer);
+        }
         return new FileInputStream(_temp);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    private byte[] getCachedInputStream(Cache cache) throws IOException {
+        byte[] buffer;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        InputStream bis = new FileInputStream(_temp);
+        copyStream(bis, baos);
+        buffer = baos.toByteArray();
+        cache.put(_temp.getAbsolutePath(), buffer);
+        return buffer;
+    }
+
+
+
+    protected void copyStream(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[2048];
+        BufferedInputStream bufIn = new BufferedInputStream(in);
+        BufferedOutputStream bufOut = new BufferedOutputStream(out);
+        int len = 0;
+        int total = 0;
+        try {
+            while ((len = bufIn.read(buffer)) > 0) {
+                bufOut.write(buffer, 0, len);
+                total += len;
+            }
+        } finally {
+            bufIn.close();
+            bufOut.close();
+        }
     }
 
     public long lastModified() {
