@@ -32,6 +32,7 @@
     <%=jspweblet.getURL("weblets.demo", "/welcome.js")%>
     <br/>
     <!-- Local weblet defined here  -->
+    <script type="text/javascript" src="<%=jspweblet.getURL("weblets.webapp", "/helloworld.js")%>"></script>
     <img src="<%=jspweblet.getURL("weblets.webapp", "/helloworld.png")%>"/>
     the image can be found locally under resources/helloworld.png!!!
     <a href="<%=jspweblet.getURL("weblets.source", "/localresource.jsp")%>" target="_new">[Get the page source]</a>
