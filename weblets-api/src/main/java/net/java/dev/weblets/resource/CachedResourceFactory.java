@@ -3,7 +3,7 @@ package net.java.dev.weblets.resource;
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.caching.SimpleCachingProvider;
-import net.java.dev.weblets.resource.Cache;
+import net.java.dev.weblets.caching.Cache;
 import net.java.dev.weblets.resource.Subbundle;
 import net.java.dev.weblets.resource.ResourceResolver;
 import net.java.dev.weblets.resource.WebletResource;
@@ -15,6 +15,20 @@ import java.util.*;
 /**
  * Class doing the temp
  * handling
+ * <p/>
+ * This is a helper class which
+ * does caching on the
+ * resources keeping temp files!
+ * so that the temp files are preserved if still
+ * in existence!
+ * To avoid unneeded reloading of temp data
+ * which has to go through the entire
+ * processing chain defined in the copy
+ * provider!
+ * <p/>
+ * the caching of the temp data itself
+ * if done is done within the resources themselves
+ * to avoid disk thrashing on high load sites!
  */
 public class CachedResourceFactory implements ResourceFactory {
 
@@ -135,8 +149,8 @@ public class CachedResourceFactory implements ResourceFactory {
      * @throws IOException
      */
     private void handleNewFile(WebletRequest request, ResourceResolver resourceResolver, WebletResource webletResource) throws IOException {
-        //TODO can be problematic under heavy load!!!!
-        //we use an atomic int cnt to avoid that one request accesses a temp file while another does the file recreation!
+        //this is not problematic under heavy load since the cache
+        //can take care of it by using region systems!
         if (_cacheFile) {
             _tempfileCache.put(getWebletKey(request), webletResource);
         }

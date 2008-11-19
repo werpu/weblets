@@ -3,7 +3,7 @@ package net.java.dev.weblets.resource;
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.caching.SimpleCachingProvider;
-import net.java.dev.weblets.resource.Cache;
+import net.java.dev.weblets.caching.Cache;
 
 import java.io.*;
 import java.net.URL;

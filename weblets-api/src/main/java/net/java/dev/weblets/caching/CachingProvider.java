@@ -1,4 +1,6 @@
-package net.java.dev.weblets.resource;
+package net.java.dev.weblets.caching;
+
+import net.java.dev.weblets.caching.Cache;
 
 /**
  * @author werpu

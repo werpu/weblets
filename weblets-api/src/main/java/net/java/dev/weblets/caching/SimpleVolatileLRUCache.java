@@ -1,6 +1,6 @@
 package net.java.dev.weblets.caching;
 
-import net.java.dev.weblets.resource.Cache;
+import net.java.dev.weblets.caching.Cache;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

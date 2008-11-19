@@ -1,7 +1,7 @@
 package net.java.dev.weblets.caches;
 
 import junit.framework.TestCase;
-import net.java.dev.weblets.resource.Cache;
+import net.java.dev.weblets.caching.Cache;
 import net.java.dev.weblets.caching.SimpleVolatileLRUCache;
 import net.java.dev.weblets.caching.SimpleNonVolatileCache;
 
