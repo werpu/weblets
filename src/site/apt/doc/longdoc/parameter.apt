@@ -29,31 +29,15 @@ Introduction
 
     Following entries are allowed within the <<<weblets>>> section
 
-    *----------------+------------------------------------------------------------------+
-    | id             | The id for the <<<Weblet>>> used for later reference             |
-    *----------------+------------------------------------------------------------------+
-    | init-param     | name value pair of an init param (see init params for addition info)|
-    |                | *------------*------------------------*                          |
-    |                | | param-name | the init param name    |                          |
-    |                | *------------*------------------------*                          |
-    |                | | param-value| value of the init param|                          |
-    |                | *------------*------------------------*                          |
-    *----------------+------------------------------------------------------------------+
-    | subbundle      | Subbundle definition                                             |
-    |                | *------------*------------------------*                          |
-    |                | | id         | Subbundle id           |                          |
-    |                | *------------*------------------------*                          |
-    |                | | resources  | comma delimited list of|                          |
-    |                | |            | resources              |                          |
-    |                | *------------*------------------------*                          |
-    *----------------+------------------------------------------------------------------+
-    | mime-mapping   | mime mapping entries                                             |
-    |                | *------------*------------------------*                          |
-    |                | | extension  |  the mime mapping extension |                     |
-    |                | *------------*------------------------* |                        |
-    |                | | mime-mapping | the mime mapping value  |                       |
-    |                | *------------*------------------------*                          |
-    *----------------+------------------------------------------------------------------+
+*----------------+------------------------------------------------------------------+
+| id             | The id for the <<<Weblet>>> used for later reference             |
+*----------------+------------------------------------------------------------------+
+| init-param     | name value pair of an init param (see init params for addition info)|
+*----------------+------------------------------------------------------------------+
+| subbundle      | Subbundle definition                                             |
+*----------------+------------------------------------------------------------------+
+| mime-mapping   | mime mapping entries                                             |
+*----------------+------------------------------------------------------------------+
 
 
 ** Init Param
@@ -65,19 +49,19 @@ Introduction
 
     Here is a complete list of init params
 
-    *----------------+----------------------*--------------------------------------------*
-    | package        | root package for the resources                  | Packaged Weblet |
-    *----------------+----------------------*--------------------------------------------*
-    | resourceRoot   | root relativ to the current webapp context root | Webapp Weblet   |
-    *----------------+--------------------------------------------------------*-----------------------------*
-    | cache-timeout  | timeout for the cache so that it is reloaded cyclicly  | all Weblet implementations  |
-    *-----------------+------------------------------------------------------------*----------------------------*
-    | allowedResources| a commpa separated list of allowed resource file extensions| all Weblet implementations |
-    *----------------+----------------------*--------------------------------------------*
-    | server-cache   | if set to true, turns on the internal server caches |  all Weblet implementations |
-    *----------------+----------------------*--------------------------------------------*
-    | caching-provider| class to the caching provider if none is set the default is used|  all Weblet implementations |
-    *----------------+----------------------*--------------------------------------------*
+*----------------+----------------------+--------------------------------------------+
+| package        | root package for the resources                  | Packaged Weblet |
+*----------------+----------------------+--------------------------------------------+
+| resourceRoot   | root relativ to the current webapp context root | Webapp Weblet   |
+*----------------+--------------------------------------------------------+-----------------------------+
+| cache-timeout  | timeout for the cache so that it is reloaded cyclicly  | all Weblet implementations  |
+*-----------------+------------------------------------------------------------+----------------------------+
+| allowedResources| a commpa separated list of allowed resource file extensions| all Weblet implementations |
+*----------------+----------------------+--------------------------------------------+
+| server-cache   | if set to true, turns on the internal server caches |  all Weblet implementations |
+*----------------+----------------------+--------------------------------------------+
+| caching-provider| class to the caching provider if none is set the default is used|  all Weblet implementations |
+*----------------+----------------------+--------------------------------------------+
 
 
 ** Subbundles
@@ -85,15 +69,19 @@ Introduction
     Subbundles are resources which can be on the fly concatenated and can be served as
     Single entity, see the {{{./subbundles.html} Subbundle Guide }} for an exact description!
 
-    *----------------+------------------------------------------------------------------+
-    | subbundle      | Subbundle definition                                             |
-    |                | *------------*------------------------*                          |
-    |                | | id         | Subbundle id           |                          |
-    |                | *------------*------------------------*                          |
-    |                | | resources  | comma delimited list of|                          |
-    |                | |            | resources              |                          |
-    |                | *------------*------------------------*                          |
-    *----------------+------------------------------------------------------------------+
+*----------------+------------------------------------------------------------------+
+| subbundle      | Subbundle definition                                             |
+*----------------+------------------------------------------------------------------+
+
+
+*** Subbundle Definition
+
+*------------+------------------------+
+| id         | Subbundle id           |
+*------------+------------------------+
+| resources  | comma delimited list of|
+|            | resources              |                          
+*------------+------------------------+
 
     The syntax looks like following
 
@@ -114,14 +102,18 @@ Introduction
     The mime mapping followis standard conventions like they are applied to a servlet container
 
 
-    *----------------+------------------------------------------------------------------+
-    | mime-mapping   | mime mapping entries                                             |
-    |                | *------------*------------------------*                          |
-    |                | | extension  |  the mime mapping extension |                     |
-    |                | *------------*------------------------* |                        |
-    |                | | mime-mapping | the mime mapping value  |                       |
-    |                | *------------*------------------------*                          |
-    *----------------+------------------------------------------------------------------+
+*----------------+------------------------------------------------------------------+
+| mime-mapping   | mime mapping entries                                             |
+*----------------+------------------------------------------------------------------+
+
+*** Mime Mapping Entries
+
+*------------+------------------------+
+| extension  |  the mime mapping extension |
+*------------+------------------------+ |
+| mime-mapping | the mime mapping value  |
+*------------+------------------------+                          
+
 
     The syntax is following
 
@@ -136,9 +128,9 @@ Introduction
 +--------------------------------------------------
 
         
-* The Weblets Mapping Section
+* The <<<Weblets>>> Mapping Section
 
-    The weblets mapping section describes various means of mapping the defined weblets
+    The <<<Weblets>>> mapping section describes various means of mapping the defined <<<Weblets>>>
     into the URLs!
     It allows a significant reduction of URL size if chosen wisely!
 

@@ -55,9 +55,7 @@ Introduction into the weblets API
 
 	The central callback point is the method <<<service>>>, with a request and response
 	object very similar to the servlet request and response objects.
-	(<<In fact in most containers they just build a facade over exactly those
-	two objects adding certain behavioral methods to the request response
-	objects of the underlying servlet container.>>)
+	(<<In fact in most containers they just build a facade over exactly those two objects adding certain behavioral methods to the request response objects of the underlying servlet container.>>)
 
 +----------------------------------------------------------------------------
     public void service WebletRequest request, WebletResponse response) throws IOException;
