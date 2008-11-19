@@ -2,7 +2,7 @@ package net.java.dev.weblets.resource;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.resource.SimpleCachingProvider;
+import net.java.dev.weblets.caching.SimpleCachingProvider;
 import net.java.dev.weblets.resource.Cache;
 import net.java.dev.weblets.packaged.ResourceloadingUtils;
 import net.java.dev.weblets.resource.Subbundle;
@@ -19,7 +19,7 @@ import java.util.List;
  * a pseudo resource only hosting a temp file
  * which concatenates all subresources!
  */
-public class SubbundleResourceImpl extends BaseWebletResourceImpl {
+public class CachingSubbundleResourceImpl extends BaseWebletResourceImpl {
 
     List /*WebletResource*/ _subresources = null;
     private static final int CACHEFILE_SIZE = 200000;
@@ -39,7 +39,7 @@ public class SubbundleResourceImpl extends BaseWebletResourceImpl {
      * @param request  the request showing either to the subbundle directly or to one of the files within the bundle!
      * @param resource the processed subbundle now having converted into a Subbundle resource
      */
-    public SubbundleResourceImpl(WebletConfig config, WebletRequest request, ResourceResolver resolver, Subbundle resource) throws IOException {
+    public CachingSubbundleResourceImpl(WebletConfig config, WebletRequest request, ResourceResolver resolver, Subbundle resource) throws IOException {
         super(resource);
         _pathInfo = request.getPathInfo();
         _webletName = request.getWebletName();

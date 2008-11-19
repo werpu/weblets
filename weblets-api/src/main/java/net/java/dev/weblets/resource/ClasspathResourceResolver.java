@@ -4,7 +4,7 @@ import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.packaged.ResourceloadingUtils;
 import net.java.dev.weblets.resource.ResourceResolver;
-import net.java.dev.weblets.resource.URLResourceImpl;
+import net.java.dev.weblets.resource.CachingURLResourceImpl;
 import net.java.dev.weblets.resource.WebletResource;
 
 import java.io.IOException;
@@ -59,7 +59,7 @@ public class ClasspathResourceResolver implements ResourceResolver {
         if (url == null) {
             return null;
         }
-        WebletResource retVal = new URLResourceImpl(_config, request, url);
+        WebletResource retVal = new CachingURLResourceImpl(_config, request, url);
         return retVal;
     }
 
@@ -68,7 +68,7 @@ public class ClasspathResourceResolver implements ResourceResolver {
         if (url == null) {
             return null;
         }
-        WebletResource retVal = new URLResourceImpl(_config, mimetype, _config.getWebletName(), pathInfo, url);
+        WebletResource retVal = new CachingURLResourceImpl(_config, mimetype, _config.getWebletName(), pathInfo, url);
         return retVal;
     }
 

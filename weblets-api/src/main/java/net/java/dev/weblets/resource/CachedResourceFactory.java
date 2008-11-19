@@ -2,7 +2,7 @@ package net.java.dev.weblets.resource;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
-import net.java.dev.weblets.resource.SimpleCachingProvider;
+import net.java.dev.weblets.caching.SimpleCachingProvider;
 import net.java.dev.weblets.resource.Cache;
 import net.java.dev.weblets.resource.Subbundle;
 import net.java.dev.weblets.resource.ResourceResolver;
@@ -78,7 +78,7 @@ public class CachedResourceFactory implements ResourceFactory {
         }
         if (webletResource == null && bundle != null) {
             /*Resource is prepared as bundle resource and then returned*/
-            webletResource = new SubbundleResourceImpl(_config, request, resourceResolver, bundle);
+            webletResource = new CachingSubbundleResourceImpl(_config, request, resourceResolver, bundle);
             handleNewFile(request, resourceResolver, webletResource);
             return webletResource;
         }

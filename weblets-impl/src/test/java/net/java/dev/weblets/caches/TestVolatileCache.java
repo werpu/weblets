@@ -2,8 +2,8 @@ package net.java.dev.weblets.caches;
 
 import junit.framework.TestCase;
 import net.java.dev.weblets.resource.Cache;
-import net.java.dev.weblets.resource.SimpleVolatileLRUCache;
-import net.java.dev.weblets.resource.NonVolatileCache;
+import net.java.dev.weblets.caching.SimpleVolatileLRUCache;
+import net.java.dev.weblets.caching.SimpleNonVolatileCache;
 
 /**
  * @author werpu
@@ -66,7 +66,7 @@ public class TestVolatileCache extends TestCase {
 
     public void testNonVolatileCache() {
         threadCnt = 0;
-        Cache cache = new NonVolatileCache();
+        Cache cache = new SimpleNonVolatileCache();
         ThreadGroup g =  new ThreadGroup("grp2");
         for (int cnt = 0; cnt < 100; cnt++) {
               Runnable runner = new TestRunner(cache);

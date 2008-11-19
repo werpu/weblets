@@ -4,7 +4,7 @@ import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.resource.ResourceResolver;
 import net.java.dev.weblets.resource.WebletResource;
-import net.java.dev.weblets.resource.URLResourceImpl;
+import net.java.dev.weblets.resource.CachingURLResourceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URL;
@@ -50,7 +50,7 @@ public class WebappResourceResolver implements ResourceResolver {
         if (url == null) {
             return null;
         }
-        WebletResource retVal = new URLResourceImpl(_config, request, url);
+        WebletResource retVal = new CachingURLResourceImpl(_config, request, url);
         return retVal;
     }
 

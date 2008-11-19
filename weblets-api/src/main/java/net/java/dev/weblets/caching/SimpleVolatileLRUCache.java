@@ -1,4 +1,6 @@
-package net.java.dev.weblets.resource;
+package net.java.dev.weblets.caching;
+
+import net.java.dev.weblets.resource.Cache;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -22,18 +24,18 @@ public class SimpleVolatileLRUCache implements Cache {
     /**
      * we split the cache into 10 internal regions to speed things up
      */
-    Map[] _delegates = null;
+    Map[] _subregions = null;
     int _capacity;
-    private int _subregions = 20;
+    private int _subregionCnt = 20;
 
     private static int DIST_WEIGHT = 10; //distribution weight also the number of parallel threads per access
 
     public SimpleVolatileLRUCache(int capacity) {
         _capacity = capacity;
-        _subregions = Math.max(3, capacity / DIST_WEIGHT);  //at least 3 lru regions!
-        _delegates = new Map[_subregions];
-        for (int cnt = 0; cnt < _subregions; cnt++) {
-            _delegates[cnt] = new LinkedHashMap(1, 0.75f, true) {
+        _subregionCnt = Math.max(3, capacity / DIST_WEIGHT);  //at least 3 lru regions!
+        _subregions = new Map[_subregionCnt];
+        for (int cnt = 0; cnt < _subregionCnt; cnt++) {
+            _subregions[cnt] = new LinkedHashMap(1, 0.75f, true) {
                 /*put already under synchronized remove should not do anything wild*/
                 protected boolean removeEldestEntry(final Map.Entry eldest) {
                     return size() > _capacity;
@@ -43,16 +45,16 @@ public class SimpleVolatileLRUCache implements Cache {
     }
 
     public Object get(String key) {
-        int region = Math.abs(key.hashCode() % _subregions);
-        synchronized (_delegates[region]) {
-            return _delegates[region].get(key);
+        int region = Math.abs(key.hashCode() % _subregionCnt);
+        synchronized (_subregions[region]) {
+            return _subregions[region].get(key);
         }
     }
 
     public void flush() {
-        for (int cnt = 0; cnt < _subregions; cnt++) {
-            synchronized (_delegates[cnt]) {
-                _delegates[cnt].clear();
+        for (int cnt = 0; cnt < _subregionCnt; cnt++) {
+            synchronized (_subregions[cnt]) {
+                _subregions[cnt].clear();
             }
         }
     }    
@@ -65,9 +67,9 @@ public class SimpleVolatileLRUCache implements Cache {
     }
 
     public void put(String key, Object data) {
-        int region = Math.abs(key.hashCode() % _subregions);
-        synchronized (_delegates[region]) {
-            _delegates[region].put(key, data);
+        int region = Math.abs(key.hashCode() % _subregionCnt);
+        synchronized (_subregions[region]) {
+            _subregions[region].put(key, data);
         }
     }
 }

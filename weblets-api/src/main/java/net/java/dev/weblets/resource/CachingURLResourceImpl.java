@@ -2,8 +2,8 @@ package net.java.dev.weblets.resource;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletRequest;
+import net.java.dev.weblets.caching.SimpleCachingProvider;
 import net.java.dev.weblets.resource.Cache;
-import net.java.dev.weblets.resource.SimpleCachingProvider;
 
 import java.io.*;
 import java.net.URL;
@@ -17,7 +17,7 @@ import java.net.URLConnection;
  * An implementation of our url resource loading mechanism
  * the entire caching aspects are handled here as well!
  */
-public class URLResourceImpl extends BaseWebletResourceImpl {
+public class CachingURLResourceImpl extends BaseWebletResourceImpl {
 
     long _lastModified = 0;
     private static final int CACHE_FILESIZE = 20000;
@@ -30,7 +30,7 @@ public class URLResourceImpl extends BaseWebletResourceImpl {
         long lastAccessed = -1;
     }
 
-    public URLResourceImpl(WebletConfig config, WebletRequest request, URL resource) throws IOException {
+    public CachingURLResourceImpl(WebletConfig config, WebletRequest request, URL resource) throws IOException {
         super(resource);
         URLConnection conn = null;
         _webletName = request.getWebletName();
@@ -41,7 +41,7 @@ public class URLResourceImpl extends BaseWebletResourceImpl {
         /*set the mime type*/
     }
 
-    public URLResourceImpl(WebletConfig config, String webletName, String pathInfo, String mimetype, URL resource) throws IOException {
+    public CachingURLResourceImpl(WebletConfig config, String webletName, String pathInfo, String mimetype, URL resource) throws IOException {
         super(resource);
         URLConnection conn = null;
         conn = resource.openConnection();

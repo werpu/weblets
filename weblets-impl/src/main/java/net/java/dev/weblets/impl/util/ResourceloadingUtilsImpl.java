@@ -6,7 +6,7 @@ import net.java.dev.weblets.util.CopyStrategy;
 import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletResponse;
-import net.java.dev.weblets.resource.SubbundleResourceImpl;
+import net.java.dev.weblets.resource.CachingSubbundleResourceImpl;
 import net.java.dev.weblets.resource.Subbundle;
 import net.java.dev.weblets.resource.*;
 
@@ -64,7 +64,7 @@ public class ResourceloadingUtilsImpl implements IResourceloadingUtils {
      */
     public WebletResource getResource(WebletConfig config, WebletRequest request, String resourcePath) throws IOException {
         URL resourceURL = getResourceUrl(request, resourcePath);
-        return new URLResourceImpl(config, request, resourceURL);
+        return new CachingURLResourceImpl(config, request, resourceURL);
     }
 
     /**
@@ -159,9 +159,9 @@ public class ResourceloadingUtilsImpl implements IResourceloadingUtils {
             response.setStatus(WebletResponse.SC_NOT_FOUND);
             return;
         } else if (resource != null) {
-            if (resource instanceof SubbundleResourceImpl) {
+            if (resource instanceof CachingSubbundleResourceImpl) {
                 //we have a bundle, we have to prepare the files if needed!
-                SubbundleResourceImpl bundle = (SubbundleResourceImpl) resource;
+                CachingSubbundleResourceImpl bundle = (CachingSubbundleResourceImpl) resource;
                 preprocessSubbundleResource(request, copyStrategy, bundle);
             } else {
                 preprocessResource(request, copyStrategy, resource);
@@ -180,7 +180,7 @@ public class ResourceloadingUtilsImpl implements IResourceloadingUtils {
      * @param bundle
      * @throws IOException
      */
-    private void preprocessSubbundleResource(WebletRequest request, CopyStrategy copyStrategy, SubbundleResourceImpl bundle) throws IOException {
+    private void preprocessSubbundleResource(WebletRequest request, CopyStrategy copyStrategy, CachingSubbundleResourceImpl bundle) throws IOException {
         if (bundle.isRecreateTemp()) {
             synchronized (this) {//all stop we do not want any further threads doing anything until we have the resource temps in place again!
                 if (!bundle.isRecreateTemp()) {//lets check if another thread has recreated already
@@ -223,7 +223,7 @@ public class ResourceloadingUtilsImpl implements IResourceloadingUtils {
      * @throws IOException
      */
     private void preprocessResource(WebletRequest request, CopyStrategy copyStrategy, WebletResource resource) throws IOException {
-        if ((!(resource instanceof SubbundleResourceImpl)) && resource.isProcessTemp() && resource.isRecreateTemp()) {//TODO a better temp recreateion determination
+        if ((!(resource instanceof CachingSubbundleResourceImpl)) && resource.isProcessTemp() && resource.isRecreateTemp()) {//TODO a better temp recreateion determination
             synchronized (resource) {
                 if (!resource.isRecreateTemp()) {
                     return;
