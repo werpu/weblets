@@ -54,7 +54,9 @@ Introduction
 		<subbundle>
 		    <id>scripts/bundlescript1.js</id>
 		    <resources>
-		        scripts/script1.js, scripts/script2.js, scripts/script3.js
+		        /scripts/script1.js,
+		        /scripts/script2.js,
+		        /scripts/script3.js
 		    </resources>
 		</subbundle>
 
@@ -86,9 +88,13 @@ Introduction
 
 
     The first access sends the entire bundle!
-    all other accesses send empty strings (TODO or maybe resource already served)
+    all other accesses send empty strings.
 
 
-    TODO make pic
 
-    
+    Now for some situations this might be suitable, for instance an empty CSS include does nothing. In other situations
+    such a thing might trigger a browser error.
+
+    To cope with this an API has been added which allows to check for already included resources!
+
+    TODO add description here!

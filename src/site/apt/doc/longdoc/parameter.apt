@@ -1,0 +1,147 @@
+                ----------------------------------------
+                Description of all Weblets Parameters
+                ----------------------------------------
+
+
+Introduction
+
+    One emphasis of <<<Weblets>>> was to get as low on configuration as possible.
+    Convention over configuration was applied wherever possible, but also
+    any convention should be overridable to get the much needed flexibility into the system.
+
+    Now while <<<Weblets>>> itself is easy to use and any standard configuration can be done
+    with a handful of parameters. The overrides however cause a bigger number of parameters appliable
+    to any weblet configuration so that the end result while being small is a bigger number
+    of parameters in various aspects of the <<<Weblets>>> configuration.
+
+    This chapter should give a precise and complete overview over the entire configuration aspects!
+
+* The Weblets section
+
+    The Weblets section is the first part of a complete configuration
+
++--------------------------------------------------
+    <weblets-config>
+        <weblet>
+        <weblet>
+    </weblets-config>
++--------------------------------------------------
+
+    Following entries are allowed within the <<<weblets>>> section
+
+    *----------------+------------------------------------------------------------------+
+    | id             | The id for the <<<Weblet>>> used for later reference             |
+    *----------------+------------------------------------------------------------------+
+    | init-param     | name value pair of an init param (see init params for addition info)|
+    |                | *------------*------------------------*                          |
+    |                | | param-name | the init param name    |                          |
+    |                | *------------*------------------------*                          |
+    |                | | param-value| value of the init param|                          |
+    |                | *------------*------------------------*                          |
+    *----------------+------------------------------------------------------------------+
+    | subbundle      | Subbundle definition                                             |
+    |                | *------------*------------------------*                          |
+    |                | | id         | Subbundle id           |                          |
+    |                | *------------*------------------------*                          |
+    |                | | resources  | comma delimited list of|                          |
+    |                | |            | resources              |                          |
+    |                | *------------*------------------------*                          |
+    *----------------+------------------------------------------------------------------+
+    | mime-mapping   | mime mapping entries                                             |
+    |                | *------------*------------------------*                          |
+    |                | | extension  |  the mime mapping extension |                     |
+    |                | *------------*------------------------* |                        |
+    |                | | mime-mapping | the mime mapping value  |                       |
+    |                | *------------*------------------------*                          |
+    *----------------+------------------------------------------------------------------+
+
+
+** Init Param
+
+    Every weblet has a number of init params describing certain internal behavior not
+    the init params can change from weblet to weblet and hence are not available for
+    ever implementations. They control things like cache behavior,
+    resource timeouts etc....
+
+    Here is a complete list of init params
+
+    *----------------+----------------------*--------------------------------------------*
+    | package        | root package for the resources                  | Packaged Weblet |
+    *----------------+----------------------*--------------------------------------------*
+    | resourceRoot   | root relativ to the current webapp context root | Webapp Weblet   |
+    *----------------+--------------------------------------------------------*-----------------------------*
+    | cache-timeout  | timeout for the cache so that it is reloaded cyclicly  | all Weblet implementations  |
+    *-----------------+------------------------------------------------------------*----------------------------*
+    | allowedResources| a commpa separated list of allowed resource file extensions| all Weblet implementations |
+    *----------------+----------------------*--------------------------------------------*
+    | server-cache   | if set to true, turns on the internal server caches |  all Weblet implementations |
+    *----------------+----------------------*--------------------------------------------*
+    | caching-provider| class to the caching provider if none is set the default is used|  all Weblet implementations |
+    *----------------+----------------------*--------------------------------------------*
+
+
+** Subbundles
+
+    Subbundles are resources which can be on the fly concatenated and can be served as
+    Single entity, see the {{{./subbundles.html} Subbundle Guide }} for an exact description!
+
+    *----------------+------------------------------------------------------------------+
+    | subbundle      | Subbundle definition                                             |
+    |                | *------------*------------------------*                          |
+    |                | | id         | Subbundle id           |                          |
+    |                | *------------*------------------------*                          |
+    |                | | resources  | comma delimited list of|                          |
+    |                | |            | resources              |                          |
+    |                | *------------*------------------------*                          |
+    *----------------+------------------------------------------------------------------+
+
+    The syntax looks like following
+
+
++--------------------------------------------------
+     <subbundle>
+         <id>/bundles/script.js</id>
+         <resources>
+              /subbundle/script1.js, /subbundle/script2.js
+          </resources>
+     </subbundle>
++--------------------------------------------------
+
+
+** Mimetype mapping
+
+    As described in {{{./packingweblets} Weblets Packaging Guide }} it is possible to do mime type overrides.
+    The mime mapping followis standard conventions like they are applied to a servlet container
+
+
+    *----------------+------------------------------------------------------------------+
+    | mime-mapping   | mime mapping entries                                             |
+    |                | *------------*------------------------*                          |
+    |                | | extension  |  the mime mapping extension |                     |
+    |                | *------------*------------------------* |                        |
+    |                | | mime-mapping | the mime mapping value  |                       |
+    |                | *------------*------------------------*                          |
+    *----------------+------------------------------------------------------------------+
+
+    The syntax is following
+
+
++--------------------------------------------------
+    <mime-mapping>
+        <extension> jpg </extension>
+        <mime-mapping>
+            image-jpeg
+        </mime-mapping>
+    </mime-mapping>
++--------------------------------------------------
+
+        
+* The Weblets Mapping Section
+
+    The weblets mapping section describes various means of mapping the defined weblets
+    into the URLs!
+    It allows a significant reduction of URL size if chosen wisely!
+
+    
+    
+
