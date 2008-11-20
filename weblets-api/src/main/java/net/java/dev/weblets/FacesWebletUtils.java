@@ -16,7 +16,7 @@ public class FacesWebletUtils {
      * @return a url with the current web-app context path to the weblet
      */
     public static String getURL(FacesContext context, String weblet, String pathInfo) {
-        return WebletUtils.getResource(weblet, pathInfo);
+        return WebletUtils.getURL(weblet, pathInfo);
     }
 
     /**
