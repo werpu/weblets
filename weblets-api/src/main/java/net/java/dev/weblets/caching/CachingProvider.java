@@ -1,6 +1,7 @@
 package net.java.dev.weblets.caching;
 
 import net.java.dev.weblets.caching.Cache;
+import net.java.dev.weblets.WebletConfig;
 
 /**
  * @author werpu
@@ -11,6 +12,7 @@ import net.java.dev.weblets.caching.Cache;
  * by own implementations
  */
 public interface CachingProvider {
+
 
     /**
      * returns a cache for a given caching region

@@ -8,6 +8,8 @@ import net.java.dev.weblets.caching.SimpleNonVolatileCache;
 /**
  * @author werpu
  * @date: 18.11.2008
+ * <p/>
+ * load test for the caches!
  */
 public class TestVolatileCache extends TestCase {
 
@@ -16,8 +18,7 @@ public class TestVolatileCache extends TestCase {
     class TestRunner implements Runnable {
         Cache _cache = null;
 
-        public TestRunner( Cache cache) {
-      
+        public TestRunner(Cache cache) {
             _cache = cache;
         }
 
@@ -26,16 +27,14 @@ public class TestVolatileCache extends TestCase {
             try {
                 for (int cnt = 0; cnt < 100; cnt++) {
                     _cache.put(cnt + "", "hello world");
+                    if (cnt % 67 == 0) {
+                        _cache.flush();
+                    }
                     
-                     
-                        if (cnt % 67 == 0) {
-                            _cache.flush();
-                        }
-
                     _cache.get(cnt + "");
                 }
             } catch (Exception e) {
-               fail(e.toString());
+                fail(e.toString());
             } finally {
                 threadCnt--;
             }
@@ -48,13 +47,13 @@ public class TestVolatileCache extends TestCase {
     public void testVolatileCache() {
         threadCnt = 0;
         Cache cache = new SimpleVolatileLRUCache(700);
-         ThreadGroup g =  new ThreadGroup("grp1");
+        ThreadGroup g = new ThreadGroup("grp1");
         for (int cnt = 0; cnt < 100; cnt++) {
             Runnable runner = new TestRunner(cache);
-            Thread t = new Thread (g, runner);
+            Thread t = new Thread(g, runner);
             t.start();
         }
-        while (threadCnt > 0) {
+        while (g.activeCount() > 0) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -67,13 +66,13 @@ public class TestVolatileCache extends TestCase {
     public void testNonVolatileCache() {
         threadCnt = 0;
         Cache cache = new SimpleNonVolatileCache();
-        ThreadGroup g =  new ThreadGroup("grp2");
+        ThreadGroup g = new ThreadGroup("grp2");
         for (int cnt = 0; cnt < 100; cnt++) {
-              Runnable runner = new TestRunner(cache);
-            Thread t = new Thread (g, runner);
+            Runnable runner = new TestRunner(cache);
+            Thread t = new Thread(g, runner);
             t.start();
         }
-        while (threadCnt > 0) {
+        while (g.activeCount() > 0) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -81,5 +80,5 @@ public class TestVolatileCache extends TestCase {
                 super.fail(e.toString());
             }
         }
-    }   
+    }
 }

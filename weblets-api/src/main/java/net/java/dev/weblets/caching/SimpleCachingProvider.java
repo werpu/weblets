@@ -4,6 +4,7 @@ import net.java.dev.weblets.caching.SimpleNonVolatileCache;
 import net.java.dev.weblets.caching.SimpleVolatileLRUCache;
 import net.java.dev.weblets.caching.CachingProvider;
 import net.java.dev.weblets.caching.Cache;
+import net.java.dev.weblets.WebletConfig;
 
 /**
  * @author werpu
@@ -16,7 +17,7 @@ public class SimpleCachingProvider implements CachingProvider {
 
     static SimpleCachingProvider _instance = new SimpleCachingProvider();
 
-    public static SimpleCachingProvider getInstance() {
+    public static CachingProvider getInstance(WebletConfig config) {
         return _instance;
     }
 

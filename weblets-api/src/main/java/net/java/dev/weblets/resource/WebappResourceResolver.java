@@ -36,6 +36,8 @@ public class WebappResourceResolver implements ResourceResolver {
      * @param request the incoming request
      * @return a valid url pointing to a resource or shadow resource!
      * @throws IOException in case of an error!
+     * @deprecated will be removed in 1.3 latest!
+     * 
      */
     public URL getURL(WebletRequest request) throws IOException {
         String resourcePath = _resourceRoot + request.getPathInfo();
@@ -45,12 +47,21 @@ public class WebappResourceResolver implements ResourceResolver {
         return url;
     }
 
+
     public WebletResource getResource(WebletRequest request) throws IOException {
         URL url = getURL(request);
         if (url == null) {
             return null;
         }
-        WebletResource retVal = new CachingURLResourceImpl(_config, request, url);
+
+
+
+        WebletResource retVal = null;
+        if(_config.isServerCache()) {
+            retVal = new CachingURLResourceImpl(_config, request, url);
+        } else {
+            retVal = new URLResourceImpl(_config, request, url);
+        }
         return retVal;
     }
 

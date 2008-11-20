@@ -21,6 +21,7 @@ public class CachingURLResourceImpl extends BaseWebletResourceImpl {
 
     long _lastModified = 0;
     private static final int CACHE_FILESIZE = 20000;
+    WebletConfig _config;
 
     /**
      * helper entry to ease the invalidation
@@ -35,6 +36,7 @@ public class CachingURLResourceImpl extends BaseWebletResourceImpl {
         URLConnection conn = null;
         _webletName = request.getWebletName();
         _pathInfo = request.getPathInfo();
+        _config = config;
         conn = resource.openConnection();
         _lastModified = conn.getLastModified();
         super.setMimeType(config.getMimeType(request.getPathInfo()));
@@ -49,6 +51,7 @@ public class CachingURLResourceImpl extends BaseWebletResourceImpl {
         _pathInfo = pathInfo;
         _lastModified = conn.getLastModified();
         super.setMimeType(mimetype);
+        _config = config;
         /*set the mime type*/
     }
 
@@ -58,7 +61,7 @@ public class CachingURLResourceImpl extends BaseWebletResourceImpl {
     }
 
     public InputStream getInputStream() throws IOException {
-        Cache cache = SimpleCachingProvider.getInstance().getCache("resourceData");
+        Cache cache = SimpleCachingProvider.getInstance(_config).getCache("resourceData");
         if (_temp != null) {
             return handleCachedTempFile(cache);
         }

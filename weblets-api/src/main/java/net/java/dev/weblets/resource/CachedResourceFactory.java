@@ -34,7 +34,7 @@ public class CachedResourceFactory implements ResourceFactory {
 
     WebletConfig _config;
 
-    Cache _tempfileCache = SimpleCachingProvider.getInstance().getCache("tempfileCache");
+    Cache _tempfileCache = null;
 
     boolean _cacheFile = true;
 
@@ -42,6 +42,7 @@ public class CachedResourceFactory implements ResourceFactory {
 
     public CachedResourceFactory(WebletConfig config) {
         _config = config;
+        _tempfileCache = _config.getCachingProvider().getCache("tempfileCache");
     }
 
     /**
@@ -82,6 +83,7 @@ public class CachedResourceFactory implements ResourceFactory {
         WebletResource webletResource = null;
         //ie js + compression means temp true
         //plain png means temp false!
+
         if (_cacheFile) {
             webletResource = (WebletResource) _tempfileCache.get(getWebletKey(request));
         }

@@ -16,6 +16,7 @@
 package net.java.dev.weblets;
 
 import net.java.dev.weblets.resource.Subbundle;
+import net.java.dev.weblets.caching.CachingProvider;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -26,6 +27,36 @@ public interface WebletConfig {
     static int WEBLET_TYPE_PROXY = 2;
     static int WEBLET_TYPE_REDIRECT = 3;
     static int WEBLET_TYPE_OTHER = 100;
+    /**
+     * List of known globally predefined init params
+     * might be moved into the base class
+     * as special methods in the long run
+     */
+    public static String CACHE_TIMEOUT = "cache-timeout";
+    public static String ALLOWED_RESOURCES = "allowedResources";
+    public static String SERVER_CACHE = "server-cache";
+    public static String CACHING_PROVIDER = "caching-provider";
+
+    /**
+     * getter to the global cache timeout init param
+     * @return a long value representing the cache timeout
+     * -1 if no parameter is set
+     */
+    public long getCacheTimeout();
+
+
+    /**
+     * @return true if the server side cache is on false if it is off!
+     */
+    public boolean isServerCache();
+
+    /**
+     * get the current caching provider
+     *
+     * @return an implementation of the caching provider
+     * or net.java.dev.weblets.caching.SimpleCachingProvider if none is set
+     */
+    public CachingProvider getCachingProvider();
 
     /**
      * @return the container hosting the resources

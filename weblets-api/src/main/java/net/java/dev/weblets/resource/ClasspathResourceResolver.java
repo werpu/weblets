@@ -59,7 +59,12 @@ public class ClasspathResourceResolver implements ResourceResolver {
         if (url == null) {
             return null;
         }
-        WebletResource retVal = new CachingURLResourceImpl(_config, request, url);
+        WebletResource retVal = null;
+        if (_config.isServerCache()) {
+            retVal = new CachingURLResourceImpl(_config, request, url);
+        } else {
+            retVal = new URLResourceImpl(_config, request, url);
+        }
         return retVal;
     }
 
@@ -68,9 +73,12 @@ public class ClasspathResourceResolver implements ResourceResolver {
         if (url == null) {
             return null;
         }
-        WebletResource retVal = new CachingURLResourceImpl(_config, mimetype, _config.getWebletName(), pathInfo, url);
+        WebletResource retVal = null;
+        if (_config.isServerCache()) {
+            retVal = new CachingURLResourceImpl(_config, mimetype, _config.getWebletName(), pathInfo, url);
+        } else {
+            retVal = new URLResourceImpl(_config, mimetype , url);
+        }
         return retVal;
     }
-
-    ;
 }

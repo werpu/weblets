@@ -17,8 +17,9 @@ package net.java.dev.weblets.impl;
 
 import net.java.dev.weblets.WebletConfig;
 import net.java.dev.weblets.WebletContainer;
+import net.java.dev.weblets.caching.CachingProvider;
+import net.java.dev.weblets.caching.SimpleCachingProvider;
 import net.java.dev.weblets.resource.Subbundle;
-import net.java.dev.weblets.impl.InverseSubbundleIndex;
 import net.java.dev.weblets.util.StringUtils;
 
 import java.util.*;
@@ -34,6 +35,35 @@ public class WebletConfigImpl implements WebletConfig {
     public WebletConfigImpl(WebletContainerImpl container) {
         _container = container;
         initAllowedFiletypes();
+    }
+
+    public long getCacheTimeout() {
+        String timeout = getInitParameter(WebletConfig.CACHE_TIMEOUT);
+        if (StringUtils.isBlank(timeout)) {
+            return -1;
+        }
+        return Long.parseLong(timeout);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public boolean isServerCache() {
+        String serverCache = getInitParameter(WebletConfig.SERVER_CACHE);
+        if (StringUtils.isBlank(serverCache)) {
+            return true;
+        }
+        return Boolean.parseBoolean(serverCache);
+    }
+
+    public CachingProvider getCachingProvider() {
+        /*String provider = getInitParameter(WebletConfig.CACHING_PROVIDER);
+        if (StringUtils.isBlank(provider)) {
+            CachingProvider cachingProvider = (CachingProvider) this.getConfigParam("_" + WebletConfig.CACHING_PROVIDER);
+            if (null == cachingProvider) {
+                cachingProvider = SimpleCachingProvider.getInstance(this);
+                setConfigParam("_" + WebletConfig.CACHING_PROVIDER, cachingProvider);
+            }
+        }*/
+        //TODO enable the init param!
+        return  SimpleCachingProvider.getInstance(this);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public WebletContainer getWebletContainer() {
@@ -188,7 +218,9 @@ public class WebletConfigImpl implements WebletConfig {
     }
 
     public Object getConfigParam(String key) {
-        return _configParams.get(key);
+        synchronized (_configParams) {
+            return _configParams.get(key);
+        }
     }
 
     public void setConfigParam(String key, Object value) {

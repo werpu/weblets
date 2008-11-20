@@ -23,6 +23,7 @@ public class CachingSubbundleResourceImpl extends BaseWebletResourceImpl {
 
     List /*WebletResource*/ _subresources = null;
     private static final int CACHEFILE_SIZE = 200000;
+    WebletConfig _config = null;
 
     /**
      * helper entry to ease the invalidation
@@ -44,6 +45,7 @@ public class CachingSubbundleResourceImpl extends BaseWebletResourceImpl {
         _pathInfo = request.getPathInfo();
         _webletName = request.getWebletName();
         _subresources = new ArrayList(resource.getResources().size());
+        _config = config;
         Iterator it = resource.getResources().iterator();
         ProcessingWebletRequest shadowRequest = new ProcessingWebletRequest(request);
         ResourceFactory factory = ResourceloadingUtils.getInstance().getResourceFactory(config);
@@ -64,7 +66,7 @@ public class CachingSubbundleResourceImpl extends BaseWebletResourceImpl {
     public InputStream getInputStream() throws IOException {
         // wo do a shadow copy our our stream resource if
         //the file is smaller than 10 KB
-        Cache cache = SimpleCachingProvider.getInstance().getCache("resourceData");
+        Cache cache = _config.getCachingProvider().getCache("resourceData");
         /*we cache the bundles to reduce disk hits if possible*/
         if (_tempFileSize == -1) {
             _tempFileSize = _temp.length();
