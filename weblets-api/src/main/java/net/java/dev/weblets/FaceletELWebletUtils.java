@@ -1,10 +1,7 @@
 package net.java.dev.weblets;
 
-import net.java.dev.weblets.util.IFacesWebletUtils;
-import net.java.dev.weblets.util.AttributeUtils;
 
 import javax.faces.context.FacesContext;
-import java.io.InputStream;
 
 /**
  * @author werpu

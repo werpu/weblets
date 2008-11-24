@@ -58,7 +58,7 @@ public class ResourceloadingUtils implements IResourceloadingUtils {
 
     public static IResourceloadingUtils getInstance() {
         if (_instance == null) {
-            synchronized (ResourceloadingUtils.class) {
+            synchronized (IResourceloadingUtils.class) {
                 if (_instance != null) {
                     return _instance;
                 }

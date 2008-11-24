@@ -42,7 +42,7 @@ public class WebappResourceResolver implements ResourceResolver {
     public URL getURL(WebletRequest request) throws IOException {
         String resourcePath = _resourceRoot + request.getPathInfo();
         HttpServletRequest httpRequest = (HttpServletRequest) request.getExternalRequest();
-        URL url = httpRequest.getSession().getServletContext().getResource("/" + resourcePath);
+        URL url = httpRequest.getSession().getServletContext().getResource("/"+ resourcePath);
         System.out.println(url.openConnection().getLastModified());
         return url;
     }

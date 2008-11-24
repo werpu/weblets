@@ -7,6 +7,8 @@ import javax.faces.context.FacesContext;
  */
 public class FacesWebletUtils {
 
+    public static final String SINGLETON_HOLDER = "webletsRequestSingletonHolder";
+
     /**
      * returns the absolute url with the context path
      *
@@ -16,7 +18,13 @@ public class FacesWebletUtils {
      * @return a url with the current web-app context path to the weblet
      */
     public static String getURL(FacesContext context, String weblet, String pathInfo) {
-        return WebletUtils.getURL(weblet, pathInfo);
+
+        return WebletUtils.getURL( weblet, pathInfo);
+    }
+
+    private static RequestSingletonHolder getSingletinHolder(FacesContext context) {
+        RequestSingletonHolder singletonHolder = (RequestSingletonHolder)  context.getApplication().getVariableResolver().resolveVariable(context, SINGLETON_HOLDER);
+        return singletonHolder;
     }
 
     /**
@@ -31,7 +39,7 @@ public class FacesWebletUtils {
      * @return
      */
     public static String getURL(FacesContext context, String weblet, String pathInfo, boolean suppressDoubleIncludes) {
-        return WebletUtils.getURL(context.getExternalContext().getRequest(), weblet, pathInfo, suppressDoubleIncludes);
+        return WebletUtils.getURL(getSingletinHolder(context), weblet, pathInfo, suppressDoubleIncludes);
     }
 
     /**
@@ -46,7 +54,7 @@ public class FacesWebletUtils {
      * @return
      */
     public static String getResource(FacesContext context, String weblet, String pathInfo, boolean suppressDoubleIncludes) {
-        return WebletUtils.getResource(context.getExternalContext(), weblet, pathInfo, suppressDoubleIncludes);
+        return WebletUtils.getResource(getSingletinHolder(context), weblet, pathInfo, suppressDoubleIncludes);
     }
 
     /**
@@ -70,6 +78,6 @@ public class FacesWebletUtils {
      * @return
      */
     public static boolean isResourceLoaded(FacesContext context, String weblet, String pathInfo) {
-        return WebletUtils.isResourceLoaded(context.getExternalContext().getRequest(), weblet, pathInfo);
+        return WebletUtils.isResourceLoaded(getSingletinHolder(context), weblet, pathInfo);
     }
 }
