@@ -43,7 +43,6 @@ public class WebappResourceResolver implements ResourceResolver {
         String resourcePath = _resourceRoot + request.getPathInfo();
         HttpServletRequest httpRequest = (HttpServletRequest) request.getExternalRequest();
         URL url = httpRequest.getSession().getServletContext().getResource("/"+ resourcePath);
-        System.out.println(url.openConnection().getLastModified());
         return url;
     }
 
