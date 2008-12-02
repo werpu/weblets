@@ -51,9 +51,15 @@ public class WebletUtilsImpl implements IWebletUtils {
         }
         String url = getResource(weblet, pathInfo);
         if (AttributeUtils.getAttribute(requestSingletonHolder, RES_SERVED + url) != null) {
+            Log log = LogFactory.getLog(getClass());
+            log.info("Blank url requested on "+weblet+":"+pathInfo);
             return "";
         } else {
             AttributeUtils.setAttribute(requestSingletonHolder, RES_SERVED + url, Boolean.TRUE);
+        }
+        if(StringUtils.isBlank(url)) {
+            Log log = LogFactory.getLog(getClass());
+            log.info("Blank resource requested on "+weblet+":"+pathInfo);
         }
         return url;
     }
@@ -74,10 +80,17 @@ public class WebletUtilsImpl implements IWebletUtils {
         }
         String url = getResource(weblet, pathInfo);
         if (AttributeUtils.getAttribute(requestSingletonHolder, RES_SERVED + url) != null) {
+            Log log = LogFactory.getLog(getClass());
+            log.info("Blank url requested on "+weblet+":"+pathInfo);
             return "";
         } else {
             AttributeUtils.setAttribute(requestSingletonHolder, RES_SERVED + url, Boolean.TRUE);
         }
+         if(StringUtils.isBlank(url)) {
+            Log log = LogFactory.getLog(getClass());
+            log.info("Blank url requested on "+weblet+":"+pathInfo);
+        }
+
         return getURL(weblet, pathInfo);
     }
 
