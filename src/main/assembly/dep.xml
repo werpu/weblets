@@ -1,0 +1,25 @@
+<assembly>
+  <id>bin</id>
+  <formats>
+    <format>dir</format>
+
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <moduleSets>
+    <moduleSet>
+      <includes>
+        <include>net.java.dev.weblets:weblets-api</include>
+		<include>net.java.dev.weblets:weblets-impl</include>
+		<include>net.java.dev.weblets:weblets-exampleweblet</include>
+		<include>net.java.dev.weblets:weblets-demo</include>
+      </includes>
+      <binaries>
+        <outputDirectory>binaries/${artifactId}</outputDirectory>
+        <unpack>false</unpack>
+      </binaries>
+      <sources>
+        <outputDirectory>${artifactId}</outputDirectory>
+	  </sources>
+    </moduleSet>
+  </moduleSets>
+</assembly>

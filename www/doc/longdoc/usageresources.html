@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title>Weblets - Resources Weblets Usage Guide</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  </head>
+  <body>
+    <div class="app" >
+      <div class="section"><h2>Resources Weblets Usage Guide</h2>
+<p>Not only java or jsp files have the problem of having to load resources. Resource loading is universal and not only limited to the domain of java or its derived technologies.<br />
+Resources can be loaded also by resource files. <tt>Weblets</tt>
+ as universal solution to resource loading provides the hooks for CSS and javascript for authors who have to deal with the problem of having to load or reference resources in a neutral way.</p>
+<div class="section"><h3>Basic Functions</h3>
+<div class="section"><h4>Introduction</h4>
+<p>The Weblets APIs follow the general patterns as described in <a href="./generalapi.html">Weblets Users Guide: Introduction to the API Patterns</a>
+. for further information please follow the link.</p>
+</div>
+<div class="section"><h4><tt>Weblets</tt>
+ and Javascript</h4>
+<p>To support resource cross refencing in a neutral manner, <tt>Weblets</tt>
+ adds another parsing step to generic text resources which preparses the resource for the occurence of the contractual functions and then replaces them on the fly with the weblet url calls.<br />
+The browser, after the parsing step, can resolve the urls and can trigger the second weblet stage which serves the resources!</p>
+<p><i>Image 0: Resource Parsing in Weblets</i>
+</p>
+<img src="../images/resourceparsing.png" /><p>Now to apply this we have to have in mind that every javascript file loaded by <tt>Weblets</tt>
+ is parsed and searched for our weblet notation. Hence we can use api functions directly without influencing the actual code.</p>
+<p><i>Code 0: Javascript Usage of the weblet api </i>
+</p>
+<div class="source"><pre>   alert('weblet:url( &quot;weblets.demo&quot; , &quot;/welcome.js&quot; )');
+   expands to alert('/myapp/weblets/demo/welcome.js')
+
+   alert(&quot;weblet:resource( 'weblets.demo' , '/welcome.js' )&quot;);
+   expands to alert(&quot;/weblets/demo/welcome.js&quot;)</pre>
+</div>
+<p><b>Note: To ease the integration into various text based resource languages, the hyphenation normally found for strings was deliberately left out of the function definition!</b>
+</p>
+</div>
+<div class="section"><h4><tt>Weblets</tt>
+ and CSS</h4>
+<p>Everything said regarding javascript also applies to CSS, following code example will showcase the features <tt>Weblets</tt>
+ adds to CSS</p>
+<p><i>Code 1: CSS Usage of the weblet api </i>
+</p>
+<div class="source"><pre>     background-image: url( weblet:resource( &quot;weblets.demo&quot; , &quot;/myimage.png&quot; ) );
+
+     will be expanded to
+     background-image: url( /myapp/weblets/demo/myimage.png );</pre>
+</div>
+</div>
+<div class="section"><h4>Additional information</h4>
+<p>Basically every text resource is parsed in the parsing stage. You can use the <tt>Weblets</tt>
+ notation in everything text based! The referencing of relative resources in <tt>Weblets</tt>
+ as well is no problem, you still can reference resources relatively without any limitations, however you have to have in mind, that those resources are referenced relatively to the expanded weblet url. Generally spoken it is saver to simply use the weblet notation for intra weblet resource references!</p>
+</div>
+</div>
+</div>
+<div class="section"><h2>Summary</h2>
+<p><tt>Weblets</tt>
+ resources can cross reference each other, a weblet function parser supports the direct referencing of resources via the weblet notation, out of every weblet loaded resource file.</p>
+<hr />
+<div class="section"><h3>Contents</h3>
+<ol type="1"><li><a href="./index.html"> Users Documentation: Index </a>
+</li>
+<li><a href="./gettingstarted.html"> Users Documentation: Getting Started </a>
+</li>
+<li><a href="./setup.html"> Users Documentation: Setup Guide </a>
+</li>
+<li><a href="./generalapi.html"> Users Documentation: Introduction to the API Patterns </a>
+</li>
+<li><a href="./usagejsp.html"> Users Documentation: JSP Weblets Usage Guide </a>
+</li>
+<li><a href="./usagejava.html"> Users Documentation: Servlet Weblets Usage Guide </a>
+</li>
+<li><a href="./usagejsf.html"> Users Documentation: JSF Weblets Usage Guide </a>
+</li>
+<li><a href="./usageresources.html"> Users Documentation: Resources Weblets Usage Guide </a>
+</li>
+<li><a href="./packingweblets.html"> Users Documentation: Weblets Packaging Guide </a>
+</li>
+</ol>
+</div>
+</div>
+
+    </div>
+  </body>
+</html>

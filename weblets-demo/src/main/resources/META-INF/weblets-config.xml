@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<weblets-config xmlns="http://weblets.dev.java.net/config">
+	<weblet>
+		<weblet-name>weblets.demo</weblet-name>
+		<weblet-class>
+			net.java.dev.weblets.packaged.PackagedWeblet
+		</weblet-class>
+		<weblet-version>1.0</weblet-version>
+
+		<init-param>
+			<param-name>package</param-name>
+			<param-value>net.java.dev.weblets.demo.resources</param-value>
+        </init-param>
+        <!-- optional cache control timeout in miliseconds -->
+        
+        <!--
+        <init-param>
+            <param-name>cachecontrol-timeout</param-name>
+            <param-value>61000</param-value>
+        </init-param>
+         -->
+		<!-- this is a weblet written specifically for the demo -->
+	</weblet>
+
+    	<weblet-mapping>
+		<weblet-name>weblets.demo</weblet-name>
+		<url-pattern>/demo/*</url-pattern>
+	</weblet-mapping>
+	
+</weblets-config>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Document   : demojsp2
+Created on : 13.12.2007, 22:20:58
+Author     : werpu
+-->
+
+
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:wbl="http://weblets.dev.java.net/tags_jsp2" version="2.0">
+
+	<jsp:directive.page isELIgnored="false" contentType="text/html" pageEncoding="utf-8" />
+
+	<!-- any content can be specified here, e.g.: -->
+	<jsp:element name="text">
+        <jsp:attribute name="lang">EN</jsp:attribute>
+        <head>
+    		<link rel="stylesheet" href="${wbl:url('weblets.demo', '/styles/weblets.css')}"></link>
+    	</head>
+        
+        <jsp:body>
+         <div class="header_bg">
+			
+		 </div>
+         
+         <div class="content">
+         <p>
+         <b>Here</b> the path is rendered relative to the context path
+         the framework or the page designer has to set the context path
+         himself! Alternatively a basepath does the trick also!
+         </p>
+         ${wbl:resource('weblets.demo','/welcome.js')}
+         <p>again we also can
+         use the url function to add the context path</p>
+         ${wbl:url('weblets.demo','/welcome.js')}
+          
+         <a href='${wbl:url( "weblets.source","/demojsp2.jspx")}' target="_new">[Get the page source]</a>
+         </div>
+   </jsp:body>
+    </jsp:element>
+
+</jsp:root>

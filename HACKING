@@ -1,0 +1,7 @@
+Welcome to the Weblets project on Java.Net!
+
+
+How to build this project
+
+Please download and install Maven2 from http://maven.apache.org to get started.
+Then type "mvn install" (without the quotes) in this directory to create a JAR in the "target" subdirectory.

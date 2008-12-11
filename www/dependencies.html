@@ -1,0 +1,267 @@
+<html>
+	<head>
+		<title>Project Dependencies</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	</head>
+	<body>
+		<div class="app">
+			<div class="section">
+				<h2>
+					Project Dependencies
+				</h2>
+				<table class="bodyTable">
+					<caption>
+						The following is a list of dependencies for this project. These dependencies are required to compile and run the application:
+					</caption>
+					<tr class="a">
+						<th>
+							GroupId
+						</th>
+						<th>
+							ArtifactId
+						</th>
+						<th>
+							Version
+						</th>
+						<th>
+							Description
+						</th>
+						<th>
+							URL
+						</th>
+					</tr>
+					
+					<tr class="a">
+						<td>
+							myfaces
+						</td>
+						<td>
+							myfaces-api
+						</td>
+						<td>
+							1.1.1
+						</td>
+						<td>
+							-
+						</td>
+						<td>
+							This dependency is compile time only and not
+							needed for the runtime unless you are
+							in a jsf project
+						</td>
+					</tr>
+					<tr class="b">
+						<td>
+							commons-digester
+						</td>
+						<td>
+							commons-digester
+						</td>
+						<td>
+							1.5
+						</td>
+						<td>
+							The Digester package lets you configure an XML-&gt;Java object mapping module which triggers certain actions called rules whenever a particular pattern of nested XML elements is recognized.
+							the Digester has dependencies into commons-collections
+							and commons-beanutils. This dependency is a runtime dependency.
+							It is used internally for xml parsing of config files.
+						</td>
+						<td>
+							http://commons.apache.org/digester/
+						</td>
+					</tr>
+					<tr class="b">
+						<td>
+							commons-logging
+						</td>
+						<td>
+							commons-logging
+						</td>
+						<td>
+							1.0.x
+						</td>
+						<td>
+							The logging package is used for internal
+							log messages, as vendor neutral logging adapter.
+						</td>
+						<td>
+							http://commons.apache.org/digester/
+						</td>
+					</tr>
+					<tr class="a">
+						<td>
+							javax.servlet
+						</td>
+						<td>
+							servlet-api
+						</td>
+						<td>
+							2.4
+						</td>
+						<td>
+							-
+						</td>
+						<td>
+							-
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="section">
+				<h2>
+					Project Transitive Dependencies
+				</h2>
+				<table class="bodyTable">
+					<caption>
+						The following is a list of transitive dependencies for this project. Transitive dependencies are the dependencies of the project dependencies:
+					</caption>
+					<tr class="b">
+						<th>
+							GroupId
+						</th>
+						<th>
+							ArtifactId
+						</th>
+						<th>
+							Version
+						</th>
+						<th>
+							Description
+						</th>
+						<th>
+							URL
+						</th>
+					</tr>
+					
+					
+					
+					<tr class="b">
+						<td>
+							javax.servlet
+						</td>
+						<td>
+							jsp-api
+						</td>
+						<td>
+							2.0
+						</td>
+						<td>
+							only if you use
+							jsp2 apis or rely on a technology based on jsp2
+							
+						</td>
+						<td>
+							-
+						</td>
+					</tr>
+					<tr class="b">
+						<td>
+							javax.servlet
+						</td>
+						<td>
+							jsp-api
+						</td>
+						<td>
+							1.x
+						</td>
+						<td>
+							only if you use
+							jsp 1.x apis or rely on a technology based on jsp2
+							
+						</td>
+						<td>
+							-
+						</td>
+					</tr>
+					
+					<tr class="b">
+						<td>
+							commons-el
+						</td>
+						<td>
+							commons-el
+						</td>
+						<td>
+							1.0
+						</td>
+						<td>
+							JSP 2.0 Expression Language Interpreter Implementation
+						</td>
+						<td>
+							<a href="http://jakarta.apache.org/commons/el/">http://jakarta.apache.org/commons/el/</a>
+						</td>
+					</tr>
+					<tr class="a">
+						<td>
+							commons-lang
+						</td>
+						<td>
+							commons-lang
+						</td>
+						<td>
+							2.1
+						</td>
+						<td>
+							Commons.Lang, a package of Java utility classes for the classes that are in java.lang's hierarchy, or are considered to be so standard as to justify existence in java.lang.
+							this package is only used if you use myfaces as runtime dependency
+						</td>
+						<td>
+							http://jakarta.apache.org/commons/${pom.artifactId.substring(8)}/
+						</td>
+					</tr>
+					<tr class="b">
+						<td>
+							commons-beanutils
+						</td>
+						<td>
+							commons-beanutils
+						</td>
+						<td>
+							1.7+
+						</td>
+						<td>
+							is used by the commons digester and has to be included always
+						</td>
+						<td>
+							http://commons.apache.org/beanutils/
+						</td>
+					</tr>
+						<tr class="b">
+						<td>
+							commons-collections
+						</td>
+						<td>
+							commons-collections
+						</td>
+						<td>
+							3.x
+						</td>
+						<td>
+							is used by the commons digester and has to be included always
+						</td>
+						<td>
+							http://commons.apache.org/collections/
+						</td>
+					</tr>
+					<tr class="a">
+						<td>
+							javax.servlet
+						</td>
+						<td>
+							jstl
+						</td>
+						<td>
+							1.1.2
+						</td>
+						<td>
+							only if you use a jstl in a project
+						</td>
+						<td>
+							-
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

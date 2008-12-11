@@ -1,0 +1,168 @@
+                                  ------------
+                                  Getting Started
+                                  ------------
+
+
+Getting Started with Weblets
+
+    This basic guide gives a small introduction into getting started with <<<Weblets>>>.
+    It should ease the beginning on how to install <<<Weblets>>> and how to get started with the
+    demo applications.
+
+
+* Download Weblets
+
+    Each <<<Weblets>>> release can be obtained via a the
+   {{{https://weblets.dev.java.net/servlets/ProjectDocumentList}Download location:Documents and files}}
+
+    It should contain everything, you need to get started with weblets
+
+    <It should contain following packages>
+
+    ** a weblets-impl jar file with the implementation classes
+
+    ** a weblets-api jar file with the external apis
+
+    ** the documentation
+
+    ** a weblets-demo war file with the demos to weblets
+
+    []
+
+    To get started simply drop the weblets-demo war file into the application
+    server of your choice and then call
+
++-------------------------------------------
+    http://<url to application server>:<port>/weblets-demo/
++-------------------------------------------    
+
+    You should get the demo page showcasing all features of weblets.
+
+    The single pages can be used as references for your own development.
+
+
+* Getting started with Maven2
+
+ Weblets can be injected via a maven build, however currently you
+ only can do it from the java.net repository.
+
+ following entries have to be added to your Maven build file.
+
+
+ Under the repositories section
+
++---------------------------------------
+  <repository>
+       <id>maven2-repository.dev.java.net</id>
+       <name>Java.net Repository for Maven</name>
+       <url>http://download.java.net/maven/2/</url>
+       <layout>default</layout>
+   </repository>
++---------------------------------------
+
+    Following dependency entries have to be added:
+
++---------------------------------------
+    <dependency>
+       <groupId>net.java.dev.weblets</groupId>
+       <artifactId>weblets-api</artifactId>
+       <version>1.1</version>
+    </dependency>
+    <dependency>
+       <groupId>net.java.dev.weblets</groupId>
+       <artifactId>weblets-impl</artifactId>
+       <version>1.1</version>
+    </dependency>
++---------------------------------------
+
+
+* Getting started via Subversion
+
+    To get started via Subversion you need three prerequisites
+
+        ** a Subversion client of your choice
+
+        ** a valid java.net account (which is free)
+
+        ** a working <<<Maven2>>> configuration
+
+    To get started with subversion simply check out one of the version tags
+    from
+
++---------------------------------------
+    https://weblets.dev.java.net/svn/weblets/tags/weblets-1.1
++---------------------------------------
+
+
+
+    or the current trunk with the latest code from
+
++---------------------------------------
+    https://weblets.dev.java.net/svn/weblets/trunk
++---------------------------------------
+
+    <example>
+
++---------------------------------------------
+svn checkout https://weblets.dev.java.net/svn/weblets/tags/weblets-1.1 <<<Weblets>>> --username username
++---------------------------------------------
+
+    <example>
+
++---------------------------------------------
+svn checkout https://weblets.dev.java.net/svn/weblets/trunk <<<Weblets>>> --username username
++---------------------------------------------
+
+    For the username and password you need to give your java.net account username
+    and password (both can be obtained for free), or alternatively the username
+    <<<guest>>> with an empty password.
+
+
+
+    After checking out simply do a mvn clean install from your checkout dir, and
+    then, after the build process simply go to the weblets-demo subdir
+    and call <<<mvn jetty:run>>>.
+
+    After that a jetty servlet runner should be available on port 9090 with the weblets
+    demo application deployed in it.
+
+    Simply point your browser to
+
++---------------------------------------
+    http://localhost:9090/
++---------------------------------------
+
+    for further details
+
+Summary
+
+    Getting started is easy, two methods are available: download or Subversion
+    checkout, try it, it is easy to get started, it is easy to use.
+
+=======================================================================
+
+* Contents
+
+	[[1]] {{{./index.html} Users Documentation: Index }}
+
+	[[]] {{{./gettingstarted.html} Users Documentation: Getting Started }}
+
+	[[]] {{{./setup.html} Users Documentation: Setup Guide }}
+
+	[[]] {{{./generalapi.html} Users Documentation: Introduction to  the API Patterns }}
+
+	[[]] {{{./usagejsp.html} Users Documentation: JSP Weblets Usage Guide }}
+
+	[[]] {{{./usagejava.html} Users Documentation: Servlet Weblets Usage Guide }}
+
+	[[]] {{{./usagejsf.html} Users Documentation: JSF Weblets Usage Guide }}
+
+	[[]] {{{./usageresources.html} Users Documentation: Resources Weblets Usage Guide }}
+
+	[[]] {{{./packingweblets.html} Users Documentation: Weblets Packaging Guide }}
+
+	[[]] {{{./reporting.html} Users Documentation: Weblets Reporting Guide }}
+
+	[[]] {{{./programmingweblets.html} Developers Documentation: Programming Weblets }}
+
+	[[]] {{{./faq.html} Users Documentation: Weblets General FAQ }}
