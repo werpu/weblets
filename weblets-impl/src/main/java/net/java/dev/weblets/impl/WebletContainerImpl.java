@@ -50,7 +50,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 public class WebletContainerImpl extends WebletContainer {
-
     public WebletContainerImpl(
             ServletContext servletContext,
             String webletContextPath,
@@ -120,10 +119,12 @@ public class WebletContainerImpl extends WebletContainer {
     }
 
     public void destroy() {
-        Iterator i = _weblets.values().iterator();
-        while (i.hasNext()) {
-            Weblet weblet = (Weblet) i.next();
-            weblet.destroy();
+        if(_weblets != null && _weblets.values() != null) {
+            Iterator i = _weblets.values().iterator();
+            while (i != null && i.hasNext()) {
+                Weblet weblet = (Weblet) i.next();
+                weblet.destroy();
+            }
         }
         _weblets = null;
         _webletConfigs = null;
@@ -174,23 +175,40 @@ public class WebletContainerImpl extends WebletContainer {
             throw new WebletException("Error weblet for: " + request.getWebletName() + ":" + request.getPathInfo() + " could not be found" +
                                       " please check either your configuration or your request cause! ");
         }
+         Weblet weblet = getWeblet(request);
         String pathInfo = request.getPathInfo();
-        if (response.getDefaultContentType() == null) {
-            //enhanced security check
-            if (pathInfo != null && SandboxGuard.isJailBreak(pathInfo)) {
-                throw new WebletException("Security Exception, the " + pathInfo +
-                                          " breaks out of the resource jail, no resource is served!");
-            }
+        //enhanced security check
+        if (pathInfo != null && SandboxGuard.isJailBreak(pathInfo)) {
+            throw new WebletException("Security Exception, the " + pathInfo +
+                                      " breaks out of the resource jail, no resource is served!");
+        }
+        WebletConfig webConfig = weblet.getWebletConfig();
+        String mimeType = null;
+
+        if(!StringUtils.isBlank(pathInfo)) {
+           mimeType = webConfig.getMimeType(pathInfo);
+        }
+
+        if(mimeType == null) {
+            mimeType = response.getDefaultContentType();
+        }
+
+        response.setContentType(mimeType);
+
+
+        Set allowedResources = webConfig.getAllowedResources();
+
             WebletConfig webConfig = weblet.getWebletConfig();
             if (pathInfo != null) {
                 String mimeType = webConfig.getMimeType(pathInfo);
-                if (mimeType != null) {
-                    response.setDefaultContentType(mimeType);
-                    response.setContentType(mimeType);
+                if(mimeType != null) {
+	                response.setDefaultContentType(mimeType);
+	                response.setContentType(mimeType);
                 }
             }
         }
-        WebletConfig webConfig = weblet.getWebletConfig();
+
+
         Set allowedResources = webConfig.getAllowedResources();
         if (allowedResources != null) {
             String filetype = StringUtils.getExtension(pathInfo);
