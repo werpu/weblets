@@ -49,8 +49,6 @@ import org.apache.commons.logging.LogFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-
-
 public class WebletContainerImpl extends WebletContainer {
     public WebletContainerImpl(
             ServletContext servletContext,
@@ -62,33 +60,22 @@ public class WebletContainerImpl extends WebletContainer {
         _webletURLFormat = webletURLFormat;
         _webletURLPattern = webletURLPattern;
         _webletContextPath = webletContextPath;
-
         checkWebletsContextPath();
-
-
-        try
-
-        {
+        try {
             Set configs = new HashSet();
             //  Enumeration e = getConfigEnumeration("weblets-config.xml"); /*lets find the root configs first*/
             Set urls = new HashSet();     //      urls.add(element);
-
             if (multipleConfigs) {
                 ConfigurationUtils.getValidConfigFiles("META-INF/", "weblets-config.xml", configs);
                 try {
-                	ConfigurationUtils.getValidConfigFiles("META-INF/", "MANIFEST.MF", configs);
+                    ConfigurationUtils.getValidConfigFiles("META-INF/", "MANIFEST.MF", configs);
                 } catch (NullPointerException ex) {
-                	Log log = LogFactory.getLog(this.getClass());
-                	log.info("MANIFEST.MF search failed for configurations, if you use Websphere, then you can safely ignore this please use a weblets-config.xml as entry point for your weblets configuration, please !");
+                    Log log = LogFactory.getLog(this.getClass());
+                    log.info("MANIFEST.MF search failed for configurations, if you use Websphere, then you can safely ignore this please use a weblets-config.xml as entry point for your weblets configuration, please !");
                 }
-
                 Iterator configNameIterator = configs.iterator();
-
                 // Defensive: Glassfish.v2.b25 produces duplicates in Enumeration
                 //            returned by loader.getResources()
-
-
-
                 while (configNameIterator.hasNext()) {
                     Enumeration theUrlEnum = ConfigurationUtils.getConfigEnumeration("META-INF/", (String) configNameIterator.next());
                     while (theUrlEnum.hasMoreElements()) {
@@ -96,8 +83,6 @@ public class WebletContainerImpl extends WebletContainer {
                         urls.add(resource);
                     }
                 }
-
-
             } else {
                 Enumeration theUrlEnum = ConfigurationUtils.getConfigEnumeration("META-INF/", "weblets-config.xml");
                 while (theUrlEnum.hasMoreElements()) {
@@ -105,15 +90,11 @@ public class WebletContainerImpl extends WebletContainer {
                     urls.add(resource);
                 }
             }
-
-
             Iterator urlIterator = urls.iterator();
             while (urlIterator.hasNext()) {
                 URL resource = (URL) urlIterator.next();
                 registerConfig(resource);
             }
-
-
             WebletContainer.setInstance(this);
         }
         catch (IOException e) {
@@ -121,13 +102,12 @@ public class WebletContainerImpl extends WebletContainer {
         }
     }
 
-
     private void checkWebletsContextPath() {
         if (_webletContextPath == null || _webletContextPath.trim().equals("")) {
             //the setup context path defaults to empty lets determine another one if possible
             Log log = LogFactory.getLog(WebletContainerImpl.class);
             log.warn("No net.java.dev.weblets.contextpath context-param has been set" +
-                    " this might cause problems in non jsf environments! ");
+                     " this might cause problems in non jsf environments! ");
         } else {
             if (_webletContextPath.endsWith("/"))
                 _webletContextPath = _webletContextPath.substring(0, _webletContextPath.length() - 1);
@@ -139,17 +119,18 @@ public class WebletContainerImpl extends WebletContainer {
     }
 
     public void destroy() {
-        Iterator i = _weblets.values().iterator();
-        while (i.hasNext()) {
-            Weblet weblet = (Weblet) i.next();
-            weblet.destroy();
+        if(_weblets != null && _weblets.values() != null) {
+            Iterator i = _weblets.values().iterator();
+            while (i != null && i.hasNext()) {
+                Weblet weblet = (Weblet) i.next();
+                weblet.destroy();
+            }
         }
         _weblets = null;
         _webletConfigs = null;
         _webletMappings = null;
         _webletContextPath = null;
     }
-
 
     public Pattern getPattern() {
         return _webletURLPattern;
@@ -171,7 +152,6 @@ public class WebletContainerImpl extends WebletContainer {
                 return new String[]{webletName, webletPath, pathInfo};
             }
         }
-
         return null;
     }
 
@@ -188,52 +168,45 @@ public class WebletContainerImpl extends WebletContainer {
             WebletRequest request,
             WebletResponse response) throws IOException, WebletException {
         Weblet weblet = getWeblet(request);
-
         String pathInfo = request.getPathInfo();
-        if (response.getDefaultContentType() == null) {
+        //enhanced security check
+        if (pathInfo != null && SandboxGuard.isJailBreak(pathInfo)) {
+            throw new WebletException("Security Exception, the " + pathInfo +
+                                      " breaks out of the resource jail, no resource is served!");
+        }
+        WebletConfig webConfig = weblet.getWebletConfig();
+        String mimeType = null;
 
-
-            //enhanced security check
-            if (pathInfo != null && SandboxGuard.isJailBreak(pathInfo)) {
-                throw new WebletException("Security Exception, the " + pathInfo +
-                        " breaks out of the resource jail, no resource is served!");
-            }
-
-            WebletConfig webConfig = weblet.getWebletConfig();
-            if (pathInfo != null) {
-                String mimeType = webConfig.getMimeType(pathInfo);
-                if(mimeType != null) {
-	                response.setDefaultContentType(mimeType);
-	                response.setContentType(mimeType);
-                }
-            }
+        if(!StringUtils.isBlank(pathInfo)) {
+           mimeType = webConfig.getMimeType(pathInfo);
         }
 
+        if(mimeType == null) {
+            mimeType = response.getDefaultContentType();
+        }
 
-        WebletConfig webConfig = weblet.getWebletConfig();
+        response.setContentType(mimeType);
+
+
         Set allowedResources = webConfig.getAllowedResources();
-
         if (allowedResources != null) {
-             String filetype = StringUtils.getExtension(pathInfo);
-             if (!allowedResources.contains(filetype.toLowerCase())) {
-                 throw new WebletException("Security Exception, the " + pathInfo +
-                         "  resource cannot be served!");
+            String filetype = StringUtils.getExtension(pathInfo);
+            if (!allowedResources.contains(filetype.toLowerCase())) {
+                throw new WebletException("Security Exception, the " + pathInfo +
+                                          "  resource cannot be served!");
                 /* not allowed no content delivered */
-             }
-         }
-
+            }
+        }
         weblet.service(request, response);
     }
 
     public Weblet getWeblet(WebletRequest request) {
         String webletName = request.getWebletName();
-
         return getWeblet(webletName);
     }
 
     public Weblet getWeblet(String webletName) {
         Weblet weblet = (Weblet) _weblets.get(webletName);
-
         if (weblet == null) {
             try {
                 WebletConfigImpl config = (WebletConfigImpl) _webletConfigs.get(webletName);
@@ -273,20 +246,16 @@ public class WebletContainerImpl extends WebletContainer {
         return weblet.serviceStream(request.getPathInfo(), mimetype);
     }
 
-
     public String getResourceUri(
             String webletName,
             String pathInfo) throws WebletException {
         WebletConfig config = (WebletConfig) _webletConfigs.get(webletName);
         if (config == null)
             throw new WebletException("Missing Weblet configuration for '" + webletName + "'");
-
         String webletPath = (String) _webletPaths.get(webletName);
         if (webletPath == null)
             throw new WebletException("Missing Weblet mapping for '" + webletName + "'");
-
         String webletVersion = config.getWebletVersion();
-
         // URL-syntax  /webletPath[$version]/pathInfo
         StringBuffer buffer = new StringBuffer();
         buffer.append(webletPath);
@@ -298,10 +267,8 @@ public class WebletContainerImpl extends WebletContainer {
             buffer.append(pathInfo);
         }
         String webletURL = buffer.toString();
-
         if (_webletURLFormat != null)
             webletURL = _webletURLFormat.format(new Object[]{webletURL});
-
         return webletURL;
     }
 
@@ -328,22 +295,21 @@ public class WebletContainerImpl extends WebletContainer {
                 digester.addFactoryCreate("weblets-config/weblet", WEBLET_CONFIG_FACTORY);
                 digester.addSetNext("weblets-config/weblet", "addWeblet", WebletConfigImpl.class.getName());
                 digester.addCallMethod("weblets-config/weblet/weblet-name",
-                        "setWebletName", 0);
+                                       "setWebletName", 0);
                 digester.addCallMethod("weblets-config/weblet/weblet-class",
-                        "setWebletClass", 0);
+                                       "setWebletClass", 0);
                 digester.addCallMethod("weblets-config/weblet/weblet-version",
-                        "setWebletVersion", 0);
+                                       "setWebletVersion", 0);
                 digester.addCallMethod("weblets-config/weblet/init-param",
-                        "addInitParam", 2);
+                                       "addInitParam", 2);
                 digester.addCallParam("weblets-config/weblet/init-param/param-name", 0);
                 digester.addCallParam("weblets-config/weblet/init-param/param-value", 1);
                 digester.addCallMethod("weblets-config/weblet/mime-mapping",
-                        "addMimeMapping", 2);
-
+                                       "addMimeMapping", 2);
                 digester.addCallParam("weblets-config/weblet/mime-mapping/extension", 0);
                 digester.addCallParam("weblets-config/weblet/mime-mapping/mime-type", 1);
                 digester.addCallMethod("weblets-config/weblet-mapping",
-                        "setWebletMapping", 2);
+                                       "setWebletMapping", 2);
                 digester.addCallParam("weblets-config/weblet-mapping/weblet-name", 0);
                 digester.addCallParam("weblets-config/weblet-mapping/url-pattern", 1);
                 digester.parse(in);
@@ -368,15 +334,12 @@ public class WebletContainerImpl extends WebletContainer {
             String webletName,
             String urlPattern) {
         WebletConfig webletConfig = (WebletConfig) _webletConfigs.get(webletName);
-
         if (webletConfig == null)
             throw new WebletException("Weblet configuration not found: " + webletName);
-
         Matcher matcher = _WEBLET_PATH_PATTERN.matcher(urlPattern);
         if (matcher.matches()) {
             String webletVersion = webletConfig.getWebletVersion();
             String webletPath = matcher.group(1);
-
             StringBuffer buffer = new StringBuffer();
             //we have to prepend some optional mapping to cover
             //the servlet case and some frameworks
@@ -392,7 +355,6 @@ public class WebletContainerImpl extends WebletContainer {
             }
             buffer.append("(/.*)?");
             ;
-
             _webletMappings.put(webletName, Pattern.compile(buffer.toString()));
             _webletPaths.put(webletName, webletPath);
         } else {
@@ -403,7 +365,6 @@ public class WebletContainerImpl extends WebletContainer {
     public Map getRegisteredWeblets() {
         return _weblets;
     }
-
 
     private Format _webletURLFormat;
     private String _webletContextPath;
@@ -435,7 +396,7 @@ public class WebletContainerImpl extends WebletContainer {
      * Returns the mimetype of a file for the underlying hosting container
      */
     public String getContainerMimeType(String pattern) {
-    	return _servletContext.getMimeType(pattern);
+        return _servletContext.getMimeType(pattern);
     }
 
     static private final Pattern _WEBLET_PATH_PATTERN =
