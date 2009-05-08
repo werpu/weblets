@@ -87,10 +87,7 @@ public class CopyStrategyImpl implements CopyStrategy {
                 //deepest level sort of
                 //we do not need to touch our writers that way 
 
-                if(e.getMessage().toLowerCase().indexOf("broken pipe") != -1) {
-                    return;
-                }
-                throw e;
+              
             }
         } finally {
             try {
