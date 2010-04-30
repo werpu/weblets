@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Myfaces Example Facelets</title>
+    <link rel="stylesheet" href="#{weblet.resource['weblets.demo']['/styles/weblets.css']}"></link>
+</h:head>
+
+<h:body>
+        <div class="header_bg"/>
+
+        <div class="content">
+
+
+            test for resource
+            <h:outputText value="#{weblet.resource['weblets.demo']['/welcome.js']}"/>
+            test for an empty resource
+            <h:outputText value="#{weblet.resource['weblets.demo']['']}"/>
+            <p>
+                test for url
+                <h:outputText value="#{weblet.url['weblets.demo']['/welcome.js']}"/>
+            </p>
+
+            <h:graphicImage id="yyy" value="#{weblet.resource['weblets.demo']['/img/icon_alert.gif']}"/>
+
+            <h:outputLink value='#{weblet.url[ "weblets.source"]["/jsfeltest.jsp"]}' target="_new">
+                <h:outputFormat value="[Get the page source]"/>
+            </h:outputLink>
+        </div>
+</h:body>
+
+</html>
