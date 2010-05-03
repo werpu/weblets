@@ -64,6 +64,10 @@ public class WebletsContextListenerImpl implements ServletContextListener {
 				try {
 					WebXmlParser parser = new WebXmlParser();
 					Digester digester = new Digester();
+                    ClassLoader loader = context.getClass().getClassLoader();
+                    digester.setClassLoader(loader);
+
+
 					digester.setValidating(false);
 					digester.setEntityResolver(DisconnectedEntityResolver.sharedInstance());
 					digester.push(parser);
