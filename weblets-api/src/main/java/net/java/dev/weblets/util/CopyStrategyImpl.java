@@ -1,6 +1,7 @@
 package net.java.dev.weblets.util;
 
 import java.io.*;
+import java.net.SocketException;
 
 /**
  * @author werpu
@@ -57,13 +58,36 @@ public class CopyStrategyImpl implements CopyStrategy {
         BufferedWriter bufOut = mapResponseWriter(out);
         try {
             String line = null;
-            while ((line = bufIn.readLine()) != null) {
-                bufOut.write(line);
-                bufOut.write("\n");
+            try {
+                while ((line = bufIn.readLine()) != null) {
+                    bufOut.write(line);
+                    bufOut.write("\n");
+                }
+
+            } catch(SocketException e) {
+                // This happens sometimes with Microsft Internet Explorer. It would
+                // appear (guess) that when javascript creates multiple dom nodes
+                // referring to the same remote resource then IE stupidly opens
+                // multiple sockets and requests that resource multiple times. But
+                // when the first request completes, it then realises its stupidity
+                // and forcibly closes all the other sockets. But here we are trying
+                // to service those requests, and so get a "broken pipe" failure
+                // on write. The only thing to do here is to silently ignore the issue,
+                // ie suppress the exception. Note that it is also possible for the
+                // above code to succeed (ie this exception clause is not run) but
+                // for a later flush to get the "broken pipe"; this is either due
+                // just to timing, or possibly IE is closing sockets after receiving
+                // a complete file for some types (gif?) rather than waiting for the
+                // server to close it.
+
+                //Note we fix it here, because this is the central core of the processing
+                //deepest level sort of
+                //we do not need to touch our writers that way 
+
+              
             }
         } finally {
-            bufIn.close();
-            bufOut.close();
+            closeBuffers(bufIn, bufOut);
         }
     }
 
@@ -74,13 +98,47 @@ public class CopyStrategyImpl implements CopyStrategy {
         int len = 0;
         int total = 0;
         try {
-            while ((len = bufIn.read(buffer)) > 0) {
-                bufOut.write(buffer, 0, len);
-                total += len;
+            try {
+                while ((len = bufIn.read(buffer)) > 0) {
+                    bufOut.write(buffer, 0, len);
+                    total += len;
+                }
+            } catch(SocketException e) {
+                // This happens sometimes with Microsft Internet Explorer. It would
+                // appear (guess) that when javascript creates multiple dom nodes
+                // referring to the same remote resource then IE stupidly opens
+                // multiple sockets and requests that resource multiple times. But
+                // when the first request completes, it then realises its stupidity
+                // and forcibly closes all the other sockets. But here we are trying
+                // to service those requests, and so get a "broken pipe" failure
+                // on write. The only thing to do here is to silently ignore the issue,
+                // ie suppress the exception. Note that it is also possible for the
+                // above code to succeed (ie this exception clause is not run) but
+                // for a later flush to get the "broken pipe"; this is either due
+                // just to timing, or possibly IE is closing sockets after receiving
+                // a complete file for some types (gif?) rather than waiting for the
+                // server to close it.
+
+                if(e.getMessage().toLowerCase().indexOf("broken pipe") != -1) {
+                    return;
+                }
+                throw e;
             }
         } finally {
+            closeBuffers(bufIn, bufOut);
+		}
+	}
+
+    private void closeBuffers(Closeable bufIn, Closeable bufOut) {
+        try {
             bufIn.close();
+        } catch (Exception e) {
+            //do nothing, there is a strange ie behavior which closes pipes upfront
+        }
+        try {
             bufOut.close();
+        } catch (Exception e) {
+            //do nothing, there is a strange ie behavior which closes pipes upfront
         }
     }
 }
