@@ -283,6 +283,13 @@ public class WebletContainerImpl extends WebletContainer {
         }
     }
 
+    /**
+     * registers the configuration file
+     * in its internal data structure
+     *
+     * 
+     * @param webletsConfig the weblets config to be registered
+     */
     public void registerConfig(
             URL webletsConfig) {
         try {
