@@ -28,11 +28,11 @@ abstract public class WebletContainer {
         _INSTANCES.put(loader, container);
     }
 
-    /* we store the valid classoader on a per thread base to bypass a performance leak */
-    static final int CLASSLOADER_CONTEXT = 0;
-    static final int CLASSLOADER_LOCAL = 1;
-    static final int CLASSLOADER_UNDEFINED = -1;
-    static int classloaderType = CLASSLOADER_UNDEFINED;    /* we do not keep the classloader only the type */
+	/* we store the valid classoader on a per thread base to bypass a performance leak */
+	static final int	CLASSLOADER_CONTEXT		= 0;
+	static final int	CLASSLOADER_LOCAL		= 1;
+	static final int	CLASSLOADER_UNDEFINED	= -1;
+	static int			classloaderType			= CLASSLOADER_UNDEFINED;	/* we do not keep the classloader only the type */
 
     /**
      * caching loader determination algorithm
@@ -61,35 +61,35 @@ abstract public class WebletContainer {
         }
     }
 
-    static public WebletContainer getInstance() throws WebletException {
-        ClassLoader loader = getLoader();
-        return (WebletContainer) _INSTANCES.get(loader);
-    }
+	static public WebletContainer getInstance() throws WebletException {
+		ClassLoader loader = getLoader();
+		return (WebletContainer) _INSTANCES.get(loader);
+	}
 
-    abstract public String getWebletContextPath();
+	abstract public String getWebletContextPath();
 
-    abstract public void setWebletContextPath(String contextPath);
+	abstract public void setWebletContextPath(String contextPath);
 
-    abstract public void service(WebletRequest request, WebletResponse response) throws IOException, WebletException;
+	abstract public void service(WebletRequest request, WebletResponse response) throws IOException, WebletException;
 
-    abstract public String getResourceUri(String webletName, String pathInfo) throws WebletException;
+	abstract public String getResourceUri(String webletName, String pathInfo) throws WebletException;
 
-    /**
-     * returns the mimetype of the underlying hosting container
-     *
-     * @param pattern
-     * @return
-     */
-    public abstract String getContainerMimeType(String pattern);
+	/**
+	 * returns the mimetype of the underlying hosting container
+	 * 
+	 * @param pattern
+	 * @return
+	 */
+	public abstract String getContainerMimeType(String pattern);
 
-    /**
-     * Method which returns the actual resource as input stream from a given weblet request
-     *
+	/**
+	 * Method which returns the actual resource as input stream from a given weblet request
+	 * 
      * @param request the current request
-     * @return an input stream on the resource
-     * @throws WebletException
-     */
-    abstract public InputStream getResourceStream(WebletRequest request, String mimetype) throws WebletException;
+	 * @return an input stream on the resource
+	 * @throws WebletException
+	 */
+	abstract public InputStream getResourceStream(WebletRequest request, String mimetype) throws WebletException;
 
-    static private final Map _INSTANCES = Collections.synchronizedMap(new HashMap());
+	static private final Map	_INSTANCES	= Collections.synchronizedMap(new HashMap());
 }

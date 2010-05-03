@@ -318,6 +318,9 @@ public class WebletContainerImpl extends WebletContainer {
                 Digester digester = new Digester();
                 digester.setClassLoader(getLoader());
                 digester.setValidating(false);
+                digester.setClassLoader(getLoader());
+                
+
                 digester.setEntityResolver(DisconnectedEntityResolver.sharedInstance());
                 digester.push(this);
                 digester.addFactoryCreate(Const.WEBLETS_CONFIG + Const.PAR_WEBLET, WEBLET_CONFIG_FACTORY);
