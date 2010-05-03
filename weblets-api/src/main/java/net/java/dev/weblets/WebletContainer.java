@@ -39,7 +39,7 @@ abstract public class WebletContainer {
      *
      * @return a valid classloader with access to our resources
      */
-    private static ClassLoader getLoader() {
+    public static ClassLoader getLoader() {
         /* once we are at a classloader we have to stay there! */
         if (classloaderType != CLASSLOADER_UNDEFINED) {
             switch (classloaderType) {

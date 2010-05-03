@@ -298,6 +298,7 @@ public class WebletContainerImpl extends WebletContainer {
             InputStream in = webletsConfig.openStream();
             try {
                 Digester digester = new Digester();
+                digester.setClassLoader(getLoader());
                 digester.setValidating(false);
                 digester.setEntityResolver(DisconnectedEntityResolver.sharedInstance());
                 digester.push(this);
