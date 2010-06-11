@@ -54,9 +54,6 @@ public class CopyStrategyImpl implements CopyStrategy {
     }
 
     protected void copyText(String webletName, Reader in, Writer out) throws IOException {
-        byte[] buffer = new byte[2048];
-        int len = 0;
-        int total = 0;
         BufferedReader bufIn = mapResponseReader(webletName, in);
         BufferedWriter bufOut = mapResponseWriter(out);
         try {
@@ -90,16 +87,7 @@ public class CopyStrategyImpl implements CopyStrategy {
               
             }
         } finally {
-            try {
-                bufIn.close();
-            } catch (Exception e) {
-                //do nothing, there is a strange ie behavior which closes pipes upfront
-            }
-            try {
-                bufOut.close();
-            } catch (Exception e) {
-                //do nothing, there is a strange ie behavior which closes pipes upfront
-            }
+            closeBuffers(bufIn, bufOut);
         }
     }
 
@@ -111,13 +99,10 @@ public class CopyStrategyImpl implements CopyStrategy {
         int total = 0;
         try {
             try {
-
                 while ((len = bufIn.read(buffer)) > 0) {
                     bufOut.write(buffer, 0, len);
                     total += len;
                 }
-                
-
             } catch(SocketException e) {
                 // This happens sometimes with Microsft Internet Explorer. It would
                 // appear (guess) that when javascript creates multiple dom nodes
@@ -140,16 +125,20 @@ public class CopyStrategyImpl implements CopyStrategy {
                 throw e;
             }
         } finally {
-            try {
-                bufIn.close();
-            } catch (Exception e) {
-                //do nothing, there is a strange ie behavior which closes pipes upfront
-            }
-            try {
-                bufOut.close();
-            } catch (Exception e) {
-                //do nothing, there is a strange ie behavior which closes pipes upfront
-            }    
+            closeBuffers(bufIn, bufOut);
 		}
 	}
+
+    private void closeBuffers(Closeable bufIn, Closeable bufOut) {
+        try {
+            bufIn.close();
+        } catch (Exception e) {
+            //do nothing, there is a strange ie behavior which closes pipes upfront
+        }
+        try {
+            bufOut.close();
+        } catch (Exception e) {
+            //do nothing, there is a strange ie behavior which closes pipes upfront
+        }
+    }
 }
