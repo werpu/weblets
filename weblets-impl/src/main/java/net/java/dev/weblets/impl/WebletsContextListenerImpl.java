@@ -232,7 +232,7 @@ public class WebletsContextListenerImpl implements ServletContextListener {
 		private String			_webletServletName;
 		private String			_webletPattern;
 		private String			_webletsContextPath;
-		private boolean			_multipleWebletConfigs	= true;
+		private boolean			_multipleWebletConfigs	= false;
 		/* optional servlet context params to enforce the weblt initialisation */
 		/**
 		 * first one allows an override of a given context path
