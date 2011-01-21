@@ -1,8 +1,10 @@
 package net.java.dev.weblets.packaged;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Collections;
@@ -107,13 +109,29 @@ public class WebletResourceloadingUtils {
 		if (url != null) {
 			URLConnection conn = url.openConnection();
 			long lastmodified = conn.getLastModified();
-			loadResourceFromStream(config, request, response, copyProvider, conn.getInputStream(), lastmodified);
+
+            //length not really working because the content length can be different
+            //due to the filter post processing we have to cache it in ram first
+            //or use the latest trunks weblets caching before serving
+            //which should go hand in hand with gzipping upfron
+            //determineContentLength(response, url);
+            loadResourceFromStream(config, request, response, copyProvider, conn.getInputStream(), lastmodified);
 		} else {
 			response.setStatus(WebletResponse.SC_NOT_FOUND);
 		}
 	}
 
-	/**
+
+    private void determineContentLength(WebletResponse response, URL url) {
+        try {
+            File f = new File(url.toURI());
+            response.setContentLength((long) f.length());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+    /**
 	 * sets initial response params upon the version state
 	 *
 	 * @param config
@@ -141,7 +159,7 @@ public class WebletResourceloadingUtils {
 			// some browsers like firefox despite
 			// having a future number pass a local date on refresh maybe we
 			// lock this out as well
-			response.setLastModified(timeout);
+			response.setLastModified(lastmodified);
 			// this should prevent requests entirely!
 			response.setContentVersion(webletVersion, timeout);
 		}
@@ -203,19 +221,43 @@ public class WebletResourceloadingUtils {
 			long resourceLastmodified) throws IOException {
 		if (in != null) {
 			// mime-type
-			long requestCacheState = request.getIfModifiedSince();
+
+            String webletVersion = config.getWebletVersion();
+		    boolean load = false;
+            if (isVersionedWeblet(webletVersion)) {
+                //we check if the resource last modified + timeout < currentTime, thats the only condition we cannot
+                //Serve a resource served, we have a strong
+                long requestCacheState = request.getIfModifiedSince();
+			    // the browser sends the utc timestamp
+			    requestCacheState = fixTimeValue(requestCacheState);
+                long currentTime = System.currentTimeMillis();
+			    // utc time mapping
+			    long currentUTCTime = currentTime - TimeZone.getDefault().getOffset(currentTime);
+                currentUTCTime = fixTimeValue(currentUTCTime);
+
+                load = (requestCacheState + getTimeout(config)) < currentUTCTime;
+            } else {
+                long requestCacheState = request.getIfModifiedSince();
+                resourceLastmodified = fixTimeValue(resourceLastmodified);
+                long utcResourceModifiedState = (resourceLastmodified - TimeZone.getDefault().getOffset(resourceLastmodified));
+                load = requestCacheState < utcResourceModifiedState;
+            }
+
+			//long requestCacheState = request.getIfModifiedSince();
 			// the browser sends the utc timestamp
-			requestCacheState = fixTimeValue(requestCacheState);
-			long resourceModifiedState = resourceLastmodified;
-			resourceModifiedState = fixTimeValue(resourceModifiedState);
-			boolean load = false;
-			long currentTime = System.currentTimeMillis();
+			//requestCacheState = fixTimeValue(requestCacheState);
+			//long resourceModifiedState = resourceLastmodified;
+			//resourceModifiedState = fixTimeValue(resourceModifiedState);
+			//boolean load = false;
+			//long currentTime = System.currentTimeMillis();
 			// utc time mapping
-			long currentUTCTime = currentTime - TimeZone.getDefault().getOffset(currentTime);
-			long utcResourceModifiedState = (resourceModifiedState - TimeZone.getDefault().getOffset(resourceModifiedState)) + getTimeout(config);
-			load = (requestCacheState < utcResourceModifiedState)
+			//long currentUTCTime = currentTime - TimeZone.getDefault().getOffset(currentTime);
+			//currentUTCTime = fixTimeValue(currentUTCTime);
+            //long utcResourceModifiedState = (resourceModifiedState - TimeZone.getDefault().getOffset(resourceModifiedState)); // + getTimeout(config);
+			//utcResourceModifiedState = fixTimeValue(utcResourceModifiedState);
+            //load = (requestCacheState < utcResourceModifiedState)
 			/*-1 or smaller value on reload pressed*/
-			|| requestCacheState < currentUTCTime;
+			//|| (requestCacheState + getTimeout(config)) < currentUTCTime;
 			/* cache control timeout reached we reload no matter what! */
 
 
@@ -223,12 +265,13 @@ public class WebletResourceloadingUtils {
 				prepareVersionedResponse(config, response, resourceLastmodified, System.currentTimeMillis() + getTimeout(config));
 				//response.setContentType(finalMimetype);
 
+
 				loadResourceFromStream(config, request, response, copyProvider, in);
 				// response.setStatus(200);
 			} else {
 				/* we have to set the timestamps as well here */
 				prepareVersionedResponse(config, response, resourceLastmodified, request.getIfModifiedSince()
-						+ TimeZone.getDefault().getOffset(request.getIfModifiedSince()));
+						 + getTimeout(config));
 				//response.setContentType(null); // Bogus "text/html" overriding
 				response.setStatus(WebletResponse.SC_NOT_MODIFIED);
 			}

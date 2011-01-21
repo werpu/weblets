@@ -8,7 +8,7 @@
         <artifactId>weblets</artifactId>
         <version>1.1.1-BETA-2</version>
     </parent>
-    
+
 
     <groupId>net.java.dev.weblets</groupId>
     <artifactId>weblets-demo</artifactId>
@@ -54,7 +54,6 @@
 
     </dependencies>
 
-    
 
     <profiles>
         <profile>
@@ -103,9 +102,41 @@
                 </dependency>
             </dependencies>
         </profile>
-        
+
     </profiles>
- 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>keytool-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <id>clean</id>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <id>genkey</id>
+                        <goals>
+                            <goal>genkey</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <keystore>${project.build.directory}/jetty-ssl.keystore</keystore>
+                    <dname>cn=booga</dname>
+                    <keypass>jetty6</keypass>
+                    <storepass>jetty6</storepass>
+                    <alias>jetty6</alias>
+                    <keyalg>RSA</keyalg>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 
 
     <properties>

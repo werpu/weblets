@@ -50,6 +50,8 @@ abstract public class WebletResponseBase implements WebletResponse {
 		}
 	}
 
+    abstract public void setContentLength(long length);
+
 	abstract protected void setContentTypeImpl(String contentType);
 
 	abstract protected void setLastModifiedImpl(long lastModified);

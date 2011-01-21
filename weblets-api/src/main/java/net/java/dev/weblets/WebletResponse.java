@@ -42,7 +42,7 @@ public interface WebletResponse {
 	 */
 	public void setContentType(String contentType);
 
-	public void setContentLength(int contentLength);
+	public void setContentLength(long contentLength);
 
 	public void setContentVersion(String contentVersion, long timeout);
 
