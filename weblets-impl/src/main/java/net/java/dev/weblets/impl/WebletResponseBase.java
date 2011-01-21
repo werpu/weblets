@@ -19,42 +19,44 @@ import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.util.VersioningUtils;
 
 abstract public class WebletResponseBase implements WebletResponse {
-    public WebletResponseBase(String contentTypeDefault) {
-        _contentTypeDefault = contentTypeDefault;
-    }
+	public WebletResponseBase(String contentTypeDefault) {
+		_contentTypeDefault = contentTypeDefault;
+	}
 
-    public final void setDefaultContentType(String contentTypeDefault) {
-        _contentTypeDefault = contentTypeDefault;
-    }
+	public final void setDefaultContentType(String contentTypeDefault) {
+		_contentTypeDefault = contentTypeDefault;
+	}
 
-    public final String getDefaultContentType() {
-        return _contentTypeDefault;
-    }
+	public final String getDefaultContentType() {
+		return _contentTypeDefault;
+	}
 
-    public final void setContentType(String contentType) {
-        if (contentType == null || "content/unknown".equals(contentType))
-            contentType = _contentTypeDefault;
-        setContentTypeImpl(contentType);
-    }
+	public final void setContentType(String contentType) {
+		if (contentType == null || "content/unknown".equals(contentType))
+			contentType = _contentTypeDefault;
+		setContentTypeImpl(contentType);
+	}
 
-    public final void setLastModified(long lastModified) {
-        // Detect unknown-last-modified
-        if (lastModified != 0) {
-            setLastModifiedImpl(lastModified);
-        }
-    }
+	public final void setLastModified(long lastModified) {
+		// Detect unknown-last-modified
+		if (lastModified != 0) {
+			setLastModifiedImpl(lastModified);
+		}
+	}
 
-    public final void setContentVersion(String contentVersion, long timeout) {
+	public final void setContentVersion(String contentVersion, long timeout) {
         if (VersioningUtils.isVersionedWeblet(contentVersion)) {
-            setContentVersionImpl(contentVersion, timeout);
-        }
-    }
+			setContentVersionImpl(contentVersion, timeout);
+		}
+	}
 
-    abstract protected void setContentTypeImpl(String contentType);
+    abstract public void setContentLength(long length);
 
-    abstract protected void setLastModifiedImpl(long lastModified);
+	abstract protected void setContentTypeImpl(String contentType);
 
-    abstract protected void setContentVersionImpl(String contentVersion, long timeout);
+	abstract protected void setLastModifiedImpl(long lastModified);
 
-    private String _contentTypeDefault;
+	abstract protected void setContentVersionImpl(String contentVersion, long timeout);
+
+	private String	_contentTypeDefault;
 }

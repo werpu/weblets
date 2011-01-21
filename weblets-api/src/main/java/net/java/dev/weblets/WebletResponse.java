@@ -19,34 +19,34 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public interface WebletResponse {
-    static public final int SC_ACCEPTED = 0;
-    static public final int SC_NOT_FOUND = 1;
-    static public final int SC_NOT_MODIFIED = 2;
-    public static final String HTTP_EXPIRES = "Expires";
-    public static final String HTTP_LAST_MODIFIED = "Last-Modified";
+	static public final int	SC_ACCEPTED		= 0;
+	static public final int	SC_NOT_FOUND	= 1;
+	static public final int	SC_NOT_MODIFIED	= 2;
+	public static final String	HTTP_EXPIRES	= "Expires";
+	public static final String	HTTP_LAST_MODIFIED	= "Last-Modified";
 
-    /**
-     * default content type set by the container according to the mime mapping
-     */
-    public void setDefaultContentType(String contentTypeDefault);
+	/**
+	 * default content type set by the container according to the mime mapping
+	 */
+	public void setDefaultContentType(String contentTypeDefault);
 
-    public String getDefaultContentType();
+	public String getDefaultContentType();
 
-    public void setLastModified(long lastModified);
+	public void setLastModified(long lastModified);
 
-    /**
-     * overridden content type which can be used to override the default one if set to unknown or null the default one is used instead this param is not touched
-     * by the container and can be used by the user who does his/her own weblet
-     *
-     * @param contentType
-     */
-    public void setContentType(String contentType);
+	/**
+	 * overridden content type which can be used to override the default one if set to unknown or null the default one is used instead this param is not touched
+	 * by the container and can be used by the user who does his/her own weblet
+	 * 
+	 * @param contentType
+	 */
+	public void setContentType(String contentType);
 
-    public void setContentLength(int contentLength);
+	public void setContentLength(long contentLength);
 
-    public void setContentVersion(String contentVersion, long timeout);
+	public void setContentVersion(String contentVersion, long timeout);
 
-    public OutputStream getOutputStream() throws IOException;
+	public OutputStream getOutputStream() throws IOException;
 
-    public void setStatus(int status);
+	public void setStatus(int status);
 }
