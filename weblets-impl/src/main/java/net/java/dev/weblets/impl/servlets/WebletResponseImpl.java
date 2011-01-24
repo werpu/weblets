@@ -103,7 +103,7 @@ public class WebletResponseImpl extends WebletResponseBase {
 			setDateHeader(WebletResponse.HTTP_EXPIRES, timeout);
              //Cache-Control: max-age=3600, must-revalidate
             //pre-check=9000,post-check=9000,
-            ((HttpServletResponse)_httpResponse).addHeader("Cache-Control", "pre-check=9000,post-check=9000,max-age="+((timeout-System.currentTimeMillis())/ 1000  ));
+            ((HttpServletResponse)_httpResponse).addHeader("Cache-Control", "max-age="+(((timeout-System.currentTimeMillis())/ 1000)  +",public" ));
 		} catch (IndexOutOfBoundsException ex) { // websphere 6.1 has a y2038k bug
 			_y2038_bug = true;
 			timeout = y2038k_fix(timeout);
