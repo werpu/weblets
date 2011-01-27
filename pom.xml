@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 
 	<name>Weblets</name>
-	<version>1.1.1-BETA-4</version>
+	<version>1.1.1</version>
 	<description>Weblets</description>
 	<url>http://weblets.dev.java.net</url>
 
@@ -114,9 +114,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:svn:http://weblets.dev.java.net/svn/weblets/tags/1.1.1-BETA-4</connection>
-		<developerConnection>scm:svn:https://weblets.dev.java.net/svn/weblets/tags/1.1.1-BETA-4</developerConnection>
-		<url>scm:svn:https://weblets.dev.java.net/svn/weblets/tags/1.1.1-BETA-4</url>
+		<connection>scm:svn:http://weblets.dev.java.net/svn/weblets/tags/1.1.1</connection>
+		<developerConnection>scm:svn:https://weblets.dev.java.net/svn/weblets/tags/1.1.1</developerConnection>
+		<url>scm:svn:https://weblets.dev.java.net/svn/weblets/tags/1.1.1</url>
 	</scm>
 
 	<modules>
@@ -180,6 +180,13 @@
 							<port>9090</port>
 							<maxIdleTime>60000</maxIdleTime>
 						</connector>
+                         <connector implementation="org.mortbay.jetty.security.SslSocketConnector">
+                            <port>8443</port>
+                            <maxIdleTime>60000</maxIdleTime>
+                            <keystore>${project.build.directory}/jetty-ssl.keystore</keystore>
+                            <password>jetty6</password>
+                            <keyPassword>jetty6</keyPassword>
+                        </connector>
 					</connectors>
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 				</configuration>

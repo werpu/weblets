@@ -16,6 +16,17 @@ body {
 	height: 60px;
 }
 
+.header_bg2 {
+    background-image: url("/weblets-demo/faces/weblets/demo$1.0.1/img/header_background.png");
+    background-repeat: no-repeat;
+}
+
+.header_bg3 {
+    background-image: url("/weblets-demo/faces/weblets/demo$1.0.1/img/header_background.png");
+    background-repeat: no-repeat;
+}
+
+
 .content {
 	margin-top: 80px;
 	margin-left:10px;
