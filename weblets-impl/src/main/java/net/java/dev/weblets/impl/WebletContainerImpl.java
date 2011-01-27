@@ -175,7 +175,7 @@ public class WebletContainerImpl extends WebletContainer {
             throw new WebletException("Error weblet for: " + request.getWebletName() + ":" + request.getPathInfo() + " could not be found" +
                                       " please check either your configuration or your request cause! ");
         }
-         Weblet weblet = getWeblet(request);
+
         String pathInfo = request.getPathInfo();
         //enhanced security check
         if (pathInfo != null && SandboxGuard.isJailBreak(pathInfo)) {
@@ -198,18 +198,16 @@ public class WebletContainerImpl extends WebletContainer {
 
         Set allowedResources = webConfig.getAllowedResources();
 
-            WebletConfig webConfig = weblet.getWebletConfig();
-            if (pathInfo != null) {
-                String mimeType = webConfig.getMimeType(pathInfo);
+
+        if (pathInfo != null) {
+                mimeType = webConfig.getMimeType(pathInfo);
                 if(mimeType != null) {
 	                response.setDefaultContentType(mimeType);
 	                response.setContentType(mimeType);
                 }
-            }
+
         }
 
-
-        Set allowedResources = webConfig.getAllowedResources();
         if (allowedResources != null) {
             String filetype = StringUtils.getExtension(pathInfo);
             if (!allowedResources.contains(filetype.toLowerCase())) {

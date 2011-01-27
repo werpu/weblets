@@ -93,20 +93,26 @@ public class VersioningUtils {
      * @return true if a reload has to be done false if not
      */
     public boolean hasTobeLoaded(WebletConfig config, WebletRequest request, long resourceLastmodified, IResourceloadingUtils resourceloadingUtils) {
-        long requestCacheState = request.getIfModifiedSince();
-        // the browser sends the utc timestamp
-        requestCacheState = fixTimeValue(requestCacheState);
-        long resourceModifiedState = resourceLastmodified;
-        resourceModifiedState = fixTimeValue(resourceModifiedState);
         boolean load = false;
-        long currentTime = System.currentTimeMillis();
-        // utc time mapping
-        long currentUTCTime = currentTime - TimeZone.getDefault().getOffset(currentTime);
-        long utcResourceModifiedState = (resourceModifiedState - TimeZone.getDefault().getOffset(resourceModifiedState)) + getTimeout(config, resourceloadingUtils);
-        load = (requestCacheState < utcResourceModifiedState)
-               /*-1 or smaller value on reload pressed*/
-               || requestCacheState < currentUTCTime;
-        /* cache control timeout reached we reload no matter what! */
+         String webletVersion = config.getWebletVersion();
+        if (isVersionedWeblet(webletVersion)) {
+            //we check if the resource last modified + timeout < currentTime, thats the only condition we cannot
+            //Serve a resource served, we have a strong
+            long requestCacheState = request.getIfModifiedSince();
+            // the browser sends the utc timestamp
+            requestCacheState = fixTimeValue(requestCacheState);
+            long currentTime = System.currentTimeMillis();
+            // utc time mapping
+            long currentUTCTime = currentTime - TimeZone.getDefault().getOffset(currentTime);
+            currentUTCTime = fixTimeValue(currentUTCTime);
+
+            load = (requestCacheState + getTimeout(config, resourceloadingUtils)) < currentUTCTime;
+        } else {
+            long requestCacheState = request.getIfModifiedSince();
+            resourceLastmodified = fixTimeValue(resourceLastmodified);
+            long utcResourceModifiedState = (resourceLastmodified - TimeZone.getDefault().getOffset(resourceLastmodified));
+            load = requestCacheState < utcResourceModifiedState;
+        }
         return load;
     }
 }
