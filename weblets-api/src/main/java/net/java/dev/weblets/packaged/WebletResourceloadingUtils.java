@@ -234,8 +234,8 @@ public class WebletResourceloadingUtils {
 			    // utc time mapping
 			    long currentUTCTime = currentTime - TimeZone.getDefault().getOffset(currentTime);
                 currentUTCTime = fixTimeValue(currentUTCTime);
-
-                load = (requestCacheState + getTimeout(config)) < currentUTCTime;
+                //a request cache state of -1 means no resurce loaded so we have to load under any condition
+                load = requestCacheState == -1 || (requestCacheState + getTimeout(config)) < currentUTCTime;
             } else {
                 long requestCacheState = request.getIfModifiedSince();
                 resourceLastmodified = fixTimeValue(resourceLastmodified);

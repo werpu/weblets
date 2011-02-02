@@ -122,6 +122,7 @@
 	<modules>
 		<module>weblets-api</module>
 		<module>weblets-impl</module>
+        <module>weblets-bundle</module>
 		<module>weblets-exampleweblet</module>
 		<module>weblets-demo</module>
 	</modules>

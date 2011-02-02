@@ -21,11 +21,13 @@
 
 
     <dependencies>
+
         <dependency>
             <groupId>net.java.dev.weblets</groupId>
             <artifactId>weblets-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+
 
         <dependency>
             <groupId>net.java.dev.weblets</groupId>
@@ -39,6 +41,13 @@
             <version>${project.version}</version>
         </dependency>
 
+     <!--
+        <dependency>
+            <groupId>net.java.dev.weblets</groupId>
+            <artifactId>weblets-bundle</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+      -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
