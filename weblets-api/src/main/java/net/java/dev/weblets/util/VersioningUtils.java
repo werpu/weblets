@@ -106,7 +106,7 @@ public class VersioningUtils {
             long currentUTCTime = currentTime - TimeZone.getDefault().getOffset(currentTime);
             currentUTCTime = fixTimeValue(currentUTCTime);
 
-            load = requestCacheState != -1 && (requestCacheState + getTimeout(config, resourceloadingUtils)) < currentUTCTime;
+            load =  requestCacheState == -1 || (requestCacheState + getTimeout(config, resourceloadingUtils)) < currentUTCTime;
         } else {
             long requestCacheState = request.getIfModifiedSince();
             resourceLastmodified = fixTimeValue(resourceLastmodified);
