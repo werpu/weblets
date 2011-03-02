@@ -4,7 +4,7 @@
   <parent>
     <groupId>net.java.dev.weblets</groupId>
     <artifactId>weblets</artifactId>
-    <version>1.1.3-SNAPSHOT</version>
+    <version>1.1.2</version>
   </parent>
 
   <groupId>net.java.dev.weblets</groupId>
@@ -12,7 +12,7 @@
   <packaging>jar</packaging>
 
   <name>Weblets Bundle</name>
-  <version>1.1.3-SNAPSHOT</version>
+  <version>1.1.2</version>
   <description>Weblets API</description>
   <url>http://weblets.dev.java.net</url>
 
@@ -20,12 +20,12 @@
       <dependency>
           <groupId>net.java.dev.weblets</groupId>
           <artifactId>weblets-api</artifactId>
-           <version>1.1.3-SNAPSHOT</version>
+           <version>1.1.2</version>
       </dependency>
       <dependency>
           <groupId>net.java.dev.weblets</groupId>
           <artifactId>weblets-impl</artifactId>
-           <version>1.1.3-SNAPSHOT</version>
+           <version>1.1.2</version>
       </dependency>
   </dependencies>
 
