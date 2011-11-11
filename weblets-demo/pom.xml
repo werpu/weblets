@@ -6,17 +6,15 @@
         <groupId>net.java.dev.weblets</groupId>
         <artifactId>weblets</artifactId>
         <version>1.2-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>net.java.dev.weblets</groupId>
     <artifactId>weblets-demo</artifactId>
     <packaging>war</packaging>
 
     <name>Weblets Demo</name>
-    <version>1.2-SNAPSHOT</version>
     <description>Weblets Demo</description>
     <url>http://weblets.dev.java.net</url>
-
 
     <dependencies>
         <dependency>
@@ -36,6 +34,7 @@
             <artifactId>weblets-exampleweblet</artifactId>
             <version>1.2-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.myfaces.core</groupId>
             <artifactId>myfaces-api</artifactId>
@@ -47,6 +46,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>org.apache.myfaces.core</groupId>
             <artifactId>myfaces-impl</artifactId>
@@ -65,9 +65,7 @@
             <version>2.3</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
-
 
     <properties>
         <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>

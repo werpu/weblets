@@ -33,7 +33,6 @@
 		</repository>
 	</repositories>
 
-
 	<mailingLists>
 		<mailingList>
 			<name>Weblets User List</name>
@@ -126,7 +125,6 @@
 		<module>weblets-demo</module>
 	</modules>
 
-
 	<!--
 		Added dependencies to have
 		transitive dependency resolution
@@ -139,11 +137,11 @@
 				<artifactId>commons-digester</artifactId>
 				<version>[1.5,)</version>
 			</dependency>
+
 			<dependency>
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
 				<version>[1.1.1,)</version>
-
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -153,6 +151,7 @@
 			<groupId>commons-digester</groupId>
 			<artifactId>commons-digester</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
@@ -160,7 +159,6 @@
 	</dependencies>
 
 	<build>
-
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -184,7 +182,6 @@
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
@@ -192,10 +189,6 @@
 					<tagBase>https://weblets.dev.java.net/svn/weblets/tags</tagBase>
 				</configuration>
 			</plugin>
-
-
-
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -222,10 +215,7 @@
 						<descriptor>src/main/assembly/dep.xml</descriptor>
 					</descriptors>
 				</configuration>
-
 			</plugin>
-
-
 		</plugins>
 		<extensions>
 			<extension>
@@ -234,6 +224,6 @@
 				<version>1.9</version>
 			</extension>
 		</extensions>
-
 	</build>
+
 </project>
