@@ -5,14 +5,13 @@
 		<groupId>net.java.dev.weblets</groupId>
 		<artifactId>weblets</artifactId>
 		<version>1.2-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<groupId>net.java.dev.weblets</groupId>
 	<artifactId>weblets-exampleweblet</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Weblets Example Weblet</name>
-	<version>1.2-SNAPSHOT</version>
 	<description>Weblets API</description>
 	<url>http://weblets.dev.java.net</url>
 

@@ -6,14 +6,13 @@
         <groupId>net.java.dev.weblets</groupId>
         <artifactId>weblets</artifactId>
         <version>1.2-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>net.java.dev.weblets</groupId>
     <artifactId>weblets-api</artifactId>
     <packaging>jar</packaging>
 
     <name>Weblets API</name>
-    <version>1.2-SNAPSHOT</version>
     <description>Weblets API</description>
     <url>http://weblets.dev.java.net</url>
 
@@ -24,6 +23,7 @@
             <version>2.3</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.myfaces.core</groupId>
             <artifactId>myfaces-api</artifactId>
