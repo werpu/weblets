@@ -1,0 +1,146 @@
+<html>
+  <head>
+    <title>Weblets - Weblets Reporting Support</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  </head>
+  <body>
+    <div class="app" >
+      <div class="section"><h2>Introduction</h2>
+<p>Reporting is a general problem within the domain of web applications. Usually three Methods of reporting are applied within a web application.</p>
+<ol type="1"><li>On demand reporting, reports are generated on demand within a request.</li>
+<li>In Server Reporting, reports are generated within a single server but may be generated asynchronously within a separated reporting task.</li>
+<li>Stand alone reporting server. The reports are generated within a separated reporting server, which runs in its own process space!</li>
+</ol>
+<p>All of the above mentioned methods can be covered by <tt>Weblets</tt>
+ via separate access methods!</p>
+<div class="section"><h3>On Demand Reporting</h3>
+<p>The easiest method, basically an on demand report, is generated on the fly within a single request.</p>
+<img src="../images/weblets-reporting-1.png" alt="<i>Figure 1.: On Demand Reporting</i>
+" /><p>As we can see in <tt>Figure 1</tt>
+ <tt>Weblets</tt>
+ supports this reporting case with its own frontend apis. <tt>Weblets</tt>
+ always serves a valid URL String to the resource, which then can be processed by the standard java URL api of Java for further processing.</p>
+<p>The following picture displays the execution flow for this reporting case:</p>
+<img src="../images/weblets-reporting-2.png" alt="<i>Figure 2. On Demand Reporting Workflow</i>
+" /><p>As displayed, only the calls to the frontend API are utilized. The other parts are pure Java calls!! To enable the reporting capabilities in this case the <tt>WebletUtils</tt>
+ class can be used with its helper methods.</p>
+<div class="source"><pre>
+        WebletUtils.getResource(&lt;webletname&gt;, &lt;resource&gt;)
+        WebletUtils.getURL(&lt;webletname&gt;, &lt;resource&gt;)
+</pre>
+</div>
+<p>See also <a href="./usagejava.html"> Users Documentation: Servlet Weblets Usage Guide </a>
+ for further descriptions.</p>
+</div>
+<div class="section"><h3>In Server Reporting</h3>
+<div class="section"><h4>Introduction</h4>
+<p><b>In server reporting</b>
+ is a common reporting case. Longer running reports are triggered and executed within the same process space which also hosts the running web application. This is very common in small to medium size web applications, delivering reports which take longer, than tolerable for a single user request. </p>
+<p>Also asynchronously periodically generated reports (like static pages of a CMS system or downloadable monthly PDF reports) are usecases for this reporting type. Often it is not needed to run a separate reporting server or running one one would be overkill for the web application installation.</p>
+<p>As of <tt>Weblets 1.1</tt>
+ support for in server reporting has been added. Currently this feature only works with <tt>Packaged Weblets</tt>
+. Additional Weblet implementations might be enabled for this feature in future revisions!</p>
+<img src="../images/2-weblets-reporting-3.png" alt="<i>Figure 3. In Server Reporting</i>
+" /></div>
+<div class="section"><h4>Problem and Solution</h4>
+<p>This kind of reporting causes one major problem: The reports run most of the times asynchronously, hence there is no servlet API available, although the container itself serves the servlet API!</p>
+<p><tt>Weblets</tt>
+ adds support via the addition of a <tt>serviceStream</tt>
+ method on the Weblet api level. Additionally on the copy provider level the input chain creation method <tt>wrapInputStream</tt>
+ is provided.</p>
+<p><tt>Note if you do not program your own Weblets, only the serviceStream method must be a concern to you.</tt>
+</p>
+<p>(See <a href="./programmingweblets.html"> Programmers Documentation: Programming Weblets </a>
+ for further reference on both API calls)</p>
+<p>As we said before only the <tt>serviceStream </tt>
+method has to be applied internally by the user trying to trigger weblets over asynchronous reporting calls. However, <tt>Weblets</tt>
+ shields the user from the proper application of the entire internal call chain. As usual, a helper method defined in the <tt>WebletUtils</tt>
+ can be called to obtain the proper behavior. </p>
+<p>Following code example displays how to call apply the Weblets API to asynchronous reporting calls:</p>
+<div class="source"><pre>
+    InputStream istr = WebletUtils.getResourceAsStream(&lt;weblet name&gt;, &lt;resource path&gt;, mimetype);
+</pre>
+</div>
+<p><i>Code 1: Resource Streaming via weblets</i>
+</p>
+<p>Note that in <tt>Weblets 1.1</tt>
+ the mime types still have to be determined manually for the reporting case! This limitation might be removed for later versions!</p>
+<p>The advantage is, you can get a stream which points to the post processed resource and you can do the processing in your report like you would do with any other datasource. The call can be done outside of a regular request it is not dependent on an actual request being present. However <tt>Weblets</tt>
+ itself must be preinitialized (aka. being started within a web container!)</p>
+</div>
+</div>
+<div class="section"><h3>Reporting Server</h3>
+<div class="section"><h4>Introduction</h4>
+<p>A dedicated reporting server is a very common use case for big installations or cluster systems. The idea behind it is to outsource the reporting to a dedicated installation only doing reporting. Advantages of such systems are:</p>
+<ul><li>Reporting gets its own process space or even a physical machine and cannot compromise the other subsystems</li>
+<li>the processor load is given fully to the web application in case of dedicated physical reporting servers.<img src="../images/2-weblets-reporting-4.png" alt="<i>Figure 4: Dedicated Reporting Server</i>
+" /></li>
+</ul>
+</div>
+<div class="section"><h4>Problem and solution</h4>
+<p>Admittably currently <tt>Weblets</tt>
+ support for this usecase is not very extensive. There are no dedicated helper classes which make things easier for us.</p>
+<p>But, since <tt>Weblets 1.0</tt>
+ there haven been several constructs in place aiding in the integration of this reporting case, although probably adjustments on the build level are required!</p>
+<div class="section"><h5>Solution 1, calling the generated URLs directly.</h5>
+<p>This is arguably the worst solution which can be applied to the above mentioned problem. Most modern reporting engines have neutral <tt>datasource</tt>
+ constructs which serve data from any given source. By utilizing those APIs we can hook into weblets. The probably easiest way is simply to handcode the resource URLs for the resources hosted on the remote server into our datasource.</p>
+<p>This method can be used but is error prone. Every version change of your resource hosting source needs readjustments on the reporting server part! But this solution is the only viable one, if you cannot alter the web configuration of your reporting server, or if your reporting server does not run within a web container!</p>
+</div>
+<div class="section"><h5>Solution 2, utilizing the URL Weblet and dual packaging!</h5>
+<p>This solution works, if your reporting server runs within the scope of a dedicated web application and you have write access to the configuration!</p>
+<p>To overcome the versioning problem we can use the URL Weblet which has been introduced in <tt>Weblets 1.0</tt>
+ as proxying mechanism to our resources. This would overcome the problem of code adjustments. If the source changes its versioning and would push the problem to one central location, which then can be handled via build processes!</p>
+<p>What does the URL Weblet do. To sum it up shortly, it is a proxy mechanism which allows to utilize the <tt>Weblets</tt>
+ frontend API to gather access to remotely hosted resources. For the application programmer utilizing this Weblet, it looks exactly like a local one, only the generated URL patterns redirect to remotely hosted resources!</p>
+<p>The advantage of this method is, resources can be outsourced to a dedicated resource serving server, without having to change a single line of code.</p>
+<p>(See also <a href="./packingweblets.html"> Users Documentation: Weblets Packaging Guide </a>
+ for further documentation)</p>
+<p>So how does this aid in our problem. Very simple we can use this weblet to point towards anther server delivering our resources. We then can use our frontend APIs to gain access to the correct resources and then use, the IO and URL apis from java to get a proper input stream on the resource!</p>
+<p>By application of this solution we have pushed the entire configuration aspects down to one single point of configuration which theoretically could be handled by a centralized build process!</p>
+<p>The resource post processing done by <tt>Weblets</tt>
+ can either be handled by the resource server itself (if it utilizes <tt>Weblets</tt>
+ for its reporting) or by the URL Weblet proxing into the reporting server!</p>
+</div>
+<div class="section"><h5>Synopsis of both solutions</h5>
+<p>As we can see neither solution to this problem is ideal, however solution 2 is recommendable over the direct url generation solution. If you can gain access to the web configuration and can add <tt>Weblets</tt>
+ to your reporting server configuration, <b>use the proxying solution</b>
+!</p>
+<hr />
+</div>
+</div>
+</div>
+<div class="section"><h3>Contents</h3>
+<ol type="1"><li><a href="./index.html"> Users documentation: Index </a>
+</li>
+<li><a href="./whatsnew.html"> What is new in this release </a>
+</li>
+<li><a href="./gettingstarted.html"> Users documentation: Getting started </a>
+</li>
+<li><a href="./setup.html"> Users documentation: Setup guide </a>
+</li>
+<li><a href="./generalapi.html"> Users documentation: Introduction to the api patterns </a>
+</li>
+<li><a href="./usagejsp.html"> Users documentation: JSP Weblets usage guide </a>
+</li>
+<li><a href="./usagejava.html"> Users documentation: Servlet Weblets usage guide </a>
+</li>
+<li><a href="./usagejsf.html"> Users documentation: JSF Weblets usage guide </a>
+</li>
+<li><a href="./usageresources.html"> Users documentation: Resources Weblets usage guide </a>
+</li>
+<li><a href="./packingweblets.html"> Users documentation: Weblets packaging guide </a>
+</li>
+<li><a href="./reporting.html"> Users documentation: Weblets reporting guide </a>
+</li>
+<li><a href="./programmingweblets.html"> Developers documentation: Programming Weblets </a>
+</li>
+<li><a href="./faq.html"> Users documentation: Weblets general FAQ </a>
+</li>
+</ol>
+</div>
+</div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,186 @@
+<html>
+  <head>
+    <title>Weblets - What is new in Weblets 1.1</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  </head>
+  <body>
+    <div class="app" >
+      <div class="section"><h2>Overview</h2>
+<p>This chapter should give a general overview of what is new in Weblets 1.1.</p>
+<p>Despite its minor increase in the version number Weblets 1.1 provides a significant improvement over Weblets 1.0. While there is no huge new feature several enhancements and a lot of small features have been added to the Weblets 1.0 core.</p>
+<p>The features can be divided into following areas.</p>
+<ol type="1"><li>General API for programming your own Weblets</li>
+<li>General reporting API for in server reporting instances</li>
+<li>Configurable cache timeouts for better browser cache control</li>
+<li>Expanded web application hosted weblets</li>
+<li>Improved mime type handling, mime overrides</li>
+<li>Documentation updates and better documentation diagrams</li>
+<li>WAS 6.1 compatibility</li>
+<li>Multiple configuration files per Weblet</li>
+<li>Optional resource whitelists and improved sandboxing of resources</li>
+<li>Enabling of transitive dependencies in the maven build</li>
+<li>Bugfixes</li>
+</ol>
+<div class="section"><h3>Short Overview Of Each Feature</h3>
+<div class="section"><h4>General API for programming your own Weblets</h4>
+<p><tt>Weblets</tt>
+ 1.1 provides a stable api to build your own Weblets upon. see <a href="./programmingweblets.html"> Developers Documentation: Programming Weblets </a>
+ for further reference!</p>
+</div>
+<div class="section"><h4>General reporting API for in server reporting instances</h4>
+<p><tt>Weblets</tt>
+ 1.1 provides a stable api for in server reporting. Also documentation has been added for in server and external reporting usecases. See <a href="./reporting.html"> Weblets Reporting Guide </a>
+ for further documentation on this new feature!</p>
+</div>
+<div class="section"><h4>Configurable cache timeouts for better browser cache control</h4>
+<p>Weblets 1.0 only had a fixed cache timeout in a far future date (2048). Sometimes it is desirable to have a periodical timeout for resources which for instance change on a daily base (date displaying images, or newspaper reports).</p>
+<p>Weblets now has added the feature of optional cache timeout periods. With this feature it is possible to periodically renew the browser cache without altering the weblets version number or doing a server reboot!</p>
+<div class="source"><pre>    &lt;init-param&gt;
+           &lt;param-name&gt;cachecontrol-timeout&lt;/param-name&gt;
+           &lt;param-value&gt; &lt;&lt;TIMEOUT_INTERVAL&gt;&gt; &lt;/param-value&gt;
+    &lt;/init-param&gt;</pre>
+</div>
+<p>Allows you to set a periodical timeout interval with <b>TIMEOUT_INTERVAL</b>
+ being the interval in miliseconds.</p>
+<p>See <a href="./packingweblets.html"> Weblets Packaging Guide </a>
+ for additional information on this new feature!</p>
+</div>
+<div class="section"><h4>Expanded Web Application Hosted Weblets</h4>
+<p><tt>Weblets</tt>
+ 1.0 only had the possibility to host resources within your classpath. It was only possible to host <tt>Weblets</tt>
+ related resources within a jar or within your WEB-INF/classes directory!</p>
+<p><tt>Weblets</tt>
+ 1.1 now enhances this with a very common usecase. <tt>expanded application hosted resources</tt>
+. This means you can put any resource hosted within your local web application under <tt>Weblet</tt>
+ control.</p>
+<p>For instance if your application is hosted under <tt>/myapplication</tt>
+ and your your resource under <tt>/myapplication/images/myimage.png</tt>
+ it until now was not possible to put this resource under Weblets control, unless you were using the <tt>Proxying Weblet</tt>
+ which slowed things down!</p>
+<p><tt>Weblets</tt>
+ 1.1 now has its own <tt>Weblet</tt>
+ to handle exactly this case.</p>
+<p>By using +--------------------------------- <i>weblet</i>
+ <i>weblet-name</i>
+weblets.webapp<i>/weblet-name</i>
+ <i>weblet-class</i>
+net.java.dev.weblets.packaged.WebappWeblet<i>/weblet-class</i>
+ <i>/weblet</i>
+ +--------------------------------- you now have the possibility to serve exactly those kind of resources in a performant manner!</p>
+<p>See <a href="./packingweblets.html"> Weblets Packaging Guide </a>
+ for more information regarding <tt>Web Application Weblets</tt>
+!</p>
+</div>
+<div class="section"><h4>Improved Mime Type Handling, Mime Overrides</h4>
+<p><tt>Weblets</tt>
+ 1.1 finally allows to set your on per bundle mime types and also allows to override mime types delivered by the server with your own settings. This can be helpful in scenarii where the server does not have default mime types or where you need to provide a different mimetype for certain resources.</p>
+<p>You can enable this feature like in following example:</p>
+<div class="source"><pre>        &lt;weblet&gt;
+                &lt;weblet-name&gt; &lt;&lt;Weblet Name&gt;&gt; &lt;/weblet-name&gt;
+                &lt;weblet-class&gt; &lt;&lt;Weblet class&gt;&gt; &lt;/weblet-class&gt;
+                &lt;!-- dedicated mime mapping override --&gt;
+                &lt;mime-mapping&gt;
+                        &lt;extension&gt; &lt;&lt;extension&gt;&gt; &lt;/extension&gt;
+                        &lt;mime-type&gt; &lt;&lt;mimetype&gt;&gt; &lt;/mime-type&gt;
+                &lt;/mime-mapping&gt;
+                &lt;mime-mapping&gt;
+                        &lt;extension&gt;png&lt;/extension&gt;
+                        &lt;mime-type&gt;image/png&lt;/mime-type&gt;
+                &lt;/mime-mapping&gt;
+        &lt;/weblet&gt;
+</pre>
+</div>
+<p>You can add optional <tt>mime-mapping</tt>
+ entries to your weblet configuration, which do the override for the filetypes defined! See also <a href="./packingweblets.html"> Weblets Packaging Guide </a>
+ for more additional information!</p>
+</div>
+<div class="section"><h4>Documentation updates and better documentation diagrams</h4>
+<p>There are documentation updates all over the place. Most of the updated information also can be found in this document!</p>
+<p>Also the diagrams which to say it mildly were not very appealing, were replaced by better looking, more precise ones!</p>
+</div>
+<div class="section"><h4>WAS 6.1 compatibility</h4>
+<p>Several bugs in Websphere prevented Weblets to run properly. All of those issues have been worked around in Weblets 6.1. Weblets 1.1 should now run properly in WAS 6.1 with some limitations. (The cache control timeout for instance is only working until the year 2038 due to a bug in one of the WAS 6.1 core classes triggering a year 2038 bug! Also multiple configuration files do only work if you use one single weblets-config.xml as identifier file!)</p>
+<p>Note all of those problems might be fixed in WAS 7.0 and IBM has been contacted and notified of the problems, they might be fixed in a bug fix update to WAS 6.1. But none of those shortcomings prevents the usage of Weblets on WAS 6.1 anymore!</p>
+</div>
+<div class="section"><h4>Multiple Configuration Files per Weblet</h4>
+<p>Due to user demand <tt>Weblets</tt>
+ 1.1 has added the possibility to keep different <tt>Weblets</tt>
+ within one single bundle in several configuration files!</p>
+<p>The <tt>Weblets</tt>
+ configuration files themselves are the same as with a one file configuration. Certain naming conventions, however have to be applied to enable this possibility.</p>
+<ul><li>There must be at least one META-INF/<tt>weblets-config.xml</tt>
+ or META-INF/Manifest.mf this marks the package location of all other <tt>Weblets</tt>
+ configuration files.</li>
+<li>The naming of the configuration files must follow the regexp pattern META-INF\/.*weblets-config.*\.xml IE: <tt>META-INF/1-weblets-config-1.xml</tt>
+ is a valid name <tt>META-INF/myconfig.xml</tt>
+ however is not!<p><i>Note to WAS 6.1 users</i>
+: A bug in WAS prevents the usage of the <tt>Manifest.mf file</tt>
+ as location point for your weblets configuration. Please use the <tt>weblets-config.xml</tt>
+ only as location point for additional configuration files in this case!</p>
+</li>
+</ul>
+</div>
+<div class="section"><h4>Optional Resource Whitelists and Improved Sandboxing of Resources</h4>
+<p>Weblets 1.1 adds improved security. While the sandboxing of resources has been tightened to allow web application hosted resources also!</p>
+<p>The probably most important new security feature now is: <tt>Resource Whitelists</tt>
+! Resource Whitelists is a mechanism to allow the serving of resources only for certain filetypes given in a resource whitelist! This mechanism works on per bundle base:</p>
+<div class="source"><pre>        &lt;init-param&gt;
+                &lt;param-name&gt;allowedResources&lt;/param-name&gt;
+                &lt;param-value&gt; jpg, png &lt;/param-value&gt;
+        &lt;/init-param&gt;</pre>
+</div>
+<p>In this example the resources served by the bundle are reduced to jpg and png files only. Every other access results in a weblets internal security exception!</p>
+<p>See <a href="./packingweblets.html"> Weblets Packaging Guide </a>
+ for and <a href="./programmingweblets.html"> Weblets Programming Guide </a>
+ for additional information on resource whitelists and the <tt>Weblets</tt>
+ internal sandboxing mechanisms!</p>
+</div>
+<div class="section"><h4>Enabling of Transitive Dependencies in the Maven Build</h4>
+<p>This new feature only is important for the <tt>Maven</tt>
+ 2.0 users integrating <tt>Weblets</tt>
+ by the maven internal mechanisms. Up until now it was needed to add the dependencies used by <tt>Weblets</tt>
+ manually within the dependencies section of <tt>Mavens</tt>
+ <tt>pom.xml</tt>
+. This issue now has been resolved. <tt>Weblets</tt>
+ 1.1 adds transitive dependencies and now maven should pick up all needed dependencies automatically!</p>
+</div>
+<div class="section"><h4>Bugfixes</h4>
+<p>Along the addition of new features a lot of bugfixes have went into the codebase, mainly dealing with cache control. Path resolution, performance, Websphere compatibility, etc...</p>
+<p>Consult the java.net svn log for further reference!</p>
+<hr />
+</div>
+</div>
+<div class="section"><h3>Contents</h3>
+<ol type="1"><li><a href="./index.html"> Users documentation: Index </a>
+</li>
+<li><a href="./whatsnew.html"> What is new in this release </a>
+</li>
+<li><a href="./gettingstarted.html"> Users documentation: Getting started </a>
+</li>
+<li><a href="./setup.html"> Users documentation: Setup guide </a>
+</li>
+<li><a href="./generalapi.html"> Users documentation: Introduction to the api patterns </a>
+</li>
+<li><a href="./usagejsp.html"> Users documentation: JSP Weblets usage guide </a>
+</li>
+<li><a href="./usagejava.html"> Users documentation: Servlet Weblets usage guide </a>
+</li>
+<li><a href="./usagejsf.html"> Users documentation: JSF Weblets usage guide </a>
+</li>
+<li><a href="./usageresources.html"> Users documentation: Resources Weblets usage guide </a>
+</li>
+<li><a href="./packingweblets.html"> Users documentation: Weblets packaging guide </a>
+</li>
+<li><a href="./reporting.html"> Users documentation: Weblets reporting guide </a>
+</li>
+<li><a href="./programmingweblets.html"> Developers documentation: Programming Weblets </a>
+</li>
+<li><a href="./faq.html"> Users documentation: Weblets general FAQ </a>
+</li>
+</ol>
+</div>
+</div>
+
+    </div>
+  </body>
+</html>

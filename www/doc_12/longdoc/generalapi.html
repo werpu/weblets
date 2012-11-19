@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <title>Weblets - Introduction to the API Patterns</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  </head>
+  <body>
+    <div class="app" >
+      <div class="section"><h2>Introduction to the API Patterns</h2>
+<p><tt>Weblets</tt>
+ contain two parts in their execution pipeline, a frontend <tt>API</tt>
+, which enables a neutral notation for application developers to isolate the resource call from the actual calling protocol and position. a url resolution stage, which intercepts the actual resource call and serves the resource from a given datasource.</p>
+<img src="../images/figure1.png" /><div class="section"><h3>General Functions </h3>
+<p>The application of those principles is very easy, all the application programmer has to use, is the frontend specific <tt>API</tt>
+.</p>
+<p><tt>Weblets</tt>
+ tries to stay the same as much as possible in its <tt>APIs</tt>
+ and their results over all frameworks, so that the application programmer can be sure that the final result stays the same, not depending on the underlying framework being used.</p>
+<p>The basic idea of the Weblet fronted API, are two contractual functions/methods.</p>
+<p><i>Code 1: Contract Functions/Methods</i>
+</p>
+<div class="source"><pre>
+    url(&lt;webletname&gt;,&lt;path to resource&gt;)
+    resource(&lt;webletname&gt;,&lt;path to resource&gt;)
+</pre>
+</div>
+<p>In every framework supported, you always will find them one way or the other.</p>
+<p>The main difference between those two contractual methods is, that <tt>url</tt>
+ serves up a full url including the current web application context, while <tt>resource</tt>
+ only serves up the relative path to the resource.</p>
+<p>The following code example shows the differences between the two functions.</p>
+<p><i>Code 2: Difference between url and resource in a pseudo API</i>
+</p>
+<div class="source"><pre>
+        url (&quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+        resolves to /my-webapp/faces/weblets/myapp/myresource.js
+
+        resource( &quot;org.myapp.html&quot;,&quot;/myresource.js&quot;)
+        resolves to /faces/weblets/myapp/myresource.js
+</pre>
+</div>
+<hr />
+</div>
+<div class="section"><h3>Contents</h3>
+<ol type="1"><li><a href="./index.html"> Users documentation: Index </a>
+</li>
+<li><a href="./whatsnew.html"> What is new in this release </a>
+</li>
+<li><a href="./gettingstarted.html"> Users documentation: Getting started </a>
+</li>
+<li><a href="./setup.html"> Users documentation: Setup guide </a>
+</li>
+<li><a href="./generalapi.html"> Users documentation: Introduction to the api patterns </a>
+</li>
+<li><a href="./usagejsp.html"> Users documentation: JSP Weblets usage guide </a>
+</li>
+<li><a href="./usagejava.html"> Users documentation: Servlet Weblets usage guide </a>
+</li>
+<li><a href="./usagejsf.html"> Users documentation: JSF Weblets usage guide </a>
+</li>
+<li><a href="./usageresources.html"> Users documentation: Resources Weblets usage guide </a>
+</li>
+<li><a href="./packingweblets.html"> Users documentation: Weblets packaging guide </a>
+</li>
+<li><a href="./reporting.html"> Users documentation: Weblets reporting guide </a>
+</li>
+<li><a href="./programmingweblets.html"> Developers documentation: Programming Weblets </a>
+</li>
+<li><a href="./faq.html"> Users documentation: Weblets general FAQ </a>
+</li>
+</ol>
+</div>
+</div>
+
+    </div>
+  </body>
+</html>

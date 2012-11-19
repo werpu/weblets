@@ -1,0 +1,130 @@
+<html>
+  <head>
+    <title>Weblets - Usage of Weblets in a JSP Centric Environment</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  </head>
+  <body>
+    <div class="app" >
+      <div class="section"><h2>Usage of Weblets in a JSP Centric Environment</h2>
+<p>As <tt>Weblets</tt>
+ originated from a project which was developed for an <tt>Ajax</tt>
+ and <tt>JSF</tt>
+ centric book. <tt>Weblets</tt>
+ has extensive tooling support for <tt>JSF</tt>
+, but it tries to cover as many web frameworks as possible in at least a generic way. And the most important ones in native ways if possible.</p>
+<p>Therefore, native support of <tt>JSP</tt>
+ as a very important frontend technology was important.</p>
+<div class="section"><h3>Setup</h3>
+<p>The setup is already described in the <a href="./setup.html">Setup guide</a>
+.</p>
+<p>To get <tt>Weblets</tt>
+ up and running you need a valid <tt>Weblets</tt>
+ servlet configuration. Unlike <tt>JSF</tt>
+ we do not have any automatisms in place. The configuration has to be done explicitly, with a path pattern as trigger for the servlet.</p>
+<div class="source"><pre>    &lt;servlet&gt;
+        &lt;servlet-name&gt;Weblets Servlet&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;net.java.dev.weblets.WebletsServlet&lt;/servlet-class&gt;
+    &lt;/servlet&gt;
+
+
+    &lt;!-- The &lt;&lt;&lt;Weblets&gt;&gt;&gt; servlet mapping must be path based otherwise &lt;&lt;&lt;Weblets&gt;&gt;&gt; will fail! --&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;Weblets Servlet&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/weblets/*&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;</pre>
+</div>
+<p>More information on the entire web.xml configuration can be found under <a href="#setup.at">Weblets:Setup guide</a>
+</p>
+</div>
+<div class="section"><h3>Basic Functions</h3>
+<div class="section"><h4>Introduction</h4>
+<p>The Weblets APIs follow the general patterns as described in <a href="./generalapi.html">Weblets Users Guide: Introduction to the API Patterns</a>
+. for further information please follow the link.</p>
+</div>
+</div>
+<div class="section"><h3><tt>JSP</tt>
+ Frontend APIs</h3>
+<p>Over the years <tt>JSP</tt>
+ has evolved, <tt>Weblets</tt>
+ tries to cover <tt>JSP</tt>
+ as extensively as possible. Hence, it provides several APIs to the frontend developer, which can be used accordingly to the <tt>JSP</tt>
+ version in use.</p>
+<div class="section"><h4>The Basic <tt>JSP</tt>
+ Bean API</h4>
+<p><tt>Weblets</tt>
+ provides as the most basic and most compatible mechanism a simple bean, which can be utilized by the backend or frontend, you can use scriptlets to access this bean. It should be compatible with all <tt>JSP</tt>
+ versions, although we have more elegant and simpler solutions for JSP2.x.</p>
+<p><i>Code 3: Accessing &lt;&lt;&lt;Weblets</i>
+&gt;&gt; via beans and scriptlets&gt;</p>
+<div class="source"><pre>    &lt;jsp:useBean class=&quot;net.java.dev.weblets.WebletUtils&quot; scope=&quot;application&quot; id=&quot;jspweblet&quot; /&gt;
+    bean definition in your header
+    
+    &lt;%= jspweblet.getResource( &quot;weblets.demo&quot;,&quot;/welcome.js&quot;) %&gt;
+    &lt;%= jspweblet.getURL( &quot;weblets.demo&quot;,&quot;/welcome.js&quot;) %&gt;</pre>
+</div>
+<p>As you can see we include our utils class as simple <tt>JSP</tt>
+ bean, the bean then provides our resource and url functions.</p>
+</div>
+<div class="section"><h4>EL Functions for <tt>JSP</tt>
+ 2.x</h4>
+<p>JSP2 provides newer <tt>EL</tt>
+ implementations which have so called <tt>EL Functions</tt>
+, those are functions which can be added extend the actual functionality provided by standard EL. <tt>Weblets</tt>
+ provide such function</p>
+<p>The next example shows how to use the <tt>EL</tt>
+ functions:</p>
+<p><i>Code 5: Usage of &lt;&lt;&lt;EL</i>
+&gt;&gt; functions</p>
+<div class="source"><pre>     xmlns:wbl=&quot;http://weblets.dev.java.net/tags_jsp2&quot; this has to be added to your namespace definitions
+
+      &lt;h:outputText value=&quot;${weblet:url('weblets.demo','/welcome.js')}&quot; /&gt;
+      &lt;h:graphicImage value=&quot;${weblet:resource('weblets.demo','/img/icon_alert.gif')}&quot; /&gt;</pre>
+</div>
+</div>
+</div>
+<div class="section"><h3>JSP Backend APIs</h3>
+<p>The JSP backend APIs are the same as the servlet APIs for further reference see <a href="#usagejava.apt">Weblets: Java APIs</a>
+}</p>
+</div>
+<div class="section"><h3>Additional notes</h3>
+<p>For the usage of JSP scriptlets, do not use the weblet name for your bean name, it is reserved by weblets itself, if you do use it in a mixed jsf jsp enviornment you will get name clashes with jsf - Weblets internal beans that way. Hence all the demos default to jspweblet in our case! In a pure jsp environment the usage of the weblet as bean variable name is safe, but it still is not advicable to use it, it might block the path to further extensions in your application or it might block the path to future weblet updates!</p>
+</div>
+</div>
+<div class="section"><h2>Summary</h2>
+<p>Weblets are fully supported in JSP,depending on your JSP version in use, you have various possibilities to access <tt>Weblets</tt>
+ from your JSP page.</p>
+<hr />
+<div class="section"><h3>Contents</h3>
+<ol type="1"><li><a href="./index.html"> Users documentation: Index </a>
+</li>
+<li><a href="./whatsnew.html"> What is new in this release </a>
+</li>
+<li><a href="./gettingstarted.html"> Users documentation: Getting started </a>
+</li>
+<li><a href="./setup.html"> Users documentation: Setup guide </a>
+</li>
+<li><a href="./generalapi.html"> Users documentation: Introduction to the api patterns </a>
+</li>
+<li><a href="./usagejsp.html"> Users documentation: JSP Weblets usage guide </a>
+</li>
+<li><a href="./usagejava.html"> Users documentation: Servlet Weblets usage guide </a>
+</li>
+<li><a href="./usagejsf.html"> Users documentation: JSF Weblets usage guide </a>
+</li>
+<li><a href="./usageresources.html"> Users documentation: Resources Weblets usage guide </a>
+</li>
+<li><a href="./packingweblets.html"> Users documentation: Weblets packaging guide </a>
+</li>
+<li><a href="./reporting.html"> Users documentation: Weblets reporting guide </a>
+</li>
+<li><a href="./programmingweblets.html"> Developers documentation: Programming Weblets </a>
+</li>
+<li><a href="./faq.html"> Users documentation: Weblets general FAQ </a>
+</li>
+</ol>
+</div>
+</div>
+
+    </div>
+  </body>
+</html>
