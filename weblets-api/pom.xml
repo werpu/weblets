@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>net.java.dev.weblets</groupId>
+        <groupId>weblets</groupId>
         <artifactId>weblets</artifactId>
         <version>1.2-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -14,7 +14,7 @@
 
     <name>Weblets API</name>
     <description>Weblets API</description>
-    <url>http://weblets.dev.java.net</url>
+    <url>http://www.github.com/werpu/weblets</url>
 
     <dependencies>
         <dependency>

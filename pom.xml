@@ -2,21 +2,21 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>net.java.dev.weblets</groupId>
+	<groupId>weblets</groupId>
 	<artifactId>weblets</artifactId>
 	<packaging>pom</packaging>
 
 	<name>Weblets</name>
 	<version>1.2-SNAPSHOT</version>
 	<description>Weblets</description>
-	<url>http://weblets.dev.java.net</url>
+	<url>http://www.github.com/werpu/weblets</url>
 
 	<issueManagement>
 		<system>Issue Tracker</system>
-		<url>https://weblets.dev.java.net/servlets/ProjectIssues</url>
+		<url>https://github.com/werpu/weblets/issues</url>
 	</issueManagement>
 
-	<inceptionYear>2005</inceptionYear>
+	<inceptionYear>2011</inceptionYear>
 
 	<distributionManagement>
 		<repository>
