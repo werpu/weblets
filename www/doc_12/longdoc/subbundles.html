@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'/>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+    <meta name="description" content="Weblets : weblets full project mirror"/>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="../../../stylesheets/stylesheet.css">
+
+    <title>Weblets Subbundles Guide</title>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+    <header class="inner">
+        <a id="forkme_banner" href="https://github.com/werpu/weblets">View on GitHub</a>
+
+        <h1 id="project_title">Weblets</h1>
+
+        <h2 id="project_tagline">weblets full project mirror</h2>
+
+        <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/werpu/weblets/zipball/master">Download this project as
+                a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/werpu/weblets/tarball/master">Download this project as
+                a tar.gz file</a>
+        </section>
+    </header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+        <h2>Subbundles</h2>
+
+        <p> As of
+            <emph>Weblets</emph>
+            1.2 the possibility of subbundles has been added to the weblets core.
+            Subbundles are simply bundles within bundles which enable certain functionality.
+        </p>
+        The reason for the introduction of this new mechanism have been several constraints
+        and future extension points which are needed or have to be avoided in the average webapp.
+        <p/>
+        Lets take a look at the subbundles from the problem point of view.
+        <p/>
+        An average page request has several includes for instance an include to three javascript
+        files several css files.
+        <p/>
+        Under normal circumstances you have one request per include, even if the request is served out of
+        the cache, which happens in 20-40% of all request that means a significant slowdown because
+        every request has to be processed separately by the browser.
+        <p/>
+        Additionally to that if no cache is active or we have an empty cache hit, the server
+        has to endure a series of requests per page request to serve the needed resources!
+        Under normal circumstances it makes sense to bundle several resources which can be grouped
+        together, to reduce both browser processing time and server load!
+        <p>Now to resolve this issue we have two tools.</p>
+        <ul>
+            <li>Our indirection API</li>
+            </li>The subbundles</li>
+        </ul>
+        Subbundles to make it short are a simple, but elegant extension to deal with the problem!
+        <h2>General Mechanism</h2>
+        Subbundles are lists of resources which are internally concatenated and by utilizing the indirection
+        api replaced with a single include call on the fly!
+        <p/>
+        <!-- HTML generated using hilite.me -->
+        <div style="background: #ffffff; overflow:auto;width:auto;color:black;background:white;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">   <span style="color: #007000">&lt;weblet&gt;</span>
+                <span style="color: #007000">&lt;weblet-name&gt;</span>weblets.demo<span style="color: #007000">&lt;/weblet-name&gt;</span>
+                <span style="color: #007000">&lt;weblet-class&gt;</span>
+                    net.java.dev.weblets.packaged.PackagedWeblet
+                <span style="color: #007000">&lt;/weblet-class&gt;</span>
+                <span style="color: #007000">&lt;weblet-version&gt;</span>1.0<span style="color: #007000">&lt;/weblet-version&gt;</span>
+
+                <span style="color: #007000">&lt;subbundle&gt;</span>
+                    <span style="color: #007000">&lt;id&gt;</span>scripts/bundlescript1.js<span style="color: #007000">&lt;/id&gt;</span>
+                    <span style="color: #007000">&lt;resources&gt;</span>
+                        /scripts/script1.js,
+                        /scripts/script2.js,
+                        /scripts/script3.js
+                    <span style="color: #007000">&lt;/resources&gt;</span>
+                <span style="color: #007000">&lt;/subbundle&gt;</span>
+
+
+                <span style="color: #007000">&lt;subbundle&gt;</span>
+                    <span style="color: #007000">&lt;id&gt;</span>scripts/cssbundle1.css<span style="color: #007000">&lt;/id&gt;</span>
+                    <span style="color: #007000">&lt;resources&gt;</span>
+                        css/css1.css, css/css2.css, css/css3.css
+                    <span style="color: #007000">&lt;/resources&gt;</span>
+                <span style="color: #007000">&lt;/subbundle&gt;</span>
+           <span style="color: #007000">&lt;/weblet&gt;</span>
+        </pre></div>
+
+    </section>
+</div>
+</body>
+</html>
