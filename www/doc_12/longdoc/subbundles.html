@@ -68,15 +68,19 @@
         api replaced with a single include call on the fly!
         <p/>
         <!-- HTML generated using hilite.me -->
-        <div style="background: #ffffff; overflow:auto;width:auto;color:black;background:white;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #007000">&lt;weblet&gt;</span>
-    <span style="color: #007000">&lt;weblet-name&gt;</span>weblets.demo<span style="color: #007000">&lt;/weblet-name&gt;</span>
+        <div style="background: #ffffff; overflow:auto;width:auto;color:black;background:white;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre
+                style="margin: 0; line-height: 125%"><span style="color: #007000">&lt;weblet&gt;</span>
+    <span style="color: #007000">&lt;weblet-name&gt;</span>weblets.demo<span
+                    style="color: #007000">&lt;/weblet-name&gt;</span>
     <span style="color: #007000">&lt;weblet-class&gt;</span>
         net.java.dev.weblets.packaged.PackagedWeblet
     <span style="color: #007000">&lt;/weblet-class&gt;</span>
-    <span style="color: #007000">&lt;weblet-version&gt;</span>1.0<span style="color: #007000">&lt;/weblet-version&gt;</span>
+    <span style="color: #007000">&lt;weblet-version&gt;</span>1.0<span
+                    style="color: #007000">&lt;/weblet-version&gt;</span>
 
     <span style="color: #007000">&lt;subbundle&gt;</span>
-        <span style="color: #007000">&lt;id&gt;</span>scripts/bundlescript1.js<span style="color: #007000">&lt;/id&gt;</span>
+        <span style="color: #007000">&lt;id&gt;</span>scripts/bundlescript1.js<span
+                    style="color: #007000">&lt;/id&gt;</span>
         <span style="color: #007000">&lt;resources&gt;</span>
             /scripts/script1.js,
             /scripts/script2.js,
@@ -86,13 +90,47 @@
 
 
     <span style="color: #007000">&lt;subbundle&gt;</span>
-        <span style="color: #007000">&lt;id&gt;</span>scripts/cssbundle1.css<span style="color: #007000">&lt;/id&gt;</span>
+        <span style="color: #007000">&lt;id&gt;</span>scripts/cssbundle1.css<span
+                    style="color: #007000">&lt;/id&gt;</span>
         <span style="color: #007000">&lt;resources&gt;</span>
             css/css1.css, css/css2.css, css/css3.css
         <span style="color: #007000">&lt;/resources&gt;</span>
     <span style="color: #007000">&lt;/subbundle&gt;</span>
 <span style="color: #007000">&lt;/weblet&gt;</span>
+        </pre>
+        </div>
+        <p/>
+        In this example two bundles are defined,
+        both bundles are concatenated at indirection access to
+        the resource name defined in the &lt;id\&gt; field!
+        <p/>
+        Now what happens at access time?
+        The indirection api resolves the first request into the bundle
+        to the resource defined in &lt;id\&gt; and ever other resource into
+        empty strings, thus omitting the additional requests.
+        <p/>
+
+        All resources in the bundle are concatenated on the fly and served as a single resources.
+        <p/>
+        Now what happens if those resources are accessed directly?
+        <ul>
+            <li>The first access sends the entire bundle!</li>
+            <li>all other accesses send empty strings.</li>
+        </ul>
+
+        Now for some situations this might be suitable, for instance an empty CSS include does nothing. In other situations
+        such a thing might trigger a browser error.
+        <p/>
+        To cope with this an API has been added which allows to check for already included resources!
+        <p/>
+        <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;color:black;background:white;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">WebletUtils<span style="color: #303030">.</span><span style="color: #0000C0">isResourceLoaded</span><span style="color: #303030">(</span>Servlet<span style="color: #303030">/</span>Portletrequest request<span style="color: #303030">,</span>  String weblet<span style="color: #303030">,</span> String pathInfo<span style="color: #303030">)</span>
         </pre></div>
+        As general utils method
+        <p/>
+        <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;color:black;background:white;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008000; font-weight: bold">public</span> <span style="color: #008000; font-weight: bold">static</span> <span style="color: #303090; font-weight: bold">boolean</span> FacesWebletUtils<span style="color: #303030">.</span><span style="color: #0000C0">isResourceLoaded</span><span style="color: #303030">(</span>FacesContext context<span style="color: #303030">,</span> String weblet<span style="color: #303030">,</span> String pathInfo<span style="color: #303030">)</span>
+        </pre></div>
+        As JSF utils method
+        <p/>
 
     </section>
 </div>
