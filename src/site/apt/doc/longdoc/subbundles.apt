@@ -97,4 +97,22 @@ Introduction
 
     To cope with this an API has been added which allows to check for already included resources!
 
-    TODO add description here!
+
++--------------------------------------------------
+	WebletUtils.isResourceLoaded(Servlet/Portletrequest request,  String weblet, String pathInfo)
++--------------------------------------------------
+As general utils function
+
+
++--------------------------------------------------
+	public static boolean isResourceLoaded(FacesContext context, String weblet, String pathInfo) {	
++--------------------------------------------------
+As JSF utils function
+
++--------------------------------------------------
+	#{isResourceLoaded(weblet, pathInfo)}
++--------------------------------------------------
+As el Function
+
+
+
