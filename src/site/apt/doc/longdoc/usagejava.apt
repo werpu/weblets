@@ -130,6 +130,8 @@ Summary
 
 	[[]] {{{./packingweblets.html} Users documentation: Weblets packaging guide }}
 
+    [[]] {{{./subbundles.html} Weblets Subbundles guide }}
+
 	[[]] {{{./reporting.html} Users documentation: Weblets reporting guide }}
 
 	[[]] {{{./programmingweblets.html} Developers documentation: Programming Weblets }}

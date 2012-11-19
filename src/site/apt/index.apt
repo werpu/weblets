@@ -27,22 +27,30 @@ Mission
 
 Documentation and Articles
 
+* Current Documentation Version 1.2:
 
-* Current Documentation Version  1.1:
+  {{{./doc_12/longdoc/whatsnew.html}Site documentation: A short summary of new features }}
 
-  {{{doc_11/longdoc/whatsnew.html}Site documentation: A short summary of new features }}
+  {{{./doc_12/shortdoc/introduction.html}Site documentation:Short introduction, loading resources with Weblets}}
 
-  {{{doc_11/shortdoc/introduction.html}Site documentation:Short introduction, loading resources with Weblets}}
+  {{{./doc_12/longdoc/introduction.html}Site documentation:Users and programmers manual with more detailed information}}
 
-  {{{doc_11/longdoc/introduction.html}Site documentation:Users and programmers manual with more detailed information}}
+
+* Documentation Version  1.1:
+
+  {{{./doc_11/longdoc/whatsnew.html}Site documentation: A short summary of new features }}
+
+  {{{./doc_11/shortdoc/introduction.html}Site documentation:Short introduction, loading resources with Weblets}}
+
+  {{{./doc_11/longdoc/introduction.html}Site documentation:Users and programmers manual with more detailed information}}
 
 
 * Current Documentation  1.0:
 
 
-  {{{doc/shortdoc/introduction.html}Site documentation:Short introduction, loading resources with Weblets}}
+  {{{./doc/shortdoc/introduction.html}Site documentation:Short introduction, loading resources with Weblets}}
 
-  {{{doc/longdoc/introduction.html}Site documentation:Users and programmers manual with more detailed information}}
+  {{{./doc/longdoc/introduction.html}Site documentation:Users and programmers manual with more detailed information}}
 
 
 

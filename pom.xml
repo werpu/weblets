@@ -163,10 +163,16 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<configuration>
+                <configuration>
+                    <siteDirectory>${project.basedir}/www/tmp</siteDirectory>
+                </configuration>
+				<!--
+                <configuration>
 					<templateDirectory>src/site/</templateDirectory>
 					<template>java.net.vm</template>
 				</configuration>
+				-->
+                <version>3.1</version>
 			</plugin>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>

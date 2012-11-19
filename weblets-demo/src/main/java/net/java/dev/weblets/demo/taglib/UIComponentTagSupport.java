@@ -1,13 +1,12 @@
 package net.java.dev.weblets.demo.taglib;
 
-import java.util.Map;
-
 import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.webapp.UIComponentTag;
+import java.util.Map;
 
 /**
  * UIComponentTagSupport provides common helper methods for

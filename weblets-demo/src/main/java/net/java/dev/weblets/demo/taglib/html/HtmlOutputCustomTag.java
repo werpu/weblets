@@ -1,9 +1,9 @@
 package net.java.dev.weblets.demo.taglib.html;
 
-import javax.faces.component.UIComponent;
-
 import net.java.dev.weblets.demo.component.html.HtmlOutputCustom;
 import net.java.dev.weblets.demo.taglib.UIComponentTagSupport;
+
+import javax.faces.component.UIComponent;
 
 /**
  * HtmlOutputCustomTag component tag handler.

@@ -1,3 +1,12 @@
+                          ------------------------
+                           What is new in Weblets 1.2
+                           ------------------------
+Overview
+
+    Weblets 1.2 is a bugfix and maintenance release it adds one new feature subbundles.
+    For a general overview of subbundles please follow following {{{./subbundles.html} Weblets Subbundles Guide  }}
+
+
                            ------------------------
                            What is new in Weblets 1.1
                            ------------------------
@@ -261,6 +270,8 @@ Overview
 	[[]] {{{./usageresources.html} Users documentation: Resources Weblets usage guide }}
 
 	[[]] {{{./packingweblets.html} Users documentation: Weblets packaging guide }}
+
+    [[]] {{{./subbundles.html} Weblets Subbundles guide }}
 
 	[[]] {{{./reporting.html} Users documentation: Weblets reporting guide }}
 

@@ -14,7 +14,7 @@ Usage of Weblets in a jsf centric environment
      in a similar way where needed.
 
      The generic tooling support of course also works in JSF,
-     but it doesn�t have to be used, due to the easier
+     but it doesn't have to be used, due to the easier
      configuration and usage of the internal <<<JSF>>> mechanisms
 
 * Setup
@@ -211,6 +211,8 @@ Summary
 	[[]] {{{./usageresources.html} Users documentation: Resources Weblets usage guide }}
 
 	[[]] {{{./packingweblets.html} Users documentation: Weblets packaging guide }}
+
+    [[]] {{{./subbundles.html} Weblets Subbundles guide }}
 
 	[[]] {{{./reporting.html} Users documentation: Weblets reporting guide }}
 
