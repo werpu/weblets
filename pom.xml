@@ -6,6 +6,12 @@
     <artifactId>weblets</artifactId>
     <packaging>pom</packaging>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
     <name>Weblets</name>
     <version>1.2-SNAPSHOT</version>
     <description>Weblets</description>
@@ -27,15 +33,15 @@
 	</distributionManagement>
     -->
 
-
-    <repositories>
-        <repository>
-            <id>maven2-repository.dev.java.net</id>
-            <name>Java.net Repository for Maven</name>
-            <url>http://download.java.net/maven/2/</url>
-        </repository>
-    </repositories>
-
+    <!--
+     <repositories>
+         <repository>
+             <id>maven2-repository.dev.java.net</id>
+             <name>Java.net Repository for Maven</name>
+             <url>http://download.java.net/maven/2/</url>
+         </repository>
+     </repositories>
+    -->
     <mailingLists>
         <mailingList>
             <name>Weblets User List</name>
@@ -91,16 +97,15 @@
             <timezone>1</timezone>
             <properties/>
         </developer>
-
         <developer>
-            <id>werpu12</id>
+            <id>werpu</id>
             <name>Werner Punz</name>
-            <email/>
+            <email>werner.punz@gmail.com</email>
             <url/>
             <organization/>
             <organizationUrl/>
             <roles>
-                <role>Developer</role>
+                <role>Project Owner</role>
             </roles>
             <timezone>1</timezone>
             <properties/>
@@ -116,9 +121,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:svn:http://weblets.dev.java.net/svn/weblets/tags/1.1.1-BETA-2</connection>
-        <developerConnection>scm:svn:https://weblets.dev.java.net/svn/weblets/tags/1.1.1-BETA-2</developerConnection>
-        <url>scm:svn:https://weblets.dev.java.net/svn/weblets/tags/1.1.1-BETA-2</url>
+        <connection>scm:git:git@github.com:werpu/weblets.git</connection>
+        <developerConnection>scm:git:git@github.com:werpu/weblets.git</developerConnection>
+        <url>git@github.com:werpu/weblets.git</url>
     </scm>
 
     <modules>
