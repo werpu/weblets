@@ -61,7 +61,7 @@ public class CopyStrategyImpl implements CopyStrategy {
             try {
                 while ((line = bufIn.readLine()) != null) {
                     bufOut.write(line);
-                    bufOut.write("\n");
+                    //bufOut.write("\n");
                 }
 
             } catch(SocketException e) {
