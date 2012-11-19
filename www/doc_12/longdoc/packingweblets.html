@@ -1,29 +1,66 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Weblets - Resource Packing With Weblets</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-  </head>
-  <body>
-    <div class="app" >
-      <div class="section"><h2>Introduction into the <tt>Weblets</tt>
- Resource Packing</h2>
+
+<head>
+    <meta charset='utf-8'/>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+    <meta name="description" content="Weblets : weblets full project mirror"/>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="../../../stylesheets/stylesheet.css">
+
+    <title>Resource Packing with Weblets</title>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+    <header class="inner">
+        <a id="forkme_banner" href="https://github.com/werpu/weblets">View on GitHub</a>
+
+        <h1 id="project_title">Weblets</h1>
+
+        <h2 id="project_tagline">weblets full project mirror</h2>
+
+        <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/werpu/weblets/zipball/master">Download this project as
+                a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/werpu/weblets/tarball/master">Download this project as
+                a tar.gz file</a>
+        </section>
+    </header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+<section id="main_content" class="inner">
+<div class="app">
+<div class="app">
+<div class="section"><h2>Introduction into the <tt>Weblets</tt>
+    Resource Packing</h2>
+
 <p>As of <tt>Weblets</tt>
- 1.1 there are three packaging formats for weblet resources:</p>
-<ul><li>Proxied resources via URL Weblet</li>
-<li>Packed resources as simple jar packages.</li>
-<li>Webapp weblets for expanded resources hosted within a web application </li>
+    1.1 there are three packaging formats for weblet resources:</p>
+<ul>
+    <li>Proxied resources via URL Weblet</li>
+    <li>Packed resources as simple jar packages.</li>
+    <li>Webapp weblets for expanded resources hosted within a web application</li>
 </ul>
 <div class="section"><h3>Structural information</h3>
-<p>A weblet is defined by its <tt>weblets-config.xml</tt>
- file located in the jars or a <tt>META-INF</tt>
- fdirectory in your classpath or <tt>WEB-INF</tt>
- directory! It is a simple xml config file with a setup syntax very close to a standard <tt>web.xml</tt>
- file</p>
-<div class="section"><h4>The weblets-config.xml file</h4>
-<p>The <tt>Weblets</tt>
- <tt>config.xml</tt>
- file consists of several parts:</p>
-<div class="source"><pre>   &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+
+    <p>A weblet is defined by its <tt>weblets-config.xml</tt>
+        file located in the jars or a <tt>META-INF</tt>
+        fdirectory in your classpath or <tt>WEB-INF</tt>
+        directory! It is a simple xml config file with a setup syntax very close to a standard <tt>web.xml</tt>
+        file</p>
+
+    <div class="section"><h4>The weblets-config.xml file</h4>
+
+        <p>The <tt>Weblets</tt>
+            <tt>config.xml</tt>
+            file consists of several parts:</p>
+
+        <div class="source"><pre>   &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
    &lt;weblets-config xmlns=&quot;http://weblets.dev.java.net/config&quot; &gt;
      &lt;weblet&gt;
                &lt;weblet-name&gt;myweblet&lt;/weblet-name&gt;
@@ -43,11 +80,13 @@
                &lt;url-pattern&gt;/myresources/*&lt;/url-pattern&gt;
      &lt;/weblet-mapping&gt;
    &lt;/weblets-config&gt;</pre>
-</div>
-<p><i>Code: Example weblets-config.xml</i>
-</p>
-<p>Lets have a look at the configuration part by part.</p>
-<div class="source"><pre>        &lt;weblet&gt;
+        </div>
+        <p><i>Code: Example weblets-config.xml</i>
+        </p>
+
+        <p>Lets have a look at the configuration part by part.</p>
+
+        <div class="source"><pre>        &lt;weblet&gt;
                 &lt;weblet-name&gt;myweblet&lt;/weblet-name&gt;
                 &lt;weblet-class&gt;
                         net.java.dev.weblets.packaged.PackagedWeblet
@@ -59,125 +98,197 @@
                         &lt;/param-value&gt;
                 &lt;/init-param&gt;
         &lt;/weblet&gt;</pre>
-</div>
-<p><i>Code: Configuration Part</i>
-</p>
-<p>This is a weblet definition, it is very similar to a <tt>web.xml</tt>
- servlet definition</p>
-<div class="source"><pre>    &lt;weblet-name&gt;myweblet&lt;/weblet-name&gt;</pre>
-</div>
-<p><i>Code: Weblet Name</i>
-</p>
-<p>Defines the weblet name with the name <tt>myweblet</tt>
- this is used externally and by the later weblet parts as reference.</p>
-<div class="source"><pre>       &lt;weblet-class&gt;
+        </div>
+        <p><i>Code: Configuration Part</i>
+        </p>
+
+        <p>This is a weblet definition, it is very similar to a <tt>web.xml</tt>
+            servlet definition</p>
+
+        <div class="source">
+            <pre>    &lt;weblet-name&gt;myweblet&lt;/weblet-name&gt;</pre>
+        </div>
+        <p><i>Code: Weblet Name</i>
+        </p>
+
+        <p>Defines the weblet name with the name <tt>myweblet</tt>
+            this is used externally and by the later weblet parts as reference.</p>
+
+        <div class="source"><pre>       &lt;weblet-class&gt;
          net.java.dev.weblets.packaged.PackagedWeblet
        &lt;/weblet-class&gt;</pre>
-</div>
-<p><i>Code: Weblet Class</i>
-</p>
-<p>Defines a weblet class. Weblet classes are different implementations of resource loading mechanisms, currently only</p>
-<ul><li>net.java.dev.weblets.packaged.PackagedWeblet</li>
-<li>net.java.dev.weblets.packaged.URLWeblet</li>
-<li>net.java.dev.weblets.packaged.WebappWeblet<p>are supported.</p>
-<div class="source"><pre>    &lt;weblet-version&gt;1.02&lt;/weblet-version&gt;</pre>
-</div>
-<p><i>Code: Weblet Version</i>
-</p>
-<p>This is an optional parameter, which is added to the url. It basically provides a version number for the packaging to get a finer control over the browser cache!</p>
-<p>By specifying a weblet version, you indicate that the packaged resource is not going to change until the version number changes. Therefore, the version number is included as part of the resource URL determined at runtime by the <tt>Weblets Phase Listener</tt>
- and the underlying <tt>Weblet Class</tt>
- e.g. <tt>/myresources$1.0/myScript.js</tt>
-. When the <tt>WebletContainer</tt>
- services this request, it extracts the version number from the URL and determines that the resource should be cached, and never expire. <tt>Weblets</tt>
- will handle the expiring and browser cache control transparently in this case so that an optimumn in cache performance on the browser side can be reached!</p>
-<p>During development, the contents of packaged resources can change frequently, so it is important for the browser to keep checking back with the web server to detect the latest resource URL contents. This check happens by default every time the main Web page is rendered if the Weblet version is omitted from <tt>weblets-config.xml</tt>
-.</p>
-<p>Alternatively the Weblet configuration allows component authors to append <tt>-SNAPSHOT</tt>
- to the version number. For example, <tt>1.0-SNAPSHOT</tt>
-, as shown in code sample 4, to indicate that this file is under development and should behave as though the version number has been omitted.</p>
-<div class="source"><pre>        &lt;init-param&gt;
+        </div>
+        <p><i>Code: Weblet Class</i>
+        </p>
+
+        <p>Defines a weblet class. Weblet classes are different implementations of resource loading mechanisms,
+            currently only</p>
+        <ul>
+            <li>net.java.dev.weblets.packaged.PackagedWeblet</li>
+            <li>net.java.dev.weblets.packaged.URLWeblet</li>
+            <li>net.java.dev.weblets.packaged.WebappWeblet<p>are supported.</p>
+
+                <div class="source">
+                    <pre>    &lt;weblet-version&gt;1.02&lt;/weblet-version&gt;</pre>
+                </div>
+                <p><i>Code: Weblet Version</i>
+                </p>
+
+                <p>This is an optional parameter, which is added to the url. It basically provides a version number for
+                    the packaging to get a finer control over the browser cache!</p>
+
+                <p>By specifying a weblet version, you indicate that the packaged resource is not going to change until
+                    the version number changes. Therefore, the version number is included as part of the resource URL
+                    determined at runtime by the <tt>Weblets Phase Listener</tt>
+                    and the underlying <tt>Weblet Class</tt>
+                    e.g. <tt>/myresources$1.0/myScript.js</tt>
+                    . When the <tt>WebletContainer</tt>
+                    services this request, it extracts the version number from the URL and determines that the resource
+                    should be cached, and never expire. <tt>Weblets</tt>
+                    will handle the expiring and browser cache control transparently in this case so that an optimumn in
+                    cache performance on the browser side can be reached!</p>
+
+                <p>During development, the contents of packaged resources can change frequently, so it is important for
+                    the browser to keep checking back with the web server to detect the latest resource URL contents.
+                    This check happens by default every time the main Web page is rendered if the Weblet version is
+                    omitted from <tt>weblets-config.xml</tt>
+                    .</p>
+
+                <p>Alternatively the Weblet configuration allows component authors to append <tt>-SNAPSHOT</tt>
+                    to the version number. For example, <tt>1.0-SNAPSHOT</tt>
+                    , as shown in code sample 4, to indicate that this file is under development and should behave as
+                    though the version number has been omitted.</p>
+
+                <div class="source"><pre>        &lt;init-param&gt;
                 &lt;param-name&gt;package&lt;/param-name&gt;
                 &lt;param-value&gt;
                         org.myapp.faces.renderer.html.resources
                 &lt;/param-value&gt;
         &lt;/init-param&gt;</pre>
-</div>
-<p><i>Code: Init Params</i>
-</p>
-<p>Every versioned weblet has a timeout date set into the far future, if you need a periodical timeout you can override this setting by setting following parameter.</p>
-<div class="source"><pre>    &lt;init-param&gt;
+                </div>
+                <p><i>Code: Init Params</i>
+                </p>
+
+                <p>Every versioned weblet has a timeout date set into the far future, if you need a periodical timeout
+                    you can override this setting by setting following parameter.</p>
+
+                <div class="source"><pre>    &lt;init-param&gt;
            &lt;param-name&gt;cachecontrol-timeout&lt;/param-name&gt;
            &lt;param-value&gt;61000&lt;/param-value&gt;
     &lt;/init-param&gt;</pre>
-</div>
-<p>Note the value is a lont value set to be in miliseconds!</p>
-<p><i>Additional information Websphere 6.1+ users: Due to a year 2038k bug in the 32 bit version of WAS 6.1 the maximum year to be settable beginning from 1970, is 2037, you cannot go higher. The cause of this is a bug in one of the date classes implemented by Websphere and has to be fixed by IBM currently there is no workaround to this, but it also for now is no showstopper! IBM might have fixed this issue already in newer versions of Websphere!</i>
-</p>
-<p>Every weblet class takes a set of init parameters, which are different from weblet-class to weblet class. For the packaged weblet only the</p>
-<div class="source"><pre>        &lt;param-name&gt;package&lt;/param-name&gt;
+                </div>
+                <p>Note the value is a lont value set to be in miliseconds!</p>
+
+                <p><i>Additional information Websphere 6.1+ users: Due to a year 2038k bug in the 32 bit version of WAS
+                    6.1 the maximum year to be settable beginning from 1970, is 2037, you cannot go higher. The cause of
+                    this is a bug in one of the date classes implemented by Websphere and has to be fixed by IBM
+                    currently there is no workaround to this, but it also for now is no showstopper! IBM might have
+                    fixed this issue already in newer versions of Websphere!</i>
+                </p>
+
+                <p>Every weblet class takes a set of init parameters, which are different from weblet-class to weblet
+                    class. For the packaged weblet only the</p>
+
+                <div class="source"><pre>        &lt;param-name&gt;package&lt;/param-name&gt;
         &lt;param-value&gt;
                 org.myapp.faces.renderer.html.resources
         &lt;/param-value&gt;</pre>
-</div>
-<p><i>Code: Package Param</i>
-</p>
-<p>parameter is important. It determines the internal package location of your resources!</p>
-<p>Now we have covered the first part of the configuration, lets have a look at the second part.</p>
-<div class="source"><pre>        &lt;weblet-mapping&gt;
+                </div>
+                <p><i>Code: Package Param</i>
+                </p>
+
+                <p>parameter is important. It determines the internal package location of your resources!</p>
+
+                <p>Now we have covered the first part of the configuration, lets have a look at the second part.</p>
+
+                <div class="source"><pre>        &lt;weblet-mapping&gt;
                 &lt;weblet-name&gt;myweblet&lt;/weblet-name&gt;
                 &lt;url-pattern&gt;/myresources/*&lt;/url-pattern&gt;
         &lt;/weblet-mapping&gt;</pre>
-</div>
-<p><i>Code: Configuration Part 2</i>
-</p>
-<p>This is very similar to a servlet mapping. The weblet mapping simply describes the resource mapping a weblet should use to be triggered.</p>
-</li>
-</ul>
-</div>
+                </div>
+                <p><i>Code: Configuration Part 2</i>
+                </p>
+
+                <p>This is very similar to a servlet mapping. The weblet mapping simply describes the resource mapping a
+                    weblet should use to be triggered.</p>
+            </li>
+        </ul>
+    </div>
 </div>
 <div class="section"><h3>The Results of the Configuration</h3>
-<p>Now the weblet system is configured lets have a short upfront look at the results (more details will follow later)</p>
-<p>Every weblet resource loading pipeline consists of two parts, the first one is the weblet notation resolution. It transforms every weblet api call into a valid url pattern.<br />
-The second one is the triggering of the resource loading mechanism from a valid url pattern.<br />
-The mapping described in the second part of the configuration refers to the second stage of weblet loading and is very similar to servlet triggering.<br />
-To sum it up shortly, different calling urls can trigger different weblets or none at all, depending on the pattern in the url!</p>
-<p>Therefore if an application programmer for instance calls the <tt>EL</tt>
-function</p>
-<div class="source"><pre>    ${weblet:url('myweblet','/styles/style.css')}</pre>
-</div>
-<p><i>Code: URL Call</i>
-</p>
-<p>the function will return following url</p>
-<div class="source"><pre>    /&lt;webapp-context/weblet-servlet/myresources$1.02/styles/style.css</pre>
-</div>
-<p><i>Code: URL Call Result</i>
-</p>
-<p>The internal location of the resource itself is hidden entirely from the frontend.</p>
-<p>Now if a browser calls this resource, the weblet class and its underlying weblet-container will serve the resource transparently.</p>
+
+    <p>Now the weblet system is configured lets have a short upfront look at the results (more details will follow
+        later)</p>
+
+    <p>Every weblet resource loading pipeline consists of two parts, the first one is the weblet notation resolution. It
+        transforms every weblet api call into a valid url pattern.<br/>
+        The second one is the triggering of the resource loading mechanism from a valid url pattern.<br/>
+        The mapping described in the second part of the configuration refers to the second stage of weblet loading and
+        is very similar to servlet triggering.<br/>
+        To sum it up shortly, different calling urls can trigger different weblets or none at all, depending on the
+        pattern in the url!</p>
+
+    <p>Therefore if an application programmer for instance calls the <tt>EL</tt>
+        function</p>
+
+    <div class="source">
+        <pre>    ${weblet:url('myweblet','/styles/style.css')}</pre>
+    </div>
+    <p><i>Code: URL Call</i>
+    </p>
+
+    <p>the function will return following url</p>
+
+    <div class="source">
+        <pre>    /&lt;webapp-context/weblet-servlet/myresources$1.02/styles/style.css</pre>
+    </div>
+    <p><i>Code: URL Call Result</i>
+    </p>
+
+    <p>The internal location of the resource itself is hidden entirely from the frontend.</p>
+
+    <p>Now if a browser calls this resource, the weblet class and its underlying weblet-container will serve the
+        resource transparently.</p>
 </div>
 <div class="section"><h3>Generating a Weblets JAR </h3>
-<p>In the examples you can find a subproject weblets-exampleweblet. This subproject should serve as a blueprint on how to package your own weblets jar, the pom.xml can serve as a blueprint for your own maven build to organize your resources in their own resource packages.</p>
-<div class="section"><h4>Deployment and dependencies</h4>
-<p>Deployment, usually once you have a running weblets web application working adding additonal resource packs is plug and play. Weblets automatically will discover new resource packs in your web application and will enable them to be used by your web application.</p>
-<p>If you want to use Weblets in a barebones web application following dependencies have to be met due to some libraries weblets uses itself.</p>
-<ul><li>Apache commons-logging </li>
-<li>Apache commons-digester</li>
-<li>Apache commons-collections</li>
-<li>Apache commons-beanutils</li>
-</ul>
-<p>It is planned to reduce the number of dependencies significantly for future versions but for now this dependency list is mandatory!</p>
-</div>
+
+    <p>In the examples you can find a subproject weblets-exampleweblet. This subproject should serve as a blueprint on
+        how to package your own weblets jar, the pom.xml can serve as a blueprint for your own maven build to organize
+        your resources in their own resource packages.</p>
+
+    <div class="section"><h4>Deployment and dependencies</h4>
+
+        <p>Deployment, usually once you have a running weblets web application working adding additonal resource packs
+            is plug and play. Weblets automatically will discover new resource packs in your web application and will
+            enable them to be used by your web application.</p>
+
+        <p>If you want to use Weblets in a barebones web application following dependencies have to be met due to some
+            libraries weblets uses itself.</p>
+        <ul>
+            <li>Apache commons-logging</li>
+            <li>Apache commons-digester</li>
+            <li>Apache commons-collections</li>
+            <li>Apache commons-beanutils</li>
+        </ul>
+        <p>It is planned to reduce the number of dependencies significantly for future versions but for now this
+            dependency list is mandatory!</p>
+    </div>
 </div>
 <div class="section"><h3>Additional Weblets</h3>
-<p>As of Weblets 1.1 three options for weblets packaging are given,</p>
-<ul><li>The Packaged Weblets class as standard weblet sufficient for most cases</li>
-<li>The URL weblet as proxying weblet. It allows to stream any url based resource as weblet into your web application.</li>
-<li>The <tt>Webapp Weblet</tt>
- as option to host local resources within your web application</li>
-</ul>
-<div class="section"><h4>Usage of the URLWeblet</h4>
-<div class="source"><pre>        &lt;weblet&gt;
+
+    <p>As of Weblets 1.1 three options for weblets packaging are given,</p>
+    <ul>
+        <li>The Packaged Weblets class as standard weblet sufficient for most cases</li>
+        <li>The URL weblet as proxying weblet. It allows to stream any url based resource as weblet into your web
+            application.
+        </li>
+        <li>The <tt>Webapp Weblet</tt>
+            as option to host local resources within your web application
+        </li>
+    </ul>
+    <div class="section"><h4>Usage of the URLWeblet</h4>
+
+        <div class="source"><pre>        &lt;weblet&gt;
                 &lt;weblet-name&gt;weblets.remote&lt;/weblet-name&gt;
                 &lt;weblet-class&gt;net.java.dev.weblets.packaged.URLWeblet&lt;/weblet-class&gt;
                 &lt;weblet-version&gt;1.0&lt;/weblet-version&gt;
@@ -187,17 +298,21 @@ function</p>
                         &lt;param-value&gt;http://localhost:8080/test4Web&lt;/param-value&gt;
                 &lt;/init-param&gt;
         &lt;/weblet&gt;       </pre>
-</div>
-<p><i>Code: URL Weblet</i>
-</p>
-<p>As we can see it is very similar to the packaged Weblet, just the init params are different, the calling api for the application developer stays the same</p>
-<div class="source"><pre> 
+        </div>
+        <p><i>Code: URL Weblet</i>
+        </p>
+
+        <p>As we can see it is very similar to the packaged Weblet, just the init params are different, the calling api
+            for the application developer stays the same</p>
+
+        <div class="source"><pre>
    &lt;%= jspweblet.getResource( &quot;weblets.remote&quot;,&quot;/scripts/helloworld.js&quot;) %&gt;
  </pre>
-</div>
-</div>
-<div class="section"><h4>Usage of the Webapp Weblet</h4>
-<div class="source"><pre>
+        </div>
+    </div>
+    <div class="section"><h4>Usage of the Webapp Weblet</h4>
+
+        <div class="source"><pre>
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
 &lt;weblets-config xmlns=&quot;http://weblets.dev.java.net/config&quot;&gt;
 
@@ -216,24 +331,34 @@ function</p>
         
 &lt;/weblets-config&gt;    
 </pre>
-</div>
-<p>As you can see the initialization code for a Weball weblet is identical to the the normal Weblets. # Resources then are streamed from &lt;contextroot&gt;/&lt;resourceRoot&gt;!</p>
-<p>ie: </p>
-<div class="source"><pre>
+        </div>
+        <p>As you can see the initialization code for a Weball weblet is identical to the the normal Weblets. #
+            Resources then are streamed from &lt;contextroot&gt;/&lt;resourceRoot&gt;!</p>
+
+        <p>ie: </p>
+
+        <div class="source"><pre>
         &lt;img src=&quot;&lt;%=jspweblet.getURL(&quot;weblets.webapp&quot;, &quot;/helloworld.png&quot;)%&gt;&quot; /&gt;
 </pre>
-</div>
-<p>Would stream the resource from:</p>
-<div class="source"><pre>
+        </div>
+        <p>Would stream the resource from:</p>
+
+        <div class="source"><pre>
         &lt;contextroot&gt;/resources/helloworld.png
 </pre>
-</div>
-<p>Security: Security can be a big issue with Webapp weblets. If you set your resourceRoot to the context root you can basically expose every file there is except the ones in the META-INF and WEB-INF dirs. It is advicable to either set your resourceRoot to a sandbox directory, which is then under jailbreak protection and host only resources there. Or to use the weblets whitelist feature for the resource types you want to expose!</p>
-</div>
+        </div>
+        <p>Security: Security can be a big issue with Webapp weblets. If you set your resourceRoot to the context root
+            you can basically expose every file there is except the ones in the META-INF and WEB-INF dirs. It is
+            advicable to either set your resourceRoot to a sandbox directory, which is then under jailbreak protection
+            and host only resources there. Or to use the weblets whitelist feature for the resource types you want to
+            expose!</p>
+    </div>
 </div>
 <div class="section"><h3>Multiple Weblets per weblets config</h3>
-<p>Of course this is also possible the following configuration should give an example on how to do this</p>
-<div class="source"><pre>
+
+    <p>Of course this is also possible the following configuration should give an example on how to do this</p>
+
+    <div class="source"><pre>
         &lt;weblets-config xmlns=&quot;http://weblets.dev.java.net/config&quot;&gt;
 
                 &lt;weblet&gt;
@@ -271,31 +396,42 @@ function</p>
           
         &lt;/weblets-config&gt;
 </pre>
-</div>
-<p><i>Code: Multiple Weblets per Configuration</i>
-</p>
+    </div>
+    <p><i>Code: Multiple Weblets per Configuration</i>
+    </p>
 </div>
 <div class="section"><h3>Multiple Weblets Config Files</h3>
-<p>Since <tt>Weblets</tt>
- 1.1 it has become possible to have multiple configuration files within one weblets package.</p>
-<p>The <tt>Weblets</tt>
- config files themselves are the same as with a one file configuration. Certain naming conventions, however have to be applied to enable this possibility.</p>
-<ul><li>There must be at least one META-INF/<tt>weblets-config.xml</tt>
- or META-INF/Manifest.mf this marks the package location of all other <tt>Weblets</tt>
- configuration files.</li>
-<li>The naming of the configuration files must follow the regexp pattern META-INF\/.*weblets-config.*\.xml IE: <tt>META-INF/1-weblets-config-1.xml</tt>
- is a valid name <tt>META-INF/myconfig.xml</tt>
- however is not!<p><i>Note to WAS 6.1 users</i>
-: A bug in WAS prevents the usage of the <tt>Manifest.mf file</tt>
- as location point for your weblets configuration. Please use the <tt>weblets-config.xml</tt>
- only as location point for additional configuration files in this case!</p>
-</li>
-</ul>
+
+    <p>Since <tt>Weblets</tt>
+        1.1 it has become possible to have multiple configuration files within one weblets package.</p>
+
+    <p>The <tt>Weblets</tt>
+        config files themselves are the same as with a one file configuration. Certain naming conventions, however have
+        to be applied to enable this possibility.</p>
+    <ul>
+        <li>There must be at least one META-INF/<tt>weblets-config.xml</tt>
+            or META-INF/Manifest.mf this marks the package location of all other <tt>Weblets</tt>
+            configuration files.
+        </li>
+        <li>The naming of the configuration files must follow the regexp pattern META-INF\/.*weblets-config.*\.xml IE:
+            <tt>META-INF/1-weblets-config-1.xml</tt>
+            is a valid name <tt>META-INF/myconfig.xml</tt>
+            however is not!<p><i>Note to WAS 6.1 users</i>
+                : A bug in WAS prevents the usage of the <tt>Manifest.mf file</tt>
+                as location point for your weblets configuration. Please use the <tt>weblets-config.xml</tt>
+                only as location point for additional configuration files in this case!</p>
+        </li>
+    </ul>
 </div>
 <div class="section"><h3>Mime Mapping</h3>
-<p>Weblets per default uses the default mimetype of the underlying container by serving resources, however some containers do not have their own mimetypes or you want to set your own mimetypes for certain files on a resource bundle level. Since Weblets 1.1, it is possible to do mime type overrides for serving resources.</p>
-<p>You simply can add or override your own mimetypes the following way:</p>
-<div class="source"><pre>        &lt;weblet&gt;
+
+    <p>Weblets per default uses the default mimetype of the underlying container by serving resources, however some
+        containers do not have their own mimetypes or you want to set your own mimetypes for certain files on a resource
+        bundle level. Since Weblets 1.1, it is possible to do mime type overrides for serving resources.</p>
+
+    <p>You simply can add or override your own mimetypes the following way:</p>
+
+    <div class="source"><pre>        &lt;weblet&gt;
                 &lt;weblet-name&gt;weblets.webapp&lt;/weblet-name&gt;
                 &lt;weblet-class&gt;net.java.dev.weblets.packaged.WebappWeblet&lt;/weblet-class&gt;
                 &lt;!-- dedicated mime mapping override --&gt;
@@ -308,61 +444,77 @@ function</p>
                         &lt;mime-type&gt;image/png&lt;/mime-type&gt;
                 &lt;/mime-mapping&gt;    
         &lt;/weblet&gt;</pre>
-</div>
-<p><i>Code: Mime Type overrides</i>
-</p>
-<p>The optional mime mapping parameters provide whatever mime mapping overrides you need in your resource bundle!</p>
+    </div>
+    <p><i>Code: Mime Type overrides</i>
+    </p>
+
+    <p>The optional mime mapping parameters provide whatever mime mapping overrides you need in your resource
+        bundle!</p>
 </div>
 <div class="section"><h3>Security</h3>
-<p>Weblets itself come with a few security addons which try to prevent jailbreaking from programs out of the sandbox the weblets provide for serving resources. Additionally you can add file locks so that only certain resources can be served. As of Weblets 1.1 file locking has been added optionally, if it is left out no file type locks are enabled and all resources within the Weblet resource pack can be served.</p>
+
+    <p>Weblets itself come with a few security addons which try to prevent jailbreaking from programs out of the sandbox
+        the weblets provide for serving resources. Additionally you can add file locks so that only certain resources
+        can be served. As of Weblets 1.1 file locking has been added optionally, if it is left out no file type locks
+        are enabled and all resources within the Weblet resource pack can be served.</p>
 </div>
 </div>
 <div class="section"><h2>Following configuration example shows how to enabled file type locking:</h2>
-<div class="source"><pre>        &lt;init-param&gt;
+
+    <div class="source"><pre>        &lt;init-param&gt;
                 &lt;param-name&gt;allowedResources&lt;/param-name&gt;
                 &lt;param-value&gt; jpg, png &lt;/param-value&gt;
         &lt;/init-param&gt;   </pre>
-</div>
-<p><i>Code: File Type Whitelists</i>
-</p>
-<p>This init parameter allows only jpg and png files to be served, all other filetype accesses served from this Weblet would result in a security error!</p>
+    </div>
+    <p><i>Code: File Type Whitelists</i>
+    </p>
+
+    <p>This init parameter allows only jpg and png files to be served, all other filetype accesses served from this
+        Weblet would result in a security error!</p>
 </div>
 <div class="section"><h2>Summary</h2>
-<p>Packaging of <tt>Weblets</tt>
- is very easy it simply is a matter of adding a weblet-config.xml at the correct locations. You can use expanded dirs or simply jar files. Check out the weblets-exampleweblet subproject of your <tt>Weblets</tt>
- installation for an extensive packaging example including maven builds! Also check out the dojo demo in the weblets-demo application for an extensive example on how to use the packed resources in your own applications.</p>
-<hr />
-<div class="section"><h3>Contents</h3>
-<ol type="1"><li><a href="./index.html"> Users documentation: Index </a>
-</li>
-<li><a href="./whatsnew.html"> What is new in this release </a>
-</li>
-<li><a href="./gettingstarted.html"> Users documentation: Getting started </a>
-</li>
-<li><a href="./setup.html"> Users documentation: Setup guide </a>
-</li>
-<li><a href="./generalapi.html"> Users documentation: Introduction to the api patterns </a>
-</li>
-<li><a href="./usagejsp.html"> Users documentation: JSP Weblets usage guide </a>
-</li>
-<li><a href="./usagejava.html"> Users documentation: Servlet Weblets usage guide </a>
-</li>
-<li><a href="./usagejsf.html"> Users documentation: JSF Weblets usage guide </a>
-</li>
-<li><a href="./usageresources.html"> Users documentation: Resources Weblets usage guide </a>
-</li>
-<li><a href="./packingweblets.html"> Users documentation: Weblets packaging guide </a>
-</li>
-<li><a href="./reporting.html"> Users documentation: Weblets reporting guide </a>
-</li>
-<li><a href="./programmingweblets.html"> Developers documentation: Programming Weblets </a>
-</li>
-<li><a href="./faq.html"> Users documentation: Weblets general FAQ </a>
-</li>
-</ol>
-</div>
-</div>
 
+    <p>Packaging of <tt>Weblets</tt>
+        is very easy it simply is a matter of adding a weblet-config.xml at the correct locations. You can use expanded
+        dirs or simply jar files. Check out the weblets-exampleweblet subproject of your <tt>Weblets</tt>
+        installation for an extensive packaging example including maven builds! Also check out the dojo demo in the
+        weblets-demo application for an extensive example on how to use the packed resources in your own applications.
+    </p>
+    <hr/>
+    <div class="section"><h3>Contents</h3>
+        <ol type="1">
+            <li><a href="./index.html"> Users documentation: Index </a>
+            </li>
+            <li><a href="./whatsnew.html"> What is new in this release </a>
+            </li>
+            <li><a href="./gettingstarted.html"> Users documentation: Getting started </a>
+            </li>
+            <li><a href="./setup.html"> Users documentation: Setup guide </a>
+            </li>
+            <li><a href="./generalapi.html"> Users documentation: Introduction to the api patterns </a>
+            </li>
+            <li><a href="./usagejsp.html"> Users documentation: JSP Weblets usage guide </a>
+            </li>
+            <li><a href="./usagejava.html"> Users documentation: Servlet Weblets usage guide </a>
+            </li>
+            <li><a href="./usagejsf.html"> Users documentation: JSF Weblets usage guide </a>
+            </li>
+            <li><a href="./usageresources.html"> Users documentation: Resources Weblets usage guide </a>
+            </li>
+            <li><a href="./packingweblets.html"> Users documentation: Weblets packaging guide </a>
+            </li>
+            <li><a href="./reporting.html"> Users documentation: Weblets reporting guide </a>
+            </li>
+            <li><a href="./programmingweblets.html"> Developers documentation: Programming Weblets </a>
+            </li>
+            <li><a href="./faq.html"> Users documentation: Weblets general FAQ </a>
+            </li>
+        </ol>
     </div>
-  </body>
+</div>
+</div>
+</div>
+</section>
+</div>
+</body>
 </html>
