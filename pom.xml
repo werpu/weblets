@@ -24,24 +24,6 @@
 
     <inceptionYear>2011</inceptionYear>
 
-    <!--
-	<distributionManagement>
-		<repository>
-			<id>java.net-m2-repository</id>
-			<url>java-net:/maven2-repository/trunk/www/repository/</url>
-		</repository>
-	</distributionManagement>
-    -->
-
-    <!--
-     <repositories>
-         <repository>
-             <id>maven2-repository.dev.java.net</id>
-             <name>Java.net Repository for Maven</name>
-             <url>http://download.java.net/maven/2/</url>
-         </repository>
-     </repositories>
-    -->
     <mailingLists>
         <mailingList>
             <name>Weblets User List</name>
@@ -158,11 +140,13 @@
         <dependency>
             <groupId>commons-digester</groupId>
             <artifactId>commons-digester</artifactId>
+            <version>[2.1,)</version>
         </dependency>
 
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
+            <version>[1.1.1,)</version>
         </dependency>
     </dependencies>
 
@@ -170,22 +154,9 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <configuration>
-                    <siteDirectory>${project.basedir}/www/tmp</siteDirectory>
+                    <siteDirectory>${basedir}/www/tmp</siteDirectory>
                 </configuration>
                 <!--
                     <configuration>
@@ -212,9 +183,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <configuration>
-                    <tagBase>https://weblets.dev.java.net/svn/weblets/tags</tagBase>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -244,13 +212,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <extensions>
-            <extension>
-                <groupId>org.jvnet.wagon-svn</groupId>
-                <artifactId>wagon-svn</artifactId>
-                <version>1.9</version>
-            </extension>
-        </extensions>
     </build>
 
 </project>
