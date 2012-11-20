@@ -7,10 +7,10 @@
     <moduleSets>
         <moduleSet>
             <includes>
-                <include>net.java.dev.weblets:weblets-api</include>
-                <include>net.java.dev.weblets:weblets-impl</include>
-                <include>net.java.dev.weblets:weblets-exampleweblet</include>
-                <include>net.java.dev.weblets:weblets-demo</include>
+                <include>com.github.weblets:weblets-api</include>
+                <include>com.github.weblets:weblets-impl</include>
+                <include>com.github.weblets:weblets-exampleweblet</include>
+                <include>com.github.weblets:weblets-demo</include>
             </includes>
             <binaries>
                 <outputDirectory>modules/${artifactId}</outputDirectory>

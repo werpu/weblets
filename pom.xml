@@ -17,6 +17,12 @@
     <description>Weblets</description>
     <url>http://www.github.com/werpu/weblets</url>
 
+    <properties>
+        <myfaces.version>2.1.8</myfaces.version>
+        <commons-digester.version>[1.5,)</commons-digester.version>
+        <commons-logging.version>[1.1.1,)</commons-logging.version>
+    </properties>
+
     <issueManagement>
         <system>Issue Tracker</system>
         <url>https://github.com/werpu/weblets/issues</url>
@@ -42,55 +48,55 @@
             <id>jfallows</id>
             <name>John R. Fallows</name>
             <email>john.r.fallows@gmail.com</email>
-            <url />
-            <organization />
-            <organizationUrl />
+            <url/>
+            <organization/>
+            <organizationUrl/>
             <roles>
                 <role>Project Owner</role>
             </roles>
             <timezone>-8</timezone>
-            <properties />
+            <properties/>
         </developer>
 
         <developer>
             <id>jjacobi</id>
             <name>Jonas Jacobi</name>
             <email>jonas.jacobi@gmail.com</email>
-            <url />
-            <organization />
-            <organizationUrl />
+            <url/>
+            <organization/>
+            <organizationUrl/>
             <roles>
                 <role>Developer</role>
             </roles>
             <timezone>-8</timezone>
-            <properties />
+            <properties/>
         </developer>
 
         <developer>
             <id>mwessendorf</id>
             <name>Matthias Wessendorf</name>
-            <email />
-            <url />
-            <organization />
-            <organizationUrl />
+            <email/>
+            <url/>
+            <organization/>
+            <organizationUrl/>
             <roles>
                 <role>Developer</role>
             </roles>
             <timezone>1</timezone>
-            <properties />
+            <properties/>
         </developer>
         <developer>
             <id>werpu</id>
             <name>Werner Punz</name>
             <email>werner.punz@gmail.com</email>
-            <url />
-            <organization />
-            <organizationUrl />
+            <url/>
+            <organization/>
+            <organizationUrl/>
             <roles>
                 <role>Project Owner</role>
             </roles>
             <timezone>1</timezone>
-            <properties />
+            <properties/>
         </developer>
     </developers>
 
@@ -125,13 +131,13 @@
             <dependency>
                 <groupId>commons-digester</groupId>
                 <artifactId>commons-digester</artifactId>
-                <version>[1.5,)</version>
+                <version>${commons-digester.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>commons-logging</groupId>
                 <artifactId>commons-logging</artifactId>
-                <version>[1.1.1,)</version>
+                <version>${commons-logging.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -140,13 +146,13 @@
         <dependency>
             <groupId>commons-digester</groupId>
             <artifactId>commons-digester</artifactId>
-            <version>[2.1,)</version>
+            <version>${commons-digester.version}</version>
         </dependency>
 
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>[1.1.1,)</version>
+            <version>${commons-logging.version}</version>
         </dependency>
     </dependencies>
 
@@ -187,6 +193,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -210,6 +217,17 @@
                         <descriptor>src/main/assembly/dep.xml</descriptor>
                     </descriptors>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <!-- this is used for inheritance merges -->
+                        <phase>package</phase>
+                        <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

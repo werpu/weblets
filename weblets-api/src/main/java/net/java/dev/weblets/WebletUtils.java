@@ -71,6 +71,7 @@ public class WebletUtils {
         return instance.getResourceStream(weblet, pathInfo, mimeType);
     }
 
+
     /**
      * kind of a weird construct but definitely faster than doing all the calls over introspection, the internal contract is defined by the IJSFWebletsUtils
      * interface

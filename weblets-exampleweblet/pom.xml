@@ -8,7 +8,10 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
+    <groupId>com.github.weblets</groupId>
 	<artifactId>weblets-exampleweblet</artifactId>
+    <version>1.3-SNAPSHOT</version>
+
 	<packaging>jar</packaging>
 
 	<name>Weblets Example Weblet</name>

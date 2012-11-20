@@ -90,7 +90,7 @@ public class WebletResponseImpl extends WebletResponseBase {
 	}
 
     public void setContentLength(long length) {
-        ((HttpServletResponse)_httpResponse).addHeader("Conten-Length", Long.toString(length));
+        ((HttpServletResponse)_httpResponse).addHeader("Content-Length", Long.toString(length));
     }
 
 	protected void setContentVersionImpl(String contentVersion, long timeout) {
