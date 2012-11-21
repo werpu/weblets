@@ -109,4 +109,16 @@ public interface IResourceloadingUtils {
      * @return
      */
     public ResourceFactory getResourceFactory(WebletConfig config);
+
+    /**
+     * @param webletName
+     * @param webletPath
+     * @param contextPath
+     * @param webletPathInfo
+     * @param ifModifiedSince
+     * @param httpRequest
+     * @return
+     */
+    public WebletRequest createWebletRequest(String webletName, String webletPath, String contextPath, String webletPathInfo,long ifModifiedSince, Object httpRequest);
+
 }

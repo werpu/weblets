@@ -74,6 +74,10 @@ abstract public class WebletContainer {
 
 	abstract public String getResourceUri(String webletName, String pathInfo) throws WebletException;
 
+    abstract public Weblet getWeblet(WebletRequest request);
+
+    abstract public Weblet getWeblet(String webletName);
+
 	/**
 	 * returns the mimetype of the underlying hosting container
 	 * 

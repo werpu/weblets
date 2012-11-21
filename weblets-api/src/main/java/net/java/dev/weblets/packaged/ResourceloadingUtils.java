@@ -56,6 +56,11 @@ public class ResourceloadingUtils implements IResourceloadingUtils {
         return _delegate.getResourceFactory(config);
     }
 
+    public WebletRequest createWebletRequest(String webletName, String webletPath, String contextPath, String webletPathInfo,long ifModifiedSince, Object httpRequest) {
+        return _delegate.createWebletRequest(webletName, webletPath, contextPath, webletPathInfo, ifModifiedSince, httpRequest);
+    }
+
+
     public static IResourceloadingUtils getInstance() {
         if (_instance == null) {
             synchronized (IResourceloadingUtils.class) {

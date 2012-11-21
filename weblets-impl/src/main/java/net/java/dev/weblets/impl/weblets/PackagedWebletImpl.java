@@ -49,6 +49,10 @@ public class PackagedWebletImpl extends Weblet {
         ResourceloadingUtils.getInstance().loadResource(getWebletConfig(), request, response, _resolver, copyProvider);
     }
 
+    public URL getResourceURL(WebletRequest request) {
+        return ResourceloadingUtils.getInstance().getResourceUrl(request, request.getWebletPath());
+    }
+
     /**
      * Second Weblet entry point the service stream method is used internally for Weblets 1.1 by our asynchronous reporting interface <p/> It basically does the
      * same as service but must be servlet independend (aka it cannot rely on a base servlet or the external request of the weblet request object <p/> If you do

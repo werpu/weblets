@@ -1,5 +1,6 @@
 package net.java.dev.weblets.impl.util;
 
+import net.java.dev.weblets.impl.servlets.WebletRequestImpl;
 import net.java.dev.weblets.packaged.IResourceloadingUtils;
 import net.java.dev.weblets.util.VersioningUtils;
 import net.java.dev.weblets.util.CopyStrategy;
@@ -86,6 +87,11 @@ public class ResourceloadingUtilsImpl implements IResourceloadingUtils {
         return url;
     }
 
+    public WebletRequest createWebletRequest(String webletName, String webletPath, String contextPath, String webletPathInfo,long ifModifiedSince, Object httpRequest) {
+        WebletRequest webRequest = new WebletRequestImpl(webletName, webletPath, contextPath, webletPathInfo, ifModifiedSince, httpRequest);
+        return webRequest;
+    }
+
     /* entry cache per session */
     private Map getResourceURLCache(WebletRequest request) {
         HttpSession session = ((HttpServletRequest) request.getExternalRequest()).getSession();
@@ -155,6 +161,7 @@ public class ResourceloadingUtilsImpl implements IResourceloadingUtils {
      */
     public void loadResource(WebletConfig config, WebletRequest request, WebletResponse response, ResourceResolver resourceResolver, CopyStrategy copyStrategy) throws IOException {
         WebletResource resource = getResourceFactory(config).getResource(request, resourceResolver, true);   /*we cache but for now now temp file*/
+
         if (resource == null) {
             response.setStatus(WebletResponse.SC_NOT_FOUND);
             return;
