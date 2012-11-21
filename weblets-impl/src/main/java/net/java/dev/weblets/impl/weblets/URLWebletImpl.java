@@ -35,6 +35,13 @@ public class URLWebletImpl extends Weblet {
         ResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyProvider);
     }
 
+    @Override
+    public URL getResourceURL(WebletRequest request) throws IOException
+    {
+        String resourcePath = _resourceRoot + request.getPathInfo();
+        return new URL(resourcePath);
+    }
+
     public InputStream serviceStream(String webletname, String mimetype) throws IOException, WebletException {
         return null; // To change body of implemented methods use File | Settings | File Templates.
     }

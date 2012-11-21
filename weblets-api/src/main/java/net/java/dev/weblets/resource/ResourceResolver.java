@@ -36,7 +36,7 @@ public interface ResourceResolver {
      * @throws IOException in case of an error
      * @deprecated
      */
-    public URL getURL(String mimetype, String pathInfo) throws IOException;
+    public URL getURL(String pathInfo) throws IOException;
 
     /**
      * returns a resource upon a given request and mimetype

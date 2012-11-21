@@ -49,8 +49,10 @@ public class PackagedWebletImpl extends Weblet {
         ResourceloadingUtils.getInstance().loadResource(getWebletConfig(), request, response, _resolver, copyProvider);
     }
 
-    public URL getResourceURL(WebletRequest request) {
-        return ResourceloadingUtils.getInstance().getResourceUrl(request, request.getWebletPath());
+    public URL getResourceURL(WebletRequest request) throws IOException {
+        String resourcePath = _resourceRoot + request.getPathInfo();
+
+        return _resolver.getURL(request.getPathInfo());
     }
 
     /**
@@ -71,7 +73,7 @@ public class PackagedWebletImpl extends Weblet {
         // weblet: functions
         //TODO add the new resolver API here as well!
         CopyStrategyImpl copyProvider = new CopyStrategyImpl();
-        URL url = _resolver.getURL(mimetype, pathInfo);
+        URL url = _resolver.getURL(pathInfo);
         if (url == null) //TODO add shadow url mock data here
             return null;
         // our utils should handle the standard case

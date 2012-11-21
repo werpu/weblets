@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * a weblet for serving the sourcecode
@@ -34,6 +35,16 @@ public class SourcecodeWeblet extends Weblet {
         response.setContentType("text/html");
         FileInputStream fin = new FileInputStream(resourcePath);
         ResourceloadingUtils.getInstance().loadResourceFromStream(getWebletConfig(), request, response, copyProvider, fin);
+    }
+
+    @Override
+    public URL getResourceURL(WebletRequest request) throws IOException
+    {
+        HttpServletRequest httpRequest = (HttpServletRequest) request.getExternalRequest();
+        StringBuffer fullAddr = new StringBuffer(255);
+        fullAddr.append(httpRequest.getSession().getServletContext().getRealPath(request.getPathInfo()));
+        String resourcePath = fullAddr.toString();
+        return new URL(resourcePath);
     }
 
     /**

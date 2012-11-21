@@ -9,6 +9,7 @@ import net.java.dev.weblets.resource.WebappResourceResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * @author werpu
@@ -56,6 +57,13 @@ public class WebappWebletImpl extends Weblet {
         assertSecurity(resourcePath); //additional security constraints!
         CopyStrategy copyProvider = new CopyStrategyImpl();
         ResourceloadingUtils.getInstance().loadResource(getWebletConfig(), request, response, _urlResolver, copyProvider);
+    }
+
+    @Override
+    public URL getResourceURL(WebletRequest request) throws IOException
+    {
+        String resourcePath = _resourceRoot + request.getPathInfo();
+        return new URL(resourcePath);
     }
 
     private void assertSecurity(String resourcePath) {

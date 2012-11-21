@@ -4,6 +4,7 @@ import net.java.dev.weblets.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * Weblet for having redirection mechanisms to have resources externally and do not trigger the weblet resource loading at all!
@@ -40,6 +41,12 @@ public class RedirectionWeblet extends Weblet {
     public void service(WebletRequest request, WebletResponse response) throws IOException, WebletException {
         // we do nothing here since our indirection
         // api will take care of it
+    }
+
+    @Override
+    public URL getResourceURL(WebletRequest request) throws IOException
+    {
+        throw new RuntimeException("Not implemented");
     }
 
     public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException {

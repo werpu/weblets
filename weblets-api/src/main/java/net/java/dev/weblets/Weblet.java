@@ -17,6 +17,7 @@ package net.java.dev.weblets;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * Basic weblet class all resource loading handlers must extend this class
@@ -39,6 +40,8 @@ abstract public class Weblet {
     }
 
     abstract public void service(WebletRequest request, WebletResponse response) throws IOException, WebletException;
+
+    public abstract URL getResourceURL(WebletRequest request) throws IOException;
 
     /**
      * Second Weblet entry point the service stream method is used internally for Weblets 1.1 by our asynchronous reporting interface

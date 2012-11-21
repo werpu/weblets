@@ -5,6 +5,7 @@ import net.java.dev.weblets.util.ServiceLoader;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * @author werpu
@@ -41,6 +42,12 @@ public class ServiceLoadingWeblet extends Weblet {
 
     public void service(WebletRequest request, WebletResponse response) throws IOException {
         _instance.service(request, response);
+    }
+
+    @Override
+    public URL getResourceURL(WebletRequest request) throws IOException
+    {
+        return _instance.getResourceURL(request);
     }
 
     public WebletConfig getWebletConfig() {

@@ -48,7 +48,7 @@ public class ClasspathResourceResolver implements ResourceResolver {
      * @return a valid url
      * @throws IOException in case of an error
      */
-    public URL getURL(String mimetype, String pathInfo) throws IOException {
+    public URL getURL( String pathInfo) throws IOException {
         String resourcePath = _resourceRoot + pathInfo;
         URL url = ResourceloadingUtils.getInstance().getResourceUrl(resourcePath);
         return url;
@@ -69,7 +69,7 @@ public class ClasspathResourceResolver implements ResourceResolver {
     }
 
     public WebletResource getResource(String mimetype, String pathInfo) throws IOException {
-        URL url = getURL(mimetype, pathInfo);
+        URL url = getURL( pathInfo);
         if (url == null) {
             return null;
         }

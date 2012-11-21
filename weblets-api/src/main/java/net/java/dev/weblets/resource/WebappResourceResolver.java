@@ -77,8 +77,9 @@ public class WebappResourceResolver implements ResourceResolver {
      * @return a valid url
      * @throws IOException in case of an error
      */
-    public URL getURL(String mimetype, String pathInfo) throws IOException {
+    public URL getURL(String pathInfo) throws IOException {
         //not implemented yet
+        //TODO implement this
         return null;
     }
 }

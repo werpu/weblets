@@ -15,31 +15,28 @@
  */
 package net.java.dev.weblets.impl;
 
-import javax.servlet.ServletRequest;
-
 import net.java.dev.weblets.WebletRequest;
 
-public class WebletRequestBase implements WebletRequest {
-    public WebletRequestBase(String webletName, String webletPath, String contextPath, String pathInfo, long ifModifiedSince, Object externalRequest /*
-																																					 * we cannot
-																																					 * use a
-																																					 * generic
-																																					 * Request
-																																					 * interface
-																																					 * since
-																																					 * portlets
-																																					 * again
-																																					 * cook
-																																					 * their own
-																																					 * soup by
-																																					 * not
-																																					 * deriving
-																																					 * from
-																																					 * Servlet
-																																					 * request
-																																					 * !!!
-																																					 */
-    ) {
+public class WebletRequestBase implements WebletRequest
+{
+    /*
+ we cannot use a generic Request interface
+  since
+  portlets
+  again
+  cook
+  their own
+  soup by
+  not
+  deriving
+  from
+  Servlet
+  request
+  !!!
+ */
+    public WebletRequestBase(String webletName, String webletPath, String contextPath, String pathInfo, long ifModifiedSince, Object externalRequest
+    )
+    {
         _webletName = webletName;
         _webletPath = webletPath;
         _contextPath = contextPath;
@@ -48,31 +45,38 @@ public class WebletRequestBase implements WebletRequest {
         _externalRequest = externalRequest;
     }
 
-    public String getWebletName() {
+    public String getWebletName()
+    {
         return _webletName;
     }
 
-    public String getWebletPath() {
+    public String getWebletPath()
+    {
         return _webletPath;
     }
 
-    public String getContextPath() {
+    public String getContextPath()
+    {
         return _contextPath;
     }
 
-    public String getPathInfo() {
+    public String getPathInfo()
+    {
         return _pathInfo;
     }
 
-    public long getIfModifiedSince() {
+    public long getIfModifiedSince()
+    {
         return _ifModifiedSince;
     }
 
-    public String getParameter(String name) {
+    public String getParameter(String name)
+    {
         return null;
     }
 
-    public Object getExternalRequest() {
+    public Object getExternalRequest()
+    {
         return _externalRequest;
     }
 
