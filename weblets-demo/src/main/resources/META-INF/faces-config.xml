@@ -129,5 +129,9 @@
 
     </render-kit>
 
+    <application>
+        <resource-handler>net.java.dev.weblets.sandbox.WebletResourceHandler</resource-handler>
+    </application>
+
 
 </faces-config>
