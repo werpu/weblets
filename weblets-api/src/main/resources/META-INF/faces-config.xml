@@ -1,9 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE faces-config
-        PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
-        "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+        version="2.0">
 
-<faces-config>
+
+
     <managed-bean>
         <managed-bean-name>weblet</managed-bean-name>
         <managed-bean-class>net.java.dev.weblets.FacesElWeblet</managed-bean-class>
@@ -25,5 +27,9 @@
     <lifecycle>
         <phase-listener>net.java.dev.weblets.impl.faces.WebletsPhaseListener</phase-listener>
     </lifecycle>
+
+    <application>
+         <resource-handler>net.java.dev.weblets.WebletResourceHandler</resource-handler>
+     </application>
 
 </faces-config>
