@@ -45,6 +45,11 @@
 
     <h:graphicImage id="yyy5" value="./#{wbl:jsfResource('weblets.demo','/img/icon_alert.gif')}"/>
 
+    <!-- subbundles not yet mit jsf resource requests working
+    <h:outputScript id="loadingBundleScript" library="weblets.demo" name="subbundle/script1.js"  target="body"/>
+    <h:outputScript id="loadingBundleScript2" library="weblets.demo" name="subbundle/script2.js"
+                    rendered="#{wbl:isResourceLoaded('weblets.demo','/subbundle/script2.js')}"  target="body"/>
+    -->
 
 
     <!--
