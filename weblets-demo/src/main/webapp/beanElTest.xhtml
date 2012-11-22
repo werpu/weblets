@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:wbl="http://weblets.dev.java.net/facelet-tags">
+<h:head>
+    <title>Hello World</title>
+</h:head>
+<h:body>
+    test for resource
+    <h:outputText value="#{weblet.resource['weblets.demo']['/welcome.js']}"/>
+    test for an empty resource
+    <h:outputText value="#{weblet.resource['weblets.demo']['']}"/>
+
+    <p>
+        test for url
+        <h:outputText value="#{weblet.url['weblets.demo']['/welcome.js']}"/>
+    </p>
+
+    <h:graphicImage id="yyy" value="#{weblet.resource['weblets.demo']['/img/icon_alert.gif']}"/>
+
+    <h:graphicImage id="yyy2" value="./javax.faces.resource/img/icon_alert.gif.jsf?ln=weblets.demo"/>
+
+    <h:graphicImage id="yyy3" value="#{weblet.jsfURL['weblets.demo']['/img/icon_alert.gif']}"/>
+
+    <h:graphicImage id="yyy4" value="#{wbl:jsfURL('weblets.demo','/img/icon_alert.gif')}"/>
+
+    <h:graphicImage id="yyy5" value="./#{wbl:jsfResource('weblets.demo','/img/icon_alert.gif')}"/>
+
+    <!--
+       we make a test include of jsf.js to see if our resource handler
+       cooperates properly with others
+    -->
+    <h:outputScript name="jsf.js" library="javax.faces" target="head"/>
+
+    <h:outputLink value='#{weblet.url[ "weblets.source"]["/jsfeltest.jsp"]}' target="_new">
+        <h:outputFormat
+                value="[Get the page source]"/>
+    </h:outputLink>
+
+</h:body>
+</html>

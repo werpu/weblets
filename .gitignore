@@ -3,4 +3,5 @@
 /.project
 *.iml
 *.iwp
-
+.idea
+atlassian-ide-plugin.xml
