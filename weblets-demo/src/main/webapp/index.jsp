@@ -44,7 +44,8 @@ Author : werpu
             <a href="./demojsp2.jspx">A simple weblet include via an el function</a>
         </li>
         <li>
-            <a href="./beanElTest.jsf">A simple weblet include via a jsf managed bean map</a>
+            <a href="./beanElTest.jsf">A simple weblet example showing various means of accessing
+                the weblets resources via jsf</a>
         </li>
         <li>
             <a href="./faces/outputCustom.jspx">A simple demo of a jsf control utilizing weblets</a>
