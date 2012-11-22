@@ -1,6 +1,5 @@
 package net.java.dev.weblets;
 
-
 import javax.faces.context.FacesContext;
 
 /**
@@ -12,7 +11,8 @@ import javax.faces.context.FacesContext;
  * for easier handling within
  * a faces EL weblet context!
  */
-public class FaceletELWebletUtils {
+public class FaceletELWebletUtils
+{
 
     /**
      * returns the relative url without the context path
@@ -21,7 +21,8 @@ public class FaceletELWebletUtils {
      * @param pathInfo the path info to the resource
      * @return a url with the current web-app context path to the weblet
      */
-    public static String getResource(String weblet, String pathInfo) {
+    public static String getResource(String weblet, String pathInfo)
+    {
         return FacesWebletUtils.getResource(FacesContext.getCurrentInstance(), weblet, pathInfo);
     }
 
@@ -32,7 +33,8 @@ public class FaceletELWebletUtils {
      * @param pathInfo the path info
      * @return a url with the current web-app context path to the weblet
      */
-    public static String getURL(String weblet, String pathInfo) {
+    public static String getURL(String weblet, String pathInfo)
+    {
         return FacesWebletUtils.getURL(FacesContext.getCurrentInstance(), weblet, pathInfo);
     }
 
@@ -46,7 +48,8 @@ public class FaceletELWebletUtils {
      * @param suppressDuplicates
      * @return
      */
-    public static String getResource(String weblet, String pathInfo, boolean suppressDuplicates) {
+    public static String getResource(String weblet, String pathInfo, boolean suppressDuplicates)
+    {
         return FacesWebletUtils.getResource(FacesContext.getCurrentInstance(), weblet, pathInfo, suppressDuplicates);
     }
 
@@ -60,7 +63,8 @@ public class FaceletELWebletUtils {
      * @param suppressDuplicates
      * @return
      */
-    public static String getURL(String weblet, String pathInfo, boolean suppressDuplicates) {
+    public static String getURL(String weblet, String pathInfo, boolean suppressDuplicates)
+    {
         return FacesWebletUtils.getURL(FacesContext.getCurrentInstance(), weblet, pathInfo, suppressDuplicates);
     }
 
@@ -71,7 +75,19 @@ public class FaceletELWebletUtils {
      * @param pathInfo the pathInfo
      * @return
      */
-    public static boolean isResourceLoaded(String weblet, String pathInfo) {
+    public static boolean isResourceLoaded(String weblet, String pathInfo)
+    {
         return FacesWebletUtils.isResourceLoaded(FacesContext.getCurrentInstance(), weblet, pathInfo);
     }
+
+    public static String getJSFResource(String weblet, String pathInfo)
+    {
+        return FacesWebletUtils.getJSFResource(FacesContext.getCurrentInstance(), weblet, pathInfo);
+    }
+
+    public static String getJSFURL(String weblet, String pathInfo)
+    {
+        return FacesWebletUtils.getJSFURL(FacesContext.getCurrentInstance(), weblet, pathInfo);
+    }
+
 }

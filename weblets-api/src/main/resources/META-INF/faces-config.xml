@@ -9,6 +9,14 @@
         <managed-bean-class>net.java.dev.weblets.FacesElWeblet</managed-bean-class>
         <managed-bean-scope>application</managed-bean-scope>
     </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>webletUtils</managed-bean-name>
+        <managed-bean-class>net.java.dev.weblets.FaceletELWebletUtils</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+
+
     <managed-bean>
         <managed-bean-name>webletsRequestSingletonHolder</managed-bean-name>
         <managed-bean-class>net.java.dev.weblets.resource.RequestSingletonHolderImpl</managed-bean-class>

@@ -9,29 +9,40 @@ import java.util.Map;
  *
  * @author: Werner Punz
  */
-public class FacesElWeblet {
+public class FacesElWeblet
+{
     private FacesElWeblet _delegate = null;
 
-    public FacesElWeblet() {
+    public FacesElWeblet()
+    {
         super();
     }
 
-    private void init() {
-        synchronized (FacesElWeblet.class) {
-            if (_delegate == null) {
+    private void init()
+    {
+        synchronized (FacesElWeblet.class)
+        {
+            if (_delegate == null)
+            {
                 Class instantiation = ServiceLoader.loadService(FacesElWeblet.class.getName());
-                try {
+                try
+                {
                     _delegate = (FacesElWeblet) instantiation.newInstance();
-                } catch (InstantiationException e) {
+                }
+                catch (InstantiationException e)
+                {
                     throw new WebletException("Error instantiating FacesElWeblet", e);
-                } catch (IllegalAccessException e) {
+                }
+                catch (IllegalAccessException e)
+                {
                     throw new WebletException("Error instantiating FacesElWeblet", e);
                 }
             }
         }
     }
 
-    public Map getResource() {
+    public Map getResource()
+    {
         if (_delegate == null)
             init();
         return _delegate.getResource();
@@ -42,9 +53,25 @@ public class FacesElWeblet {
      *
      * @return
      */
-    public Map getUrl() {
+    public Map getUrl()
+    {
         if (_delegate == null)
             init();
         return _delegate.getUrl();
     }
+
+    public Map getJsfURL()
+    {
+        if (_delegate == null)
+            init();
+        return _delegate.getJsfURL();
+    }
+
+    public Map getJsfResource()
+    {
+        if (_delegate == null)
+            init();
+        return _delegate.getJsfResource();
+    }
+
 }
