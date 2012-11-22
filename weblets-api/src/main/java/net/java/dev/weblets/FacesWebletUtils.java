@@ -95,6 +95,9 @@ public class FacesWebletUtils
         ResourceHandler handler = ctx.getApplication().getResourceHandler();
 
         Resource resource = handler.createResource(pathInfo, weblet);
+        if(resource == null)  {
+            throw new WebletException("Resource with weblet: "+weblet +" and pathInfo: "+pathInfo + " not found");
+        }
         String requestURL = resource.getRequestPath();
         String contextPath = ctx.getExternalContext().getRequestContextPath();
         if (requestURL.startsWith(contextPath))
@@ -116,8 +119,11 @@ public class FacesWebletUtils
     public static String getJSFURL(FacesContext ctx, String weblet, String pathInfo)
     {
         ResourceHandler handler = ctx.getApplication().getResourceHandler();
-
         Resource resource = handler.createResource(pathInfo, weblet);
+        if(resource == null)  {
+            throw new WebletException("Resource with weblet:"+weblet +" and pathInfo "+pathInfo + "not found");
+        }
+
         return resource.getRequestPath();
     }
 

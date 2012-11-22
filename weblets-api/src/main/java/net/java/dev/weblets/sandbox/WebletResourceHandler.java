@@ -19,6 +19,7 @@
 
 package net.java.dev.weblets.sandbox;
 
+import net.java.dev.weblets.WebletException;
 import net.java.dev.weblets.WebletUtils;
 
 import javax.faces.application.Resource;
@@ -41,8 +42,17 @@ public class WebletResourceHandler extends ResourceHandlerWrapper
     {
         Resource res = super.createResource(resourceName, libraryName);
         if (res != null) return res;
-        String resourceURL = WebletUtils.getURL(libraryName, resourceName);
-        return new WebletResource(libraryName, resourceName);
+        try
+        {
+            String resourceURL = WebletUtils.getURL(libraryName, resourceName);
+            return new WebletResource(libraryName, resourceName);
+        }
+        catch (WebletException ex)
+        {
+            //no weblet found we return null to be in accordance with the jsf spec
+            return null;
+        }
+
     }
 
     @Override
@@ -50,8 +60,17 @@ public class WebletResourceHandler extends ResourceHandlerWrapper
     {
         Resource res = super.createResource(resourceName, libraryName, contentType);
         if (res != null) return res;
-        String resourceURL = WebletUtils.getURL(libraryName, resourceName);
-        return new WebletResource(libraryName, resourceName, contentType);
+        try
+        {
+            String resourceURL = WebletUtils.getURL(libraryName, resourceName);
+            return new WebletResource(libraryName, resourceName, contentType);
+        }
+        catch (WebletException ex)
+        {
+            //no weblet found we return null to be in accordance with the jsf spec
+            return null;
+        }
+
     }
 
     public WebletResourceHandler(ResourceHandler wrapped)
