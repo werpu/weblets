@@ -25,6 +25,8 @@ import net.java.dev.weblets.WebletRequest;
 import net.java.dev.weblets.WebletResponse;
 import net.java.dev.weblets.WebletUtils;
 import net.java.dev.weblets.packaged.ResourceloadingUtils;
+import net.java.dev.weblets.resource.CachingSubbundleResourceImpl;
+import net.java.dev.weblets.util.StringUtils;
 import net.java.dev.weblets.util.VersioningUtils;
 
 import javax.faces.FacesException;
@@ -55,6 +57,7 @@ public class WebletResource extends Resource
 
     WebletContainer container;
     Weblet weblet;
+    WebletConfig config;
 
     public WebletResource(final String libraryName, String resourceName)
     {
@@ -66,6 +69,7 @@ public class WebletResource extends Resource
         setResourceName(resourceName);
         container = WebletContainer.getInstance();
         weblet = container.getWeblet(getLibraryName());
+        config = weblet.getWebletConfig();
         String pattern = "*." + resourceName.substring(resourceName.lastIndexOf(".") + 1);
         setContentType(container.getContainerMimeType(pattern));
     }
@@ -81,12 +85,39 @@ public class WebletResource extends Resource
         setContentType(contentType);
         container = WebletContainer.getInstance();
         weblet = container.getWeblet(getLibraryName());
+        config = weblet.getWebletConfig();
     }
 
     @Override
     public InputStream getInputStream() throws IOException
     {
-        return WebletUtils.getResourceAsStream(getLibraryName(), "/" + getResourceName(), getContentType());
+        WebletRequest request = ResourceloadingUtils.getInstance().createWebletRequest(getLibraryName(), "",
+                FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath(),"/"+getResourceName(),getIfModifiedSince(),
+                FacesContext.getCurrentInstance().getExternalContext().getRequest());
+
+        return weblet.serviceStream(request);
+        //WebletResource webletResource = ResourceloadingUtils.getInstance().getResourceFactory(config).getResource(request, )
+
+        /**
+         *  WebletResource resource = getResourceFactory(config).getResource(request, resourceResolver, true);
+
+                 if (resource == null) {
+                     response.setStatus(WebletResponse.SC_NOT_FOUND);
+                     return;
+                 } else if (resource != null) {
+                     if (resource instanceof CachingSubbundleResourceImpl) {
+                         //we have a bundle, we have to prepare the files if needed!
+                         CachingSubbundleResourceImpl bundle = (CachingSubbundleResourceImpl) resource;
+                         preprocessSubbundleResource(request, copyStrategy, bundle);
+                     } else {
+                         preprocessResource(request, copyStrategy, resource);
+                     }
+                     loadResourceFromStream(config, request, response, copyStrategy, resource.getInputStream(), resource.lastModified());
+                 }
+         */
+
+
+        //return WebletUtils.getResourceAsStream(getLibraryName(), "/" + getResourceName(), getContentType());
     }
 
     @Override
@@ -119,8 +150,8 @@ public class WebletResource extends Resource
                     .getViewHandler()
                     .getResourceURL(
                             context, mapping +
-                            ResourceHandler.RESOURCE_IDENTIFIER + "/" + getResourceName()
-                            + "?ln=" + getLibraryName() + "&vsn=" + weblet.getWebletConfig().getWebletVersion());
+                            ResourceHandler.RESOURCE_IDENTIFIER + (!StringUtils.isBlank(weblet.getWebletConfig().getWebletVersion())?"/"+weblet.getWebletConfig().getWebletVersion():"" )+ "/" + getResourceName()
+                            + "?ln=" + getLibraryName());
         } else
         {
             return context
@@ -128,8 +159,10 @@ public class WebletResource extends Resource
                     .getViewHandler()
                     .getResourceURL(
                             context,
-                            ResourceHandler.RESOURCE_IDENTIFIER + "/" + getResourceName()
-                                    + mapping + "?ln=" + getLibraryName() + "&vsn=" + weblet.getWebletConfig().getWebletVersion());
+                            ResourceHandler.RESOURCE_IDENTIFIER +
+                                    (!StringUtils.isBlank(weblet.getWebletConfig().getWebletVersion())?"/"+weblet.getWebletConfig().getWebletVersion():"" ) +
+                                    "/" + getResourceName()
+                                    + mapping + "?ln=" + getLibraryName());
         }
     }
 

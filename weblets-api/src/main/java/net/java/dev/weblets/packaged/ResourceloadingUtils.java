@@ -36,6 +36,10 @@ public class ResourceloadingUtils implements IResourceloadingUtils {
         _delegate.loadResource(config, request, response, resourceResolver, copyStrategy);
     }
 
+    public InputStream getResourceInputStream(WebletConfig config, WebletRequest request,  ResourceResolver resourceResolver, CopyStrategy copyStrategy) throws IOException {
+        return _delegate.getResourceInputStream(config, request, resourceResolver, copyStrategy);
+    }
+
     public void loadResourceFromStream(WebletConfig config, WebletRequest request, WebletResponse response, CopyStrategy copyProvider, InputStream in, long resourceLastmodified) throws IOException {
         _delegate.loadResourceFromStream(config, request, response, copyProvider, in, resourceLastmodified);
     }

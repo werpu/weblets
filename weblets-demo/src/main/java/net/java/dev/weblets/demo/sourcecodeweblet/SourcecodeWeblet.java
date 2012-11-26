@@ -19,11 +19,13 @@ import java.net.URL;
  *
  * @author Werner Punz
  */
-public class SourcecodeWeblet extends Weblet {
+public class SourcecodeWeblet extends Weblet
+{
 
     public void service(
             WebletRequest request,
-            WebletResponse response) throws IOException {
+            WebletResponse response) throws IOException
+    {
         WebletRequestBase webletRequest = (WebletRequestBase) request;
         //this might fail on some containers overriding the HttpServlet
         //but for demo purposes this is ok
@@ -47,6 +49,20 @@ public class SourcecodeWeblet extends Weblet {
         return new URL(resourcePath);
     }
 
+    @Override
+    public InputStream serviceStream(WebletRequest request) throws IOException
+    {
+        WebletRequestBase webletRequest = (WebletRequestBase) request;
+        //this might fail on some containers overriding the HttpServlet
+        //but for demo purposes this is ok
+        HttpServletRequest httpRequest = (HttpServletRequest) webletRequest.getExternalRequest();
+        StringBuffer fullAddr = new StringBuffer(255);
+        fullAddr.append(httpRequest.getSession().getServletContext().getRealPath(request.getPathInfo()));
+        String resourcePath = fullAddr.toString();
+        FileInputStream fin = new FileInputStream(resourcePath);
+        return fin;
+    }
+
     /**
      * Handle reporting cases of containers which are initialized
      * but do not have an active request
@@ -57,11 +73,13 @@ public class SourcecodeWeblet extends Weblet {
      * @throws IOException
      * @throws WebletException
      */
-    public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException {
+    public InputStream serviceStream(String pathInfo, String mimetype) throws IOException, WebletException
+    {
         return null;
     }
 
-    public void destroy() {
+    public void destroy()
+    {
         super.destroy();
     }
 }

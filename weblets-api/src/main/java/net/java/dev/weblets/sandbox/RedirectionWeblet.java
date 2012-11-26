@@ -1,6 +1,7 @@
 package net.java.dev.weblets.sandbox;
 
 import net.java.dev.weblets.*;
+import net.java.dev.weblets.resource.ResourceResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,6 +46,12 @@ public class RedirectionWeblet extends Weblet {
 
     @Override
     public URL getResourceURL(WebletRequest request) throws IOException
+    {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public InputStream serviceStream(WebletRequest request) throws IOException
     {
         throw new RuntimeException("Not implemented");
     }

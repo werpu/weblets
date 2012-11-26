@@ -35,6 +35,12 @@ public class URLWebletImpl extends Weblet {
         ResourceloadingUtils.getInstance().loadFromUrl(getWebletConfig(), request, response, url, copyProvider);
     }
 
+    public InputStream serviceStream(WebletRequest request) throws IOException {
+       //TODO implement this
+       throw new RuntimeException("Not implemented yet");
+    }
+
+
     @Override
     public URL getResourceURL(WebletRequest request) throws IOException
     {

@@ -15,6 +15,8 @@
  */
 package net.java.dev.weblets;
 
+import net.java.dev.weblets.resource.ResourceResolver;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -44,7 +46,17 @@ abstract public class Weblet {
     public abstract URL getResourceURL(WebletRequest request) throws IOException;
 
     /**
-     * Second Weblet entry point the service stream method is used internally for Weblets 1.1 by our asynchronous reporting interface
+     * Second weblet entry point fetches the stream from the weblet
+     * with a given weblet request
+     *
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    public abstract InputStream serviceStream(WebletRequest request) throws IOException;
+
+    /**
+     * Third Weblet entry point the service stream method is used internally for Weblets 1.1 by our asynchronous reporting interface
      * <p/>
      * It basically does the same as service but must be servlet independend (aka it cannot rely on a base servlet or the external request of the weblet request
      * object
@@ -54,6 +66,8 @@ abstract public class Weblet {
      * Note, we limit our params here to pathInfo and mimetype since we cannot rely on having a valid external context available weblets themselves know their
      * config params hence all config params can be reached via their internal settings, but in no circumstance you can rely on the weblets having any context
      * whatsoever in this case!
+     *
+     * TODO this does not work with subbundles yet, we have to add subbundles somehow in the long run
      *
      * @param pathInfo the pathinfo for the local resource
      * @param mimetype the preferred mimetype for the request

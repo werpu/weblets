@@ -37,6 +37,16 @@ public class WebletResourceHandler extends ResourceHandlerWrapper
     @Override
     public Resource createResource(String resourceName, String libraryName)
     {
+        String version = (resourceName.indexOf("/") != -1)? resourceName.substring(0, resourceName.indexOf("/")) : "";
+        try
+        {
+            Float.parseFloat(version);
+            resourceName = resourceName.substring(resourceName.indexOf("/") + 1);
+        }
+        catch (NumberFormatException ex)
+        {
+        }
+
         Resource res = super.createResource(resourceName, libraryName);
         if (res != null) return res;
         try
@@ -55,6 +65,15 @@ public class WebletResourceHandler extends ResourceHandlerWrapper
     @Override
     public Resource createResource(String resourceName, String libraryName, String contentType)
     {
+        String version = (resourceName.indexOf("/") != -1)? resourceName.substring(0, resourceName.indexOf("/")) : "";
+        try
+        {
+            Float.parseFloat(version);
+            resourceName = resourceName.substring(resourceName.indexOf("/") + 1);
+        }
+        catch (NumberFormatException ex)
+        {
+        }
         Resource res = super.createResource(resourceName, libraryName, contentType);
         if (res != null) return res;
         try

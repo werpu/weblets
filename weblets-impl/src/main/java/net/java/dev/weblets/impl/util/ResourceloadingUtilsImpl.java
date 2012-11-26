@@ -38,6 +38,9 @@ public class ResourceloadingUtilsImpl implements IResourceloadingUtils {
     public ResourceloadingUtilsImpl() {
     }
 
+
+
+
     public URL getResourceUrl(WebletRequest request, String resourcePath) {
         Map urlCache = getResourceURLCache(request);
         URL url = null;
@@ -146,6 +149,39 @@ public class ResourceloadingUtilsImpl implements IResourceloadingUtils {
 
     */
 
+
+    /**
+        * Central entry point for the resource loading
+        * reporting part, this loads a processed input stream
+        * from we given weblet request
+        *
+        * @param config           the weblet config
+        * @param request          the weblet request
+        * @param response         the weblet response
+        * @param resourceResolver our resource resolver which maps a valid request into a resource depending on the state of the application
+        * @param copyStrategy     the copy strategy which does the preprocessing of resources
+        * @throws IOException in case of an error!
+        *                     <p/>
+        *                     TODO add a raw copy to the strategy for cases where we already work on preprocessed streams!
+        */
+       public InputStream getResourceInputStream(WebletConfig config, WebletRequest request,  ResourceResolver resourceResolver, CopyStrategy copyStrategy) throws IOException {
+           WebletResource resource = getResourceFactory(config).getResource(request, resourceResolver, true);   /*we cache but for now now temp file*/
+
+           if (resource == null) {
+               return null;
+           } else {
+               if (resource instanceof CachingSubbundleResourceImpl) {
+                   //we have a bundle, we have to prepare the files if needed!
+                   CachingSubbundleResourceImpl bundle = (CachingSubbundleResourceImpl) resource;
+                   preprocessSubbundleResource(request, copyStrategy, bundle);
+               } else {
+                   preprocessResource(request, copyStrategy, resource);
+               }
+               return getProcessedResourceInputStream(config, request,  copyStrategy, resource.getInputStream());
+           }
+       }
+
+
     /**
      * Central entry point for the resource loading
      * loads a resource from the given parameters
@@ -165,7 +201,7 @@ public class ResourceloadingUtilsImpl implements IResourceloadingUtils {
         if (resource == null) {
             response.setStatus(WebletResponse.SC_NOT_FOUND);
             return;
-        } else if (resource != null) {
+        } else {
             if (resource instanceof CachingSubbundleResourceImpl) {
                 //we have a bundle, we have to prepare the files if needed!
                 CachingSubbundleResourceImpl bundle = (CachingSubbundleResourceImpl) resource;
@@ -299,6 +335,20 @@ public class ResourceloadingUtilsImpl implements IResourceloadingUtils {
     }
 
     /**
+     * wraps the current weblet input stream for parsing and processing the resource
+     *
+     * @param config
+     * @param req
+     * @param copyStrategy
+     * @param in
+     * @return
+     * @throws IOException
+     */
+    public InputStream getProcessedResourceInputStream(WebletConfig config, WebletRequest req, CopyStrategy copyStrategy, InputStream in) throws IOException {
+        return copyStrategy.wrapInputStream(config.getWebletName(), config.getMimeType(req.getContextPath()), in);
+    };
+
+    /**
      * loads a given resource from an input stream it uses internal timestamps for resource handling and resource serving this works on most browser but safari
      * seems to ignore the timestamps and always sends a modifiedSince for resources for 1.1.1970
      *
@@ -312,11 +362,13 @@ public class ResourceloadingUtilsImpl implements IResourceloadingUtils {
      */
     public void loadResourceFromStream(WebletConfig config, WebletRequest request, WebletResponse response, CopyStrategy copyProvider, InputStream in,
                                        long resourceLastmodified) throws IOException {
+
         if (in != null) {
             // mime-type
             if (versioningUtils.hasTobeLoaded(config, request, resourceLastmodified, this)) {
                 prepareVersionedResponse(config, response, resourceLastmodified, System.currentTimeMillis() + versioningUtils.getTimeout(config, this));
                 //response.setContentType(finalMimetype);
+
                 loadResourceFromStream(config, request, response, copyProvider, in);
                 // response.setStatus(200);
             } else {

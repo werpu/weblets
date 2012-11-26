@@ -18,7 +18,7 @@ import java.net.URL;
  * all service implementing weblets
  * are derived from this class!
  */
-public class ServiceLoadingWeblet extends Weblet {
+public  class ServiceLoadingWeblet extends Weblet {
     Weblet _instance = null;
 
 
@@ -48,6 +48,12 @@ public class ServiceLoadingWeblet extends Weblet {
     public URL getResourceURL(WebletRequest request) throws IOException
     {
         return _instance.getResourceURL(request);
+    }
+
+    @Override
+    public InputStream serviceStream(WebletRequest request) throws IOException
+    {
+        return _instance.serviceStream(request);
     }
 
     public WebletConfig getWebletConfig() {

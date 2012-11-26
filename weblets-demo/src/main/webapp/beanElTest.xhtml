@@ -37,13 +37,15 @@
 
     <h:graphicImage id="yyy" value="#{weblet.resource['weblets.demo']['/img/icon_alert.gif']}"/>
 
-    <h:graphicImage id="yyy2" value="./javax.faces.resource/img/icon_alert.gif.jsf?ln=weblets.demo"/>
 
     <h:graphicImage id="yyy3" value="#{weblet.jsfURL['weblets.demo']['/img/icon_alert.gif']}"/>
 
     <h:graphicImage id="yyy4" value="#{wbl:jsfURL('weblets.demo','/img/icon_alert.gif')}"/>
 
     <h:graphicImage id="yyy5" value="./#{wbl:jsfResource('weblets.demo','/img/icon_alert.gif')}"/>
+
+    <h:graphicImage id="yyy2" value="./javax.faces.resource/img/icon_alert.gif.jsf?ln=weblets.demo"/>
+
 
     <!-- subbundles not yet mit jsf resource requests working
     <h:outputScript id="loadingBundleScript" library="weblets.demo" name="subbundle/script1.js"  target="body"/>

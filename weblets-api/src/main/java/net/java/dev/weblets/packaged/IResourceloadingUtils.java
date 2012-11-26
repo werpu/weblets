@@ -121,4 +121,15 @@ public interface IResourceloadingUtils {
      */
     public WebletRequest createWebletRequest(String webletName, String webletPath, String contextPath, String webletPathInfo,long ifModifiedSince, Object httpRequest);
 
+    /**
+     * Fetches a processed input stream from a given resource
+     *
+     * @param config
+     * @param request
+     * @param resourceResolver
+     * @param copyStrategy
+     * @return
+     * @throws IOException
+     */
+    public InputStream getResourceInputStream(WebletConfig config, WebletRequest request,  ResourceResolver resourceResolver, CopyStrategy copyStrategy) throws IOException;
 }
