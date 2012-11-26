@@ -25,6 +25,7 @@
     <title>Hello World</title>
 </h:head>
 <h:body>
+    <!--
     test for resource
     <h:outputText value="#{weblet.resource['weblets.demo']['/welcome.js']}"/>
     test for an empty resource
@@ -45,13 +46,11 @@
     <h:graphicImage id="yyy5" value="./#{wbl:jsfResource('weblets.demo','/img/icon_alert.gif')}"/>
 
     <h:graphicImage id="yyy2" value="./javax.faces.resource/img/icon_alert.gif.jsf?ln=weblets.demo"/>
+    -->
 
-
-    <!-- subbundles not yet mit jsf resource requests working
     <h:outputScript id="loadingBundleScript" library="weblets.demo" name="subbundle/script1.js"  target="body"/>
     <h:outputScript id="loadingBundleScript2" library="weblets.demo" name="subbundle/script2.js"
                     rendered="#{wbl:isResourceLoaded('weblets.demo','/subbundle/script2.js')}"  target="body"/>
-    -->
 
 
     <!--

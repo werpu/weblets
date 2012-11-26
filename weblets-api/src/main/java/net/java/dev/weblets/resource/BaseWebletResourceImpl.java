@@ -1,8 +1,8 @@
 package net.java.dev.weblets.resource;
 
 import java.io.File;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author werpu
@@ -13,7 +13,8 @@ import java.io.IOException;
  * handle as neutral datasource
  * instead of URLs as before!
  */
-public abstract class BaseWebletResourceImpl implements WebletResource {
+public abstract class BaseWebletResourceImpl implements WebletResource
+{
 
     protected Object _resource;
 
@@ -27,11 +28,15 @@ public abstract class BaseWebletResourceImpl implements WebletResource {
 
     long _tempFileSize = -1;
 
-    public String getWebletName() {
+
+
+    public String getWebletName()
+    {
         return _webletName;
     }
 
-    public void setWebletName(String webletName) {
+    public void setWebletName(String webletName)
+    {
         _webletName = webletName;
     }
 
@@ -41,41 +46,49 @@ public abstract class BaseWebletResourceImpl implements WebletResource {
      */
     boolean _processTemp = false;
 
-    public Object getResource() {
+    public Object getResource()
+    {
         return _resource;
     }
 
-    public void setResource(Object resource) {
+    public void setResource(Object resource)
+    {
         _resource = resource;
     }
 
-    public boolean isRecreateTemp() {
+    public boolean isRecreateTemp()
+    {
         return _recreateTemp;
     }
 
-    public void setRecreateTemp(boolean recreateTemp) {
+    public void setRecreateTemp(boolean recreateTemp)
+    {
         _recreateTemp = recreateTemp;
         _tempFileSize = -1;
     }
 
     boolean _recreateTemp = true;
 
-    protected BaseWebletResourceImpl(Object resource) {
+    protected BaseWebletResourceImpl(Object resource)
+    {
         _resource = resource;
     }
 
-    public void setPathInfo(String pathInfo) {
+    public void setPathInfo(String pathInfo)
+    {
         _pathInfo = pathInfo;
     }
 
-    public void setMimeType(String mimeType) {
+    public void setMimeType(String mimeType)
+    {
         _mimeType = mimeType;
     }
 
     /**
      * @return the unprocessed resource handle
      */
-    public Object getUnoprocessedResourceHandle() {
+    public Object getUnoprocessedResourceHandle()
+    {
         return _resource;
     }
 
@@ -90,7 +103,8 @@ public abstract class BaseWebletResourceImpl implements WebletResource {
      * @return a relative path to the resource
      *         sort of the resource identifier
      */
-    public String getPathInfo() {
+    public String getPathInfo()
+    {
         return _pathInfo;
     }
 
@@ -103,7 +117,8 @@ public abstract class BaseWebletResourceImpl implements WebletResource {
     /**
      * @return the mime type for the resource
      */
-    public String getMimetype() {
+    public String getMimetype()
+    {
         return _mimeType;
     }
 
@@ -111,34 +126,42 @@ public abstract class BaseWebletResourceImpl implements WebletResource {
      * @return the resource version
      *         not implemented yet
      */
-    public String getResourceVersion() {
+    public String getResourceVersion()
+    {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
-    public boolean hasTemp() {
+    public boolean hasTemp()
+    {
         return _temp != null;
     }
 
-    public long tempLastmodified() {
-        if (_temp == null) {
+    public long tempLastmodified()
+    {
+        if (_temp == null)
+        {
             return -1;
         }
         return _temp.lastModified();
     }
 
-    public File getTemp() {
+    public File getTemp()
+    {
         return _temp;
     }
 
-    public void setTemp(File temp) {
+    public void setTemp(File temp)
+    {
         _temp = temp;
     }
 
-    public boolean isProcessTemp() {
+    public boolean isProcessTemp()
+    {
         return _processTemp;
     }
 
-    public void setProcessTemp(boolean processTemp) {
+    public void setProcessTemp(boolean processTemp)
+    {
         _processTemp = processTemp;
     }
 }

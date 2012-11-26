@@ -23,13 +23,6 @@ public class CachingURLResourceImpl extends BaseWebletResourceImpl {
     private static final int CACHE_FILESIZE = 20000;
     WebletConfig _config;
 
-    /**
-     * helper entry to ease the invalidation
-     */
-    class CacheEntry {
-        public byte[] data;
-        long lastAccessed = -1;
-    }
 
     public CachingURLResourceImpl(WebletConfig config, WebletRequest request, URL resource) throws IOException {
         super(resource);

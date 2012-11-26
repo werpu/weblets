@@ -30,13 +30,7 @@ public class CachingSubbundleResourceImpl extends BaseWebletResourceImpl {
     private static final int CACHEFILE_SIZE = 200000;
     WebletConfig _config = null;
 
-    /**
-     * helper entry to ease the invalidation
-     */
-    class CacheEntry {
-        public byte[] data;
-        long lastAccessed = -1;
-    }
+
 
     /**
      * constructor
