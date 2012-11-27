@@ -13,7 +13,7 @@
     </parent>
 
     <name>Weblets</name>
-    <version>1.3</version>
+    <version>1.4-SNAPSHOT</version>
     <description>Weblets</description>
     <url>http://www.github.com/werpu/weblets</url>
 

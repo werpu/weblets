@@ -4,13 +4,13 @@
     <parent>
         <groupId>com.github.weblets</groupId>
         <artifactId>weblets</artifactId>
-        <version>1.3</version>
+        <version>1.4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.github.weblets</groupId>
     <artifactId>weblets-impl</artifactId>
-    <version>1.3</version>
+    <version>1.4-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 

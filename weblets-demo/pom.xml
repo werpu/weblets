@@ -4,13 +4,13 @@
     <parent>
         <groupId>com.github.weblets</groupId>
         <artifactId>weblets</artifactId>
-        <version>1.3</version>
+        <version>1.4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.github.weblets</groupId>
     <artifactId>weblets-demo</artifactId>
-    <version>1.3</version>
+    <version>1.4-SNAPSHOT</version>
 
     <packaging>war</packaging>
 
@@ -22,19 +22,19 @@
         <dependency>
             <groupId>com.github.weblets</groupId>
             <artifactId>weblets-api</artifactId>
-            <version>1.3</version>
+            <version>1.4-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.weblets</groupId>
             <artifactId>weblets-impl</artifactId>
-            <version>1.3</version>
+            <version>1.4-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.weblets</groupId>
             <artifactId>weblets-exampleweblet</artifactId>
-            <version>1.3</version>
+            <version>1.4-SNAPSHOT</version>
         </dependency>
 
         <dependency>
