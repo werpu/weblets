@@ -28,7 +28,7 @@ public class ReflectUtilsImpl {
                     if (methods[cnt].getName().equals("getContextPath")) {
                         //due to a bug in tomcat 5.0.x we have to make a setAccessible
                         methods[cnt].setAccessible(true);
-                        return (String) methods[cnt].invoke(context, new String[0]);
+                        return (String) methods[cnt].invoke(context);
                     }
                 }
             } catch (IllegalAccessException e) {
@@ -48,7 +48,7 @@ public class ReflectUtilsImpl {
         // return _httpResponse.getOutputStream();
         Method m = null;
         try {
-            m = response.getClass().getMethod("getOutputStream", (Class[]) new Class[0]);
+            m = response.getClass().getMethod("getOutputStream");
             try {
                 return (OutputStream) m.invoke(response, new Class[]{});
             } catch (IllegalAccessException e) {
@@ -64,7 +64,7 @@ public class ReflectUtilsImpl {
                 // this should work because we are in a prerender stage but already
                 // have the response object
                 // this needs further testing of course!
-                m = response.getClass().getMethod("getPortletOutputStream", (Class[]) null);
+                m = response.getClass().getMethod("getPortletOutputStream");
                 try {
                     return (OutputStream) m.invoke(response, new Class[]{});
                 } catch (IllegalAccessException e1) {
@@ -87,7 +87,7 @@ public class ReflectUtilsImpl {
         // return _httpResponse.getOutputStream();
         Method m = null;
         try {
-            m = implementor.getClass().getMethod("getParameter", (Class[]) new Class[0]);
+            m = implementor.getClass().getMethod("getParameter");
             try {
                 String[] params = new String[1];
                 params[0] = name;
@@ -107,11 +107,11 @@ public class ReflectUtilsImpl {
         return null;
     }
 
-    public static Object getAttribute(Object implementor, String name) {
+    /*public static Object getAttribute(Object implementor, String name) {
         // return _httpResponse.getOutputStream();
         Method m = null;
         try {
-            m = implementor.getClass().getMethod("getAttribute", (Class[]) new Class[0]);
+            m = implementor.getClass().getMethod("getAttribute");
             try {
                 String[] params = new String[1];
                 params[0] = name;
@@ -129,13 +129,13 @@ public class ReflectUtilsImpl {
             log.error(e);
         }
         return null;
-    }
+    }*/
 
-    public static void setAttribute(Object implementor, String name, Object value) {
+    /*public static void setAttribute(Object implementor, String name, Object value) {
         // return _httpResponse.getOutputStream();
         Method m = null;
         try {
-            m = implementor.getClass().getMethod("setAttribute", (Class[]) new Class[0]);
+            m = implementor.getClass().getMethod("setAttribute", (Class[]) null);
             try {
                 Object[] params = new Object[2];
                 params[0] = name;
@@ -152,5 +152,5 @@ public class ReflectUtilsImpl {
             Log log = LogFactory.getLog(ReflectUtilsImpl.class);
             log.error(e);
         }
-    }
+    } */
 }
