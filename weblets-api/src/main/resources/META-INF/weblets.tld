@@ -8,11 +8,9 @@
     <uri>http://weblets.dev.java.net/tags</uri>
     <display-name>Weblets</display-name>
     <description>The Weblets JSP tag library</description>
-    <!-- causes a problem in tomcat 7.0.54 the wrong context is passed down
     <listener>
         <listener-class>net.java.dev.weblets.WebletsContextListener</listener-class>
     </listener>
-    -->
     <tag>
         <name>resource</name>
         <tag-class>net.java.dev.weblets.WebletsResourceTag</tag-class>
