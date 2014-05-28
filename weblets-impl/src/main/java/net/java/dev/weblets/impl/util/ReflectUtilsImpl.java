@@ -26,7 +26,8 @@ public class ReflectUtilsImpl {
                 Method[] methods = context.getClass().getMethods();
                 for (int cnt = 0; cnt < methods.length; cnt++) {
                     if (methods[cnt].getName().equals("getContextPath")) {
-                        return (String) methods[cnt].invoke(context, null);
+                        //methods[cnt].setAccessible(true);
+                        return (String) methods[cnt].invoke(context, new String[0]);
                     }
                 }
             } catch (IllegalAccessException e) {
@@ -46,7 +47,7 @@ public class ReflectUtilsImpl {
         // return _httpResponse.getOutputStream();
         Method m = null;
         try {
-            m = response.getClass().getMethod("getOutputStream", (Class[]) null);
+            m = response.getClass().getMethod("getOutputStream", (Class[]) new Class[0]);
             try {
                 return (OutputStream) m.invoke(response, new Class[]{});
             } catch (IllegalAccessException e) {
@@ -85,7 +86,7 @@ public class ReflectUtilsImpl {
         // return _httpResponse.getOutputStream();
         Method m = null;
         try {
-            m = implementor.getClass().getMethod("getParameter", (Class[]) null);
+            m = implementor.getClass().getMethod("getParameter", (Class[]) new Class[0]);
             try {
                 String[] params = new String[1];
                 params[0] = name;
@@ -109,7 +110,7 @@ public class ReflectUtilsImpl {
         // return _httpResponse.getOutputStream();
         Method m = null;
         try {
-            m = implementor.getClass().getMethod("getAttribute", (Class[]) null);
+            m = implementor.getClass().getMethod("getAttribute", (Class[]) new Class[0]);
             try {
                 String[] params = new String[1];
                 params[0] = name;
@@ -133,7 +134,7 @@ public class ReflectUtilsImpl {
         // return _httpResponse.getOutputStream();
         Method m = null;
         try {
-            m = implementor.getClass().getMethod("setAttribute", (Class[]) null);
+            m = implementor.getClass().getMethod("setAttribute", (Class[]) new Class[0]);
             try {
                 Object[] params = new Object[2];
                 params[0] = name;
