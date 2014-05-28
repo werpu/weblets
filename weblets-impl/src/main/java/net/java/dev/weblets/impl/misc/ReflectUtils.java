@@ -23,6 +23,8 @@ public class ReflectUtils {
 				Method[] methods = context.getClass().getMethods();
 				for (int cnt = 0; cnt < methods.length; cnt++) {
 					if (methods[cnt].getName().equals("getContextPath")) {
+                        //fix for a tomcat issue in tomcat 7.0.54
+                        methods[cnt].setAccessible(true);
 						return (String) methods[cnt].invoke(context, null);
 					}
 				}
